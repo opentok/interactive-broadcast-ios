@@ -8,12 +8,169 @@
 
 /* Begin PBXBuildFile section */
 		0B6723581C46CBF500AFE70F /* SpotlightKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723571C46CBF500AFE70F /* SpotlightKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B6723631C46CECA00AFE70F /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67235F1C46CECA00AFE70F /* UIColor+AppAdditions.h */; };
+		0B6723641C46CECA00AFE70F /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723601C46CECA00AFE70F /* UIColor+AppAdditions.m */; };
+		0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723611C46CECA00AFE70F /* UIView+EasyAutoLayout.h */; };
+		0B6723661C46CECA00AFE70F /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723621C46CECA00AFE70F /* UIView+EasyAutoLayout.m */; };
+		0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */; };
+		0B6723821C46CED700AFE70F /* MainSpotlightControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723681C46CED700AFE70F /* MainSpotlightControllerViewController.m */; };
+		0B6723831C46CED700AFE70F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B67236E1C46CED700AFE70F /* Info.plist */; };
+		0B6723841C46CED700AFE70F /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723701C46CED700AFE70F /* OTKTextChatComponent.h */; };
+		0B6723851C46CED700AFE70F /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723711C46CED700AFE70F /* OTKTextChatComponent.m */; };
+		0B6723861C46CED700AFE70F /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723721C46CED700AFE70F /* OTKTextChatTableViewCell.h */; };
+		0B6723871C46CED700AFE70F /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723731C46CED700AFE70F /* OTKTextChatTableViewCell.m */; };
+		0B6723881C46CED700AFE70F /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723741C46CED700AFE70F /* OTKTextChatView.h */; };
+		0B6723891C46CED700AFE70F /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723751C46CED700AFE70F /* OTKTextChatView.m */; };
+		0B67238A1C46CED700AFE70F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723761C46CED700AFE70F /* README.md */; };
+		0B67238B1C46CED700AFE70F /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723771C46CED700AFE70F /* Reachability.h */; };
+		0B67238C1C46CED700AFE70F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723781C46CED700AFE70F /* Reachability.m */; };
+		0B67238D1C46CED700AFE70F /* SIOSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237C1C46CED700AFE70F /* SIOSocket.h */; };
+		0B67238E1C46CED700AFE70F /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67237D1C46CED700AFE70F /* SIOSocket.m */; };
+		0B67238F1C46CED700AFE70F /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237E1C46CED700AFE70F /* socket.io.js.h */; };
+		0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237F1C46CED700AFE70F /* SpotlightApi.h */; };
+		0B6723911C46CED700AFE70F /* SpotlightApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723801C46CED700AFE70F /* SpotlightApi.m */; };
+		0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67239C1C46CEE100AFE70F /* Alert.h */; };
+		0B6723CD1C46CEE100AFE70F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67239D1C46CEE100AFE70F /* Alert.m */; };
+		0B6723CE1C46CEE100AFE70F /* BackArrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B67239F1C46CEE100AFE70F /* BackArrow-1.png */; };
+		0B6723CF1C46CEE100AFE70F /* BackArrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A01C46CEE100AFE70F /* BackArrow-2.png */; };
+		0B6723D01C46CEE100AFE70F /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A11C46CEE100AFE70F /* BackArrow.png */; };
+		0B6723D11C46CEE100AFE70F /* bg-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A21C46CEE100AFE70F /* bg-graphic.png */; };
+		0B6723D21C46CEE100AFE70F /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A31C46CEE100AFE70F /* EventCell.xib */; };
+		0B6723D31C46CEE100AFE70F /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A41C46CEE100AFE70F /* EventsViewController.xib */; };
+		0B6723D41C46CEE100AFE70F /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A51C46CEE100AFE70F /* EventViewController.xib */; };
+		0B6723D51C46CEE100AFE70F /* icon-bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A61C46CEE100AFE70F /* icon-bubble.png */; };
+		0B6723D61C46CEE100AFE70F /* icon-bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A71C46CEE100AFE70F /* icon-bubble@2x.png */; };
+		0B6723D71C46CEE100AFE70F /* icon-check-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A81C46CEE100AFE70F /* icon-check-circle.png */; };
+		0B6723D81C46CEE100AFE70F /* icon-check-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723A91C46CEE100AFE70F /* icon-check-circle@2x.png */; };
+		0B6723D91C46CEE100AFE70F /* icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AA1C46CEE100AFE70F /* icon-check.png */; };
+		0B6723DA1C46CEE100AFE70F /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AB1C46CEE100AFE70F /* icon-check@2x.png */; };
+		0B6723DB1C46CEE100AFE70F /* icon-close-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AC1C46CEE100AFE70F /* icon-close-circle.png */; };
+		0B6723DC1C46CEE100AFE70F /* icon-close-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AD1C46CEE100AFE70F /* icon-close-circle@2x.png */; };
+		0B6723DD1C46CEE100AFE70F /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AE1C46CEE100AFE70F /* icon-close.png */; };
+		0B6723DE1C46CEE100AFE70F /* icon-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723AF1C46CEE100AFE70F /* icon-close@2x.png */; };
+		0B6723DF1C46CEE100AFE70F /* icon_sendMsgArrow_052015.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B01C46CEE100AFE70F /* icon_sendMsgArrow_052015.png */; };
+		0B6723E01C46CEE100AFE70F /* MainSpotlightControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B11C46CEE100AFE70F /* MainSpotlightControllerViewController.xib */; };
+		0B6723E11C46CEE100AFE70F /* MainSpotlightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B21C46CEE100AFE70F /* MainSpotlightView.xib */; };
+		0B6723E21C46CEE100AFE70F /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B31C46CEE100AFE70F /* Montserrat-Bold.ttf */; };
+		0B6723E31C46CEE100AFE70F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B41C46CEE100AFE70F /* Montserrat-Regular.ttf */; };
+		0B6723E41C46CEE100AFE70F /* OTKTextChatComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B51C46CEE100AFE70F /* OTKTextChatComponent.xib */; };
+		0B6723E51C46CEE100AFE70F /* OTKTextChatDivTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B61C46CEE100AFE70F /* OTKTextChatDivTableViewCell.xib */; };
+		0B6723E61C46CEE100AFE70F /* OTKTextChatRecvShortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B71C46CEE100AFE70F /* OTKTextChatRecvShortTableViewCell.xib */; };
+		0B6723E71C46CEE100AFE70F /* OTKTextChatRecvTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B81C46CEE100AFE70F /* OTKTextChatRecvTableViewCell.xib */; };
+		0B6723E81C46CEE100AFE70F /* OTKTextChatSentShortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723B91C46CEE100AFE70F /* OTKTextChatSentShortTableViewCell.xib */; };
+		0B6723E91C46CEE100AFE70F /* OTKTextChatSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BA1C46CEE100AFE70F /* OTKTextChatSentTableViewCell.xib */; };
+		0B6723EA1C46CEE100AFE70F /* recv-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BB1C46CEE100AFE70F /* recv-arrow.png */; };
+		0B6723EB1C46CEE100AFE70F /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BC1C46CEE100AFE70F /* recv-arrow@2x.png */; };
+		0B6723EC1C46CEE100AFE70F /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BD1C46CEE100AFE70F /* sent-arrow.png */; };
+		0B6723ED1C46CEE100AFE70F /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BE1C46CEE100AFE70F /* sent-arrow@2x.png */; };
+		0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723BF1C46CEE100AFE70F /* dataButton.h */; };
+		0B6723EF1C46CEE100AFE70F /* dataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C01C46CEE100AFE70F /* dataButton.m */; };
+		0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C31C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h */; };
+		0B6723F11C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C41C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m */; };
+		0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C51C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h */; };
+		0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C61C46CEE100AFE70F /* DGActivityIndicatorView.h */; };
+		0B6723F41C46CEE100AFE70F /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C71C46CEE100AFE70F /* DGActivityIndicatorView.m */; };
+		0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C81C46CEE100AFE70F /* EventsViewController.h */; };
+		0B6723F61C46CEE100AFE70F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C91C46CEE100AFE70F /* EventsViewController.m */; };
+		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; };
+		0B6723F81C46CEE100AFE70F /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723CB1C46CEE100AFE70F /* EventViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B6723961C46CED700AFE70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D79756BB1B1F73620022B7B9;
+			remoteInfo = OTKTextChat_library;
+		};
+		0B6723981C46CED700AFE70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D79756D91B1F74690022B7B9;
+			remoteInfo = OTKTextChatBundle;
+		};
+		0B67239A1C46CED700AFE70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D74724CC1B591F7C00D438B3;
+			remoteInfo = OpenTokUI;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0B6723541C46CBF500AFE70F /* SpotlightKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SpotlightKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B6723571C46CBF500AFE70F /* SpotlightKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotlightKit.h; sourceTree = "<group>"; };
 		0B6723591C46CBF500AFE70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B67235F1C46CECA00AFE70F /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
+		0B6723601C46CECA00AFE70F /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
+		0B6723611C46CECA00AFE70F /* UIView+EasyAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasyAutoLayout.h"; sourceTree = "<group>"; };
+		0B6723621C46CECA00AFE70F /* UIView+EasyAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasyAutoLayout.m"; sourceTree = "<group>"; };
+		0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSpotlightControllerViewController.h; sourceTree = "<group>"; };
+		0B6723681C46CED700AFE70F /* MainSpotlightControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainSpotlightControllerViewController.m; sourceTree = "<group>"; };
+		0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = OTKTextChat.xcodeproj; sourceTree = "<group>"; };
+		0B67236E1C46CED700AFE70F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B6723701C46CED700AFE70F /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
+		0B6723711C46CED700AFE70F /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
+		0B6723721C46CED700AFE70F /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
+		0B6723731C46CED700AFE70F /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
+		0B6723741C46CED700AFE70F /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
+		0B6723751C46CED700AFE70F /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
+		0B6723761C46CED700AFE70F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0B6723771C46CED700AFE70F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		0B6723781C46CED700AFE70F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		0B67237C1C46CED700AFE70F /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
+		0B67237D1C46CED700AFE70F /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
+		0B67237E1C46CED700AFE70F /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
+		0B67237F1C46CED700AFE70F /* SpotlightApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightApi.h; sourceTree = "<group>"; };
+		0B6723801C46CED700AFE70F /* SpotlightApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightApi.m; sourceTree = "<group>"; };
+		0B67239C1C46CEE100AFE70F /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		0B67239D1C46CEE100AFE70F /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
+		0B67239F1C46CEE100AFE70F /* BackArrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-1.png"; sourceTree = "<group>"; };
+		0B6723A01C46CEE100AFE70F /* BackArrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-2.png"; sourceTree = "<group>"; };
+		0B6723A11C46CEE100AFE70F /* BackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackArrow.png; sourceTree = "<group>"; };
+		0B6723A21C46CEE100AFE70F /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
+		0B6723A31C46CEE100AFE70F /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
+		0B6723A41C46CEE100AFE70F /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
+		0B6723A51C46CEE100AFE70F /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
+		0B6723A61C46CEE100AFE70F /* icon-bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble.png"; sourceTree = "<group>"; };
+		0B6723A71C46CEE100AFE70F /* icon-bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble@2x.png"; sourceTree = "<group>"; };
+		0B6723A81C46CEE100AFE70F /* icon-check-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check-circle.png"; sourceTree = "<group>"; };
+		0B6723A91C46CEE100AFE70F /* icon-check-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check-circle@2x.png"; sourceTree = "<group>"; };
+		0B6723AA1C46CEE100AFE70F /* icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check.png"; sourceTree = "<group>"; };
+		0B6723AB1C46CEE100AFE70F /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
+		0B6723AC1C46CEE100AFE70F /* icon-close-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close-circle.png"; sourceTree = "<group>"; };
+		0B6723AD1C46CEE100AFE70F /* icon-close-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close-circle@2x.png"; sourceTree = "<group>"; };
+		0B6723AE1C46CEE100AFE70F /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
+		0B6723AF1C46CEE100AFE70F /* icon-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close@2x.png"; sourceTree = "<group>"; };
+		0B6723B01C46CEE100AFE70F /* icon_sendMsgArrow_052015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sendMsgArrow_052015.png; sourceTree = "<group>"; };
+		0B6723B11C46CEE100AFE70F /* MainSpotlightControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainSpotlightControllerViewController.xib; sourceTree = "<group>"; };
+		0B6723B21C46CEE100AFE70F /* MainSpotlightView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainSpotlightView.xib; sourceTree = "<group>"; };
+		0B6723B31C46CEE100AFE70F /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		0B6723B41C46CEE100AFE70F /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		0B6723B51C46CEE100AFE70F /* OTKTextChatComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatComponent.xib; sourceTree = "<group>"; };
+		0B6723B61C46CEE100AFE70F /* OTKTextChatDivTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatDivTableViewCell.xib; sourceTree = "<group>"; };
+		0B6723B71C46CEE100AFE70F /* OTKTextChatRecvShortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatRecvShortTableViewCell.xib; sourceTree = "<group>"; };
+		0B6723B81C46CEE100AFE70F /* OTKTextChatRecvTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatRecvTableViewCell.xib; sourceTree = "<group>"; };
+		0B6723B91C46CEE100AFE70F /* OTKTextChatSentShortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentShortTableViewCell.xib; sourceTree = "<group>"; };
+		0B6723BA1C46CEE100AFE70F /* OTKTextChatSentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentTableViewCell.xib; sourceTree = "<group>"; };
+		0B6723BB1C46CEE100AFE70F /* recv-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recv-arrow.png"; sourceTree = "<group>"; };
+		0B6723BC1C46CEE100AFE70F /* recv-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recv-arrow@2x.png"; sourceTree = "<group>"; };
+		0B6723BD1C46CEE100AFE70F /* sent-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow.png"; sourceTree = "<group>"; };
+		0B6723BE1C46CEE100AFE70F /* sent-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow@2x.png"; sourceTree = "<group>"; };
+		0B6723BF1C46CEE100AFE70F /* dataButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataButton.h; sourceTree = "<group>"; };
+		0B6723C01C46CEE100AFE70F /* dataButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataButton.m; sourceTree = "<group>"; };
+		0B6723C31C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorFiveDotsAnimation.h; sourceTree = "<group>"; };
+		0B6723C41C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGActivityIndicatorFiveDotsAnimation.m; sourceTree = "<group>"; };
+		0B6723C51C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorAnimationProtocol.h; sourceTree = "<group>"; };
+		0B6723C61C46CEE100AFE70F /* DGActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorView.h; sourceTree = "<group>"; };
+		0B6723C71C46CEE100AFE70F /* DGActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGActivityIndicatorView.m; sourceTree = "<group>"; };
+		0B6723C81C46CEE100AFE70F /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		0B6723C91C46CEE100AFE70F /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		0B6723CA1C46CEE100AFE70F /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		0B6723CB1C46CEE100AFE70F /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +203,159 @@
 		0B6723561C46CBF500AFE70F /* SpotlightKit */ = {
 			isa = PBXGroup;
 			children = (
+				0B67239C1C46CEE100AFE70F /* Alert.h */,
+				0B67239D1C46CEE100AFE70F /* Alert.m */,
+				0B67239E1C46CEE100AFE70F /* Assets */,
+				0B6723BF1C46CEE100AFE70F /* dataButton.h */,
+				0B6723C01C46CEE100AFE70F /* dataButton.m */,
+				0B6723C11C46CEE100AFE70F /* DGActivityIndicatorView */,
+				0B6723C81C46CEE100AFE70F /* EventsViewController.h */,
+				0B6723C91C46CEE100AFE70F /* EventsViewController.m */,
+				0B6723CA1C46CEE100AFE70F /* EventViewController.h */,
+				0B6723CB1C46CEE100AFE70F /* EventViewController.m */,
+				0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */,
+				0B6723681C46CED700AFE70F /* MainSpotlightControllerViewController.m */,
+				0B6723691C46CED700AFE70F /* OTKTextChat */,
+				0B6723771C46CED700AFE70F /* Reachability.h */,
+				0B6723781C46CED700AFE70F /* Reachability.m */,
+				0B6723791C46CED700AFE70F /* SocketIO */,
+				0B67237B1C46CED700AFE70F /* Source */,
+				0B67237F1C46CED700AFE70F /* SpotlightApi.h */,
+				0B6723801C46CED700AFE70F /* SpotlightApi.m */,
+				0B67235F1C46CECA00AFE70F /* UIColor+AppAdditions.h */,
+				0B6723601C46CECA00AFE70F /* UIColor+AppAdditions.m */,
+				0B6723611C46CECA00AFE70F /* UIView+EasyAutoLayout.h */,
+				0B6723621C46CECA00AFE70F /* UIView+EasyAutoLayout.m */,
 				0B6723571C46CBF500AFE70F /* SpotlightKit.h */,
 				0B6723591C46CBF500AFE70F /* Info.plist */,
 			);
 			path = SpotlightKit;
+			sourceTree = "<group>";
+		};
+		0B6723691C46CED700AFE70F /* OTKTextChat */ = {
+			isa = PBXGroup;
+			children = (
+				0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */,
+				0B67236D1C46CED700AFE70F /* OTKTextChatFramework */,
+				0B67236F1C46CED700AFE70F /* OTKTextChatLibrary */,
+				0B6723761C46CED700AFE70F /* README.md */,
+			);
+			path = OTKTextChat;
+			sourceTree = "<group>";
+		};
+		0B67236B1C46CED700AFE70F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B6723971C46CED700AFE70F /* libOTKTextChat_library.a */,
+				0B6723991C46CED700AFE70F /* OTKTextChatBundle.bundle */,
+				0B67239B1C46CED700AFE70F /* OpenTokUI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0B67236D1C46CED700AFE70F /* OTKTextChatFramework */ = {
+			isa = PBXGroup;
+			children = (
+				0B67236E1C46CED700AFE70F /* Info.plist */,
+			);
+			path = OTKTextChatFramework;
+			sourceTree = "<group>";
+		};
+		0B67236F1C46CED700AFE70F /* OTKTextChatLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				0B6723701C46CED700AFE70F /* OTKTextChatComponent.h */,
+				0B6723711C46CED700AFE70F /* OTKTextChatComponent.m */,
+				0B6723721C46CED700AFE70F /* OTKTextChatTableViewCell.h */,
+				0B6723731C46CED700AFE70F /* OTKTextChatTableViewCell.m */,
+				0B6723741C46CED700AFE70F /* OTKTextChatView.h */,
+				0B6723751C46CED700AFE70F /* OTKTextChatView.m */,
+			);
+			path = OTKTextChatLibrary;
+			sourceTree = "<group>";
+		};
+		0B6723791C46CED700AFE70F /* SocketIO */ = {
+			isa = PBXGroup;
+			children = (
+				0B67237A1C46CED700AFE70F /* Source */,
+			);
+			path = SocketIO;
+			sourceTree = "<group>";
+		};
+		0B67237A1C46CED700AFE70F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		0B67237B1C46CED700AFE70F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B67237C1C46CED700AFE70F /* SIOSocket.h */,
+				0B67237D1C46CED700AFE70F /* SIOSocket.m */,
+				0B67237E1C46CED700AFE70F /* socket.io.js.h */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		0B67239E1C46CEE100AFE70F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				0B67239F1C46CEE100AFE70F /* BackArrow-1.png */,
+				0B6723A01C46CEE100AFE70F /* BackArrow-2.png */,
+				0B6723A11C46CEE100AFE70F /* BackArrow.png */,
+				0B6723A21C46CEE100AFE70F /* bg-graphic.png */,
+				0B6723A31C46CEE100AFE70F /* EventCell.xib */,
+				0B6723A41C46CEE100AFE70F /* EventsViewController.xib */,
+				0B6723A51C46CEE100AFE70F /* EventViewController.xib */,
+				0B6723A61C46CEE100AFE70F /* icon-bubble.png */,
+				0B6723A71C46CEE100AFE70F /* icon-bubble@2x.png */,
+				0B6723A81C46CEE100AFE70F /* icon-check-circle.png */,
+				0B6723A91C46CEE100AFE70F /* icon-check-circle@2x.png */,
+				0B6723AA1C46CEE100AFE70F /* icon-check.png */,
+				0B6723AB1C46CEE100AFE70F /* icon-check@2x.png */,
+				0B6723AC1C46CEE100AFE70F /* icon-close-circle.png */,
+				0B6723AD1C46CEE100AFE70F /* icon-close-circle@2x.png */,
+				0B6723AE1C46CEE100AFE70F /* icon-close.png */,
+				0B6723AF1C46CEE100AFE70F /* icon-close@2x.png */,
+				0B6723B01C46CEE100AFE70F /* icon_sendMsgArrow_052015.png */,
+				0B6723B11C46CEE100AFE70F /* MainSpotlightControllerViewController.xib */,
+				0B6723B21C46CEE100AFE70F /* MainSpotlightView.xib */,
+				0B6723B31C46CEE100AFE70F /* Montserrat-Bold.ttf */,
+				0B6723B41C46CEE100AFE70F /* Montserrat-Regular.ttf */,
+				0B6723B51C46CEE100AFE70F /* OTKTextChatComponent.xib */,
+				0B6723B61C46CEE100AFE70F /* OTKTextChatDivTableViewCell.xib */,
+				0B6723B71C46CEE100AFE70F /* OTKTextChatRecvShortTableViewCell.xib */,
+				0B6723B81C46CEE100AFE70F /* OTKTextChatRecvTableViewCell.xib */,
+				0B6723B91C46CEE100AFE70F /* OTKTextChatSentShortTableViewCell.xib */,
+				0B6723BA1C46CEE100AFE70F /* OTKTextChatSentTableViewCell.xib */,
+				0B6723BB1C46CEE100AFE70F /* recv-arrow.png */,
+				0B6723BC1C46CEE100AFE70F /* recv-arrow@2x.png */,
+				0B6723BD1C46CEE100AFE70F /* sent-arrow.png */,
+				0B6723BE1C46CEE100AFE70F /* sent-arrow@2x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		0B6723C11C46CEE100AFE70F /* DGActivityIndicatorView */ = {
+			isa = PBXGroup;
+			children = (
+				0B6723C21C46CEE100AFE70F /* Animations */,
+				0B6723C51C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h */,
+				0B6723C61C46CEE100AFE70F /* DGActivityIndicatorView.h */,
+				0B6723C71C46CEE100AFE70F /* DGActivityIndicatorView.m */,
+			);
+			path = DGActivityIndicatorView;
+			sourceTree = "<group>";
+		};
+		0B6723C21C46CEE100AFE70F /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				0B6723C31C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h */,
+				0B6723C41C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,7 +365,24 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */,
+				0B6723631C46CECA00AFE70F /* UIColor+AppAdditions.h in Headers */,
+				0B6723861C46CED700AFE70F /* OTKTextChatTableViewCell.h in Headers */,
+				0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
+				0B6723841C46CED700AFE70F /* OTKTextChatComponent.h in Headers */,
+				0B67238F1C46CED700AFE70F /* socket.io.js.h in Headers */,
+				0B67238D1C46CED700AFE70F /* SIOSocket.h in Headers */,
 				0B6723581C46CBF500AFE70F /* SpotlightKit.h in Headers */,
+				0B67238B1C46CED700AFE70F /* Reachability.h in Headers */,
+				0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */,
+				0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */,
+				0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */,
+				0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */,
+				0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */,
+				0B6723881C46CED700AFE70F /* OTKTextChatView.h in Headers */,
+				0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */,
+				0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */,
+				0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +418,7 @@
 				TargetAttributes = {
 					0B6723531C46CBF500AFE70F = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 246HEUPQZ9;
 					};
 				};
 			};
@@ -108,6 +432,12 @@
 			mainGroup = 0B67234A1C46CBF500AFE70F;
 			productRefGroup = 0B6723551C46CBF500AFE70F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B67236B1C46CED700AFE70F /* Products */;
+					ProjectRef = 0B67236A1C46CED700AFE70F /* OTKTextChat.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0B6723531C46CBF500AFE70F /* SpotlightKit */,
@@ -115,11 +445,68 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		0B6723971C46CED700AFE70F /* libOTKTextChat_library.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOTKTextChat_library.a;
+			remoteRef = 0B6723961C46CED700AFE70F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0B6723991C46CED700AFE70F /* OTKTextChatBundle.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OTKTextChatBundle.bundle;
+			remoteRef = 0B6723981C46CED700AFE70F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0B67239B1C46CED700AFE70F /* OpenTokUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OpenTokUI.framework;
+			remoteRef = 0B67239A1C46CED700AFE70F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		0B6723521C46CBF500AFE70F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6723E01C46CEE100AFE70F /* MainSpotlightControllerViewController.xib in Resources */,
+				0B6723DC1C46CEE100AFE70F /* icon-close-circle@2x.png in Resources */,
+				0B6723E31C46CEE100AFE70F /* Montserrat-Regular.ttf in Resources */,
+				0B6723D81C46CEE100AFE70F /* icon-check-circle@2x.png in Resources */,
+				0B6723D01C46CEE100AFE70F /* BackArrow.png in Resources */,
+				0B6723DA1C46CEE100AFE70F /* icon-check@2x.png in Resources */,
+				0B6723E81C46CEE100AFE70F /* OTKTextChatSentShortTableViewCell.xib in Resources */,
+				0B6723DE1C46CEE100AFE70F /* icon-close@2x.png in Resources */,
+				0B6723E41C46CEE100AFE70F /* OTKTextChatComponent.xib in Resources */,
+				0B6723D41C46CEE100AFE70F /* EventViewController.xib in Resources */,
+				0B6723E91C46CEE100AFE70F /* OTKTextChatSentTableViewCell.xib in Resources */,
+				0B6723D31C46CEE100AFE70F /* EventsViewController.xib in Resources */,
+				0B6723D91C46CEE100AFE70F /* icon-check.png in Resources */,
+				0B6723DB1C46CEE100AFE70F /* icon-close-circle.png in Resources */,
+				0B6723D71C46CEE100AFE70F /* icon-check-circle.png in Resources */,
+				0B6723D51C46CEE100AFE70F /* icon-bubble.png in Resources */,
+				0B6723D11C46CEE100AFE70F /* bg-graphic.png in Resources */,
+				0B6723E51C46CEE100AFE70F /* OTKTextChatDivTableViewCell.xib in Resources */,
+				0B6723DD1C46CEE100AFE70F /* icon-close.png in Resources */,
+				0B6723EC1C46CEE100AFE70F /* sent-arrow.png in Resources */,
+				0B6723CF1C46CEE100AFE70F /* BackArrow-2.png in Resources */,
+				0B6723E11C46CEE100AFE70F /* MainSpotlightView.xib in Resources */,
+				0B6723CE1C46CEE100AFE70F /* BackArrow-1.png in Resources */,
+				0B6723D61C46CEE100AFE70F /* icon-bubble@2x.png in Resources */,
+				0B6723ED1C46CEE100AFE70F /* sent-arrow@2x.png in Resources */,
+				0B6723D21C46CEE100AFE70F /* EventCell.xib in Resources */,
+				0B6723EB1C46CEE100AFE70F /* recv-arrow@2x.png in Resources */,
+				0B6723E61C46CEE100AFE70F /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
+				0B6723EA1C46CEE100AFE70F /* recv-arrow.png in Resources */,
+				0B6723E71C46CEE100AFE70F /* OTKTextChatRecvTableViewCell.xib in Resources */,
+				0B6723DF1C46CEE100AFE70F /* icon_sendMsgArrow_052015.png in Resources */,
+				0B6723E21C46CEE100AFE70F /* Montserrat-Bold.ttf in Resources */,
+				0B6723831C46CED700AFE70F /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +517,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6723641C46CECA00AFE70F /* UIColor+AppAdditions.m in Sources */,
+				0B6723F81C46CEE100AFE70F /* EventViewController.m in Sources */,
+				0B6723F61C46CEE100AFE70F /* EventsViewController.m in Sources */,
+				0B6723EF1C46CEE100AFE70F /* dataButton.m in Sources */,
+				0B6723911C46CED700AFE70F /* SpotlightApi.m in Sources */,
+				0B6723871C46CED700AFE70F /* OTKTextChatTableViewCell.m in Sources */,
+				0B6723CD1C46CEE100AFE70F /* Alert.m in Sources */,
+				0B67238C1C46CED700AFE70F /* Reachability.m in Sources */,
+				0B6723661C46CECA00AFE70F /* UIView+EasyAutoLayout.m in Sources */,
+				0B6723F11C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
+				0B6723F41C46CEE100AFE70F /* DGActivityIndicatorView.m in Sources */,
+				0B67238A1C46CED700AFE70F /* README.md in Sources */,
+				0B6723821C46CED700AFE70F /* MainSpotlightControllerViewController.m in Sources */,
+				0B6723891C46CED700AFE70F /* OTKTextChatView.m in Sources */,
+				0B67238E1C46CED700AFE70F /* SIOSocket.m in Sources */,
+				0B6723851C46CED700AFE70F /* OTKTextChatComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,12 +630,14 @@
 		0B67235D1C46CBF500AFE70F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SpotlightKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -243,12 +648,14 @@
 		0B67235E1C46CBF500AFE70F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SpotlightKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -275,6 +682,7 @@
 				0B67235E1C46CBF500AFE70F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

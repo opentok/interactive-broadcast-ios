@@ -74,6 +74,7 @@
 		0B6723F61C46CEE100AFE70F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C91C46CEE100AFE70F /* EventsViewController.m */; };
 		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; };
 		0B6723F81C46CEE100AFE70F /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723CB1C46CEE100AFE70F /* EventViewController.m */; };
+		0BB44A6F1C4FF6D30076545C /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB44A6E1C4FF6D30076545C /* OpenTok.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +172,7 @@
 		0B6723C91C46CEE100AFE70F /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		0B6723CA1C46CEE100AFE70F /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		0B6723CB1C46CEE100AFE70F /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
+		0BB44A6E1C4FF6D30076545C /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = ../Frameworks/OpenTok.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BB44A6F1C4FF6D30076545C /* OpenTok.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +190,7 @@
 		0B67234A1C46CBF500AFE70F = {
 			isa = PBXGroup;
 			children = (
+				0BB44A6E1C4FF6D30076545C /* OpenTok.framework */,
 				0B6723561C46CBF500AFE70F /* SpotlightKit */,
 				0B6723551C46CBF500AFE70F /* Products */,
 			);

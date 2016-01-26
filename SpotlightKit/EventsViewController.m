@@ -92,7 +92,7 @@
     if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
         //Should we change to the default image
     }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",instanceData[@"frontend_url"], data[@"event_image"]]];
+        //finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",instanceData[@"frontend_url"], data[@"event_image"]]];
     }
     
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];

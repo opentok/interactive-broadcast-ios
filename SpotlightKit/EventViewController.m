@@ -40,6 +40,7 @@ OTSubscriber* _fanSubscriber;
 OTSubscriber* _hostSubscriber;
 OTSubscriber* _celebritySubscriber;
 OTSubscriber* _producerSubscriber;
+OTSubscriber* _privateProducerSubscriber;
 
 id<OTVideoCapture> _cameraCapture;
 
@@ -47,9 +48,9 @@ OTStream* _celebrityStream;
 OTStream* _hostStream;
 OTStream* _fanStream;
 OTStream* _producerStream;
+OTStream* _privateProducerStream;
 
 OTConnection* _producerConnection;
-
 
 DGActivityIndicatorView *activityIndicatorView;
 OTKTextChatComponent *textChat;
@@ -78,7 +79,7 @@ static NSString* const kTextChatType = @"chatMessage";
 @synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName, namePrompt,getInLineName,statusBar,chatBar;
 
 - (id)initEventWithData:(NSMutableDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle{
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];    
     if( self = [self initWithNibName:@"EventViewController" bundle:bundle])    {
         
         instanceData = [aConnectionData mutableCopy];
@@ -130,7 +131,7 @@ static NSString* const kTextChatType = @"chatMessage";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     NSLog(@"VIEW DID LOAD");
-    
+
 }
 
 -(void) loadUser{
@@ -300,7 +301,7 @@ static NSString* const kTextChatType = @"chatMessage";
         (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
         [self stopLoader];
         [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
-        
+
     }
     if(isOnstage){
         [self publishTo:_session];
@@ -327,7 +328,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [self showAlert:error.localizedDescription];
     }
     [session publish:_publisher error:&error];
-    
+
 }
 
 -(void)unpublishFrom:(OTSession *)session
@@ -408,6 +409,17 @@ static NSString* const kTextChatType = @"chatMessage";
         }
         
     }
+    if(stream.session.connection.connectionId == _session.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
+        _privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
+        
+        OTError *error = nil;
+        [_session subscribe: _privateProducerSubscriber error:&error];
+        if (error)
+        {
+            NSLog(@"subscribe to producer error");
+        }
+        
+    }
     
 }
 
@@ -430,13 +442,14 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
-    if(subscriber.session.connection.connectionId == _session.connection.connectionId){
+    if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
         
         UIView *holder;
         NSString *connectingTo =[self getStreamData:subscriber.stream.connection.data];
         OTSubscriber *_subscriber = _subscribers[connectingTo];
+        
         assert(_subscriber == subscriber);
         
         holder = videoViews[connectingTo];
@@ -446,9 +459,9 @@ static NSString* const kTextChatType = @"chatMessage";
         [holder addSubview:_subscriber.view];
         self.eventImage.hidden = YES;
         [self adjustChildrenWidth];
-        
-    }
     
+    }
+
 }
 
 - (void)subscriber:(OTSubscriberKit*)subscriber
@@ -520,9 +533,17 @@ static NSString* const kTextChatType = @"chatMessage";
             _fanStream = stream;
         }
         
-        if(isLive || isCeleb || isHost){
-            [self doSubscribe:stream];
+        if([stream.connection.data isEqualToString:@"usertype=producer"]){
+            _privateProducerStream = stream;
+        
+        }else{
+            
+            if(isLive || isCeleb || isHost){
+                [self doSubscribe:stream];
+            }
         }
+        
+        
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
@@ -540,24 +561,27 @@ streamDestroyed:(OTStream *)stream
     NSLog(@"disconnectin from connecting to (%@)", stream.connection.data);
     
     NSString *type = [self getStreamData:stream.connection.data];
-    OTSubscriber *_subscriber = _subscribers[type];
-    
-    if([type isEqualToString:@"host"]){
-        _hostStream = nil;
-    }
-    
-    if([type isEqualToString:@"celebrity"]){
-        _celebrityStream = nil;
-    }
-    
-    if([type isEqualToString:@"fan"]){
-        _fanStream = nil;
-    }
     if([type isEqualToString:@"producer"]){
-        _producerStream = nil;
+        if(session.connection.connectionId == _producerSession.connection.connectionId){
+            _producerStream = nil;
+        }else{
+            _privateProducerStream = nil;
+        }
+    }else{
+        if([type isEqualToString:@"host"]){
+            _hostStream = nil;
+        }
+        
+        if([type isEqualToString:@"celebrity"]){
+            _celebrityStream = nil;
+        }
+        
+        if([type isEqualToString:@"fan"]){
+            _fanStream = nil;
+        }
+        [self cleanupSubscriber:type];
+
     }
-    
-    [self cleanupSubscriber:type];
     
 }
 
@@ -684,6 +708,35 @@ didFailWithError:(OTError*)error
         [self muteOnstageSession:YES];
         [self showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
     }
+    if([type isEqualToString:@"privateCall"]){
+        if ([messageData[@"callWith"] isEqualToString: _publisher.stream.connection.connectionId ]) {
+            NSLog(@"PRODUCER CALLING ME!!!");
+            [self doSubscribe:_privateProducerStream];
+            inCallWithProducer = YES;
+            self.statusLabel.text = @"PRIVATE CALL WITH PRODUCER";
+            [self muteOnstageSession:YES];
+            [self showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
+        }else{
+            NSLog(@"PRODUCER CALLING SOMEONE ELSE!!!");
+            [self muteOnstageSession:YES];
+            [self showNotification:@"TEMPORARILLY MUTED" useColor:[UIColor SLBlueColor]];
+        }
+        
+    }
+    
+    if([type isEqualToString:@"endPrivateCall"]){
+        if(inCallWithProducer){
+            NSLog(@"PRODUCER CALLING ENDEd!!!");
+            OTError *error = nil;
+            [_session unsubscribe: _privateProducerSubscriber error:&error];
+            inCallWithProducer = NO;
+            [self muteOnstageSession:NO];
+        }else{
+            NSLog(@"I CAN HEAR AGAIN");
+            [self muteOnstageSession:NO];
+        }
+        [self hideNotification];
+    }
     
     if([type isEqualToString:@"disconnectProducer"]){
         OTError *error = nil;
@@ -768,7 +821,7 @@ didFailWithError:(OTError*)error
         }
         [self showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
         [self performSelector:@selector(hideNotification) withObject:nil afterDelay:5.0];
-        
+
     }
     
     if([type isEqualToString:@"chatMessage"]){
@@ -784,7 +837,7 @@ didFailWithError:(OTError*)error
             [textChat addMessage:msg];
             [self.chatBtn setTitle:[[NSNumber numberWithFloat:unreadCount] stringValue] forState:UIControlStateNormal];
             
-        }
+    }
         
         
         
@@ -831,12 +884,12 @@ didFailWithError:(OTError*)error
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formated = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
-        
+       
         [signalingSocket emit:@"mySnapshot" args:@[@{
-                                                       @"connectionId": _publisher.session.connection.connectionId,
-                                                       @"sessionId" : _producerSession.sessionId,
-                                                       @"snapshot": formated
-                                                       }]];
+                                                            @"connectionId": _publisher.session.connection.connectionId,
+                                                            @"sessionId" : _producerSession.sessionId,
+                                                            @"snapshot": formated
+                                                            }]];
         [screenCapture removeFromSuperview];
     }
     
@@ -1020,12 +1073,12 @@ didFailWithError:(OTError*)error
     CGFloat c = 0;
     CGFloat new_width = 1;
     CGFloat new_height = self.internalHolder.bounds.size.height;
-    if(_session.streams.count == 0){
+    if(_subscribers.count == 0){
         self.eventImage.hidden = NO;
     }
     else{
         self.eventImage.hidden = YES;
-        new_width = screen_width/_session.streams.count;
+        new_width = screen_width/_subscribers.count;
     }
     
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];

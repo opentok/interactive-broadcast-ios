@@ -24,6 +24,7 @@
 @implementation MainSpotlightControllerViewController
 
 Alert *alert;
+
 static bool hasNetworkConnectivity = YES;
 
 @synthesize instance_id,backend_base_url,instance_data,user;
@@ -76,6 +77,7 @@ static bool hasNetworkConnectivity = YES;
     [self logReachability:self.wifiReachability];
     
     if(hasNetworkConnectivity){
+        //[self showLoader];
         instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
     }else{
         NSLog(@"CHECK YOUR INTERNET!! ");

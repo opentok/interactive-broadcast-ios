@@ -2,7 +2,7 @@
 //  SpotlightKit.h
 //  SpotlightKit
 //
-//  Created by Andrea Phillips on 13/01/2016.
+//  Created by Andrea Phillips on 08/01/2016.
 //  Copyright © 2016 Tokbox. All rights reserved.
 //
 
@@ -21,3 +21,4 @@ FOUNDATION_EXPORT const unsigned char SpotlightKitVersionString[];
 #import <SpotlightKit/EventsViewController.h>
 #import <SpotlightKit/MainSpotlightControllerViewController.h>
 #import <SpotlightKit/dataButton.h>
+

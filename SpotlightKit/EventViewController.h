@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <OpenTok/OpenTok.h>
 
 @interface EventViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIView *view;
@@ -52,6 +54,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *countdownView;
 @property (strong, nonatomic) IBOutlet UILabel *countdownNumber;
+
 
 - (id)initEventWithData:(NSDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle NS_DESIGNATED_INITIALIZER;
 

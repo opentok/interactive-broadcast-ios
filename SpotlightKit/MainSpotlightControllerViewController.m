@@ -29,6 +29,11 @@ static bool hasNetworkConnectivity = YES;
 
 @synthesize instance_id,backend_base_url,instance_data,user;
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
 - (id)initWithData:(NSString *)ainstance_id backend_base_url:(NSString *)abackend_url user:(NSMutableDictionary *)aUser
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -64,7 +69,6 @@ static bool hasNetworkConnectivity = YES;
                                                object:nil];
     
     self.hostReachability = [Reachability reachabilityWithHostName:@"http://google.com/"];
-    //[self.hostReachability startNotifier];
     
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
@@ -77,10 +81,9 @@ static bool hasNetworkConnectivity = YES;
     [self logReachability:self.wifiReachability];
     
     if(hasNetworkConnectivity){
-        //[self showLoader];
         instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
     }else{
-        NSLog(@"CHECK YOUR INTERNET!! ");
+        NSLog(@"error please check your internet");
     }
 
 }
@@ -166,7 +169,7 @@ static bool hasNetworkConnectivity = YES;
 
 - (void)presentDetailController:(UIViewController*)detailVC{
     [self presentViewController:detailVC animated:NO completion:^{
-        NSLog(@"Presented");
+       // NSLog(@"Presented");
     }];
 }
 

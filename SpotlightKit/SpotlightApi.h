@@ -1,17 +1,22 @@
 //
 //  SpotlightApi.h
-//  spotlightIos
+//  ;
 //
 //  Created by Andrea Phillips on 15/12/2015.
 //  Copyright © 2015 Andrea Phillips. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface SpotlightApi : NSObject
+
+
+@interface SpotlightApi : NSObject;
+
 
 + (SpotlightApi*)sharedInstance;
 - (NSMutableDictionary*)getEvents:(NSString*)instance_id back_url:(NSString*)backend_base_url;
 - (NSMutableDictionary*)creteEventToken:(NSString*)user_type back_url:(NSString*)backend_base_url data:(NSMutableDictionary *)event_data;
+- (NSMutableDictionary*)sendMetric:(NSString*)metric event_id:(NSString*)an_event_id;
 
 @end

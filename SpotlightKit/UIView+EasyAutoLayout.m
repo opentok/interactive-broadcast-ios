@@ -13,7 +13,6 @@
 -(NSLayoutConstraint *)constraintForIdentifier:(NSString *)identifier {
     
     for (NSLayoutConstraint *constraint in self.constraints) {
-        NSLog(constraint.identifier);
         if ([constraint.identifier isEqualToString:identifier]) {
             return constraint;
         }

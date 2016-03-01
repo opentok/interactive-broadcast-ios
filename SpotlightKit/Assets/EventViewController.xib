@@ -117,6 +117,11 @@
                                             <integer key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="S49-2H-vFW"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" red="0.23238547796491976" green="0.24447601010101006" blue="0.099412984047154443" alpha="0.0" colorSpace="calibratedRGB"/>

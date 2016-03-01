@@ -10,12 +10,15 @@
 #import "EventViewController.h"
 #import "dataButton.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SIOSocket.h"
+
 
 @interface EventsViewController (){
     NSMutableDictionary *eventsData;
     NSMutableDictionary *instanceData;
     NSArray *dataArray;
     NSMutableDictionary *user;
+    SIOSocket *signalingSocket;
 }
 @property UIViewController  *currentDetailViewController;
 
@@ -23,14 +26,29 @@
 
 @implementation EventsViewController
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+    if(self = [self initWithCoder:aDecoder]) {
+        // Do something
+    }
+    return self;
+}
+
 - (id)initEventWithData:(NSMutableDictionary *)aEventData user:(NSMutableDictionary *)aUser
 {
+    
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if( self = [self initWithNibName:@"EventsViewController" bundle:bundle])
+    self = [super initWithNibName:@"EventsViewController" bundle:bundle];
+    if( self != nil )
     {
         instanceData = aEventData;
         eventsData = [aEventData[@"events"] mutableCopy];
-        dataArray = [aEventData[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]];
+        dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
 
         user = aUser;
     }
@@ -46,6 +64,7 @@
     
     CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
+    [self connectSignaling];
      
 }
 - (void) viewDidAppear:(BOOL)animated{
@@ -55,6 +74,32 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)connectSignaling{
+    
+    [SIOSocket socketWithHost:instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
+     {
+         signalingSocket = socket;
+         signalingSocket.onConnect = ^()
+         {
+             NSLog(@"Connected to signaling server");
+         };
+         [signalingSocket on:@"change-event-status" callback: ^(SIOParameterArray *args)
+          {
+              NSDictionary *eventChanged = [args firstObject];
+              [self UpdateEventStatus:eventChanged];
+              
+          }];
+     }];
+}
+-(void)UpdateEventStatus:(NSDictionary *)event{
+    NSString *find = [NSString stringWithFormat:@"id == %@",event[@"id"]];
+    NSArray *changedEvent = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
+    if([changedEvent count] != 0){
+        [dataArray[[dataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
+    }
+    [self.eventsView reloadData];
 }
 
 //Collection stuff
@@ -92,7 +137,7 @@
     if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
         //Should we change to the default image
     }else{
-        //finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",instanceData[@"frontend_url"], data[@"event_image"]]];
+        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",instanceData[@"frontend_url"], data[@"event_image"]]];
     }
     
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
@@ -114,7 +159,6 @@
     
 }
 -(void)onCellClick:(id)sender{
-    NSLog(@"CLIC");
     NSMutableDictionary* eventData = [sender getData];
     
     //instanceData[@"backend_base_url"] = self

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2096" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -194,8 +194,6 @@
                     <rect key="frame" x="540" y="110" width="40" height="40"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.7598448057432432" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="91Q-2l-gpd"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="I4c-7b-AH9"/>
                         <constraint firstAttribute="width" constant="40" id="QAM-KU-IIe"/>
                         <constraint firstAttribute="height" constant="40" id="Zhm-Tn-h5H"/>
                     </constraints>
@@ -210,12 +208,6 @@
                             <integer key="value" value="3"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="91Q-2l-gpd"/>
-                            <exclude reference="I4c-7b-AH9"/>
-                        </mask>
-                    </variation>
                     <connections>
                         <action selector="chatNow:" destination="-1" eventType="touchUpInside" id="cjt-Or-3bn"/>
                     </connections>
@@ -432,6 +424,8 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="uBj-TM-Vvj"/>
+                    <exclude reference="hK6-Sl-Mud"/>
+                    <exclude reference="ih6-fa-dwe"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=regular">

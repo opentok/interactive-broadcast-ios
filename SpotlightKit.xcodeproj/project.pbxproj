@@ -26,7 +26,7 @@
 		0B6723641C46CECA00AFE70F /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723601C46CECA00AFE70F /* UIColor+AppAdditions.m */; };
 		0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723611C46CECA00AFE70F /* UIView+EasyAutoLayout.h */; };
 		0B6723661C46CECA00AFE70F /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723621C46CECA00AFE70F /* UIView+EasyAutoLayout.m */; };
-		0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */; };
+		0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723821C46CED700AFE70F /* MainSpotlightControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723681C46CED700AFE70F /* MainSpotlightControllerViewController.m */; };
 		0B6723831C46CED700AFE70F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B67236E1C46CED700AFE70F /* Info.plist */; };
 		0B6723841C46CED700AFE70F /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723701C46CED700AFE70F /* OTKTextChatComponent.h */; };
@@ -41,7 +41,7 @@
 		0B67238D1C46CED700AFE70F /* SIOSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237C1C46CED700AFE70F /* SIOSocket.h */; };
 		0B67238E1C46CED700AFE70F /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67237D1C46CED700AFE70F /* SIOSocket.m */; };
 		0B67238F1C46CED700AFE70F /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237E1C46CED700AFE70F /* socket.io.js.h */; };
-		0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237F1C46CED700AFE70F /* SpotlightApi.h */; };
+		0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237F1C46CED700AFE70F /* SpotlightApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723911C46CED700AFE70F /* SpotlightApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723801C46CED700AFE70F /* SpotlightApi.m */; };
 		0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67239C1C46CEE100AFE70F /* Alert.h */; };
 		0B6723CD1C46CEE100AFE70F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67239D1C46CEE100AFE70F /* Alert.m */; };
@@ -77,16 +77,16 @@
 		0B6723EB1C46CEE100AFE70F /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BC1C46CEE100AFE70F /* recv-arrow@2x.png */; };
 		0B6723EC1C46CEE100AFE70F /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BD1C46CEE100AFE70F /* sent-arrow.png */; };
 		0B6723ED1C46CEE100AFE70F /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BE1C46CEE100AFE70F /* sent-arrow@2x.png */; };
-		0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723BF1C46CEE100AFE70F /* dataButton.h */; };
+		0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723BF1C46CEE100AFE70F /* dataButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723EF1C46CEE100AFE70F /* dataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C01C46CEE100AFE70F /* dataButton.m */; };
 		0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C31C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h */; };
 		0B6723F11C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C41C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m */; };
 		0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C51C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h */; };
 		0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C61C46CEE100AFE70F /* DGActivityIndicatorView.h */; };
 		0B6723F41C46CEE100AFE70F /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C71C46CEE100AFE70F /* DGActivityIndicatorView.m */; };
-		0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C81C46CEE100AFE70F /* EventsViewController.h */; };
+		0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C81C46CEE100AFE70F /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723F61C46CEE100AFE70F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C91C46CEE100AFE70F /* EventsViewController.m */; };
-		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; };
+		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723F81C46CEE100AFE70F /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723CB1C46CEE100AFE70F /* EventViewController.m */; };
 		A019EA311C876F4900BD2ECB /* OTAudioDeviceManager.html in Resources */ = {isa = PBXBuildFile; fileRef = A019E9EE1C876F4800BD2ECB /* OTAudioDeviceManager.html */; };
 		A019EA321C876F4900BD2ECB /* OTAudioFormat.html in Resources */ = {isa = PBXBuildFile; fileRef = A019E9EF1C876F4800BD2ECB /* OTAudioFormat.html */; };
@@ -704,6 +704,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */,
+				0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */,
+				0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */,
+				0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */,
+				0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */,
+				0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */,
 				0B6723631C46CECA00AFE70F /* UIColor+AppAdditions.h in Headers */,
 				0B6723861C46CED700AFE70F /* OTKTextChatTableViewCell.h in Headers */,
 				0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
@@ -713,13 +718,8 @@
 				0B6723581C46CBF500AFE70F /* SpotlightKit.h in Headers */,
 				0B67238B1C46CED700AFE70F /* Reachability.h in Headers */,
 				0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */,
-				0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */,
-				0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */,
-				0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */,
 				0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */,
 				0B6723881C46CED700AFE70F /* OTKTextChatView.h in Headers */,
-				0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */,
-				0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */,
 				0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1131,6 +1131,7 @@
 				A019EC3F1C8784B200BD2ECB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

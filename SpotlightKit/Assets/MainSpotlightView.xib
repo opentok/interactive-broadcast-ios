@@ -18,24 +18,12 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="o0w-DU-mNv" secondAttribute="centerX" constant="-40" id="0zS-Zd-Nlv"/>
                 <constraint firstItem="o0w-DU-mNv" firstAttribute="leading" secondItem="BAZ-6Q-WQH" secondAttribute="leading" id="Uqh-34-Lw5"/>
-                <constraint firstAttribute="trailing" secondItem="o0w-DU-mNv" secondAttribute="trailing" id="d0D-UA-A8h"/>
                 <constraint firstItem="o0w-DU-mNv" firstAttribute="top" secondItem="BAZ-6Q-WQH" secondAttribute="top" id="fx3-oZ-1Su"/>
                 <constraint firstAttribute="bottom" secondItem="o0w-DU-mNv" secondAttribute="bottom" id="gKy-g6-Jz6"/>
-                <constraint firstItem="o0w-DU-mNv" firstAttribute="top" secondItem="BAZ-6Q-WQH" secondAttribute="top" id="iZh-YG-kWS"/>
-                <constraint firstAttribute="centerY" secondItem="o0w-DU-mNv" secondAttribute="centerY" constant="-146" id="uJf-uD-Arm"/>
                 <constraint firstAttribute="trailing" secondItem="o0w-DU-mNv" secondAttribute="trailing" id="ySg-zJ-54L"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="0zS-Zd-Nlv"/>
-                    <exclude reference="d0D-UA-A8h"/>
-                    <exclude reference="iZh-YG-kWS"/>
-                    <exclude reference="uJf-uD-Arm"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="375" y="319"/>
         </view>
     </objects>

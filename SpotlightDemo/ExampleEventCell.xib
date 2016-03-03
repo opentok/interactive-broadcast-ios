@@ -93,7 +93,6 @@
                 <constraint firstItem="TVf-Vb-SAq" firstAttribute="height" secondItem="z4j-23-xLV" secondAttribute="height" multiplier="1:2" id="QsK-ym-xrL"/>
                 <constraint firstAttribute="bottom" secondItem="z4j-23-xLV" secondAttribute="bottom" id="W08-3q-MW1"/>
                 <constraint firstItem="TVf-Vb-SAq" firstAttribute="leading" secondItem="AwH-oD-6Tj" secondAttribute="leading" id="Zvb-uZ-xI4"/>
-                <constraint firstItem="ADL-8S-8q5" firstAttribute="trailing" secondItem="dnS-Od-Hmb" secondAttribute="trailing" id="bqF-cg-34E"/>
                 <constraint firstItem="TVf-Vb-SAq" firstAttribute="top" secondItem="O7Z-d5-UU9" secondAttribute="bottom" constant="4" id="dbD-2v-8Mr"/>
                 <constraint firstItem="TVf-Vb-SAq" firstAttribute="width" secondItem="z4j-23-xLV" secondAttribute="width" id="flj-ro-Cda"/>
                 <constraint firstItem="TVf-Vb-SAq" firstAttribute="centerX" secondItem="ADL-8S-8q5" secondAttribute="centerX" id="kVw-n7-A8a"/>
@@ -104,11 +103,6 @@
                 <constraint firstItem="dnS-Od-Hmb" firstAttribute="top" secondItem="TVf-Vb-SAq" secondAttribute="bottom" constant="5" id="ujR-5T-tnp"/>
             </constraints>
             <size key="customSize" width="200" height="200"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="bqF-cg-34E"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="507" y="358"/>
         </collectionViewCell>
     </objects>

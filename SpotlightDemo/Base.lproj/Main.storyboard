@@ -174,23 +174,13 @@
                                 <constraints>
                                     <constraint firstItem="dgG-aS-bjC" firstAttribute="centerX" secondItem="ClB-cd-5rv" secondAttribute="centerX" id="4Nv-zw-YnC"/>
                                     <constraint firstItem="dgG-aS-bjC" firstAttribute="centerX" secondItem="6Fb-Pc-PVG" secondAttribute="centerX" id="5LU-F1-5we"/>
-                                    <constraint firstItem="HhQ-c6-Fn2" firstAttribute="leading" secondItem="dgG-aS-bjC" secondAttribute="leading" id="In7-BN-F74"/>
                                     <constraint firstItem="ec7-Ad-ce1" firstAttribute="centerY" secondItem="6Fb-Pc-PVG" secondAttribute="centerY" id="LMT-wn-oke"/>
-                                    <constraint firstItem="HhQ-c6-Fn2" firstAttribute="leading" secondItem="ec7-Ad-ce1" secondAttribute="leading" id="OIt-mO-lbY"/>
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="centerY" secondItem="HhQ-c6-Fn2" secondAttribute="centerY" id="con-9q-rTc"/>
                                     <constraint firstItem="ec7-Ad-ce1" firstAttribute="leading" secondItem="6Fb-Pc-PVG" secondAttribute="trailing" constant="8" id="dnc-v7-9y4"/>
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="top" secondItem="dgG-aS-bjC" secondAttribute="bottom" constant="8" id="hDI-wv-vO7"/>
                                     <constraint firstItem="dgG-aS-bjC" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="top" constant="8" id="hPA-L7-6sR"/>
-                                    <constraint firstItem="HhQ-c6-Fn2" firstAttribute="leading" secondItem="ClB-cd-5rv" secondAttribute="leading" constant="-1" id="sBt-ux-PhC"/>
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="leading" secondItem="HhQ-c6-Fn2" secondAttribute="trailing" constant="8" id="sX5-Hg-DBV"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="In7-BN-F74"/>
-                                        <exclude reference="OIt-mO-lbY"/>
-                                        <exclude reference="sBt-ux-PhC"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7V-Xv-Egs">
                                 <rect key="frame" x="307" y="329" width="410" height="30"/>
@@ -245,20 +235,8 @@
                                     <constraint firstItem="O5B-FQ-EBk" firstAttribute="centerX" secondItem="7EL-vm-onI" secondAttribute="centerX" id="4Ht-C9-Aaa"/>
                                     <constraint firstItem="7EL-vm-onI" firstAttribute="top" secondItem="O5B-FQ-EBk" secondAttribute="bottom" constant="8" symbolic="YES" id="GuF-aL-QAz"/>
                                     <constraint firstItem="O5B-FQ-EBk" firstAttribute="top" secondItem="le3-SG-RP0" secondAttribute="topMargin" id="SL6-8i-gbW"/>
-                                    <constraint firstItem="7EL-vm-onI" firstAttribute="centerY" secondItem="le3-SG-RP0" secondAttribute="centerY" id="V5p-fF-jqk"/>
-                                    <constraint firstItem="O5B-FQ-EBk" firstAttribute="centerY" secondItem="le3-SG-RP0" secondAttribute="centerY" id="jCl-tM-uD7"/>
                                     <constraint firstItem="O5B-FQ-EBk" firstAttribute="centerX" secondItem="le3-SG-RP0" secondAttribute="centerX" id="mj1-ar-cu2"/>
-                                    <constraint firstItem="O5B-FQ-EBk" firstAttribute="top" secondItem="le3-SG-RP0" secondAttribute="top" constant="10" id="uz6-1J-cyQ"/>
-                                    <constraint firstItem="7EL-vm-onI" firstAttribute="top" secondItem="O5B-FQ-EBk" secondAttribute="bottom" constant="8" id="vVI-yf-85d"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="V5p-fF-jqk"/>
-                                        <exclude reference="vVI-yf-85d"/>
-                                        <exclude reference="jCl-tM-uD7"/>
-                                        <exclude reference="uz6-1J-cyQ"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

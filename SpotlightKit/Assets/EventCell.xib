@@ -91,7 +91,6 @@
                 <constraint firstAttribute="trailing" secondItem="xh1-AK-D4S" secondAttribute="trailing" constant="5" id="MqY-iG-eGB"/>
                 <constraint firstItem="Nqz-B4-43S" firstAttribute="leading" secondItem="2jB-Zh-nLU" secondAttribute="leading" constant="4" id="OGT-CU-yNr"/>
                 <constraint firstItem="eRA-9T-zj1" firstAttribute="centerX" secondItem="Nqz-B4-43S" secondAttribute="centerX" id="SOn-3O-CJR"/>
-                <constraint firstItem="2jB-Zh-nLU" firstAttribute="trailing" secondItem="xh1-AK-D4S" secondAttribute="trailing" id="UqB-2W-85o"/>
                 <constraint firstItem="eRA-9T-zj1" firstAttribute="centerY" secondItem="qSy-Of-7kQ" secondAttribute="centerY" id="Vym-fQ-w3Q"/>
                 <constraint firstAttribute="trailing" secondItem="qSy-Of-7kQ" secondAttribute="trailing" id="WCT-bW-vo3"/>
                 <constraint firstItem="eRA-9T-zj1" firstAttribute="leading" secondItem="VWH-ju-BFj" secondAttribute="leading" id="XfM-r1-e7w"/>
@@ -104,11 +103,6 @@
                 <constraint firstItem="eRA-9T-zj1" firstAttribute="width" secondItem="qSy-Of-7kQ" secondAttribute="width" id="yIl-nP-bYn"/>
             </constraints>
             <size key="customSize" width="200" height="200"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="UqB-2W-85o"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="507" y="358"/>
         </collectionViewCell>
     </objects>

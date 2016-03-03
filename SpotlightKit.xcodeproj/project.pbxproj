@@ -6,13 +6,27 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		A019EC3D1C8784B100BD2ECB /* BuildFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A019EC401C8784B200BD2ECB /* Build configuration list for PBXAggregateTarget "BuildFramework" */;
+			buildPhases = (
+				A019EC411C8784B500BD2ECB /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = BuildFramework;
+			productName = BuildFramework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0B6723581C46CBF500AFE70F /* SpotlightKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723571C46CBF500AFE70F /* SpotlightKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723631C46CECA00AFE70F /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67235F1C46CECA00AFE70F /* UIColor+AppAdditions.h */; };
 		0B6723641C46CECA00AFE70F /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723601C46CECA00AFE70F /* UIColor+AppAdditions.m */; };
 		0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723611C46CECA00AFE70F /* UIView+EasyAutoLayout.h */; };
 		0B6723661C46CECA00AFE70F /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723621C46CECA00AFE70F /* UIView+EasyAutoLayout.m */; };
-		0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */; };
+		0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723671C46CED700AFE70F /* MainSpotlightControllerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723821C46CED700AFE70F /* MainSpotlightControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723681C46CED700AFE70F /* MainSpotlightControllerViewController.m */; };
 		0B6723831C46CED700AFE70F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B67236E1C46CED700AFE70F /* Info.plist */; };
 		0B6723841C46CED700AFE70F /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723701C46CED700AFE70F /* OTKTextChatComponent.h */; };
@@ -27,7 +41,7 @@
 		0B67238D1C46CED700AFE70F /* SIOSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237C1C46CED700AFE70F /* SIOSocket.h */; };
 		0B67238E1C46CED700AFE70F /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67237D1C46CED700AFE70F /* SIOSocket.m */; };
 		0B67238F1C46CED700AFE70F /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237E1C46CED700AFE70F /* socket.io.js.h */; };
-		0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237F1C46CED700AFE70F /* SpotlightApi.h */; };
+		0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67237F1C46CED700AFE70F /* SpotlightApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723911C46CED700AFE70F /* SpotlightApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723801C46CED700AFE70F /* SpotlightApi.m */; };
 		0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B67239C1C46CEE100AFE70F /* Alert.h */; };
 		0B6723CD1C46CEE100AFE70F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B67239D1C46CEE100AFE70F /* Alert.m */; };
@@ -63,16 +77,16 @@
 		0B6723EB1C46CEE100AFE70F /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BC1C46CEE100AFE70F /* recv-arrow@2x.png */; };
 		0B6723EC1C46CEE100AFE70F /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BD1C46CEE100AFE70F /* sent-arrow.png */; };
 		0B6723ED1C46CEE100AFE70F /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B6723BE1C46CEE100AFE70F /* sent-arrow@2x.png */; };
-		0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723BF1C46CEE100AFE70F /* dataButton.h */; };
+		0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723BF1C46CEE100AFE70F /* dataButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723EF1C46CEE100AFE70F /* dataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C01C46CEE100AFE70F /* dataButton.m */; };
 		0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C31C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h */; };
 		0B6723F11C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C41C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.m */; };
 		0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C51C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h */; };
 		0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C61C46CEE100AFE70F /* DGActivityIndicatorView.h */; };
 		0B6723F41C46CEE100AFE70F /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C71C46CEE100AFE70F /* DGActivityIndicatorView.m */; };
-		0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C81C46CEE100AFE70F /* EventsViewController.h */; };
+		0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723C81C46CEE100AFE70F /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723F61C46CEE100AFE70F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723C91C46CEE100AFE70F /* EventsViewController.m */; };
-		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; };
+		0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6723CA1C46CEE100AFE70F /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B6723F81C46CEE100AFE70F /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6723CB1C46CEE100AFE70F /* EventViewController.m */; };
 		A019EA311C876F4900BD2ECB /* OTAudioDeviceManager.html in Resources */ = {isa = PBXBuildFile; fileRef = A019E9EE1C876F4800BD2ECB /* OTAudioDeviceManager.html */; };
 		A019EA321C876F4900BD2ECB /* OTAudioFormat.html in Resources */ = {isa = PBXBuildFile; fileRef = A019E9EF1C876F4800BD2ECB /* OTAudioFormat.html */; };
@@ -690,6 +704,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B6723651C46CECA00AFE70F /* UIView+EasyAutoLayout.h in Headers */,
+				0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */,
+				0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */,
+				0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */,
+				0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */,
+				0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */,
 				0B6723631C46CECA00AFE70F /* UIColor+AppAdditions.h in Headers */,
 				0B6723861C46CED700AFE70F /* OTKTextChatTableViewCell.h in Headers */,
 				0B6723F01C46CEE100AFE70F /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
@@ -699,13 +718,8 @@
 				0B6723581C46CBF500AFE70F /* SpotlightKit.h in Headers */,
 				0B67238B1C46CED700AFE70F /* Reachability.h in Headers */,
 				0B6723F21C46CEE100AFE70F /* DGActivityIndicatorAnimationProtocol.h in Headers */,
-				0B6723F51C46CEE100AFE70F /* EventsViewController.h in Headers */,
-				0B6723901C46CED700AFE70F /* SpotlightApi.h in Headers */,
-				0B6723F71C46CEE100AFE70F /* EventViewController.h in Headers */,
 				0B6723CC1C46CEE100AFE70F /* Alert.h in Headers */,
 				0B6723881C46CED700AFE70F /* OTKTextChatView.h in Headers */,
-				0B6723EE1C46CEE100AFE70F /* dataButton.h in Headers */,
-				0B6723811C46CED700AFE70F /* MainSpotlightControllerViewController.h in Headers */,
 				0B6723F31C46CEE100AFE70F /* DGActivityIndicatorView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -744,6 +758,9 @@
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 246HEUPQZ9;
 					};
+					A019EC3D1C8784B100BD2ECB = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
 				};
 			};
 			buildConfigurationList = 0B67234E1C46CBF500AFE70F /* Build configuration list for PBXProject "SpotlightKit" */;
@@ -765,6 +782,7 @@
 			projectRoot = "";
 			targets = (
 				0B6723531C46CBF500AFE70F /* SpotlightKit */,
+				A019EC3D1C8784B100BD2ECB /* BuildFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -893,6 +911,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A019EC411C8784B500BD2ECB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"SpotlightKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0B67234F1C46CBF500AFE70F /* Sources */ = {
@@ -1055,6 +1089,20 @@
 			};
 			name = Release;
 		};
+		A019EC3E1C8784B200BD2ECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A019EC3F1C8784B200BD2ECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1072,6 +1120,15 @@
 			buildConfigurations = (
 				0B67235D1C46CBF500AFE70F /* Debug */,
 				0B67235E1C46CBF500AFE70F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A019EC401C8784B200BD2ECB /* Build configuration list for PBXAggregateTarget "BuildFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A019EC3E1C8784B200BD2ECB /* Debug */,
+				A019EC3F1C8784B200BD2ECB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

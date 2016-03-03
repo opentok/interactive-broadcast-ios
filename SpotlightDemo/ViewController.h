@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-@property NSString *instance_id;
-@property NSString *backend_base_url;
-@property NSDictionary* user;
 
 @end
 

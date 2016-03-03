@@ -10,29 +10,24 @@
 #import "MainSpotlightControllerViewController.h"
 
 @interface ViewController ()
-@property (strong, nonatomic) IBOutlet UIButton *SingleInstanceButton;
-@property (strong, nonatomic) IBOutlet UIButton *SingleInstanceHost;
-@property (strong, nonatomic) IBOutlet UIButton *SingleInstanceFan;
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-
-@property MainSpotlightControllerViewController  *spotlightController;
-
-
+@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceButton;
+@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceHost;
+@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceFan;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) MainSpotlightControllerViewController  *spotlightController;
+@property (strong, nonatomic) NSString *instance_id;
+@property (strong, nonatomic) NSString *backend_base_url;
+@property (strong, nonatomic) NSDictionary* user;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.instance_id = @"AAAA1";
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 - (IBAction)openSingleInstance:(id)sender {
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                 @"type":@"celebrity",
@@ -44,8 +39,6 @@
 }
 
 - (IBAction)singleInstanceAsHost:(id)sender {
-    
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                                            @"type":@"host",
@@ -58,9 +51,6 @@
     
 }
 - (IBAction)singleInstanceAsFan:(id)sender {
-    
-    
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                                            @"type":@"fan",
@@ -73,7 +63,6 @@
 
 
 - (IBAction)openMultipleInstance:(id)sender {
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                                            @"type":@"fan",
@@ -83,7 +72,6 @@
 
 }
 - (IBAction)multipleAsHost:(id)sender {
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                                            @"type":@"host",
@@ -92,7 +80,6 @@
     [self presentController:user];
 }
 - (IBAction)multipleAsCeleb:(id)sender {
-    self.instance_id = @"AAAA1";
     NSMutableDictionary *user =[NSMutableDictionary
                                 dictionaryWithDictionary:@{
                                                            @"type":@"celebrity",
@@ -106,13 +93,12 @@
     
     if ([segue.identifier isEqualToString:@"GoToMultipleEvents"]) {
         ViewController *vc = [segue destinationViewController];
-        NSString* instance_id = @"AAAA1";
         NSMutableDictionary *user =[NSMutableDictionary
                                     dictionaryWithDictionary:@{
                                                                @"type":@"fan",
                                                                @"name":@"Fan",
                                                                }];
-        vc.instance_id = instance_id;
+        vc.instance_id = self.instance_id;
         vc.backend_base_url= @"https://chatshow-tesla.herokuapp.com";
         vc.user = user;
     }

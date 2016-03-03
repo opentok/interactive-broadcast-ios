@@ -234,7 +234,7 @@
                                             <constraint firstAttribute="width" constant="249" id="EAL-dX-Bx8"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         <variation key="widthClass=regular" misplaced="YES">
                                             <rect key="frame" x="388" y="36" width="249" height="30"/>
                                         </variation>

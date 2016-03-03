@@ -123,8 +123,8 @@
     if(![self.nameTextField.text isEqualToString:@"" ]){
         userOptions[@"name"] = self.nameTextField.text;
     }
-    NSString *stagingBackend = @"https://chatshow-tesla.herokuapp.com";
-    NSString *demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
+//    NSString *stagingBackend = @"https://chatshow-tesla.herokuapp.com";
+//    NSString *demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
     NSString *MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
     self.spotlightController = [[MainSpotlightControllerViewController alloc] initWithData:@"spotlight-mlb-210216" backend_base_url:MLBBackend user:userOptions];
     [self presentViewController:self.spotlightController animated:NO completion:nil];

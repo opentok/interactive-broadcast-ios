@@ -26,17 +26,9 @@
 
 @implementation EventsViewController
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskLandscape;
-}
-
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-    if(self = [self initWithCoder:aDecoder]) {
-        // Do something
-    }
-    return self;
 }
 
 - (id)initEventWithData:(NSMutableDictionary *)aEventData user:(NSMutableDictionary *)aUser

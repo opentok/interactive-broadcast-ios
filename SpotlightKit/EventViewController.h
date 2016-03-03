@@ -11,7 +11,6 @@
 #import <OpenTok/OpenTok.h>
 
 @interface EventViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) IBOutlet UIView *videoHolder;
 
 

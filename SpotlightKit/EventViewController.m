@@ -296,13 +296,16 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)disconnectBackstage
 {
-    [_producerSession unsubscribe: _selfSubscriber error:nil];
-    _selfSubscriber = nil;
+    if(_selfSubscriber){
+        [_producerSession unsubscribe: _selfSubscriber error:nil];
+        _selfSubscriber = nil;
+    }
     
     [self unpublishFrom:_producerSession];
     [self cleanupPublisher];
     isBackstage = NO;
     self.inLineHolder.alpha = 0;
+    self.getInLineBtn.hidden = NO;
 }
 
 - (void)doDisconnect{
@@ -356,6 +359,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [self.FanViewHolder addSubview:_publisher.view];
         _publisher.view.frame = CGRectMake(0, 0, self.FanViewHolder.bounds.size.width, self.FanViewHolder.bounds.size.height);
         self.closeEvenBtn.hidden = YES;
+        self.getInLineBtn.hidden = YES;
     }
     
     
@@ -934,15 +938,18 @@ didFailWithError:(OTError*)error
         [_producerSession unsubscribe: _producerSubscriber error:&error];
         _producerSubscriber = nil;
         inCallWithProducer = NO;
+        self.getInLineBtn.hidden = NO;
+
         [self muteOnstageSession:NO];
         [self hideNotification];
     }
     
     if([type isEqualToString:@"disconnectBackstage"]){
-        self.leaveLineBtn.hidden = YES;
-        self.getInLineBtn.hidden = YES;
-        [self disconnectBackstage];
-        self.statusLabel.text = @"";
+        self.leaveLineBtn.hidden = NO;
+//        [self unpublishFrom:_producerSubscriber.session];
+        self.statusLabel.text = @"IN LINE";
+        [self hideNotification];
+       // isBackstage = NO;
     }
     if([type isEqualToString:@"goLive"]){
         self.eventData[@"status"] = @"L";
@@ -971,6 +978,7 @@ didFailWithError:(OTError*)error
         self.statusLabel.text = @"\u2022 You are live";
         self.statusLabel.hidden = NO;
         self.leaveLineBtn.hidden = YES;
+        self.getInLineBtn.hidden = YES;
         [self hideChatBox];
         [self hideNotification];
         self.chatBtn.hidden = YES;
@@ -1128,6 +1136,7 @@ didFailWithError:(OTError*)error
             self.eventImage.hidden = NO;
             [self updateEventImage: [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
             self.getInLineBtn.hidden = YES;
+            self.getInLineBtn.alpha = 1;
         }
     };
     if([self.eventData[@"status"] isEqualToString:@"P"]){
@@ -1149,6 +1158,7 @@ didFailWithError:(OTError*)error
         }
         if(!isCeleb && !isHost && !isBackstage && !isOnstage){
             self.getInLineBtn.hidden = NO;
+            self.getInLineBtn.alpha = 1;
         }
         isLive = YES;
     };
@@ -1159,6 +1169,9 @@ didFailWithError:(OTError*)error
         //Event Closed, disconect fan and show image
         self.eventImage.hidden = NO;
         self.getInLineBtn.hidden = YES;
+        self.getInLineBtn.alpha = 0;
+        self.leaveLineBtn.hidden = YES;
+        
         OTError *error = nil;
         if (error)
         {

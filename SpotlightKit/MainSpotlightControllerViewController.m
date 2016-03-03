@@ -49,12 +49,9 @@ static bool hasNetworkConnectivity = YES;
 
 - (id)initWithViewController:(UIViewController*)viewController{
     
-    self = [super init];
-    
-    if(self){
-        [self presentDetailController:viewController];
+    if (self = [super init]) {
+        [self presentViewController:viewController animated:YES completion:nil];
     }
-    
     return self;
 }
 
@@ -80,23 +77,21 @@ static bool hasNetworkConnectivity = YES;
     [self logReachability:self.internetReachability];
     [self logReachability:self.wifiReachability];
     
-    if(hasNetworkConnectivity){
+    if(hasNetworkConnectivity) {
         instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
-    }else{
+    }
+    else{
         NSLog(@"error please check your internet");
     }
-
-}
--(void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-
-    if(instance_data)
-    {
-        instance_data[@"backend_base_url"] = self.backend_base_url;
-        [self loadInstanceView];
-    }
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if(instance_data) {
+            instance_data[@"backend_base_url"] = self.backend_base_url;
+            [self loadInstanceView];
+        }
+    });
 }
+
 - (void)reachabilityChanged:(NSNotification *)notification {
     Reachability *reachability = [notification object];
     [self logReachability: reachability];
@@ -146,33 +141,21 @@ static bool hasNetworkConnectivity = YES;
 }
 
 - (void) loadInstanceView {
+    
+    id presentedViewController;
     if(![self.instance_data[@"events"] count]){
         //Load the first detail controller
-        EventsViewController *multiEvent = [[EventsViewController alloc] initEventWithData:self.instance_data user:self.user];
-        [self presentDetailController:multiEvent];
+        presentedViewController = [[EventsViewController alloc] initEventWithData:self.instance_data user:self.user];
     }
     else if([self.instance_data[@"events"] count] == 1){
         //Load the first detail controller
-        EventViewController *detailOne = [[EventViewController alloc] initEventWithData:self.instance_data[@"events"][0] connectionData:self.instance_data user:self.user isSingle:YES];
-        [self presentDetailController:detailOne];
+        presentedViewController = [[EventViewController alloc] initEventWithData:self.instance_data[@"events"][0] connectionData:self.instance_data user:self.user isSingle:YES];
     }else{
         //Load the first detail controller
-        EventsViewController *multiEvent = [[EventsViewController alloc] initEventWithData:self.instance_data user:self.user];
-        [self presentDetailController:multiEvent];
+        presentedViewController = [[EventsViewController alloc] initEventWithData:self.instance_data user:self.user];
     }
-    
+    [self presentViewController:presentedViewController animated:YES completion:nil];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)presentDetailController:(UIViewController*)detailVC{
-    [self presentViewController:detailVC animated:NO completion:^{
-       // NSLog(@"Presented");
-    }];
-}
-
 
 - (void)removeCurrentDetailViewController{
     

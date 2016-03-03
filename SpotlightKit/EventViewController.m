@@ -148,9 +148,6 @@ static NSString* const kTextChatType = @"chatMessage";
     }
     [self.statusBar setBackgroundColor: [UIColor BarColor]];
     
-    screen = [UIScreen mainScreen].bounds;
-    screen_width = CGRectGetWidth(screen);
-    
     videoViews = [[NSMutableDictionary alloc] init];
     videoViews[@"fan"] = self.FanViewHolder;
     videoViews[@"celebrity"] = self.CelebrityViewHolder;
@@ -161,6 +158,11 @@ static NSString* const kTextChatType = @"chatMessage";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+}
+
+- (void)viewDidLayoutSubviews {
+    screen = [UIScreen mainScreen].bounds;
+    screen_width = CGRectGetWidth(screen);
 }
 
 -(void) loadUser{

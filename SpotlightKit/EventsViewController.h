@@ -11,7 +11,6 @@
 @interface EventsViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UICollectionView *eventsView;
-@property (strong, nonatomic) IBOutlet UIView *detailView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
 
 

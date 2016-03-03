@@ -29,7 +29,7 @@ static bool hasNetworkConnectivity = YES;
 
 @synthesize instance_id,backend_base_url,instance_data,user;
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskLandscape;
 }

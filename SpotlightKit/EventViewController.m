@@ -103,14 +103,14 @@ static NSString* const kTextChatType = @"chatMessage";
 
 @synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName, namePrompt,getInLineName,statusBar,chatBar;
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskLandscape;
 }
 
 - (id)initEventWithData:(NSMutableDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle{
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if( self = [self initWithNibName:@"EventViewController" bundle:bundle])    {
+    if( self = [super initWithNibName:@"EventViewController" bundle:bundle])    {
         
         instanceData = [aConnectionData mutableCopy];
         self.eventData = [aEventData mutableCopy];
@@ -176,7 +176,7 @@ static NSString* const kTextChatType = @"chatMessage";
     self.eventName.hidden = NO;
     
     self.statusLabel.layer.borderWidth = 2.0;
-    [self.statusLabel.layer setBorderColor:CFBridgingRetain([UIColor SLGreenColor])];
+    self.statusLabel.layer.borderColor = [UIColor SLGreenColor].CGColor;
     self.statusLabel.layer.cornerRadius = 3;
     self.getInLineBtn.layer.cornerRadius = 3;
     self.leaveLineBtn.layer.cornerRadius = 3;
@@ -274,7 +274,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if (error)
     {
         NSLog(@"connect error");
-        NSLog(error);
+        NSLog(@"%@", error);
         [self showAlert:error.localizedDescription];
     }
 }
@@ -378,7 +378,7 @@ static NSString* const kTextChatType = @"chatMessage";
     OTError *error = nil;
     if (error)
     {
-        NSLog(error);
+        NSLog(@"%@", error);
         [self showAlert:error.localizedDescription];
     }
     [session publish:_publisher error:&error];
@@ -1429,7 +1429,7 @@ didFailWithError:(OTError*)error
     
 }
 
--(void)muteOnstageSession:(BOOL*)mute{
+-(void)muteOnstageSession:(BOOL)mute{
     for(NSString *_subscriber in _subscribers){
         OTSubscriber *sub = _subscribers[_subscriber];
         sub.subscribeToAudio = !mute;

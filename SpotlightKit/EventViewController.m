@@ -711,6 +711,7 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
         self.leaveLineBtn.hidden = YES;
         [self hideNotification];
     }else{
+        self.getInLineBtn.hidden = YES;
         _session = nil;
     }
 }

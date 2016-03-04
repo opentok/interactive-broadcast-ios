@@ -349,7 +349,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [self.inLineHolder sendSubviewToBack:_publisher.view];
         self.inLineHolder.alpha = 1;
         self.closeEvenBtn.hidden = YES;
-        [_publisher setPublishAudio: NO];
+        _publisher.publishAudio = NO;
         (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
         [self stopLoader];
         [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
@@ -904,7 +904,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"joinProducer"]){
         [self doSubscribe:_producerStream];
         inCallWithProducer = YES;
-        [_publisher setPublishAudio: YES];
+        _publisher.publishAudio = YES;
         [self muteOnstageSession:YES];
         [self showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
     }
@@ -952,7 +952,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"disconnectBackstage"]){
         self.leaveLineBtn.hidden = NO;
         self.statusLabel.text = @"IN LINE";
-        [_publisher setPublishAudio: NO];
+        _publisher.publishAudio = NO;
         [self hideNotification];
     }
     if([type isEqualToString:@"goLive"]){

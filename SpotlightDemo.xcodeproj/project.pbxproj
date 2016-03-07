@@ -72,8 +72,6 @@
 		0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A11C40272000BE89DC /* recv-arrow@2x.png */; };
 		0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A21C40272000BE89DC /* sent-arrow.png */; };
 		0B71C3C31C40272000BE89DC /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A31C40272000BE89DC /* sent-arrow@2x.png */; };
-		0B71C3EB1C40273500BE89DC /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3C41C40273500BE89DC /* Alert.h */; };
-		0B71C3EC1C40273500BE89DC /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3C51C40273500BE89DC /* Alert.m */; };
 		0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3C61C40273500BE89DC /* dataButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B71C3EE1C40273500BE89DC /* dataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3C71C40273500BE89DC /* dataButton.m */; };
 		0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3CA1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h */; };
@@ -131,6 +129,14 @@
 		0BB44AE01C5044A60076545C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
 		0BBB5AB51C7F854200CBCD59 /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */; };
 		0BBB5AB61C7F854200CBCD59 /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */; };
+		A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */; };
+		A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */; };
+		A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */; };
+		A0524D1D1C8E13C400FF08BB /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0524D151C8E13C400FF08BB /* SVProgressHUD.bundle */; };
+		A0524D1E1C8E13C400FF08BB /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D161C8E13C400FF08BB /* SVProgressHUD.h */; };
+		A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D171C8E13C400FF08BB /* SVProgressHUD.m */; };
+		A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */; };
+		A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -220,8 +226,6 @@
 		0B71C3A11C40272000BE89DC /* recv-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recv-arrow@2x.png"; sourceTree = "<group>"; };
 		0B71C3A21C40272000BE89DC /* sent-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow.png"; sourceTree = "<group>"; };
 		0B71C3A31C40272000BE89DC /* sent-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow@2x.png"; sourceTree = "<group>"; };
-		0B71C3C41C40273500BE89DC /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
-		0B71C3C51C40273500BE89DC /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		0B71C3C61C40273500BE89DC /* dataButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataButton.h; sourceTree = "<group>"; };
 		0B71C3C71C40273500BE89DC /* dataButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataButton.m; sourceTree = "<group>"; };
 		0B71C3CA1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorFiveDotsAnimation.h; sourceTree = "<group>"; };
@@ -253,6 +257,14 @@
 		0B96C2C11C88789800E2422A /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
 		0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		A0524D151C8E13C400FF08BB /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		A0524D161C8E13C400FF08BB /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		A0524D171C8E13C400FF08BB /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,12 +391,11 @@
 		0B71C3771C4026EE00BE89DC /* SpotlightKit */ = {
 			isa = PBXGroup;
 			children = (
+				A0524D111C8E13C400FF08BB /* SVProgressHUD */,
 				0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */,
 				0B175BC31C4095B90091A6BE /* Source */,
 				0B71C3C81C40273500BE89DC /* DGActivityIndicatorView */,
 				0B71C3D51C40273500BE89DC /* OTKTextChat */,
-				0B71C3C41C40273500BE89DC /* Alert.h */,
-				0B71C3C51C40273500BE89DC /* Alert.m */,
 				0B71C3C61C40273500BE89DC /* dataButton.h */,
 				0B71C3C71C40273500BE89DC /* dataButton.m */,
 				0B71C3CF1C40273500BE89DC /* EventsViewController.h */,
@@ -508,6 +519,21 @@
 			name = OTNetworkTest;
 			sourceTree = "<group>";
 		};
+		A0524D111C8E13C400FF08BB /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */,
+				A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */,
+				A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */,
+				A0524D151C8E13C400FF08BB /* SVProgressHUD.bundle */,
+				A0524D161C8E13C400FF08BB /* SVProgressHUD.h */,
+				A0524D171C8E13C400FF08BB /* SVProgressHUD.m */,
+				A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */,
+				A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -522,18 +548,21 @@
 				0B71C3F21C40273500BE89DC /* DGActivityIndicatorView.h in Headers */,
 				0B71C3FB1C40273500BE89DC /* OTKTextChatComponent.h in Headers */,
 				0B71C3F41C40273500BE89DC /* EventsViewController.h in Headers */,
+				A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */,
 				0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */,
 				0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
 				0B71C3F61C40273500BE89DC /* EventViewController.h in Headers */,
+				A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */,
 				0B71C3791C4026EE00BE89DC /* SpotlightKit.h in Headers */,
-				0B71C3EB1C40273500BE89DC /* Alert.h in Headers */,
 				0B71C4081C40273500BE89DC /* UIView+EasyAutoLayout.h in Headers */,
 				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
 				0B175BC71C4095B90091A6BE /* SIOSocket.h in Headers */,
+				A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */,
 				0B71C3F11C40273500BE89DC /* DGActivityIndicatorAnimationProtocol.h in Headers */,
 				0B296A7C1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h in Headers */,
 				0B71C3FD1C40273500BE89DC /* OTKTextChatTableViewCell.h in Headers */,
 				0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */,
+				A0524D1E1C8E13C400FF08BB /* SVProgressHUD.h in Headers */,
 				0B71C3F81C40273500BE89DC /* MainSpotlightControllerViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,6 +685,7 @@
 				0B71C3AA1C40272000BE89DC /* EventViewController.xib in Resources */,
 				0B71C3A61C40272000BE89DC /* BackArrow.png in Resources */,
 				0B71C3BE1C40272000BE89DC /* OTKTextChatSentShortTableViewCell.xib in Resources */,
+				A0524D1D1C8E13C400FF08BB /* SVProgressHUD.bundle in Resources */,
 				0B71C3BC1C40272000BE89DC /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */,
 				0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */,
@@ -713,11 +743,13 @@
 				0B296A7D1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m in Sources */,
 				0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
-				0B71C3EC1C40273500BE89DC /* Alert.m in Sources */,
+				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
 				0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */,
+				A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */,
 				0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */,
 				0BBB5AB61C7F854200CBCD59 /* OTDefaultAudioDevice.m in Sources */,
 				0B71C4001C40273500BE89DC /* OTKTextChatView.m in Sources */,
+				A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */,
 				0B71C3FE1C40273500BE89DC /* OTKTextChatTableViewCell.m in Sources */,
 				0B71C3EE1C40273500BE89DC /* dataButton.m in Sources */,
 				0B175BC81C4095B90091A6BE /* SIOSocket.m in Sources */,

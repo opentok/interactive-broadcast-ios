@@ -22,6 +22,8 @@
 #import "UIColor+AppAdditions.h"
 #import "UIView+EasyAutolayout.h"
 
+#import "SVProgressHUD.h"
+
 #define TIME_WINDOW 3000 // 3 seconds
 #define AUDIO_ONLY_TEST_DURATION 6 // 6 seconds
 
@@ -77,8 +79,8 @@ CGFloat screen_width;
 CGFloat chatYPosition;
 CGFloat activeStreams;
 CGFloat unreadCount = 0;
-CGFloat backcount = 3;
-NSTimer * countbackTimer;
+//CGFloat backcount = 3;
+//NSTimer * countbackTimer;
 
 
 //Network Testing
@@ -968,12 +970,12 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"joinHost"]){
         
         
-        OTError *error = nil;
-        if (error)
-        {
-            NSLog(@"error: (%@)", error);
-            [self showAlert:error.localizedDescription];
-        }
+        //        OTError *error = nil;
+        //        if (error)
+        //        {
+        //            NSLog(@"error: (%@)", error);
+        //            [self showAlert:error.localizedDescription];
+        //        }
         
         [self disconnectBackstage];
         
@@ -991,7 +993,15 @@ didFailWithError:(OTError*)error
             [self goLive];
         }
         
-        [self showCountdownView];
+        //        [self showCountdownView];
+        // TODO: add spinner here
+        [SVProgressHUD show];
+    }
+    
+    if ([type isEqualToString:@"joinHostNow"]) {
+        
+        // TODO: remove spinner
+        [SVProgressHUD dismiss];
         [NSTimer scheduledTimerWithTimeInterval:1.0
                                          target:self
                                        selector:@selector(doPublish)
@@ -1491,23 +1501,23 @@ didFailWithError:(OTError*)error
     }];
 }
 
--(void)showCountdownView
-{
-    self.countdownView.hidden = NO;
-    countbackTimer =  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeNumberCount) userInfo:nil repeats:YES];
-    
-}
-
--(void)changeNumberCount
-{
-    if(backcount == -1){
-        [countbackTimer invalidate];
-        self.countdownView.hidden = YES;
-    }else{
-        self.countdownNumber.text = [[NSNumber numberWithFloat:backcount] stringValue];
-        backcount--;
-    }
-}
+//-(void)showCountdownView
+//{
+//    self.countdownView.hidden = NO;
+//    countbackTimer =  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeNumberCount) userInfo:nil repeats:YES];
+//    
+//}
+//
+//-(void)changeNumberCount
+//{
+//    if(backcount == -1){
+//        [countbackTimer invalidate];
+//        self.countdownView.hidden = YES;
+//    }else{
+//        self.countdownNumber.text = [[NSNumber numberWithFloat:backcount] stringValue];
+//        backcount--;
+//    }
+//}
 
 //GO BACK
 

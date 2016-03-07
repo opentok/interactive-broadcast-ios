@@ -35,8 +35,6 @@
                 <outlet property="chatBtn" destination="sgd-9K-em0" id="yc3-Kv-t36"/>
                 <outlet property="closeChat" destination="fgA-0L-GnS" id="5wc-3u-cwV"/>
                 <outlet property="closeEvenBtn" destination="jgu-Fc-pWM" id="oIM-90-yKY"/>
-                <outlet property="countdownNumber" destination="zxB-cu-RQk" id="Lb9-4k-kai"/>
-                <outlet property="countdownView" destination="uS9-jv-Nux" id="Ip7-Nw-Oh6"/>
                 <outlet property="dismissInline" destination="2eW-aR-FL2" id="62Z-3N-5fj"/>
                 <outlet property="eventImage" destination="3OI-XM-flL" id="kQ8-UC-YNm"/>
                 <outlet property="eventName" destination="HMb-Rp-gdV" id="NfD-q8-8EM"/>

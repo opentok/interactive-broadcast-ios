@@ -11,9 +11,10 @@
 #import "EventViewController.h"
 #import "SpotlightApi.h"
 #import "Reachability.h"
-#import "Alert.h"
+//#import "Alert.h"
+#import "SVProgressHUD.h"
 
-@interface MainSpotlightControllerViewController ()<AlertDelegate>
+@interface MainSpotlightControllerViewController ()
 @property UIViewController  *currentDetailViewController;
 
 @property (nonatomic) Reachability *hostReachability;
@@ -23,7 +24,7 @@
 
 @implementation MainSpotlightControllerViewController
 
-Alert *alert;
+//Alert *alert;
 
 static bool hasNetworkConnectivity = YES;
 
@@ -128,16 +129,19 @@ static bool hasNetworkConnectivity = YES;
             break;
         }
     }
-    if(!hasNetworkConnectivity && !alert){
-        alert = [[Alert alloc] initWithTitle:@"Network Error! Make sure you are connected to the internet and try again." duration:0.0 completion:^{}];
-        [alert setAlertType:AlertTypeError];
-        [alert setDelegate:self];
-        [alert showAlert];
+    //    if(!hasNetworkConnectivity && !alert){
+    //        alert = [[Alert alloc] initWithTitle:@"Network Error! Make sure you are connected to the internet and try again." duration:0.0 completion:^{}];
+    //        [alert setAlertType:AlertTypeError];
+    //        [alert setDelegate:self];
+    //        [alert showAlert];
+    if (!hasNetworkConnectivity) {
+        
+        [SVProgressHUD showErrorWithStatus:@"Network Error! Make sure you are connected to the internet and try again."];
     }
-    if(alert && hasNetworkConnectivity){
-        [alert dismissAlert];
-        alert = nil;
-    }
+    //    if(alert && hasNetworkConnectivity){
+    //        [alert dismissAlert];
+    //        alert = nil;
+    //    }
 }
 
 - (void) loadInstanceView {

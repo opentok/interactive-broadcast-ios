@@ -562,12 +562,12 @@ static NSString* const kTextChatType = @"chatMessage";
     UIView *feedView = videoViews[feed];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
-    avatar.contentMode = UIViewContentModeScaleToFill;
+    avatar.contentMode = UIViewContentModeScaleAspectFill;
 
     CGRect frame = feedView.frame;
-    avatar.frame = frame;
+    avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
     
-    [feedView addSubview:avatar];
+    [videoViews[feed] addSubview:avatar];
 }
 
 - (void) hideAvatarFor:(NSString*)feed

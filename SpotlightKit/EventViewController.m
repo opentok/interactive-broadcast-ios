@@ -999,7 +999,7 @@ didFailWithError:(OTError*)error
         
         //        [self showCountdownView];
         // TODO: add spinner here
-        [SVProgressHUD show];
+        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
     }
     
     if ([type isEqualToString:@"joinHostNow"]) {

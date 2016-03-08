@@ -17,7 +17,6 @@
 @interface MainSpotlightControllerViewController ()
 @property UIViewController  *currentDetailViewController;
 
-@property (nonatomic) Reachability *hostReachability;
 @property (nonatomic) Reachability *internetReachability;
 @property (nonatomic) Reachability *wifiReachability;
 @end
@@ -66,15 +65,12 @@ static bool hasNetworkConnectivity = YES;
                                                  name:@"dismissMainController"
                                                object:nil];
     
-    self.hostReachability = [Reachability reachabilityWithHostName:@"http://google.com/"];
-    
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
     
     self.wifiReachability = [Reachability reachabilityForLocalWiFi];
     [self.wifiReachability startNotifier];
     
-    [self logReachability:self.hostReachability];
     [self logReachability:self.internetReachability];
     [self logReachability:self.wifiReachability];
     
@@ -101,9 +97,7 @@ static bool hasNetworkConnectivity = YES;
 - (void)logReachability:(Reachability *)reachability {
     NSString *whichReachabilityString = nil;
     
-    if (reachability == self.hostReachability) {
-        whichReachabilityString = self.backend_base_url;
-    } else if (reachability == self.internetReachability) {
+    if (reachability == self.internetReachability) {
         whichReachabilityString = @"The Internet";
         
     }else if (reachability == self.wifiReachability) {

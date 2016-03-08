@@ -412,6 +412,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if(isBackstage){
         _selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         _selfSubscriber.networkStatsDelegate = self;
+        _selfSubscriber.subscribeToAudio = NO;
         
         OTError *error = nil;
         [_producerSession subscribe: _selfSubscriber error:&error];
@@ -527,6 +528,9 @@ static NSString* const kTextChatType = @"chatMessage";
         self.eventImage.hidden = YES;
         [self adjustChildrenWidth];
         
+    }
+    if(_publisher && _publisher.stream.connection.connectionId == subscriber.stream.connection.connectionId){
+        subscriber.subscribeToAudio = NO;
     }
     
 }

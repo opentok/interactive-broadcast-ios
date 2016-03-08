@@ -543,6 +543,42 @@ static NSString* const kTextChatType = @"chatMessage";
           error);
 }
 
+- (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
+                         reason:(OTSubscriberVideoEventReason)reason
+{
+    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
+    [self showAvatarFor:feed];
+}
+
+- (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
+                         reason:(OTSubscriberVideoEventReason)reason
+{
+    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
+    [self hideAvatarFor:feed];
+}
+
+- (void) showAvatarFor:(NSString*)feed
+{
+    UIView *feedView = videoViews[feed];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
+    avatar.contentMode = UIViewContentModeScaleToFill;
+
+    CGRect frame = feedView.frame;
+    avatar.frame = frame;
+    
+    [feedView addSubview:avatar];
+}
+
+- (void) hideAvatarFor:(NSString*)feed
+{
+    for(UIView* subview in [videoViews[feed] subviews])
+    {
+        if([subview isKindOfClass:[UIImageView class]])
+        {
+            return [subview removeFromSuperview];
+        }
+    }}
 //Network Test
 
 - (void)subscriber:(OTSubscriberKit*)subscriber

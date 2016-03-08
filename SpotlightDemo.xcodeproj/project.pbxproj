@@ -102,6 +102,7 @@
 		0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */; };
 		0B96C2C21C88789800E2422A /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B96C2C11C88789800E2422A /* OpenTok.framework */; };
 		0B96C2C31C8879DE00E2422A /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B96C2C11C88789800E2422A /* OpenTok.framework */; };
+		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
 		0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44ACA1C5044690076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
@@ -255,6 +256,7 @@
 		0B71C3E91C40273500BE89DC /* UIView+EasyAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasyAutoLayout.h"; sourceTree = "<group>"; };
 		0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasyAutoLayout.m"; sourceTree = "<group>"; };
 		0B96C2C11C88789800E2422A /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
+		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
 		0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				0B71C3A11C40272000BE89DC /* recv-arrow@2x.png */,
 				0B71C3A21C40272000BE89DC /* sent-arrow.png */,
 				0B71C3A31C40272000BE89DC /* sent-arrow@2x.png */,
+				0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				A0524D1D1C8E13C400FF08BB /* SVProgressHUD.bundle in Resources */,
 				0B71C3BC1C40272000BE89DC /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */,
+				0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */,
 				0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */,
 				0B71C3C01C40272000BE89DC /* recv-arrow.png in Resources */,
 				0B71C3BF1C40272000BE89DC /* OTKTextChatSentTableViewCell.xib in Resources */,

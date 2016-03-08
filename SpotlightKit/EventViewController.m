@@ -22,7 +22,8 @@
 #import "UIColor+AppAdditions.h"
 #import "UIView+EasyAutolayout.h"
 
-#import "SVProgressHUD.h"
+//#import "SVProgressHUD.h"
+#import "DotSpinnerViewController.h"
 
 #define TIME_WINDOW 3000 // 3 seconds
 #define AUDIO_ONLY_TEST_DURATION 6 // 6 seconds
@@ -1035,13 +1036,14 @@ didFailWithError:(OTError*)error
         
         //        [self showCountdownView];
         // TODO: add spinner here
-        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
+//        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
+        [DotSpinnerViewController show];
     }
     
     if ([type isEqualToString:@"joinHostNow"]) {
         
         // TODO: remove spinner
-        [SVProgressHUD dismiss];
+        [DotSpinnerViewController dismiss];
         [NSTimer scheduledTimerWithTimeInterval:1.0
                                          target:self
                                        selector:@selector(doPublish)

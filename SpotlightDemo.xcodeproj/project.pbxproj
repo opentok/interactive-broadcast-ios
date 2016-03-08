@@ -130,6 +130,11 @@
 		0BB44AE01C5044A60076545C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
 		0BBB5AB51C7F854200CBCD59 /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */; };
 		0BBB5AB61C7F854200CBCD59 /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */; };
+		A01C89F71C8F676B0095333F /* DotSpinnerView.h in Headers */ = {isa = PBXBuildFile; fileRef = A01C89F21C8F676B0095333F /* DotSpinnerView.h */; };
+		A01C89F81C8F676B0095333F /* DotSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A01C89F31C8F676B0095333F /* DotSpinnerView.m */; };
+		A01C89F91C8F676B0095333F /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A01C89F41C8F676B0095333F /* DotSpinnerViewController.h */; };
+		A01C89FA1C8F676B0095333F /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01C89F51C8F676B0095333F /* DotSpinnerViewController.m */; };
+		A01C89FB1C8F676B0095333F /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01C89F61C8F676B0095333F /* DotSpinnerViewController.xib */; };
 		A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */; };
 		A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */; };
 		A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */; };
@@ -259,6 +264,11 @@
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
 		0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		A01C89F21C8F676B0095333F /* DotSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerView.h; sourceTree = "<group>"; };
+		A01C89F31C8F676B0095333F /* DotSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerView.m; sourceTree = "<group>"; };
+		A01C89F41C8F676B0095333F /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
+		A01C89F51C8F676B0095333F /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
+		A01C89F61C8F676B0095333F /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -393,6 +403,11 @@
 		0B71C3771C4026EE00BE89DC /* SpotlightKit */ = {
 			isa = PBXGroup;
 			children = (
+				A01C89F21C8F676B0095333F /* DotSpinnerView.h */,
+				A01C89F31C8F676B0095333F /* DotSpinnerView.m */,
+				A01C89F41C8F676B0095333F /* DotSpinnerViewController.h */,
+				A01C89F51C8F676B0095333F /* DotSpinnerViewController.m */,
+				A01C89F61C8F676B0095333F /* DotSpinnerViewController.xib */,
 				A0524D111C8E13C400FF08BB /* SVProgressHUD */,
 				0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */,
 				0B175BC31C4095B90091A6BE /* Source */,
@@ -566,7 +581,9 @@
 				0B71C3FD1C40273500BE89DC /* OTKTextChatTableViewCell.h in Headers */,
 				0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */,
 				A0524D1E1C8E13C400FF08BB /* SVProgressHUD.h in Headers */,
+				A01C89F91C8F676B0095333F /* DotSpinnerViewController.h in Headers */,
 				0B71C3F81C40273500BE89DC /* MainSpotlightControllerViewController.h in Headers */,
+				A01C89F71C8F676B0095333F /* DotSpinnerView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +692,7 @@
 				0B71C3AF1C40272000BE89DC /* icon-check.png in Resources */,
 				0B71C3AD1C40272000BE89DC /* icon-check-circle.png in Resources */,
 				0B71C3B11C40272000BE89DC /* icon-close-circle.png in Resources */,
+				A01C89FB1C8F676B0095333F /* DotSpinnerViewController.xib in Resources */,
 				0B71C3A41C40272000BE89DC /* BackArrow-1.png in Resources */,
 				0B71C3A91C40272000BE89DC /* EventsViewController.xib in Resources */,
 				0B71C3FA1C40273500BE89DC /* Info.plist in Resources */,
@@ -744,8 +762,10 @@
 			files = (
 				0B71C3F31C40273500BE89DC /* DGActivityIndicatorView.m in Sources */,
 				0B71C3F51C40273500BE89DC /* EventsViewController.m in Sources */,
+				A01C89FA1C8F676B0095333F /* DotSpinnerViewController.m in Sources */,
 				0B296A7D1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m in Sources */,
 				0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
+				A01C89F81C8F676B0095333F /* DotSpinnerView.m in Sources */,
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
 				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
 				0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */,

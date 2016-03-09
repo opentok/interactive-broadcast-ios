@@ -189,7 +189,7 @@ static NSString* const kTextChatType = @"chatMessage";
     self.inLineHolder.layer.borderWidth = 3.0f;
     
     [self startSession];
-
+    
 }
 -(void)startSession{
     prevVideoTimestamp = 0;
@@ -219,7 +219,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if(isFan){
         [self connectFanSignaling];
     }
-
+    
 }
 -(void)loadChat{
     OTSession *currentSession;
@@ -552,7 +552,7 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 - (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
-                         reason:(OTSubscriberVideoEventReason)reason
+                        reason:(OTSubscriberVideoEventReason)reason
 {
     NSString *feed = [self getStreamData:subscriber.stream.connection.data];
     [self hideAvatarFor:feed];
@@ -564,7 +564,7 @@ static NSString* const kTextChatType = @"chatMessage";
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
     avatar.contentMode = UIViewContentModeScaleAspectFill;
-
+    
     CGRect frame = feedView.frame;
     avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
     
@@ -681,9 +681,9 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
             } else
             {
                 self.connectionQuality = @"Poor";
-
+                
             }
-
+            
         });
     }
     
@@ -711,11 +711,11 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
     } else {
         NSLog(@"quality update sent  %@", self.connectionQuality);
     }
-
+    
     NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
     [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
-
-
+    
+    
     
 }
 
@@ -798,7 +798,7 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
         }
-
+        
     }
     
     
@@ -819,19 +819,21 @@ streamDestroyed:(OTStream *)stream
             _privateProducerStream = nil;
         }
     }else{
-        if([type isEqualToString:@"host"]){
-            _hostStream = nil;
+        if(session.connection.connectionId == _session.connection.connectionId){
+            
+            if([type isEqualToString:@"host"]){
+                _hostStream = nil;
+            }
+            
+            if([type isEqualToString:@"celebrity"]){
+                _celebrityStream = nil;
+            }
+            
+            if([type isEqualToString:@"fan"]){
+                _fanStream = nil;
+            }
+            [self cleanupSubscriber:type];
         }
-        
-        if([type isEqualToString:@"celebrity"]){
-            _celebrityStream = nil;
-        }
-        
-        if([type isEqualToString:@"fan"]){
-            _fanStream = nil;
-        }
-        [self cleanupSubscriber:type];
-        
     }
     
 }
@@ -911,7 +913,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"muteAudio"]){
         [messageData[@"mute"] isEqualToString:@"on"] ? [_publisher setPublishAudio: NO] : [_publisher setPublishAudio: YES];
     }
-
+    
     if([type isEqualToString:@"videoOnOff"]){
         [messageData[@"video"] isEqualToString:@"on"] ? [_publisher setPublishVideo: YES] : [_publisher setPublishVideo: NO];
     }
@@ -1036,7 +1038,7 @@ didFailWithError:(OTError*)error
         
         //        [self showCountdownView];
         // TODO: add spinner here
-//        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
+        //        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
         [DotSpinnerViewController show];
     }
     
@@ -1268,10 +1270,10 @@ didFailWithError:(OTError*)error
     double duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     chatYPosition = 106 - textChat.view.bounds.size.height ;
     [UIView animateWithDuration:duration animations:^{
-            CGRect r = self.view.bounds;
-            r.origin.y += chatYPosition;
-            r.size.height -= chatYPosition + kbSize.height;
-            textChat.view.frame = r;
+        CGRect r = self.view.bounds;
+        r.origin.y += chatYPosition;
+        r.size.height -= chatYPosition + kbSize.height;
+        textChat.view.frame = r;
     }];
 }
 
@@ -1280,13 +1282,13 @@ didFailWithError:(OTError*)error
     NSDictionary* info = aNotification.userInfo;
     double duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
-
+    
     [UIView animateWithDuration:duration animations:^{
         
-            CGRect r = self.view.bounds;
-            r.origin.y += chatYPosition;
-            r.size.height -= chatYPosition;
-            textChat.view.frame = r;
+        CGRect r = self.view.bounds;
+        r.origin.y += chatYPosition;
+        r.size.height -= chatYPosition;
+        textChat.view.frame = r;
         
         
     }];
@@ -1296,9 +1298,9 @@ didFailWithError:(OTError*)error
     OTError *error = nil;
     OTSession *currentSession;
     //if(isBackstage){
-        currentSession = _producerSession;
+    currentSession = _producerSession;
     //}else{
-      //  currentSession = _session;
+    //  currentSession = _session;
     //}
     
     NSDictionary *user_message = @{@"message": message.text};
@@ -1547,7 +1549,7 @@ didFailWithError:(OTError*)error
 //{
 //    self.countdownView.hidden = NO;
 //    countbackTimer =  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeNumberCount) userInfo:nil repeats:YES];
-//    
+//
 //}
 //
 //-(void)changeNumberCount

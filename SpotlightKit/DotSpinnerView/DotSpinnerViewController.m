@@ -1,12 +1,63 @@
 //
-//  DotSpinnerView.m
+//  DotSpinnerViewController.m
 //  Spinner
 //
-//  Created by Xi Huang on 3/7/16.
+//  Created by Xi Huang on 3/8/16.
 //  Copyright © 2016 Xi Huang. All rights reserved.
 //
 
-#import "DotSpinnerView.h"
+#import "DotSpinnerViewController.h"
+
+@implementation DotSpinnerViewController
+
+#pragma mark - main class
++ (instancetype)sharedInstance {
+    static DotSpinnerViewController *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^(){
+        sharedInstance = [[DotSpinnerViewController alloc] initWithNibName:@"DotSpinnerViewController"
+                                                                    bundle:[NSBundle bundleForClass:[DotSpinnerViewController class]]];
+        sharedInstance.providesPresentationContextTransitionStyle = YES;
+        sharedInstance.definesPresentationContext = YES;
+        sharedInstance.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    });
+    return sharedInstance;
+}
+
++ (void)show {
+    
+    DotSpinnerViewController *sharedDotSpinnerViewController = [DotSpinnerViewController sharedInstance];
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *topViewController = [DotSpinnerViewController topViewControllerWithRootViewController:rootViewController];
+    [topViewController presentViewController:sharedDotSpinnerViewController animated:NO completion:nil];
+}
+
++ (void)dismiss {
+    
+    DotSpinnerViewController *sharedDotSpinnerViewController = [DotSpinnerViewController sharedInstance];
+    [sharedDotSpinnerViewController dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark - helper method
++ (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isMemberOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    }
+    else if ([rootViewController isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    }
+    else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    }
+    else {
+        return rootViewController;
+    }
+}
+
+@end
 
 #pragma mark - DotSpinnerDotView
 @interface DotSpinnerDotView: UIView
@@ -26,7 +77,7 @@
 
 
 #pragma mark - DotSpinnerView
-@interface DotSpinnerView()
+@interface DotSpinnerView: UIView
 @property (nonatomic) NSUInteger number;
 @property (nonatomic) NSTimer *spinAnimationTimer;
 @property (nonatomic) NSArray <DotSpinnerDotView *> *dots;
@@ -34,20 +85,10 @@
 
 @implementation DotSpinnerView
 
-#pragma mark - life cycle methods
-+ (instancetype)sharedInstance {
-    static DotSpinnerView *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^(){
-        sharedInstance = [[DotSpinnerView alloc] initWithFrame:CGRectMake(0, 0, 120, 120) numberOfDots:10];
-    });
-    return sharedInstance;
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.number = 10;
+    [self setNumber:10];
     [self drawingDots];
     self.spinAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(applySpinAnimation) userInfo:nil repeats:YES];
 }
@@ -93,8 +134,8 @@
             startX = centerX + cos(angle) * (currentAngle + distance * 1.2) - 5;
             startY = centerY + sin(angle) * (currentAngle + distance * 1.2) - 5;
             
-//            CGRect newRect = CGRectMake(startX, startY, number * (1 + i / 10), number * (1 + i / 10));
-            CGRect newRect = CGRectMake(startX, startY, 16, 16);
+            //            CGRect newRect = CGRectMake(startX, startY, number * (1 + i / 10), number * (1 + i / 10));
+            CGRect newRect = CGRectMake(startX, startY, 10, 10);
             DotSpinnerDotView *dotView = [[DotSpinnerDotView alloc] initWithFrame:newRect];
             dotView.alpha = i / 10;
             [dots addObject:dotView];
@@ -105,7 +146,7 @@
         }
         _dots = dots;
     }
-
+    
     return self;
 }
 
@@ -138,26 +179,6 @@
     }
     _dots = dots;
 }
-
-#pragma mark - public methods
-//+ (void)show {
-//    DotSpinnerView *view = [DotSpinnerView sharedInstance];
-////    [view updateFrame];
-//    view.spinAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:view selector:@selector(applySpinAnimation) userInfo:nil repeats:YES];
-//}
-//
-//+ (void)dismiss {
-//    DotSpinnerView *view = [DotSpinnerView sharedInstance];
-//    [view.spinAnimationTimer invalidate];
-//    [view removeFromSuperview];
-//}
-
-#pragma mark - private methods
-//- (void)updateFrame {
-//    DotSpinnerView *view = [DotSpinnerView sharedInstance];
-//    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-//    view.center = rootViewController.view.center;
-//}
 
 - (void)applySpinAnimation {
     

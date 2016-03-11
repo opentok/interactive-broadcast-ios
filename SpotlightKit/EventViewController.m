@@ -458,6 +458,7 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     if(stream.session.connection.connectionId != _producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
+        subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _subscribers[connectingTo] = subs;
         
         OTError *error = nil;

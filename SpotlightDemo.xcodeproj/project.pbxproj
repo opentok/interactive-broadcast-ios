@@ -100,9 +100,9 @@
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
 		0B71C4081C40273500BE89DC /* UIView+EasyAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E91C40273500BE89DC /* UIView+EasyAutoLayout.h */; };
 		0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */; };
-		0B8A37F41C8FBB87007F76D6 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8A37F31C8FBB87007F76D6 /* OpenTok.framework */; };
-		0B8A37F51C8FBB8B007F76D6 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8A37F31C8FBB87007F76D6 /* OpenTok.framework */; };
 		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
+		0BA3DF9C1C922A27001A2FA5 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA3DF9B1C922A27001A2FA5 /* OpenTok.framework */; };
+		0BA3DF9D1C922A27001A2FA5 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA3DF9B1C922A27001A2FA5 /* OpenTok.framework */; };
 		0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44ACA1C5044690076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
@@ -258,8 +258,8 @@
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		0B71C3E91C40273500BE89DC /* UIView+EasyAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasyAutoLayout.h"; sourceTree = "<group>"; };
 		0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasyAutoLayout.m"; sourceTree = "<group>"; };
-		0B8A37F31C8FBB87007F76D6 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
+		0BA3DF9B1C922A27001A2FA5 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
 		0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 				0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */,
 				0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */,
 				0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */,
-				0B8A37F41C8FBB87007F76D6 /* OpenTok.framework in Frameworks */,
+				0BA3DF9C1C922A27001A2FA5 /* OpenTok.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +308,7 @@
 				0BB44AD81C5044900076545C /* GLKit.framework in Frameworks */,
 				0BB44AD21C50447C0076545C /* CoreMedia.framework in Frameworks */,
 				0BB44ADA1C5044A60076545C /* OpenGLES.framework in Frameworks */,
-				0B8A37F51C8FBB8B007F76D6 /* OpenTok.framework in Frameworks */,
+				0BA3DF9D1C922A27001A2FA5 /* OpenTok.framework in Frameworks */,
 				0BB44ADB1C5044A60076545C /* SystemConfiguration.framework in Frameworks */,
 				0BB44ADC1C5044A60076545C /* UIKit.framework in Frameworks */,
 				0BB44ADD1C5044A60076545C /* VideoToolbox.framework in Frameworks */,
@@ -334,7 +334,7 @@
 		0B71C34B1C3F5D0F00BE89DC = {
 			isa = PBXGroup;
 			children = (
-				0B8A37F31C8FBB87007F76D6 /* OpenTok.framework */,
+				0BA3DF9B1C922A27001A2FA5 /* OpenTok.framework */,
 				0B175B7F1C407BED0091A6BE /* libc++.tbd */,
 				0B175B7D1C407B4C0091A6BE /* AVKit.framework */,
 				0B175B7B1C4078B20091A6BE /* libsqlite3.tbd */,

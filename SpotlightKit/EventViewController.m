@@ -372,6 +372,8 @@ static NSString* const kTextChatType = @"chatMessage";
         (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
         [self stopLoader];
         [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
+        _publisher.publishAudio = NO;
+
         NSLog(@"DO PUBLISH BACKSTAGE");
         
     }
@@ -760,13 +762,13 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         NSLog(@"SessionDidDisconnect from producerSession");
         [self disconnectBackstageSession];
         self.leaveLineBtn.hidden = YES;
-        self.getInLineBtn.hidden = NO;
         [self hideNotification];
     }else{
         NSLog(@"SessionDidDisconnect from onstage");
-        self.getInLineBtn.hidden = NO;
         _session = nil;
     }
+    self.getInLineBtn.hidden = NO;
+
 }
 
 
@@ -991,7 +993,7 @@ didFailWithError:(OTError*)error
         [_producerSession unsubscribe: _producerSubscriber error:&error];
         _producerSubscriber = nil;
         inCallWithProducer = NO;
-        
+        _publisher.publishAudio = NO;
         self.getInLineBtn.hidden = NO;
         [self muteOnstageSession:NO];
         [self hideNotification];

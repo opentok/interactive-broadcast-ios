@@ -20,5 +20,3 @@ FOUNDATION_EXPORT const unsigned char SpotlightKitVersionString[];
 #import <SpotlightKit/EventViewController.h>
 #import <SpotlightKit/EventsViewController.h>
 #import <SpotlightKit/MainSpotlightControllerViewController.h>
-#import <SpotlightKit/dataButton.h>
-

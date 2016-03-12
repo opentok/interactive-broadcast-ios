@@ -22,7 +22,7 @@
 #import "UIColor+AppAdditions.h"
 #import "UIView+EasyAutolayout.h"
 
-//#import "SVProgressHUD.h"
+#import "SVProgressHUD.h"
 #import "DotSpinnerViewController.h"
 
 #define TIME_WINDOW 3000 // 3 seconds
@@ -144,13 +144,23 @@ static NSString* const kTextChatType = @"chatMessage";
     [super viewDidLoad];
     isLive = NO;
     self.connectionData = [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"] back_url:instanceData[@"backend_base_url"] data:self.eventData];
-    if(self.connectionData){
-        self.eventData = [self.connectionData[@"event"] mutableCopy];
-        [self statusChanged];
-        [self loadUser];
-    }
-    [self.statusBar setBackgroundColor: [UIColor BarColor]];
     
+    
+    
+    [SVProgressHUD show];
+    [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
+                                          back_url:instanceData[@"backend_base_url"]
+                                              data:self.eventData
+                                        completion:^(NSMutableDictionary *resultData) {
+                                        
+                                            [SVProgressHUD dismiss];
+                                            self.connectionData = resultData;
+                                            self.eventData = [self.connectionData[@"event"] mutableCopy];
+                                            [self statusChanged];
+                                            [self loadUser];
+                                        }];
+    
+    [self.statusBar setBackgroundColor: [UIColor BarColor]];
     videoViews = [[NSMutableDictionary alloc] init];
     videoViews[@"fan"] = self.FanViewHolder;
     videoViews[@"celebrity"] = self.CelebrityViewHolder;

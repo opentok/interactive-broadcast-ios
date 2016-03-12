@@ -70,6 +70,7 @@ NSMutableDictionary* videoViews;
 
 static bool isBackstage = NO;
 static bool isOnstage = NO;
+static bool shouldResendProducerSignal = NO;
 static bool inCallWithProducer = NO;
 static bool isLive = NO;
 static bool isSingleEvent = NO;
@@ -311,6 +312,7 @@ static NSString* const kTextChatType = @"chatMessage";
     isBackstage = NO;
     self.inLineHolder.alpha = 0;
     self.getInLineBtn.hidden = NO;
+    shouldResendProducerSignal = YES;
 }
 
 - (void)doDisconnect{
@@ -898,6 +900,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"startEvent"]){
         self.eventData[@"status"] = @"P";
         self.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        shouldResendProducerSignal = YES;
         [self statusChanged];
     }
     if([type isEqualToString:@"openChat"]){
@@ -932,12 +935,16 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"newFanAck"]){
+        shouldResendProducerSignal = NO;
         [self performSelector:@selector(captureAndSendScreenshot) withObject:nil afterDelay:2.0];
     }
-    
+    if([type isEqualToString:@"producerLeaving"]){
+        shouldResendProducerSignal = YES;
+    }
     if([type isEqualToString:@"resendNewFanSignal"]){
         
-        if(isBackstage && !_producerStream){
+//        if(isBackstage && !_producerStream ){
+        if(shouldResendProducerSignal){
             [self disconnectBackstage];
             _producerSession = [[OTSession alloc] initWithApiKey:self.apikey
                                                        sessionId:self.connectionData[@"sessionIdProducer"]
@@ -1012,14 +1019,6 @@ didFailWithError:(OTError*)error
         
     }
     if([type isEqualToString:@"joinHost"]){
-        
-        
-        //        OTError *error = nil;
-        //        if (error)
-        //        {
-        //            NSLog(@"error: (%@)", error);
-        //            [self showAlert:error.localizedDescription];
-        //        }
         
         [self disconnectBackstage];
         

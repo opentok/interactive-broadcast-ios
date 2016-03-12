@@ -144,22 +144,6 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [super viewDidLoad];
     isLive = NO;
-    self.connectionData = [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"] back_url:instanceData[@"backend_base_url"] data:self.eventData];
-    
-    
-    
-    [SVProgressHUD show];
-    [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
-                                          back_url:instanceData[@"backend_base_url"]
-                                              data:self.eventData
-                                        completion:^(NSMutableDictionary *resultData) {
-                                        
-                                            [SVProgressHUD dismiss];
-                                            self.connectionData = resultData;
-                                            self.eventData = [self.connectionData[@"event"] mutableCopy];
-                                            [self statusChanged];
-                                            [self loadUser];
-                                        }];
     
     [self.statusBar setBackgroundColor: [UIColor BarColor]];
     videoViews = [[NSMutableDictionary alloc] init];
@@ -172,6 +156,18 @@ static NSString* const kTextChatType = @"chatMessage";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    [SVProgressHUD show];
+    [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
+                                          back_url:instanceData[@"backend_base_url"]
+                                              data:self.eventData
+                                        completion:^(NSMutableDictionary *resultData) {
+                                            
+                                            [SVProgressHUD dismiss];
+                                            self.connectionData = resultData;
+                                            self.eventData = [self.connectionData[@"event"] mutableCopy];
+                                            [self statusChanged];
+                                            [self loadUser];
+                                        }];
 }
 
 - (void)viewDidLayoutSubviews {

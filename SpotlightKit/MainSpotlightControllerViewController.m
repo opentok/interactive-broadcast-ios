@@ -11,19 +11,14 @@
 #import "EventViewController.h"
 #import "SpotlightApi.h"
 #import "Reachability.h"
-//#import "Alert.h"
 #import "SVProgressHUD.h"
 
 @interface MainSpotlightControllerViewController ()
 @property UIViewController  *currentDetailViewController;
-
 @property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
 @end
 
 @implementation MainSpotlightControllerViewController
-
-//Alert *alert;
 
 static bool hasNetworkConnectivity = YES;
 
@@ -67,12 +62,7 @@ static bool hasNetworkConnectivity = YES;
     
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
-    
-    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
-    [self.wifiReachability startNotifier];
-    
     [self logReachability:self.internetReachability];
-    [self logReachability:self.wifiReachability];
     
     if(hasNetworkConnectivity) {
         instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
@@ -95,47 +85,25 @@ static bool hasNetworkConnectivity = YES;
 }
 
 - (void)logReachability:(Reachability *)reachability {
-    NSString *whichReachabilityString = nil;
-    
-    if (reachability == self.internetReachability) {
-        whichReachabilityString = @"The Internet";
-        
-    }else if (reachability == self.wifiReachability) {
-        whichReachabilityString = @"Local Wi-Fi";
-    }
-    
-    NSString *howReachableString = nil;
     
     switch (reachability.currentReachabilityStatus) {
         case NotReachable: {
-            howReachableString = @"not reachable";
             hasNetworkConnectivity = NO;
             break;
         }
         case ReachableViaWWAN: {
-            howReachableString = @"reachable by cellular data";
             hasNetworkConnectivity = YES;
             break;
         }
         case ReachableViaWiFi:{
-            howReachableString = @"reachable by WiFi";
             hasNetworkConnectivity = YES;
             break;
         }
     }
-    //    if(!hasNetworkConnectivity && !alert){
-    //        alert = [[Alert alloc] initWithTitle:@"Network Error! Make sure you are connected to the internet and try again." duration:0.0 completion:^{}];
-    //        [alert setAlertType:AlertTypeError];
-    //        [alert setDelegate:self];
-    //        [alert showAlert];
+
     if (!hasNetworkConnectivity) {
-        
         [SVProgressHUD showErrorWithStatus:@"Network Error! Make sure you are connected to the internet and try again."];
     }
-    //    if(alert && hasNetworkConnectivity){
-    //        [alert dismissAlert];
-    //        alert = nil;
-    //    }
 }
 
 - (void) loadInstanceView {

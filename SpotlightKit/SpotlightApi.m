@@ -70,7 +70,9 @@ NSString *BACKEND_URL;
     
 };
 
-- (NSMutableDictionary*) creteEventToken:(NSString*)user_type back_url:(NSString*)backend_base_url data:(NSMutableDictionary *)event_data{
+- (NSMutableDictionary*)creteEventToken:(NSString*)user_type
+                               back_url:(NSString*)backend_base_url
+                                   data:(NSMutableDictionary *)event_data {
     
     if([user_type isEqualToString:@"fan"]){
         [self creteEventTokenFan:user_type back_url:backend_base_url data:event_data];
@@ -88,28 +90,61 @@ NSString *BACKEND_URL;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     NSError * error = nil;
 
-    
-    __block NSDictionary *json;
-    
     NSURLResponse * response = nil;
     NSData * data = [NSURLConnection sendSynchronousRequest:request
                                           returningResponse:&response
                                                       error:&error];
-    
-    if (error == nil)
-    {
-        json = [NSJSONSerialization JSONObjectWithData:data
-                                               options:0
-                                                 error:nil];
+    if (error == nil) {
         
         NSError * errorDictionary = nil;
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
         NSMutableDictionary *data = [dictionary mutableCopy];
         data[@"backend_base_url"] = backend_base_url;
         return data;
-    }else{
+    }
+    else{
         return connectionData;
     }
+}
+
+- (void)creteEventToken:(NSString*)user_type
+               back_url:(NSString*)backend_base_url
+                   data:(NSMutableDictionary *)event_data
+             completion:(void (^)(NSMutableDictionary *))completion {
+    
+    if([user_type isEqualToString:@"fan"]){
+        [self creteEventTokenFan:user_type back_url:backend_base_url data:event_data];
+    }
+    
+    NSMutableDictionary *connectionData;
+    NSString *_url = [NSString stringWithFormat:@"%@_url", user_type];
+    
+    NSString *event_url = event_data[_url];
+    
+    //user_type should be @"fan", @'celebrity' or @"host"
+    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@",backend_base_url, user_type, event_url];
+    
+    //Create the request
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    
+        if (error == nil) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                   options:0
+                                                     error:nil];
+            NSError * errorDictionary = nil;
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
+            NSMutableDictionary *data = [dictionary mutableCopy];
+            data[@"backend_base_url"] = backend_base_url;
+            completion(data);
+        }
+        else {
+            completion(connectionData);
+        }
+    }];
 }
 
 - (NSMutableDictionary*) creteEventTokenFan:(NSString*)user_type back_url:(NSString*)backend_base_url data:(NSMutableDictionary *)event_data{

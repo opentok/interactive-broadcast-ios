@@ -94,7 +94,7 @@
 		0B71C4001C40273500BE89DC /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E11C40273500BE89DC /* OTKTextChatView.m */; };
 		0B71C4021C40273500BE89DC /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E31C40273500BE89DC /* Reachability.h */; };
 		0B71C4031C40273500BE89DC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E41C40273500BE89DC /* Reachability.m */; };
-		0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E51C40273500BE89DC /* SpotlightApi.h */; };
+		0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E51C40273500BE89DC /* SpotlightApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B71C4051C40273500BE89DC /* SpotlightApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E61C40273500BE89DC /* SpotlightApi.m */; };
 		0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */; };
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
@@ -561,6 +561,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
 				0B71C4021C40273500BE89DC /* Reachability.h in Headers */,
 				0B71C3FF1C40273500BE89DC /* OTKTextChatView.h in Headers */,
 				0BBB5AB51C7F854200CBCD59 /* OTDefaultAudioDevice.h in Headers */,
@@ -570,7 +571,6 @@
 				A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */,
 				0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */,
 				0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */,
-				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
 				0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
 				0B71C3F61C40273500BE89DC /* EventViewController.h in Headers */,
 				A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */,

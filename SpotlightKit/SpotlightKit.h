@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char SpotlightKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <SpotlightKit/PublicHeader.h>
 
+#import <SpotlightKit/SpotlightApi.h>
 #import <SpotlightKit/EventViewController.h>
 #import <SpotlightKit/EventsViewController.h>
 #import <SpotlightKit/MainSpotlightControllerViewController.h>

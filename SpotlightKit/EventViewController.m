@@ -105,7 +105,7 @@ OTDefaultAudioDevice* _myAudioDevice;
 
 static NSString* const kTextChatType = @"chatMessage";
 
-@synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName, namePrompt,getInLineName,statusBar,chatBar;
+@synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName,statusBar,chatBar;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
@@ -1466,7 +1466,6 @@ didFailWithError:(OTError*)error
         }
         
     }];
-    [self.getInLineName resignFirstResponder];
 }
 
 - (IBAction)getInLineClick:(id)sender {
@@ -1475,10 +1474,6 @@ didFailWithError:(OTError*)error
                                                sessionId:self.connectionData[@"sessionIdProducer"]
                                                 delegate:self];
     [self inLineConnect];
-}
-
-- (IBAction)closePrompt:(id)sender {
-    self.namePrompt.hidden = YES;
 }
 
 - (IBAction)leaveLine:(id)sender {

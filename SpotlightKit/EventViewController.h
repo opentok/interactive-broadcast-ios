@@ -11,49 +11,40 @@
 #import <OpenTok/OpenTok.h>
 
 @interface EventViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIView *videoHolder;
+@property (weak, nonatomic) IBOutlet UIView *videoHolder;
 
 
-@property (strong, nonatomic) IBOutlet UIView *statusBar;
-@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UILabel *eventName;
-@property (strong, nonatomic) IBOutlet UIButton *getInLineBtn;
-@property (strong, nonatomic) IBOutlet UIButton *leaveLineBtn;
-@property (strong, nonatomic) IBOutlet UIButton *chatBtn;
-@property (strong, nonatomic) IBOutlet UIButton *closeChat;
-@property (strong, nonatomic) IBOutlet UIView *chatBar;
-@property (strong, nonatomic) IBOutlet UIButton *closeEvenBtn;
-@property (strong, nonatomic) IBOutlet UIButton *dismissInline;
-@property (strong, nonatomic) IBOutlet UILabel *inlineNotification;
+@property (weak, nonatomic) IBOutlet UIView *statusBar;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventName;
+@property (weak, nonatomic) IBOutlet UIButton *getInLineBtn;
+@property (weak, nonatomic) IBOutlet UIButton *leaveLineBtn;
+@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
+@property (weak, nonatomic) IBOutlet UIButton *closeChat;
+@property (weak, nonatomic) IBOutlet UIView *chatBar;
+@property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
+@property (weak, nonatomic) IBOutlet UIButton *dismissInline;
+@property (weak, nonatomic) IBOutlet UILabel *inlineNotification;
 
-@property (strong, nonatomic) IBOutlet UIView *namePrompt;
-@property (strong, nonatomic) IBOutlet UIButton *closeNamePrompt;
-@property (strong, nonatomic) IBOutlet UITextField *getInLineName;
-@property (strong, nonatomic) IBOutlet UIButton *submitGetInLine;
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) NSMutableDictionary *eventData;
+@property (nonatomic) NSMutableDictionary *connectionData;
 
-@property (strong,nonatomic) NSMutableDictionary *user;
-@property (strong,nonatomic) NSMutableDictionary *eventData;
-@property (strong,nonatomic) NSMutableDictionary *connectionData;
+@property (nonatomic) NSString *apikey;
+@property (nonatomic) NSString *userName;
+@property (nonatomic) Boolean isCeleb;
+@property (nonatomic) Boolean isHost;
+@property (nonatomic) NSString *connectionQuality;
 
-@property NSString *apikey;
-@property NSString *userName;
-@property Boolean isCeleb;
-@property Boolean isHost;
-@property NSString *connectionQuality;
+@property (weak, nonatomic) IBOutlet UIView *internalHolder;
+@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *inLineHolder;
+@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
 
-@property (strong, nonatomic) IBOutlet UIView *internalHolder;
-@property (strong, nonatomic) IBOutlet UIView *HostViewHolder;
-@property (strong, nonatomic) IBOutlet UIView *FanViewHolder;
-@property (strong, nonatomic) IBOutlet UIView *CelebrityViewHolder;
-@property (strong, nonatomic) IBOutlet UIView *inLineHolder;
-@property (strong, nonatomic) IBOutlet UIImageView *eventImage;
-
-@property (strong, nonatomic) IBOutlet UIView *notificationBar;
-@property (strong, nonatomic) IBOutlet UILabel *notificationLabel;
-
-//@property (strong, nonatomic) IBOutlet UIView *countdownView;
-//@property (strong, nonatomic) IBOutlet UILabel *countdownNumber;
-
+@property (weak, nonatomic) IBOutlet UIView *notificationBar;
+@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 
 - (id)initEventWithData:(NSDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle NS_DESIGNATED_INITIALIZER;
 

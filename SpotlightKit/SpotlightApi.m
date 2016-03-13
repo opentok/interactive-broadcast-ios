@@ -132,9 +132,6 @@ NSString *BACKEND_URL;
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
     
         if (error == nil) {
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
-                                                   options:0
-                                                     error:nil];
             NSError * errorDictionary = nil;
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
             NSMutableDictionary *data = [dictionary mutableCopy];

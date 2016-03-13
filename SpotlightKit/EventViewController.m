@@ -1486,6 +1486,7 @@ didFailWithError:(OTError*)error
     self.chatBtn.hidden = YES;
     self.closeEvenBtn.hidden = NO;
     [self disconnectBackstage];
+    [_producerSession disconnect:nil];
     self.statusLabel.text = @"";
     self.getInLineBtn.hidden = NO;
     

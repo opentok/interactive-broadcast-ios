@@ -314,7 +314,6 @@ static NSString* const kTextChatType = @"chatMessage";
     }
     
     [self unpublishFrom:_producerSession];
-    [self cleanupPublisher];
     isBackstage = NO;
     self.inLineHolder.alpha = 0;
     self.getInLineBtn.hidden = NO;
@@ -934,7 +933,7 @@ didFailWithError:(OTError*)error
         }
     }
     if([type isEqualToString:@"joinBackstage"]){
-        [self publishTo:_producerSubscriber.session];
+//        [self publishTo:_producerSubscriber.session];
         self.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
         [self showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];

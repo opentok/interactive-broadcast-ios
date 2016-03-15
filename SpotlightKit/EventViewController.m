@@ -23,6 +23,9 @@
 #import "SVProgressHUD.h"
 #import "DotSpinnerViewController.h"
 
+#import "OTDefaultAudioDevice.h"
+
+
 #define TIME_WINDOW 3000 // 3 seconds
 #define AUDIO_ONLY_TEST_DURATION 6 // 6 seconds
 
@@ -105,6 +108,9 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 - (id)initEventWithData:(NSMutableDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle{
+    OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
+    [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
+    
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     if( self = [super initWithNibName:@"EventViewController" bundle:bundle])    {
         

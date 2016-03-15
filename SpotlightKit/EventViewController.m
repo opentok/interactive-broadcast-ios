@@ -13,7 +13,6 @@
 
 #import "OTKTextChatComponent.h"
 #import "SpotlightApi.h"
-#import "OTDefaultAudioDevice.h"
 #import "PerformSelectorWithDebounce.h"
 
 #import "EventViewController.h"
@@ -43,9 +42,6 @@ OTPublisher* _publisher;
 
 
 NSMutableDictionary *_subscribers;
-OTSubscriber* _fanSubscriber;
-OTSubscriber* _hostSubscriber;
-OTSubscriber* _celebritySubscriber;
 OTSubscriber* _producerSubscriber;
 OTSubscriber* _privateProducerSubscriber;
 OTSubscriber* _selfSubscriber;
@@ -101,7 +97,6 @@ long video_bw;
 long audio_bw;
 double video_pl_ratio;
 double audio_pl_ratio;
-OTDefaultAudioDevice* _myAudioDevice;
 
 static NSString* const kTextChatType = @"chatMessage";
 
@@ -997,6 +992,7 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"disconnectProducer"]){
+        if(!isOnstage){
         OTError *error = nil;
         [_producerSession unsubscribe: _producerSubscriber error:&error];
         _producerSubscriber = nil;
@@ -1005,6 +1001,7 @@ didFailWithError:(OTError*)error
         _publisher.publishAudio = NO;
         [self muteOnstageSession:NO];
         [self hideNotification];
+        }
     }
     
     if([type isEqualToString:@"disconnectBackstage"]){
@@ -1040,10 +1037,6 @@ didFailWithError:(OTError*)error
         if(![self.eventData[@"status"] isEqualToString:@"L"] && !isLive){
             [self goLive];
         }
-        
-        //        [self showCountdownView];
-        // TODO: add spinner here
-        //        [SVProgressHUD showWithStatus:@"GOING LIVE NOW"];
         [DotSpinnerViewController show];
     }
     

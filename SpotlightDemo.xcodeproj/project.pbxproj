@@ -72,7 +72,7 @@
 		0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A11C40272000BE89DC /* recv-arrow@2x.png */; };
 		0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A21C40272000BE89DC /* sent-arrow.png */; };
 		0B71C3C31C40272000BE89DC /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3A31C40272000BE89DC /* sent-arrow@2x.png */; };
-		0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3C61C40273500BE89DC /* dataButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3C61C40273500BE89DC /* dataButton.h */; };
 		0B71C3EE1C40273500BE89DC /* dataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3C71C40273500BE89DC /* dataButton.m */; };
 		0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3CA1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h */; };
 		0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3CB1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m */; };
@@ -100,8 +100,9 @@
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
 		0B71C4081C40273500BE89DC /* UIView+EasyAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E91C40273500BE89DC /* UIView+EasyAutoLayout.h */; };
 		0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */; };
-		0B96C2C21C88789800E2422A /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B96C2C11C88789800E2422A /* OpenTok.framework */; };
-		0B96C2C31C8879DE00E2422A /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B96C2C11C88789800E2422A /* OpenTok.framework */; };
+		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
+		0BA3DFAA1C988042001A2FA5 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA3DFA91C988042001A2FA5 /* OpenTok.framework */; };
+		0BA3DFAB1C988050001A2FA5 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA3DFA91C988042001A2FA5 /* OpenTok.framework */; };
 		0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44ACA1C5044690076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
@@ -127,8 +128,6 @@
 		0BB44ADE1C5044A60076545C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B611C4075A30091A6BE /* QuartzCore.framework */; };
 		0BB44ADF1C5044A60076545C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5E1C403B720091A6BE /* AVFoundation.framework */; };
 		0BB44AE01C5044A60076545C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
-		0BBB5AB51C7F854200CBCD59 /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */; };
-		0BBB5AB61C7F854200CBCD59 /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */; };
 		A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */; };
 		A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */; };
 		A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */; };
@@ -137,6 +136,12 @@
 		A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D171C8E13C400FF08BB /* SVProgressHUD.m */; };
 		A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */; };
 		A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */; };
+		A056C36A1C988E8000C9C44E /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */; };
+		A056C36B1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */; };
+		A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */; };
+		A081FE241C8FA56D00D7DF9D /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A081FE211C8FA56D00D7DF9D /* DotSpinnerViewController.h */; };
+		A081FE251C8FA56D00D7DF9D /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A081FE221C8FA56D00D7DF9D /* DotSpinnerViewController.m */; };
+		A081FE261C8FA56D00D7DF9D /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A081FE231C8FA56D00D7DF9D /* DotSpinnerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -254,9 +259,8 @@
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		0B71C3E91C40273500BE89DC /* UIView+EasyAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasyAutoLayout.h"; sourceTree = "<group>"; };
 		0B71C3EA1C40273500BE89DC /* UIView+EasyAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasyAutoLayout.m"; sourceTree = "<group>"; };
-		0B96C2C11C88789800E2422A /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
-		0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
-		0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
+		0BA3DFA91C988042001A2FA5 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -265,6 +269,11 @@
 		A0524D171C8E13C400FF08BB /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
+		A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		A081FE211C8FA56D00D7DF9D /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
+		A081FE221C8FA56D00D7DF9D /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
+		A081FE231C8FA56D00D7DF9D /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,7 +291,7 @@
 				0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */,
 				0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */,
 				0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */,
-				0B96C2C21C88789800E2422A /* OpenTok.framework in Frameworks */,
+				0BA3DFAA1C988042001A2FA5 /* OpenTok.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +309,7 @@
 				0BB44AD81C5044900076545C /* GLKit.framework in Frameworks */,
 				0BB44AD21C50447C0076545C /* CoreMedia.framework in Frameworks */,
 				0BB44ADA1C5044A60076545C /* OpenGLES.framework in Frameworks */,
-				0B96C2C31C8879DE00E2422A /* OpenTok.framework in Frameworks */,
+				0BA3DFAB1C988050001A2FA5 /* OpenTok.framework in Frameworks */,
 				0BB44ADB1C5044A60076545C /* SystemConfiguration.framework in Frameworks */,
 				0BB44ADC1C5044A60076545C /* UIKit.framework in Frameworks */,
 				0BB44ADD1C5044A60076545C /* VideoToolbox.framework in Frameworks */,
@@ -326,7 +335,7 @@
 		0B71C34B1C3F5D0F00BE89DC = {
 			isa = PBXGroup;
 			children = (
-				0B96C2C11C88789800E2422A /* OpenTok.framework */,
+				0BA3DFA91C988042001A2FA5 /* OpenTok.framework */,
 				0B175B7F1C407BED0091A6BE /* libc++.tbd */,
 				0B175B7D1C407B4C0091A6BE /* AVKit.framework */,
 				0B175B7B1C4078B20091A6BE /* libsqlite3.tbd */,
@@ -391,6 +400,7 @@
 		0B71C3771C4026EE00BE89DC /* SpotlightKit */ = {
 			isa = PBXGroup;
 			children = (
+				A081FE201C8FA56D00D7DF9D /* DotSpinnerView */,
 				A0524D111C8E13C400FF08BB /* SVProgressHUD */,
 				0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */,
 				0B175BC31C4095B90091A6BE /* Source */,
@@ -454,6 +464,7 @@
 				0B71C3A11C40272000BE89DC /* recv-arrow@2x.png */,
 				0B71C3A21C40272000BE89DC /* sent-arrow.png */,
 				0B71C3A31C40272000BE89DC /* sent-arrow@2x.png */,
+				0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -511,10 +522,10 @@
 		0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */ = {
 			isa = PBXGroup;
 			children = (
+				A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */,
+				A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */,
 				0B296A7A1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h */,
 				0B296A7B1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m */,
-				0BBB5AB31C7F854200CBCD59 /* OTDefaultAudioDevice.h */,
-				0BBB5AB41C7F854200CBCD59 /* OTDefaultAudioDevice.m */,
 			);
 			name = OTNetworkTest;
 			sourceTree = "<group>";
@@ -534,6 +545,16 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		A081FE201C8FA56D00D7DF9D /* DotSpinnerView */ = {
+			isa = PBXGroup;
+			children = (
+				A081FE211C8FA56D00D7DF9D /* DotSpinnerViewController.h */,
+				A081FE221C8FA56D00D7DF9D /* DotSpinnerViewController.m */,
+				A081FE231C8FA56D00D7DF9D /* DotSpinnerViewController.xib */,
+			);
+			path = DotSpinnerView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -541,21 +562,22 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */,
+				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
 				0B71C4021C40273500BE89DC /* Reachability.h in Headers */,
 				0B71C3FF1C40273500BE89DC /* OTKTextChatView.h in Headers */,
-				0BBB5AB51C7F854200CBCD59 /* OTDefaultAudioDevice.h in Headers */,
 				0B71C3F21C40273500BE89DC /* DGActivityIndicatorView.h in Headers */,
 				0B71C3FB1C40273500BE89DC /* OTKTextChatComponent.h in Headers */,
 				0B71C3F41C40273500BE89DC /* EventsViewController.h in Headers */,
+				A056C36A1C988E8000C9C44E /* OTDefaultAudioDevice.h in Headers */,
 				A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */,
 				0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */,
+				0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */,
 				0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
 				0B71C3F61C40273500BE89DC /* EventViewController.h in Headers */,
 				A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */,
 				0B71C3791C4026EE00BE89DC /* SpotlightKit.h in Headers */,
+				A081FE241C8FA56D00D7DF9D /* DotSpinnerViewController.h in Headers */,
 				0B71C4081C40273500BE89DC /* UIView+EasyAutoLayout.h in Headers */,
-				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
 				0B175BC71C4095B90091A6BE /* SIOSocket.h in Headers */,
 				A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */,
 				0B71C3F11C40273500BE89DC /* DGActivityIndicatorAnimationProtocol.h in Headers */,
@@ -672,6 +694,7 @@
 				0B71C3AF1C40272000BE89DC /* icon-check.png in Resources */,
 				0B71C3AD1C40272000BE89DC /* icon-check-circle.png in Resources */,
 				0B71C3B11C40272000BE89DC /* icon-close-circle.png in Resources */,
+				A081FE261C8FA56D00D7DF9D /* DotSpinnerViewController.xib in Resources */,
 				0B71C3A41C40272000BE89DC /* BackArrow-1.png in Resources */,
 				0B71C3A91C40272000BE89DC /* EventsViewController.xib in Resources */,
 				0B71C3FA1C40273500BE89DC /* Info.plist in Resources */,
@@ -688,6 +711,7 @@
 				A0524D1D1C8E13C400FF08BB /* SVProgressHUD.bundle in Resources */,
 				0B71C3BC1C40272000BE89DC /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */,
+				0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */,
 				0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */,
 				0B71C3C01C40272000BE89DC /* recv-arrow.png in Resources */,
 				0B71C3BF1C40272000BE89DC /* OTKTextChatSentTableViewCell.xib in Resources */,
@@ -727,6 +751,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B71C35F1C3F5D0F00BE89DC /* ViewController.m in Sources */,
+				A056C36B1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
 				0B175BAC1C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m in Sources */,
 				0B71C3651C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodeld in Sources */,
 				0B71C35C1C3F5D0F00BE89DC /* AppDelegate.m in Sources */,
@@ -740,14 +765,15 @@
 			files = (
 				0B71C3F31C40273500BE89DC /* DGActivityIndicatorView.m in Sources */,
 				0B71C3F51C40273500BE89DC /* EventsViewController.m in Sources */,
+				A081FE251C8FA56D00D7DF9D /* DotSpinnerViewController.m in Sources */,
 				0B296A7D1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m in Sources */,
 				0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
 				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
+				A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
 				0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */,
 				A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */,
 				0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */,
-				0BBB5AB61C7F854200CBCD59 /* OTDefaultAudioDevice.m in Sources */,
 				0B71C4001C40273500BE89DC /* OTKTextChatView.m in Sources */,
 				A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */,
 				0B71C3FE1C40273500BE89DC /* OTKTextChatTableViewCell.m in Sources */,

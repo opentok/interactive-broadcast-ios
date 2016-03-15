@@ -11,24 +11,16 @@
 #import "EventViewController.h"
 #import "SpotlightApi.h"
 #import "Reachability.h"
-//#import "Alert.h"
 #import "SVProgressHUD.h"
 
 @interface MainSpotlightControllerViewController ()
-@property UIViewController  *currentDetailViewController;
-
-@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic) UIViewController  *currentDetailViewController;
 @property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
 @end
 
 @implementation MainSpotlightControllerViewController
 
-//Alert *alert;
-
 static bool hasNetworkConnectivity = YES;
-
-@synthesize instance_id,backend_base_url,instance_data,user;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
@@ -48,14 +40,6 @@ static bool hasNetworkConnectivity = YES;
     return self;
 }
 
-- (id)initWithViewController:(UIViewController*)viewController{
-    
-    if (self = [super init]) {
-        [self presentViewController:viewController animated:YES completion:nil];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     //UI ***************************
@@ -66,28 +50,20 @@ static bool hasNetworkConnectivity = YES;
                                                  name:@"dismissMainController"
                                                object:nil];
     
-    self.hostReachability = [Reachability reachabilityWithHostName:@"http://google.com/"];
-    
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
-    
-    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
-    [self.wifiReachability startNotifier];
-    
-    [self logReachability:self.hostReachability];
     [self logReachability:self.internetReachability];
-    [self logReachability:self.wifiReachability];
     
     if(hasNetworkConnectivity) {
-        instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+        self.instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
     }
     else{
         NSLog(@"error please check your internet");
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if(instance_data) {
-            instance_data[@"backend_base_url"] = self.backend_base_url;
+        if(self.instance_data) {
+            self.instance_data[@"backend_base_url"] = self.backend_base_url;
             [self loadInstanceView];
         }
     });
@@ -99,49 +75,25 @@ static bool hasNetworkConnectivity = YES;
 }
 
 - (void)logReachability:(Reachability *)reachability {
-    NSString *whichReachabilityString = nil;
-    
-    if (reachability == self.hostReachability) {
-        whichReachabilityString = self.backend_base_url;
-    } else if (reachability == self.internetReachability) {
-        whichReachabilityString = @"The Internet";
-        
-    }else if (reachability == self.wifiReachability) {
-        whichReachabilityString = @"Local Wi-Fi";
-    }
-    
-    NSString *howReachableString = nil;
     
     switch (reachability.currentReachabilityStatus) {
         case NotReachable: {
-            howReachableString = @"not reachable";
             hasNetworkConnectivity = NO;
             break;
         }
         case ReachableViaWWAN: {
-            howReachableString = @"reachable by cellular data";
             hasNetworkConnectivity = YES;
             break;
         }
         case ReachableViaWiFi:{
-            howReachableString = @"reachable by WiFi";
             hasNetworkConnectivity = YES;
             break;
         }
     }
-    //    if(!hasNetworkConnectivity && !alert){
-    //        alert = [[Alert alloc] initWithTitle:@"Network Error! Make sure you are connected to the internet and try again." duration:0.0 completion:^{}];
-    //        [alert setAlertType:AlertTypeError];
-    //        [alert setDelegate:self];
-    //        [alert showAlert];
+
     if (!hasNetworkConnectivity) {
-        
         [SVProgressHUD showErrorWithStatus:@"Network Error! Make sure you are connected to the internet and try again."];
     }
-    //    if(alert && hasNetworkConnectivity){
-    //        [alert dismissAlert];
-    //        alert = nil;
-    //    }
 }
 
 - (void) loadInstanceView {
@@ -173,12 +125,6 @@ static bool hasNetworkConnectivity = YES;
     //3. Update the hierarchy"
     //   Automatically the method didMoveToParentViewController: will be called on the detailViewController)
     [self.currentDetailViewController removeFromParentViewController];
-}
-
-- (CGRect)frameForDetailController{
-    CGRect detailFrame = self.detailView.bounds;
-    
-    return detailFrame;
 }
 
 -(void)closeMainController:(NSNotification *)notification {

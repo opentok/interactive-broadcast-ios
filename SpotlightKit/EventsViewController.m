@@ -63,10 +63,6 @@
     NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)connectSignaling{
     
@@ -95,10 +91,6 @@
 }
 
 //Collection stuff
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    //return [dataArray count];
-    return 1;
-}
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [dataArray count];
 }

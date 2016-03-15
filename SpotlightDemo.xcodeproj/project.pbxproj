@@ -136,6 +136,9 @@
 		A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D171C8E13C400FF08BB /* SVProgressHUD.m */; };
 		A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */; };
 		A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */; };
+		A056C36A1C988E8000C9C44E /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */; };
+		A056C36B1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */; };
+		A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */; };
 		A081FE241C8FA56D00D7DF9D /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A081FE211C8FA56D00D7DF9D /* DotSpinnerViewController.h */; };
 		A081FE251C8FA56D00D7DF9D /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A081FE221C8FA56D00D7DF9D /* DotSpinnerViewController.m */; };
 		A081FE261C8FA56D00D7DF9D /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A081FE231C8FA56D00D7DF9D /* DotSpinnerViewController.xib */; };
@@ -266,6 +269,8 @@
 		A0524D171C8E13C400FF08BB /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		A0524D181C8E13C400FF08BB /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		A0524D191C8E13C400FF08BB /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
+		A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
 		A081FE211C8FA56D00D7DF9D /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
 		A081FE221C8FA56D00D7DF9D /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
 		A081FE231C8FA56D00D7DF9D /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
@@ -517,6 +522,8 @@
 		0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */ = {
 			isa = PBXGroup;
 			children = (
+				A056C3681C988E8000C9C44E /* OTDefaultAudioDevice.h */,
+				A056C3691C988E8000C9C44E /* OTDefaultAudioDevice.m */,
 				0B296A7A1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h */,
 				0B296A7B1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m */,
 			);
@@ -561,6 +568,7 @@
 				0B71C3F21C40273500BE89DC /* DGActivityIndicatorView.h in Headers */,
 				0B71C3FB1C40273500BE89DC /* OTKTextChatComponent.h in Headers */,
 				0B71C3F41C40273500BE89DC /* EventsViewController.h in Headers */,
+				A056C36A1C988E8000C9C44E /* OTDefaultAudioDevice.h in Headers */,
 				A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */,
 				0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */,
 				0B71C3ED1C40273500BE89DC /* dataButton.h in Headers */,
@@ -743,6 +751,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B71C35F1C3F5D0F00BE89DC /* ViewController.m in Sources */,
+				A056C36B1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
 				0B175BAC1C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m in Sources */,
 				0B71C3651C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodeld in Sources */,
 				0B71C35C1C3F5D0F00BE89DC /* AppDelegate.m in Sources */,
@@ -761,6 +770,7 @@
 				0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
 				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
+				A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
 				0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */,
 				A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */,
 				0B71C4091C40273500BE89DC /* UIView+EasyAutoLayout.m in Sources */,

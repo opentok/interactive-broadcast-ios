@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "OTDefaultAudioDevice.h"
+#import <OpenTok/OpenTok.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
+    [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
     return YES;
 }
 

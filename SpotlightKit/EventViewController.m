@@ -697,7 +697,13 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     [NSString stringWithFormat:@"Session disconnected: (%@)", session.sessionId];
     NSLog(@"sessionDidDisconnect (%@)", alertMessage);
     if(session == _producerSession){
-        [self disconnectBackstage];
+        isBackstage = NO;
+        self.inLineHolder.alpha = 0;
+        self.getInLineBtn.hidden = NO;
+        shouldResendProducerSignal = YES;
+        [self cleanupPublisher];
+        
+        
         self.leaveLineBtn.hidden = YES;
         [self hideNotification];
     }else{

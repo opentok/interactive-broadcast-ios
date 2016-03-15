@@ -605,26 +605,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }
 }
 
-- (void)subscriber:(OTSubscriberKit*)subscriber
-audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
-{
-    if (prevAudioTimestamp == 0)
-    {
-        prevAudioTimestamp = stats.timestamp;
-        prevAudioBytes = stats.audioBytesReceived;
-    }
-    
-    if (stats.timestamp - prevAudioTimestamp >= TIME_WINDOW)
-    {
-        audio_bw = (8 * (stats.audioBytesReceived - prevAudioBytes)) / ((stats.timestamp - prevAudioTimestamp) / 1000ull);
-        
-        [self processStats:stats];
-        prevAudioTimestamp = stats.timestamp;
-        prevAudioBytes = stats.audioBytesReceived;
-        //NSLog(@"audioBytesReceived %llu, bps %ld, packetsLost %.2f",stats.audioBytesReceived, audio_bw,audio_pl_ratio);
-    }
-}
-
 - (void)processStats:(id)stats
 {
     if ([stats isKindOfClass:[OTSubscriberKitVideoNetworkStats class]])
@@ -642,21 +622,6 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
         prevVideoPacketsLost = videoStats.videoPacketsLost;
         prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
     }
-    if ([stats isKindOfClass:[OTSubscriberKitAudioNetworkStats class]])
-    {
-        audio_pl_ratio = -1;
-        OTSubscriberKitAudioNetworkStats *audioStats =
-        (OTSubscriberKitAudioNetworkStats *) stats;
-        if (prevAudioPacketsRcvd != 0) {
-            uint64_t pl = audioStats.audioPacketsLost - prevAudioPacketsLost;
-            uint64_t pr = audioStats.audioPacketsReceived - prevAudioPacketsRcvd;
-            uint64_t pt = pl + pr;
-            if (pt > 0)
-                audio_pl_ratio = (double) pl / (double) pt;
-        }
-        prevAudioPacketsLost = audioStats.audioPacketsLost;
-        prevAudioPacketsRcvd = audioStats.audioPacketsReceived;
-    }
     
     [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
 }
@@ -664,33 +629,10 @@ audioNetworkStatsUpdated:(OTSubscriberKitAudioNetworkStats*)stats
 - (void)checkQualityAndSendSignal
 {
     BOOL canDoVideo = (video_bw >= 150000 && video_pl_ratio <= 0.03);
-    BOOL canDoAudio = (audio_bw >= 25000 && audio_pl_ratio <= 0.05);
+    BOOL canDoAudio = true;
+
     
-    if (!canDoVideo && !canDoAudio)
-    {
-        NSLog(@"Starting Audio Only Test");
-        // test for audio only stream
-        _publisher.publishVideo = NO;
-        
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW,
-                                              AUDIO_ONLY_TEST_DURATION * NSEC_PER_SEC);
-        dispatch_after(delay,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
-            
-            // you can tune audio bw threshold value based on your needs.
-            if (audio_bw >= 25000 && audio_pl_ratio <= 0.05)
-            {
-                self.connectionQuality = @"Good";
-                
-            } else
-            {
-                self.connectionQuality = @"Poor";
-                
-            }
-            
-        });
-    }
-    
-    else if (canDoAudio && !canDoVideo)
+    if (!canDoVideo)
     {
         self.connectionQuality = @"Poor";
         
@@ -928,7 +870,6 @@ didFailWithError:(OTError*)error
         }
     }
     if([type isEqualToString:@"joinBackstage"]){
-//        [self publishTo:_producerSubscriber.session];
         self.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
         [self showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
@@ -943,7 +884,6 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"resendNewFanSignal"]){
         
-//        if(isBackstage && !_producerStream ){
         if(shouldResendProducerSignal){
             [self disconnectBackstage];
             _producerSession = [[OTSession alloc] initWithApiKey:self.apikey

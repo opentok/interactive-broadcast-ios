@@ -16,7 +16,6 @@
 #import "PerformSelectorWithDebounce.h"
 
 #import "EventViewController.h"
-#import <MobileCoreServices/UTCoreTypes.h>
 #import "DGActivityIndicatorView.h"
 #import "UIColor+AppAdditions.h"
 #import "UIView+EasyAutolayout.h"
@@ -77,8 +76,6 @@ CGFloat screen_width;
 CGFloat chatYPosition;
 CGFloat activeStreams;
 CGFloat unreadCount = 0;
-//CGFloat backcount = 3;
-//NSTimer * countbackTimer;
 
 
 //Network Testing
@@ -303,28 +300,11 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)disconnectBackstage
 {
-    if(_selfSubscriber){
-        [_producerSession unsubscribe: _selfSubscriber error:nil];
-        _selfSubscriber = nil;
-    }
-    
     [self unpublishFrom:_producerSession];
     isBackstage = NO;
     self.inLineHolder.alpha = 0;
     self.getInLineBtn.hidden = NO;
     shouldResendProducerSignal = YES;
-}
-
-- (void)doDisconnect{
-    OTError *error = nil;
-    
-    self.statusLabel.text = @"Disconnecting";
-    
-    [_session disconnect:&error];
-    if (error)
-    {
-        [self showAlert:error.localizedDescription];
-    }
 }
 
 //Publishers
@@ -368,14 +348,14 @@ static NSString* const kTextChatType = @"chatMessage";
         self.closeEvenBtn.hidden = YES;
         self.getInLineBtn.hidden = YES;
     }
-    
-    
-    
-    
     [self adjustChildrenWidth];
 }
 -(void) publishTo:(OTSession *)session
 {
+    if(_publisher){
+        NSLog(@"PUBLISHER EXISTED");
+    }
+    
     if(!_publisher){
         _publisher = [[OTPublisher alloc] initWithDelegate:self name:self.userName];
     }
@@ -402,6 +382,13 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)cleanupPublisher{
     if(_publisher){
+        
+        if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
+            NSLog(@"cleanup publisher from onstage");
+        }else{
+            NSLog(@"cleanup publisher from backstage");
+        }
+        
         [_publisher.view removeFromSuperview];
         _publisher = nil;
     }
@@ -413,6 +400,7 @@ static NSString* const kTextChatType = @"chatMessage";
     streamCreated:(OTStream *)stream
 {
     if(isBackstage){
+        NSLog(@"stream Created PUBLISHER BACK");
         _selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         _selfSubscriber.networkStatsDelegate = self;
         _selfSubscriber.subscribeToAudio = NO;
@@ -424,6 +412,7 @@ static NSString* const kTextChatType = @"chatMessage";
             NSLog(@"subscribe self error");
         }
     }else{
+        NSLog(@"stream Created PUBLISHER ONST");
         [self doSubscribe:stream];
     }
     
@@ -433,11 +422,18 @@ static NSString* const kTextChatType = @"chatMessage";
   streamDestroyed:(OTStream *)stream
 {
     
+    NSLog(@"stream DESTROYED PUBLISHER");
+
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
+        NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         [self cleanupSubscriber:connectingTo];
+    }
+    if(_selfSubscriber){
+        [_producerSession unsubscribe:_selfSubscriber error:nil];
+        _selfSubscriber = nil;
     }
     
     [self cleanupPublisher];
@@ -469,6 +465,7 @@ static NSString* const kTextChatType = @"chatMessage";
         {
             NSLog(@"subscriber didFailWithError %@", error);
         }
+        subs = nil;
         
     }
     if(stream.session.connection.connectionId == _producerSession.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
@@ -601,7 +598,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         [self processStats:stats];
         prevVideoTimestamp = stats.timestamp;
         prevVideoBytes = stats.videoBytesReceived;
-        //NSLog(@"videoBytesReceived %llu, bps %ld, packetsLost %.2f",stats.videoBytesReceived, video_bw, video_pl_ratio);
     }
 }
 
@@ -716,27 +712,30 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     NSLog(@"session streamCreated (%@)", stream.streamId);
     if(mySession.connection.connectionId != _producerSession.connection.connectionId){
-        if([stream.connection.data isEqualToString:@"usertype=host"]){
-            _hostStream = stream;
-        }
-        
-        if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
-            _celebrityStream = stream;
-        }
-        
-        if([stream.connection.data isEqualToString:@"usertype=fan"]){
-            _fanStream = stream;
-        }
         
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _privateProducerStream = stream;
             
         }else{
+            if([stream.connection.data isEqualToString:@"usertype=host"]){
+                _hostStream = stream;
+            }
+            
+            if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
+                _celebrityStream = stream;
+            }
+            
+            if([stream.connection.data isEqualToString:@"usertype=fan"]){
+                _fanStream = stream;
+            }
+            
             
             if(isLive || isCeleb || isHost){
                 [self doSubscribe:stream];
             }
         }
+        
+        
         
         
     }else{
@@ -754,7 +753,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 streamDestroyed:(OTStream *)stream
 {
     NSLog(@"session streamDestroyed (%@)", stream.streamId);
-    NSLog(@"disconnectin from connecting to (%@)", stream.connection.data);
+    NSLog(@"disconnectin from stream (%@)", stream.connection.data);
     
     NSString *type = [self getStreamData:stream.connection.data];
     if([type isEqualToString:@"producer"]){
@@ -984,11 +983,12 @@ didFailWithError:(OTError*)error
         
         // TODO: remove spinner
         [DotSpinnerViewController dismiss];
-        [NSTimer scheduledTimerWithTimeInterval:1.0
-                                         target:self
-                                       selector:@selector(doPublish)
-                                       userInfo:nil
-                                        repeats:NO];
+        [self doPublish];
+//        [NSTimer scheduledTimerWithTimeInterval:1.0
+//                                         target:self
+//                                       selector:@selector(doPublish)
+//                                       userInfo:nil
+//                                        repeats:NO];
     }
     
     if([type isEqualToString:@"finishEvent"]){
@@ -1478,24 +1478,6 @@ didFailWithError:(OTError*)error
         self.inLineHolder.alpha = 0;
     }];
 }
-
-//-(void)showCountdownView
-//{
-//    self.countdownView.hidden = NO;
-//    countbackTimer =  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeNumberCount) userInfo:nil repeats:YES];
-//
-//}
-//
-//-(void)changeNumberCount
-//{
-//    if(backcount == -1){
-//        [countbackTimer invalidate];
-//        self.countdownView.hidden = YES;
-//    }else{
-//        self.countdownNumber.text = [[NSNumber numberWithFloat:backcount] stringValue];
-//        backcount--;
-//    }
-//}
 
 //GO BACK
 

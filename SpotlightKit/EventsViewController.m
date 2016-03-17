@@ -26,11 +26,6 @@
 
 @implementation EventsViewController
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                              user:(NSMutableDictionary *)aUser {
     
@@ -54,10 +49,6 @@
     self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
     [self connectSignaling];
      
-}
-- (void) viewDidAppear:(BOOL)animated{
-    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
 -(void)connectSignaling{
@@ -193,5 +184,13 @@
     
 }
 
+#pragma mark - orientation
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 @end

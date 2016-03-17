@@ -131,11 +131,6 @@ static NSString* const kTextChatType = @"chatMessage";
 
 @synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName,statusBar,chatBar;
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                    connectionData:(NSMutableDictionary *)aConnectionData
                              user:(NSMutableDictionary *)aUser
@@ -201,6 +196,7 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 - (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     screen = [UIScreen mainScreen].bounds;
     screen_width = CGRectGetWidth(screen);
 }
@@ -1546,5 +1542,13 @@ didFailWithError:(OTError*)error
     }
 }
 
+#pragma mark - orientation
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 @end

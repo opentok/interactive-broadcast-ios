@@ -7,9 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-
 
 @interface SpotlightApi : NSObject;
 
@@ -23,10 +20,11 @@
                                    data:(NSMutableDictionary *)event_data;
 
 - (void)creteEventToken:(NSString*)user_type
-                               back_url:(NSString*)backend_base_url
-                                   data:(NSMutableDictionary *)event_data
-                             completion:(void (^)(NSMutableDictionary *))completion;
+               back_url:(NSString*)backend_base_url
+                   data:(NSMutableDictionary *)event_data
+             completion:(void (^)(NSMutableDictionary *))completion;
 
-- (NSMutableDictionary*)sendMetric:(NSString*)metric event_id:(NSString*)an_event_id;
+- (NSMutableDictionary*)sendMetric:(NSString*)metric
+                          event_id:(NSString*)an_event_id;
 
 @end

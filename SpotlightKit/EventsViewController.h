@@ -10,10 +10,7 @@
 
 @interface EventsViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UICollectionView *eventsView;
-@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
-
-
-- (id)initEventWithData:(NSDictionary *)aEventaData user:(NSMutableDictionary *)aUser NS_DESIGNATED_INITIALIZER;
+- (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
+                             user:(NSMutableDictionary *)aUser NS_DESIGNATED_INITIALIZER;
 
 @end

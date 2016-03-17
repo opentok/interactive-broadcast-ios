@@ -14,8 +14,17 @@
 #import "SVProgressHUD.h"
 
 @interface MainSpotlightControllerViewController ()
+
+@property (weak, nonatomic) IBOutlet UIView *detailView;
+@property (nonatomic) NSString *instance_id;
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) NSMutableArray *singleEventData;
+@property (nonatomic) NSString *backend_base_url;
+@property (nonatomic) NSMutableDictionary *instance_data;
+
 @property (nonatomic) UIViewController  *currentDetailViewController;
 @property (nonatomic) Reachability *internetReachability;
+
 @end
 
 @implementation MainSpotlightControllerViewController
@@ -27,11 +36,11 @@ static bool hasNetworkConnectivity = YES;
     return UIInterfaceOrientationMaskLandscape;
 }
 
-- (id)initWithData:(NSString *)ainstance_id backend_base_url:(NSString *)abackend_url user:(NSMutableDictionary *)aUser
-{
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if( self = [self initWithNibName:@"MainSpotlightControllerViewController" bundle:bundle])
-    {
+- (instancetype)initWithData:(NSString *)ainstance_id
+            backend_base_url:(NSString *)abackend_url
+                        user:(NSMutableDictionary *)aUser {
+    
+    if(self = [super initWithNibName:@"MainSpotlightControllerViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         self.instance_id = ainstance_id;
         self.backend_base_url = abackend_url;
         self.user = aUser;

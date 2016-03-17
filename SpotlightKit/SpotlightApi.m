@@ -7,6 +7,8 @@
 //
 
 #import "SpotlightApi.h"
+
+#import <UIKit/UIKit.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 

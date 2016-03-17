@@ -9,39 +9,30 @@
 #import "EventsViewController.h"
 #import "EventViewController.h"
 #import "dataButton.h"
-#import <QuartzCore/QuartzCore.h>
 #import "SIOSocket.h"
 
-
-@interface EventsViewController (){
+@interface EventsViewController () {
     NSMutableDictionary *eventsData;
     NSMutableDictionary *instanceData;
     NSArray *dataArray;
     NSMutableDictionary *user;
     SIOSocket *signalingSocket;
 }
-@property UIViewController  *currentDetailViewController;
 
+@property (weak, nonatomic) IBOutlet UICollectionView *eventsView;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
+@property (nonatomic) UIViewController  *currentDetailViewController;
 @end
 
 @implementation EventsViewController
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
-- (id)initEventWithData:(NSMutableDictionary *)aEventData user:(NSMutableDictionary *)aUser
-{
+- (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
+                             user:(NSMutableDictionary *)aUser {
     
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    self = [super initWithNibName:@"EventsViewController" bundle:bundle];
-    if( self != nil )
-    {
+    if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         instanceData = aEventData;
         eventsData = [aEventData[@"events"] mutableCopy];
         dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
-
         user = aUser;
     }
     return self;
@@ -58,10 +49,6 @@
     self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
     [self connectSignaling];
      
-}
-- (void) viewDidAppear:(BOOL)animated{
-    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
 -(void)connectSignaling{
@@ -197,5 +184,13 @@
     
 }
 
+#pragma mark - orientation
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 @end

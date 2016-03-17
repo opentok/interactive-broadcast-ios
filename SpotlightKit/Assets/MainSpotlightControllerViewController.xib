@@ -28,7 +28,6 @@
                 <constraint firstAttribute="bottom" secondItem="lxC-AR-snB" secondAttribute="bottom" id="gyn-Qv-CGX"/>
                 <constraint firstItem="lxC-AR-snB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qtO-ex-0b3"/>
             </constraints>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <point key="canvasLocation" x="375" y="319"/>
         </view>
     </objects>

@@ -5,8 +5,6 @@
 //  Created by Andrea Phillips on 30/09/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.
 //
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
 
 #import <OpenTok/OpenTok.h>
 #import "SIOSocket.h"
@@ -18,7 +16,6 @@
 #import "EventViewController.h"
 #import "DGActivityIndicatorView.h"
 #import "UIColor+AppAdditions.h"
-#import "UIView+EasyAutolayout.h"
 
 #import "SVProgressHUD.h"
 #import "DotSpinnerViewController.h"
@@ -30,8 +27,40 @@
 #define AUDIO_ONLY_TEST_DURATION 6 // 6 seconds
 
 
-@interface EventViewController ()
-<OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
+@interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
+@property (weak, nonatomic) IBOutlet UIView *videoHolder;
+
+@property (weak, nonatomic) IBOutlet UIView *statusBar;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventName;
+@property (weak, nonatomic) IBOutlet UIButton *getInLineBtn;
+@property (weak, nonatomic) IBOutlet UIButton *leaveLineBtn;
+@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
+@property (weak, nonatomic) IBOutlet UIButton *closeChat;
+@property (weak, nonatomic) IBOutlet UIView *chatBar;
+@property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
+@property (weak, nonatomic) IBOutlet UIButton *dismissInline;
+@property (weak, nonatomic) IBOutlet UILabel *inlineNotification;
+
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) NSMutableDictionary *eventData;
+@property (nonatomic) NSMutableDictionary *connectionData;
+
+@property (nonatomic) NSString *apikey;
+@property (nonatomic) NSString *userName;
+@property (nonatomic) Boolean isCeleb;
+@property (nonatomic) Boolean isHost;
+@property (nonatomic) NSString *connectionQuality;
+
+@property (weak, nonatomic) IBOutlet UIView *internalHolder;
+@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *inLineHolder;
+@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
+
+@property (weak, nonatomic) IBOutlet UIView *notificationBar;
+@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 @end
 
 @implementation EventViewController
@@ -102,17 +131,15 @@ static NSString* const kTextChatType = @"chatMessage";
 
 @synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName,statusBar,chatBar;
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
-- (id)initEventWithData:(NSMutableDictionary *)aEventData connectionData:(NSMutableDictionary *)aConnectionData user:(NSMutableDictionary *)aUser isSingle:(BOOL)aSingle{
+- (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
+                   connectionData:(NSMutableDictionary *)aConnectionData
+                             user:(NSMutableDictionary *)aUser
+                         isSingle:(BOOL)aSingle {
+    
     OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
     [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
     
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if( self = [super initWithNibName:@"EventViewController" bundle:bundle])    {
+    if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
         instanceData = [aConnectionData mutableCopy];
         self.eventData = [aEventData mutableCopy];
@@ -169,6 +196,7 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 - (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     screen = [UIScreen mainScreen].bounds;
     screen_width = CGRectGetWidth(screen);
 }
@@ -631,9 +659,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 - (void)checkQualityAndSendSignal
 {
     BOOL canDoVideo = (video_bw >= 150000 && video_pl_ratio <= 0.03);
-    BOOL canDoAudio = true;
+//    BOOL canDoAudio = true;
 
-    
     if (!canDoVideo)
     {
         self.connectionQuality = @"Poor";
@@ -1515,5 +1542,13 @@ didFailWithError:(OTError*)error
     }
 }
 
+#pragma mark - orientation
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 @end

@@ -14,24 +14,27 @@
 #import "SVProgressHUD.h"
 
 @interface MainSpotlightControllerViewController ()
-@property (nonatomic) UIViewController  *currentDetailViewController;
+
+@property (weak, nonatomic) IBOutlet UIView *detailView;
+@property (nonatomic) NSString *instance_id;
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) NSMutableArray *singleEventData;
+@property (nonatomic) NSString *backend_base_url;
+@property (nonatomic) NSMutableDictionary *instance_data;
+
 @property (nonatomic) Reachability *internetReachability;
+
 @end
 
 @implementation MainSpotlightControllerViewController
 
 static bool hasNetworkConnectivity = YES;
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
-- (id)initWithData:(NSString *)ainstance_id backend_base_url:(NSString *)abackend_url user:(NSMutableDictionary *)aUser
-{
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if( self = [self initWithNibName:@"MainSpotlightControllerViewController" bundle:bundle])
-    {
+- (instancetype)initWithData:(NSString *)ainstance_id
+            backend_base_url:(NSString *)abackend_url
+                        user:(NSMutableDictionary *)aUser {
+    
+    if(self = [super initWithNibName:@"MainSpotlightControllerViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         self.instance_id = ainstance_id;
         self.backend_base_url = abackend_url;
         self.user = aUser;
@@ -111,20 +114,6 @@ static bool hasNetworkConnectivity = YES;
         presentedViewController = [[EventsViewController alloc] initEventWithData:self.instance_data user:self.user];
     }
     [self presentViewController:presentedViewController animated:YES completion:nil];
-}
-
-- (void)removeCurrentDetailViewController{
-    
-    //1. Call the willMoveToParentViewController with nil
-    //   This is the last method where your detailViewController can perform some operations before neing removed
-    [self.currentDetailViewController willMoveToParentViewController:nil];
-    
-    //2. Remove the DetailViewController's view from the Container
-    [self.currentDetailViewController.view removeFromSuperview];
-    
-    //3. Update the hierarchy"
-    //   Automatically the method didMoveToParentViewController: will be called on the detailViewController)
-    [self.currentDetailViewController removeFromParentViewController];
 }
 
 -(void)closeMainController:(NSNotification *)notification {

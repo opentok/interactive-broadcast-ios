@@ -43,10 +43,6 @@
     }
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [dataArray count];
 }
@@ -153,10 +149,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
                                                         object:nil
                                                       userInfo:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 @end

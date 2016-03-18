@@ -180,6 +180,8 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     [SVProgressHUD show];
     [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
@@ -199,6 +201,13 @@ static NSString* const kTextChatType = @"chatMessage";
     [super viewDidLayoutSubviews];
     screen = [UIScreen mainScreen].bounds;
     screen_width = CGRectGetWidth(screen);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) loadUser{
@@ -1301,6 +1310,10 @@ didFailWithError:(OTError*)error
         [self.eventImage setImage:[UIImage imageWithData:imageData]];
     }
     
+}
+
+- (void)orientationChanged:(NSNotification *)notification {
+    [self adjustChildrenWidth];
 }
 
 - (void) adjustChildrenWidth{

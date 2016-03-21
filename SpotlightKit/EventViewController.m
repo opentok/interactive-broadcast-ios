@@ -1313,7 +1313,6 @@ didFailWithError:(OTError*)error
 }
 
 - (void) adjustChildrenWidth{
-    NSLog(@"ADJUSTING VIEWS");
     CGFloat c = 0;
     CGFloat new_width = 1;
     CGFloat new_height = self.internalHolder.bounds.size.height;

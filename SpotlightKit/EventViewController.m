@@ -180,7 +180,6 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     [SVProgressHUD show];
     [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
@@ -206,7 +205,6 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

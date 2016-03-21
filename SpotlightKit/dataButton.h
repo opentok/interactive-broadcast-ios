@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface dataButton : UIButton
-
-@property (nonatomic, retain) NSMutableDictionary* userData;
-
+@property (nonatomic) NSMutableDictionary* userData;
 -(NSMutableDictionary*) getData;
 @end

@@ -116,7 +116,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" red="0.23238547796491976" green="0.24447601010101006" blue="0.099412984047154443" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="0.0" colorSpace="calibratedRGB"/>
                         </view>
                         <view alpha="0.0" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="65j-ak-aqS">
                             <rect key="frame" x="435" y="15" width="150" height="150"/>

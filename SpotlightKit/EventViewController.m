@@ -199,6 +199,13 @@ static NSString* const kTextChatType = @"chatMessage";
     [super viewDidLayoutSubviews];
     screen = [UIScreen mainScreen].bounds;
     screen_width = CGRectGetWidth(screen);
+    [self performSelector:@selector(adjustChildrenWidth) withObject:nil afterDelay:1.0];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) loadUser{
@@ -1304,7 +1311,6 @@ didFailWithError:(OTError*)error
 }
 
 - (void) adjustChildrenWidth{
-    
     CGFloat c = 0;
     CGFloat new_width = 1;
     CGFloat new_height = self.internalHolder.bounds.size.height;
@@ -1320,17 +1326,16 @@ didFailWithError:(OTError*)error
     
     for(NSString *viewName in viewNames){
         if(_subscribers[viewName]){
+            [videoViews[viewName] setHidden:NO];
             OTSubscriber *temp = _subscribers[viewName];
             
             [videoViews[viewName] setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
             temp.view.frame = CGRectMake(0, 0, new_width,new_height);
             c++;
             
-            [videoViews[viewName] setHidden:NO];
         }else{
             [videoViews[viewName] setHidden:YES];
-            [videoViews[viewName] setFrame:CGRectMake(0, 0, 10,new_height)];
-            
+            [videoViews[viewName] setFrame:CGRectMake(0, 0, 5,new_height)];
         }
         
     }

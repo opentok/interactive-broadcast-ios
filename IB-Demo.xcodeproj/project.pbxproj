@@ -32,14 +32,14 @@
 		0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B175BC61C4095B90091A6BE /* socket.io.js.h */; };
 		0B296A7C1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B296A7A1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h */; };
 		0B296A7D1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B296A7B1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m */; };
-		0B41BFEB1C4EC00F002EAEF5 /* SpotlightKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* SpotlightKit.framework */; };
-		0B41BFEC1C4EC00F002EAEF5 /* SpotlightKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* SpotlightKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0B41BFEB1C4EC00F002EAEF5 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* IBKit.framework */; };
+		0B41BFEC1C4EC00F002EAEF5 /* IBKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* IBKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0B71C3591C3F5D0F00BE89DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3581C3F5D0F00BE89DC /* main.m */; };
 		0B71C35C1C3F5D0F00BE89DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C35B1C3F5D0F00BE89DC /* AppDelegate.m */; };
 		0B71C35F1C3F5D0F00BE89DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C35E1C3F5D0F00BE89DC /* ViewController.m */; };
 		0B71C3621C3F5D0F00BE89DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3601C3F5D0F00BE89DC /* Main.storyboard */; };
 		0B71C3651C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3631C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodeld */; };
-		0B71C3791C4026EE00BE89DC /* SpotlightKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3781C4026EE00BE89DC /* SpotlightKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B71C3791C4026EE00BE89DC /* IBKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3781C4026EE00BE89DC /* IBKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B71C3A41C40272000BE89DC /* BackArrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3841C40272000BE89DC /* BackArrow-1.png */; };
 		0B71C3A51C40272000BE89DC /* BackArrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3851C40272000BE89DC /* BackArrow-2.png */; };
 		0B71C3A61C40272000BE89DC /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3861C40272000BE89DC /* BackArrow.png */; };
@@ -58,7 +58,7 @@
 		0B71C3B31C40272000BE89DC /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3931C40272000BE89DC /* icon-close.png */; };
 		0B71C3B41C40272000BE89DC /* icon-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3941C40272000BE89DC /* icon-close@2x.png */; };
 		0B71C3B51C40272000BE89DC /* icon_sendMsgArrow_052015.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3951C40272000BE89DC /* icon_sendMsgArrow_052015.png */; };
-		0B71C3B61C40272000BE89DC /* MainSpotlightControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3961C40272000BE89DC /* MainSpotlightControllerViewController.xib */; };
+		0B71C3B61C40272000BE89DC /* MainIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3961C40272000BE89DC /* MainIBViewController.xib */; };
 		0B71C3B71C40272000BE89DC /* MainSpotlightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3971C40272000BE89DC /* MainSpotlightView.xib */; };
 		0B71C3B81C40272000BE89DC /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3981C40272000BE89DC /* Montserrat-Bold.ttf */; };
 		0B71C3B91C40272000BE89DC /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3991C40272000BE89DC /* Montserrat-Regular.ttf */; };
@@ -83,8 +83,8 @@
 		0B71C3F51C40273500BE89DC /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3D01C40273500BE89DC /* EventsViewController.m */; };
 		0B71C3F61C40273500BE89DC /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3D11C40273500BE89DC /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3D21C40273500BE89DC /* EventViewController.m */; };
-		0B71C3F81C40273500BE89DC /* MainSpotlightControllerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3D31C40273500BE89DC /* MainSpotlightControllerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3D41C40273500BE89DC /* MainSpotlightControllerViewController.m */; };
+		0B71C3F81C40273500BE89DC /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3D31C40273500BE89DC /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B71C3F91C40273500BE89DC /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3D41C40273500BE89DC /* MainIBViewController.m */; };
 		0B71C3FA1C40273500BE89DC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B71C3DA1C40273500BE89DC /* Info.plist */; };
 		0B71C3FB1C40273500BE89DC /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3DC1C40273500BE89DC /* OTKTextChatComponent.h */; };
 		0B71C3FC1C40273500BE89DC /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3DD1C40273500BE89DC /* OTKTextChatComponent.m */; };
@@ -94,8 +94,8 @@
 		0B71C4001C40273500BE89DC /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E11C40273500BE89DC /* OTKTextChatView.m */; };
 		0B71C4021C40273500BE89DC /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E31C40273500BE89DC /* Reachability.h */; };
 		0B71C4031C40273500BE89DC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E41C40273500BE89DC /* Reachability.m */; };
-		0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E51C40273500BE89DC /* SpotlightApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B71C4051C40273500BE89DC /* SpotlightApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E61C40273500BE89DC /* SpotlightApi.m */; };
+		0B71C4041C40273500BE89DC /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E51C40273500BE89DC /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B71C4051C40273500BE89DC /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E61C40273500BE89DC /* IBApi.m */; };
 		0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */; };
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
 		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
@@ -149,7 +149,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0B41BFEC1C4EC00F002EAEF5 /* SpotlightKit.framework in Embed Frameworks */,
+				0B41BFEC1C4EC00F002EAEF5 /* IBKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,7 +185,7 @@
 		0B175BC61C4095B90091A6BE /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
 		0B296A7A1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
 		0B296A7B1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
-		0B71C3541C3F5D0F00BE89DC /* SpotlightDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotlightDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B71C3541C3F5D0F00BE89DC /* IB-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IB-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B71C3581C3F5D0F00BE89DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0B71C35A1C3F5D0F00BE89DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0B71C35B1C3F5D0F00BE89DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -194,8 +194,8 @@
 		0B71C3611C3F5D0F00BE89DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B71C3641C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpotlightDemo.xcdatamodel; sourceTree = "<group>"; };
 		0B71C36B1C3F5D0F00BE89DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0B71C3761C4026EE00BE89DC /* SpotlightKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SpotlightKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B71C3781C4026EE00BE89DC /* SpotlightKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotlightKit.h; sourceTree = "<group>"; };
+		0B71C3761C4026EE00BE89DC /* IBKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B71C3781C4026EE00BE89DC /* IBKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBKit.h; sourceTree = "<group>"; };
 		0B71C37A1C4026EE00BE89DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B71C3841C40272000BE89DC /* BackArrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-1.png"; sourceTree = "<group>"; };
 		0B71C3851C40272000BE89DC /* BackArrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-2.png"; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 		0B71C3931C40272000BE89DC /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
 		0B71C3941C40272000BE89DC /* icon-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close@2x.png"; sourceTree = "<group>"; };
 		0B71C3951C40272000BE89DC /* icon_sendMsgArrow_052015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sendMsgArrow_052015.png; sourceTree = "<group>"; };
-		0B71C3961C40272000BE89DC /* MainSpotlightControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainSpotlightControllerViewController.xib; sourceTree = "<group>"; };
+		0B71C3961C40272000BE89DC /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
 		0B71C3971C40272000BE89DC /* MainSpotlightView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainSpotlightView.xib; sourceTree = "<group>"; };
 		0B71C3981C40272000BE89DC /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		0B71C3991C40272000BE89DC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -240,8 +240,8 @@
 		0B71C3D01C40273500BE89DC /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		0B71C3D11C40273500BE89DC /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		0B71C3D21C40273500BE89DC /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
-		0B71C3D31C40273500BE89DC /* MainSpotlightControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSpotlightControllerViewController.h; sourceTree = "<group>"; };
-		0B71C3D41C40273500BE89DC /* MainSpotlightControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainSpotlightControllerViewController.m; sourceTree = "<group>"; };
+		0B71C3D31C40273500BE89DC /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
+		0B71C3D41C40273500BE89DC /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
 		0B71C3DA1C40273500BE89DC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B71C3DC1C40273500BE89DC /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
 		0B71C3DD1C40273500BE89DC /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
@@ -251,8 +251,8 @@
 		0B71C3E11C40273500BE89DC /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
 		0B71C3E31C40273500BE89DC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		0B71C3E41C40273500BE89DC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		0B71C3E51C40273500BE89DC /* SpotlightApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightApi.h; sourceTree = "<group>"; };
-		0B71C3E61C40273500BE89DC /* SpotlightApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightApi.m; sourceTree = "<group>"; };
+		0B71C3E51C40273500BE89DC /* IBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi.h; sourceTree = "<group>"; };
+		0B71C3E61C40273500BE89DC /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
 		0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
@@ -283,7 +283,7 @@
 				0BB44AD91C5044900076545C /* GLKit.framework in Frameworks */,
 				0BB44AD01C5044780076545C /* CoreGraphics.framework in Frameworks */,
 				0BB44ACB1C50446A0076545C /* AVKit.framework in Frameworks */,
-				0B41BFEB1C4EC00F002EAEF5 /* SpotlightKit.framework in Frameworks */,
+				0B41BFEB1C4EC00F002EAEF5 /* IBKit.framework in Frameworks */,
 				0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */,
 				0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */,
 				0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */,
@@ -348,8 +348,8 @@
 				0B175B611C4075A30091A6BE /* QuartzCore.framework */,
 				0B175B5E1C403B720091A6BE /* AVFoundation.framework */,
 				0B175B5B1C4039E50091A6BE /* Foundation.framework */,
-				0B71C3561C3F5D0F00BE89DC /* SpotlightDemo */,
-				0B71C3771C4026EE00BE89DC /* SpotlightKit */,
+				0B71C3561C3F5D0F00BE89DC /* IB-Demo */,
+				0B71C3771C4026EE00BE89DC /* IBKit */,
 				0B71C3551C3F5D0F00BE89DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -357,13 +357,13 @@
 		0B71C3551C3F5D0F00BE89DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0B71C3541C3F5D0F00BE89DC /* SpotlightDemo.app */,
-				0B71C3761C4026EE00BE89DC /* SpotlightKit.framework */,
+				0B71C3541C3F5D0F00BE89DC /* IB-Demo.app */,
+				0B71C3761C4026EE00BE89DC /* IBKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0B71C3561C3F5D0F00BE89DC /* SpotlightDemo */ = {
+		0B71C3561C3F5D0F00BE89DC /* IB-Demo */ = {
 			isa = PBXGroup;
 			children = (
 				0B175BAD1C4089D50091A6BE /* ExampleEventCell.xib */,
@@ -382,7 +382,7 @@
 				0B71C3631C3F5D0F00BE89DC /* SpotlightDemo.xcdatamodeld */,
 				0B71C3571C3F5D0F00BE89DC /* Supporting Files */,
 			);
-			path = SpotlightDemo;
+			path = "IB-Demo";
 			sourceTree = "<group>";
 		};
 		0B71C3571C3F5D0F00BE89DC /* Supporting Files */ = {
@@ -393,7 +393,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0B71C3771C4026EE00BE89DC /* SpotlightKit */ = {
+		0B71C3771C4026EE00BE89DC /* IBKit */ = {
 			isa = PBXGroup;
 			children = (
 				A081FE201C8FA56D00D7DF9D /* DotSpinnerView */,
@@ -408,19 +408,19 @@
 				0B71C3D01C40273500BE89DC /* EventsViewController.m */,
 				0B71C3D11C40273500BE89DC /* EventViewController.h */,
 				0B71C3D21C40273500BE89DC /* EventViewController.m */,
-				0B71C3D31C40273500BE89DC /* MainSpotlightControllerViewController.h */,
-				0B71C3D41C40273500BE89DC /* MainSpotlightControllerViewController.m */,
+				0B71C3D31C40273500BE89DC /* MainIBViewController.h */,
+				0B71C3D41C40273500BE89DC /* MainIBViewController.m */,
 				0B71C3E31C40273500BE89DC /* Reachability.h */,
 				0B71C3E41C40273500BE89DC /* Reachability.m */,
-				0B71C3E51C40273500BE89DC /* SpotlightApi.h */,
-				0B71C3E61C40273500BE89DC /* SpotlightApi.m */,
+				0B71C3E51C40273500BE89DC /* IBApi.h */,
+				0B71C3E61C40273500BE89DC /* IBApi.m */,
 				0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */,
 				0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */,
-				0B71C3781C4026EE00BE89DC /* SpotlightKit.h */,
+				0B71C3781C4026EE00BE89DC /* IBKit.h */,
 				0B71C3831C40272000BE89DC /* Assets */,
 				0B71C37A1C4026EE00BE89DC /* Info.plist */,
 			);
-			path = SpotlightKit;
+			path = IBKit;
 			sourceTree = "<group>";
 		};
 		0B71C3831C40272000BE89DC /* Assets */ = {
@@ -444,7 +444,7 @@
 				0B71C3931C40272000BE89DC /* icon-close.png */,
 				0B71C3941C40272000BE89DC /* icon-close@2x.png */,
 				0B71C3951C40272000BE89DC /* icon_sendMsgArrow_052015.png */,
-				0B71C3961C40272000BE89DC /* MainSpotlightControllerViewController.xib */,
+				0B71C3961C40272000BE89DC /* MainIBViewController.xib */,
 				0B71C3971C40272000BE89DC /* MainSpotlightView.xib */,
 				0B71C3981C40272000BE89DC /* Montserrat-Bold.ttf */,
 				0B71C3991C40272000BE89DC /* Montserrat-Regular.ttf */,
@@ -556,7 +556,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B71C4041C40273500BE89DC /* SpotlightApi.h in Headers */,
+				0B71C4041C40273500BE89DC /* IBApi.h in Headers */,
 				0B71C4021C40273500BE89DC /* Reachability.h in Headers */,
 				0B71C3FF1C40273500BE89DC /* OTKTextChatView.h in Headers */,
 				0B71C3F21C40273500BE89DC /* DGActivityIndicatorView.h in Headers */,
@@ -569,7 +569,7 @@
 				0B71C3EF1C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.h in Headers */,
 				0B71C3F61C40273500BE89DC /* EventViewController.h in Headers */,
 				A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */,
-				0B71C3791C4026EE00BE89DC /* SpotlightKit.h in Headers */,
+				0B71C3791C4026EE00BE89DC /* IBKit.h in Headers */,
 				A081FE241C8FA56D00D7DF9D /* DotSpinnerViewController.h in Headers */,
 				0B175BC71C4095B90091A6BE /* SIOSocket.h in Headers */,
 				A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */,
@@ -578,16 +578,16 @@
 				0B71C3FD1C40273500BE89DC /* OTKTextChatTableViewCell.h in Headers */,
 				0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */,
 				A0524D1E1C8E13C400FF08BB /* SVProgressHUD.h in Headers */,
-				0B71C3F81C40273500BE89DC /* MainSpotlightControllerViewController.h in Headers */,
+				0B71C3F81C40273500BE89DC /* MainIBViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0B71C3531C3F5D0F00BE89DC /* SpotlightDemo */ = {
+		0B71C3531C3F5D0F00BE89DC /* IB-Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0B71C36E1C3F5D0F00BE89DC /* Build configuration list for PBXNativeTarget "SpotlightDemo" */;
+			buildConfigurationList = 0B71C36E1C3F5D0F00BE89DC /* Build configuration list for PBXNativeTarget "IB-Demo" */;
 			buildPhases = (
 				0B71C3501C3F5D0F00BE89DC /* Sources */,
 				0B71C3511C3F5D0F00BE89DC /* Frameworks */,
@@ -598,14 +598,14 @@
 			);
 			dependencies = (
 			);
-			name = SpotlightDemo;
+			name = "IB-Demo";
 			productName = SpotlightDemo;
-			productReference = 0B71C3541C3F5D0F00BE89DC /* SpotlightDemo.app */;
+			productReference = 0B71C3541C3F5D0F00BE89DC /* IB-Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0B71C3751C4026EE00BE89DC /* SpotlightKit */ = {
+		0B71C3751C4026EE00BE89DC /* IBKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0B71C37F1C4026EE00BE89DC /* Build configuration list for PBXNativeTarget "SpotlightKit" */;
+			buildConfigurationList = 0B71C37F1C4026EE00BE89DC /* Build configuration list for PBXNativeTarget "IBKit" */;
 			buildPhases = (
 				0B71C3711C4026EE00BE89DC /* Sources */,
 				0B71C3721C4026EE00BE89DC /* Frameworks */,
@@ -616,9 +616,9 @@
 			);
 			dependencies = (
 			);
-			name = SpotlightKit;
+			name = IBKit;
 			productName = SpotlightKit;
-			productReference = 0B71C3761C4026EE00BE89DC /* SpotlightKit.framework */;
+			productReference = 0B71C3761C4026EE00BE89DC /* IBKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -627,7 +627,7 @@
 		0B71C34C1C3F5D0F00BE89DC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Tokbox;
 				TargetAttributes = {
 					0B71C3531C3F5D0F00BE89DC = {
@@ -643,7 +643,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0B71C34F1C3F5D0F00BE89DC /* Build configuration list for PBXProject "SpotlightDemo" */;
+			buildConfigurationList = 0B71C34F1C3F5D0F00BE89DC /* Build configuration list for PBXProject "IB-Demo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -656,8 +656,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0B71C3531C3F5D0F00BE89DC /* SpotlightDemo */,
-				0B71C3751C4026EE00BE89DC /* SpotlightKit */,
+				0B71C3531C3F5D0F00BE89DC /* IB-Demo */,
+				0B71C3751C4026EE00BE89DC /* IBKit */,
 				0B78E5401C6BC1C8000040C7 /* Buid framework */,
 			);
 		};
@@ -713,7 +713,7 @@
 				0B71C3BB1C40272000BE89DC /* OTKTextChatDivTableViewCell.xib in Resources */,
 				0B71C3BA1C40272000BE89DC /* OTKTextChatComponent.xib in Resources */,
 				0B71C3B71C40272000BE89DC /* MainSpotlightView.xib in Resources */,
-				0B71C3B61C40272000BE89DC /* MainSpotlightControllerViewController.xib in Resources */,
+				0B71C3B61C40272000BE89DC /* MainIBViewController.xib in Resources */,
 				0B71C3AE1C40272000BE89DC /* icon-check-circle@2x.png in Resources */,
 				0B71C3B21C40272000BE89DC /* icon-close-circle@2x.png in Resources */,
 				0B71C3B81C40272000BE89DC /* Montserrat-Bold.ttf in Resources */,
@@ -764,14 +764,14 @@
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
 				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
 				A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
-				0B71C3F91C40273500BE89DC /* MainSpotlightControllerViewController.m in Sources */,
+				0B71C3F91C40273500BE89DC /* MainIBViewController.m in Sources */,
 				A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */,
 				0B71C4001C40273500BE89DC /* OTKTextChatView.m in Sources */,
 				A0524D211C8E13C400FF08BB /* SVRadialGradientLayer.m in Sources */,
 				0B71C3FE1C40273500BE89DC /* OTKTextChatTableViewCell.m in Sources */,
 				0B71C3EE1C40273500BE89DC /* dataButton.m in Sources */,
 				0B175BC81C4095B90091A6BE /* SIOSocket.m in Sources */,
-				0B71C4051C40273500BE89DC /* SpotlightApi.m in Sources */,
+				0B71C4051C40273500BE89DC /* IBApi.m in Sources */,
 				0B71C4031C40273500BE89DC /* Reachability.m in Sources */,
 				0B71C3FC1C40273500BE89DC /* OTKTextChatComponent.m in Sources */,
 				0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */,
@@ -887,13 +887,13 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OpenTok-iOS-2.7.1",
 				);
-				INFOPLIST_FILE = SpotlightDemo/Info.plist;
+				INFOPLIST_FILE = "IB-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.IBDemo;
+				PRODUCT_NAME = "IB-Demo";
 			};
 			name = Debug;
 		};
@@ -910,20 +910,19 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OpenTok-iOS-2.7.1",
 				);
-				INFOPLIST_FILE = SpotlightDemo/Info.plist;
+				INFOPLIST_FILE = "IB-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.IBDemo;
+				PRODUCT_NAME = "IB-Demo";
 			};
 			name = Release;
 		};
 		0B71C3801C4026EE00BE89DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -936,13 +935,13 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OpenTok-iOS-2.7.1",
 				);
-				INFOPLIST_FILE = SpotlightKit/Info.plist;
+				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.IBKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
@@ -954,7 +953,6 @@
 		0B71C3811C4026EE00BE89DC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -968,12 +966,12 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OpenTok-iOS-2.7.1",
 				);
-				INFOPLIST_FILE = SpotlightKit/Info.plist;
+				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.SpotlightKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.IBKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
@@ -999,7 +997,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0B71C34F1C3F5D0F00BE89DC /* Build configuration list for PBXProject "SpotlightDemo" */ = {
+		0B71C34F1C3F5D0F00BE89DC /* Build configuration list for PBXProject "IB-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B71C36C1C3F5D0F00BE89DC /* Debug */,
@@ -1008,7 +1006,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0B71C36E1C3F5D0F00BE89DC /* Build configuration list for PBXNativeTarget "SpotlightDemo" */ = {
+		0B71C36E1C3F5D0F00BE89DC /* Build configuration list for PBXNativeTarget "IB-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B71C36F1C3F5D0F00BE89DC /* Debug */,
@@ -1017,7 +1015,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0B71C37F1C4026EE00BE89DC /* Build configuration list for PBXNativeTarget "SpotlightKit" */ = {
+		0B71C37F1C4026EE00BE89DC /* Build configuration list for PBXNativeTarget "IBKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B71C3801C4026EE00BE89DC /* Debug */,

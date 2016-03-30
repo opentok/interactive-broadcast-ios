@@ -1,6 +1,6 @@
 //
 //  MultipleEventsExampleControllerViewController.m
-//  spotlightIos
+//  IB-ios
 //
 //  If you want to implement your own multiple events controller you will need to import
 //
@@ -8,7 +8,7 @@
 #import "MultipleEventsExampleControllerViewController.h"
 #import "dataButton.h"
 #import <QuartzCore/QuartzCore.h>
-#import "SpotlightApi.h"
+#import "IBApi.h"
 #import "EventViewController.h"
 
 @interface MultipleEventsExampleControllerViewController ()
@@ -34,7 +34,7 @@
     CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
     
-    allEvents = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+    allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
     if(allEvents)
     {
         //We filter our closed events

@@ -1,5 +1,5 @@
 //
-//  SpotlightApi.h
+//  IBApi.h
 //  ;
 //
 //  Created by Andrea Phillips on 15/12/2015.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SpotlightApi : NSObject;
+@interface IBApi : NSObject;
 
-+ (SpotlightApi*)sharedInstance;
++ (IBApi*)sharedInstance;
 
 - (NSMutableDictionary*)getEvents:(NSString*)instance_id
                          back_url:(NSString*)backend_base_url;

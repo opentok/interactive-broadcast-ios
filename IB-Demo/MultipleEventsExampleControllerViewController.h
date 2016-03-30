@@ -1,6 +1,6 @@
 //
 //  MultipleEventsExampleControllerViewController.h
-//  spotlightIos
+//  IB-ios
 //
 //  Created by Andrea Phillips on 14/12/2015.
 //  Copyright © 2015 Andrea Phillips. All rights reserved.

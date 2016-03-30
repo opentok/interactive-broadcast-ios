@@ -1,19 +1,19 @@
 //
-//  MainSpotlightControllerViewController.m
-//  spotlightIos
+//  MainIBViewController.m
+//  IB-ios
 //
 //  Created by Andrea Phillips on 30/09/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.
 //
 
-#import "MainSpotlightControllerViewController.h"
+#import "MainIBViewController.h"
 #import "EventsViewController.h"
 #import "EventViewController.h"
-#import "SpotlightApi.h"
+#import "IBApi.h"
 #import "Reachability.h"
 #import "SVProgressHUD.h"
 
-@interface MainSpotlightControllerViewController ()
+@interface MainIBViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *detailView;
 @property (nonatomic) NSString *instance_id;
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation MainSpotlightControllerViewController
+@implementation MainIBViewController
 
 static bool hasNetworkConnectivity = YES;
 
@@ -34,7 +34,7 @@ static bool hasNetworkConnectivity = YES;
             backend_base_url:(NSString *)abackend_url
                         user:(NSMutableDictionary *)aUser {
     
-    if(self = [super initWithNibName:@"MainSpotlightControllerViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
+    if(self = [super initWithNibName:@"MainIBViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         self.instance_id = ainstance_id;
         self.backend_base_url = abackend_url;
         self.user = aUser;
@@ -58,7 +58,7 @@ static bool hasNetworkConnectivity = YES;
     [self logReachability:self.internetReachability];
     
     if(hasNetworkConnectivity) {
-        self.instance_data = [[SpotlightApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+        self.instance_data = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
     }
     else{
         NSLog(@"error please check your internet");

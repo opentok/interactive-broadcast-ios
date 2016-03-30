@@ -1,26 +1,26 @@
 //
-//  SpotlightApi.m
-//  spotlightIos
+//  IBApi.m
+//  IB-ios
 //
 //  Created by Andrea Phillips on 15/12/2015.
 //  Copyright © 2015 Andrea Phillips. All rights reserved.
 //
 
-#import "SpotlightApi.h"
+#import "IBApi.h"
 
 #import <UIKit/UIKit.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
-@implementation SpotlightApi
+@implementation IBApi
 NSString *BACKEND_URL;
 
-+ (SpotlightApi*)sharedInstance
++ (IBApi*)sharedInstance
 {
-    static SpotlightApi *_sharedInstance = nil;
+    static IBApi *_sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInstance = [[SpotlightApi alloc] init];
+        _sharedInstance = [[IBApi alloc] init];
     });
     return _sharedInstance;
 }

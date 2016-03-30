@@ -1,6 +1,6 @@
 //
 //  EventViewController.m
-//  spotlightIos
+//  IB-ios
 //
 //  Created by Andrea Phillips on 30/09/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.
@@ -10,7 +10,7 @@
 #import "SIOSocket.h"
 
 #import "OTKTextChatComponent.h"
-#import "SpotlightApi.h"
+#import "IBApi.h"
 #import "PerformSelectorWithDebounce.h"
 
 #import "EventViewController.h"
@@ -182,7 +182,7 @@ static NSString* const kTextChatType = @"chatMessage";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [SVProgressHUD show];
-    [[SpotlightApi sharedInstance] creteEventToken:self.user[@"type"]
+    [[IBApi sharedInstance] creteEventToken:self.user[@"type"]
                                           back_url:instanceData[@"backend_base_url"]
                                               data:self.eventData
                                         completion:^(NSMutableDictionary *resultData) {
@@ -726,7 +726,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             self.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            [[SpotlightApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
+            [[IBApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
         }
     }
 }
@@ -1536,7 +1536,7 @@ didFailWithError:(OTError*)error
         [_producerSession disconnect:&error];
     }
     [_session disconnect:&error];
-    [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
+    [[IBApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:NULL];
     

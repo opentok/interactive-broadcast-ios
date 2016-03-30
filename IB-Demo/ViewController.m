@@ -1,20 +1,20 @@
 //
 //  ViewController.m
-//  spotlightIos
+//  IB-ios
 //
 //  Created by Andrea Phillips on 30/09/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.
 //
 
 #import "ViewController.h"
-#import "MainSpotlightControllerViewController.h"
+#import "MainIBViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *SingleInstanceButton;
 @property (weak, nonatomic) IBOutlet UIButton *SingleInstanceHost;
 @property (weak, nonatomic) IBOutlet UIButton *SingleInstanceFan;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) MainSpotlightControllerViewController  *spotlightController;
+@property (strong, nonatomic) MainIBViewController  *IBController;
 @property (strong, nonatomic) NSString *instance_id;
 @property (strong, nonatomic) NSString *backend_base_url;
 @property (strong, nonatomic) NSDictionary* user;
@@ -112,8 +112,8 @@
 //    NSString *stagingBackend = @"https://chatshow-tesla.herokuapp.com";
 //    NSString *demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
     NSString *MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
-    self.spotlightController = [[MainSpotlightControllerViewController alloc] initWithData:@"spotlight-mlb-210216" backend_base_url:MLBBackend user:userOptions];
-    [self presentViewController:self.spotlightController animated:NO completion:nil];
+    self.IBController = [[MainIBViewController alloc] initWithData:@"spotlight-mlb-210216" backend_base_url:MLBBackend user:userOptions];
+    [self presentViewController:self.IBController animated:NO completion:nil];
 }
 
 @end

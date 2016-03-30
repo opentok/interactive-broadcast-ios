@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  SpotlightDemo
+//  IB-Demo
 //
 //  Created by Andrea Phillips on 07/01/2016.
 //  Copyright © 2016 Tokbox. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  EventViewController.h
-//  spotlightIos
+//  IB-ios
 //
 //  Created by Andrea Phillips on 30/09/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.

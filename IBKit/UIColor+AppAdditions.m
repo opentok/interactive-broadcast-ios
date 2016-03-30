@@ -1,6 +1,6 @@
 //
 //  UIColor+AppAdditions.m
-//  spotlightIos
+//  IB-ios
 //
 //  Created by Andrea Phillips on 16/10/2015.
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.

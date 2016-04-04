@@ -50,6 +50,7 @@
 @property (nonatomic) NSString *userName;
 @property (nonatomic) Boolean isCeleb;
 @property (nonatomic) Boolean isHost;
+
 @property (nonatomic) NSString *connectionQuality;
 
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
@@ -147,6 +148,7 @@ static NSString* const kTextChatType = @"chatMessage";
         self.user = aUser;
         self.isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
         self.isHost = [aUser[@"type"] isEqualToString:@"host"];
+        
         isFan = !self.isCeleb && !self.isHost;
         
         isSingleEvent = aSingle;
@@ -726,7 +728,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             self.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            [[SpotlightApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
+            if([self.connectionData[@"enable_analytics"] isEqualToValue:@(YES)]){
+                [[SpotlightApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
+            }
         }
     }
 }
@@ -1536,7 +1540,9 @@ didFailWithError:(OTError*)error
         [_producerSession disconnect:&error];
     }
     [_session disconnect:&error];
-    [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
+    if([self.connectionData[@"enable_analytics"] isEqualToValue:@(YES)]){
+        [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
+    }
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:NULL];
     

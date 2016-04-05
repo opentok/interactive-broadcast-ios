@@ -1197,6 +1197,9 @@ didFailWithError:(OTError*)error
         
     };
     if([self.eventData[@"status"] isEqualToString:@"L"]){
+        NSString *url = [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image"]];
+        [self updateEventImage: url];
+        
         if (_subscribers.count > 0) {
             self.eventImage.hidden = YES;
         }else{

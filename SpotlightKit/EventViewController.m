@@ -127,6 +127,8 @@ long video_bw;
 long audio_bw;
 double video_pl_ratio;
 double audio_pl_ratio;
+NSString *frameRate;
+NSString *resolution;
 
 static NSString* const kTextChatType = @"chatMessage";
 
@@ -554,6 +556,11 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
+    
+    frameRate = @"30";
+//    resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width,subscriber.stream.videoDimensions.height];
+    resolution = @"640x480";
+    
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
@@ -622,12 +629,37 @@ static NSString* const kTextChatType = @"chatMessage";
         {
             return [subview removeFromSuperview];
         }
-    }}
+    }
+}
+
 //Network Test
+
+-(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
+    {
+    
+        NSDictionary* videoLimits = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSArray arrayWithObjects:@(250),@(350),@(600),@(1000), nil], @"1280x720-30",
+                                     [NSArray arrayWithObjects:@(150),@(250),@(350),@(800), nil], @"1280x720-15",
+                                     [NSArray arrayWithObjects:@(120),@(150),@(250),@(600), nil], @"1280x720-7",
+                                     //VGA
+                                     [NSArray arrayWithObjects:@(120),@(150),@(250),@(600), nil], @"640x480-30",
+                                     [NSArray arrayWithObjects:@(75),@(120),@(150),@(250), nil], @"640x480-15",
+                                     [NSArray arrayWithObjects:@(50),@(75),@(120),@(200), nil], @"640x480-7",
+                                     //QVGA
+                                     [NSArray arrayWithObjects:@(100),@(120),@(200),@(300), nil], @"320X240-30",
+                                     [NSArray arrayWithObjects:@(100),@(120),@(200),@(300), nil], @"320X240-15",
+                                     [NSArray arrayWithObjects:@(50),@(75),@(100),@(300), nil], @"320X240-7",
+                                     nil];
+        
+        NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
+        return videoLimits[key];
+}
 
 - (void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
+
+    
     if (prevVideoTimestamp == 0)
     {
         prevVideoTimestamp = stats.timestamp;
@@ -667,23 +699,31 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 
 - (void)checkQualityAndSendSignal
 {
-    BOOL canDoVideo = (video_bw >= 150000 && video_pl_ratio <= 0.03);
-//    BOOL canDoAudio = true;
-
-    if (!canDoVideo)
-    {
-        self.connectionQuality = @"Poor";
-        
-    } else
-    {
-        self.connectionQuality = @"Great";
+    NSArray *aVideoLimits = [self getVideoLimits:resolution framerate:frameRate];
+    NSString *quality = @"";
+    
+    
+    if (video_bw < aVideoLimits[0]) {
+        quality = @"Poor";
+    } else if (video_bw > aVideoLimits[0] && video_bw <= aVideoLimits[1] && video_pl_ratio < 0.1 ) {
+        quality = @"Poor";
+    } else if (video_bw > aVideoLimits[0] && video_pl_ratio > 0.1 ) {
+        quality = @"Poor";
+    } else if (video_bw > aVideoLimits[1] && video_bw <= aVideoLimits[2] && video_pl_ratio < 0.1 ) {
+        quality = @"Poor";
+    } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
+        quality = @"Poor";
+    } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio < 0.02 ) {
+        quality = @"Good";
+    } else if (video_bw > aVideoLimits[3] && video_pl_ratio < 0.1) {
+        quality = @"Great";
     }
     
     NSDictionary *data = @{
                            @"type" : @"qualityUpdate",
                            @"data" :@{
                                    @"connectionId": _publisher.session.connection.connectionId,
-                                   @"quality" : self.connectionQuality,
+                                   @"quality" : quality,
                                    },
                            };
     
@@ -692,16 +732,14 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     if (error) {
         NSLog(@"signal didFailWithError %@", error);
     } else {
-        NSLog(@"quality update sent  %@", self.connectionQuality);
+        NSLog(@"quality update sent  %@",quality);
     }
     
     NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
     [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
     
-    
-    
 }
-
+///end network test //
 
 
 # pragma mark - OTSession delegate callbacks

@@ -728,7 +728,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             self.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            if([self.connectionData[@"enable_analytics"] isEqualToValue:@(YES)]){
+            if([self.connectionData[@"enable_analytics"] boolValue]){
                 [[SpotlightApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
             }
         }
@@ -1540,7 +1540,7 @@ didFailWithError:(OTError*)error
         [_producerSession disconnect:&error];
     }
     [_session disconnect:&error];
-    if([self.connectionData[@"enable_analytics"] isEqualToValue:@(YES)]){
+    if([self.connectionData[@"enable_analytics"] boolValue]){
         [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
     }
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];

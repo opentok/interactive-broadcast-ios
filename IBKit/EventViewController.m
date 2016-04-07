@@ -465,18 +465,22 @@ static NSString* const kTextChatType = @"chatMessage";
     
     NSLog(@"stream DESTROYED PUBLISHER");
 
-    NSString *connectingTo =[self getStreamData:stream.connection.data];
-    OTSubscriber *_subscriber = _subscribers[connectingTo];
-    if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
-    {
-        NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
-        [self cleanupSubscriber:connectingTo];
+    if (stream.connection) {
+        NSString *connectingTo =[self getStreamData:stream.connection.data];
+        OTSubscriber *_subscriber = _subscribers[connectingTo];
+        if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
+        {
+            NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
+            [self cleanupSubscriber:connectingTo];
+        }
     }
+    
     if(_selfSubscriber){
         [_producerSession unsubscribe:_selfSubscriber error:nil];
         _selfSubscriber = nil;
     }
     
+#warning - double check
     [self cleanupPublisher];
 }
 
@@ -493,7 +497,9 @@ static NSString* const kTextChatType = @"chatMessage";
 //Subscribers
 - (void)doSubscribe:(OTStream*)stream
 {
+    if (!stream || !stream.connection) return;
     
+#warning - double check _producerSession and _session
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     if(stream.session.connection.connectionId != _producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];

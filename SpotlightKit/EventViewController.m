@@ -51,6 +51,9 @@
 @property (nonatomic) Boolean isCeleb;
 @property (nonatomic) Boolean isHost;
 
+@property (nonatomic) BOOL connectedToOnstageSession;
+@property (nonatomic) NSMutableDictionary *errors;
+
 @property (nonatomic) NSString *connectionQuality;
 
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
@@ -466,7 +469,10 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     
     NSLog(@"stream DESTROYED PUBLISHER");
-
+    NSLog(@"%ld",[stream.connection isMemberOfClass:[OTConnection class]]);
+    
+    if(!stream.connection || ![stream.connection isMemberOfClass:[OTConnection class]] || !stream.connection.data) return;
+    
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
@@ -474,6 +480,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         [self cleanupSubscriber:connectingTo];
     }
+    
     if(_selfSubscriber){
         [_producerSession unsubscribe:_selfSubscriber error:nil];
         _selfSubscriber = nil;
@@ -719,6 +726,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             NSLog(@"sessionDidConnect to Onstage");
             (self.statusLabel).text = @"";
             self.closeEvenBtn.hidden = NO;
+            self.connectedToOnstageSession = YES;
         }
         if(session.sessionId == _producerSession.sessionId){
             NSLog(@"sessionDidConnect to Backstage");
@@ -753,6 +761,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         self.getInLineBtn.hidden = YES;
         _session = nil;
+        self.connectedToOnstageSession = NO;
     }
 }
 
@@ -826,7 +835,7 @@ streamDestroyed:(OTStream *)stream
             if([type isEqualToString:@"fan"]){
                 _fanStream = nil;
             }
-            [self cleanupSubscriber:type];
+            //[self cleanupSubscriber:type];
         }
     }
     
@@ -844,14 +853,14 @@ connectionCreated:(OTConnection *)connection
 connectionDestroyed:(OTConnection *)connection
 {
     NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
-    NSString *connectingTo =[self getStreamData:connection.data];
-    OTSubscriber *_subscriber = _subscribers[connectingTo];
-    
-    if ([_subscriber.stream.connection.connectionId
-         isEqualToString:connection.connectionId])
-    {
-        [self cleanupSubscriber:connectingTo];
-    }
+//    NSString *connectingTo =[self getStreamData:connection.data];
+//    OTSubscriber *_subscriber = _subscribers[connectingTo];
+//    
+//    if ([_subscriber.stream.connection.connectionId
+//         isEqualToString:connection.connectionId])
+//    {
+//        [self cleanupSubscriber:connectingTo];
+//    }
 }
 
 - (void) session:(OTSession*)session
@@ -1093,6 +1102,31 @@ didFailWithError:(OTError*)error
     }
 }
 
+- (void)sendWarningSignal
+{
+
+    BOOL subscribing =  _subscribers.count == 0 ? false : true;
+    
+    NSDictionary *data = @{
+                           @"type" : @"warning",
+                           @"data" :@{
+                                   @"connected": @(self.connectedToOnstageSession),
+                                   @"subscribing":@(subscribing),
+                                   @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
+                                   },
+                           };
+    
+    OTError* error = nil;
+    
+    if (error) {
+        NSLog(@"signal error %@", error);
+    } else {
+        NSLog(@"signal sent of type Warning");
+    }
+    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+    [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
+}
+
 - (void)sendNewUserSignal
 {
     if(!self.connectionQuality){
@@ -1105,7 +1139,9 @@ didFailWithError:(OTError*)error
                                    @"username": self.userName,
                                    @"quality":self.connectionQuality,
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@"true"
+                                   @"mobile":@"true",
+                                   @"os":@"iOS",
+                                   @"device":[[UIDevice currentDevice] model]
                                    },
                            @"chat" : @{
                                    @"chatting" : @"false",

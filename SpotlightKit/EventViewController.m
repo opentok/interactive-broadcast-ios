@@ -472,6 +472,9 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     
     NSLog(@"stream DESTROYED PUBLISHER");
+    NSLog(@"%ld",[stream.connection isMemberOfClass:[OTConnection class]]);
+    
+    if(!stream.connection || ![stream.connection isMemberOfClass:[OTConnection class]] || !stream.connection.data) return;
     
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];

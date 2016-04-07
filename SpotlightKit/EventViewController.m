@@ -470,11 +470,11 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)publisher:(OTPublisherKit*)publisher
   streamDestroyed:(OTStream *)stream
 {
-    
     NSLog(@"stream DESTROYED PUBLISHER");
-    NSLog(@"%ld",[stream.connection isMemberOfClass:[OTConnection class]]);
+
+    if(!stream.connection) return;
     
-    if(!stream.connection || ![stream.connection isMemberOfClass:[OTConnection class]] || !stream.connection.data) return;
+    NSLog(@"%ld",[stream.connection isMemberOfClass:[OTConnection class]]);
     
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];
@@ -549,8 +549,8 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)cleanupSubscriber:(NSString*)type
 {
     OTSubscriber *_subscriber = _subscribers[type];
-    [_subscriber.view removeFromSuperview];
     if(_subscriber){
+        [_subscriber.view removeFromSuperview];
         [_subscribers removeObjectForKey:type];
         _subscriber = nil;
     }
@@ -647,21 +647,20 @@ static NSString* const kTextChatType = @"chatMessage";
 -(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
 {
     
-    NSDictionary* videoLimits = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [NSArray arrayWithObjects:@(250),@(350),@(600),@(1000), nil], @"1280x720-30",
-                                 [NSArray arrayWithObjects:@(150),@(250),@(350),@(800), nil], @"1280x720-15",
-                                 [NSArray arrayWithObjects:@(120),@(150),@(250),@(600), nil], @"1280x720-7",
+    NSDictionary* videoLimits = @{@[@(250),@(350),@(600),@(1000)]:@"1280x720-30",
+                                 @[@(150),@(250),@(350),@(800)]: @"1280x720-15",
+                                  @[@(120),@(150),@(250),@(600)]:@"1280x720-7",
                                  //VGA
-                                 [NSArray arrayWithObjects:@(600),@(250),@(250),@(600),@(150),@(150),@(120), nil], @"640x480-30",
-                                 [NSArray arrayWithObjects:@(400),@(200),@(150),@(200),@(120),@(120),@(75), nil], @"640x480-15",
-                                 [NSArray arrayWithObjects:@(200),@(150),@(120),@(150),@(75),@(50),@(50), nil], @"640x480-7",
+                                  @[@(600),@(250),@(250),@(600),@(150),@(150),@(120)]: @"640x480-30",
+                                  @[@(400),@(200),@(150),@(200),@(120),@(120),@(75)]: @"640x480-15",
+                                  @[@(200),@(150),@(120),@(150),@(75),@(50),@(50)]: @"640x480-7",
                                  //QVGA
-                                 [NSArray arrayWithObjects:@(300),@(200),@(120),@(200),@(120),@(100), nil], @"320X240-30",
-                                 [NSArray arrayWithObjects:@(200),@(150),@(120),@(150),@(120),@(100), nil], @"320X240-15",
-                                 [NSArray arrayWithObjects:@(150),@(100),@(100),@(150),@(75),@(50), nil], @"320X240-7",
-                                 nil];
+                                  @[@(300),@(200),@(120),@(200),@(120),@(100)]: @"320X240-30",
+                                  @[@(200),@(150),@(120),@(150),@(120),@(100)]:@"320X240-15",
+                                  @[@(150),@(100),@(100),@(150),@(75),@(50)]: @"320X240-7"};
     
     NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
+    NSLog(@"%@",key);
     return videoLimits[key];
 }
 
@@ -729,7 +728,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 
 - (void)checkQualityAndSendSignal
 {
-    if(_publisher){
+    if(_publisher && _publisher.session){
         
         NSArray *aVideoLimits = [self getVideoLimits:resolution framerate:frameRate];
         NSString *quality = @"";
@@ -856,8 +855,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         self.getInLineBtn.hidden = NO;
         shouldResendProducerSignal = YES;
         [self cleanupPublisher];
-        
-        
         self.leaveLineBtn.hidden = YES;
         [self hideNotification];
     }else{
@@ -937,7 +934,7 @@ streamDestroyed:(OTStream *)stream
             if([type isEqualToString:@"fan"]){
                 _fanStream = nil;
             }
-            //[self cleanupSubscriber:type];
+            [self cleanupSubscriber:type];
         }
     }
     
@@ -955,14 +952,14 @@ connectionCreated:(OTConnection *)connection
 connectionDestroyed:(OTConnection *)connection
 {
     NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
-//    NSString *connectingTo =[self getStreamData:connection.data];
-//    OTSubscriber *_subscriber = _subscribers[connectingTo];
-//    
-//    if ([_subscriber.stream.connection.connectionId
-//         isEqualToString:connection.connectionId])
-//    {
-//        [self cleanupSubscriber:connectingTo];
-//    }
+    NSString *connectingTo =[self getStreamData:connection.data];
+    OTSubscriber *_subscriber = _subscribers[connectingTo];
+    
+    if ([_subscriber.stream.connection.connectionId
+         isEqualToString:connection.connectionId])
+    {
+        [self cleanupSubscriber:connectingTo];
+    }
 }
 
 - (void) session:(OTSession*)session

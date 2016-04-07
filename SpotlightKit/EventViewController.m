@@ -452,7 +452,7 @@ static NSString* const kTextChatType = @"chatMessage";
         
         OTError *error = nil;
         [_producerSession subscribe: _selfSubscriber error:&error];
-        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
+        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
         if (error)
         {
             NSLog(@"subscribe self error");
@@ -800,7 +800,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         
         NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
         [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
-        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
+        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
     }
 }
 ///end network test //

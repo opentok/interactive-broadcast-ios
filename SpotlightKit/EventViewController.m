@@ -412,6 +412,9 @@ static NSString* const kTextChatType = @"chatMessage";
     if (error)
     {
         NSLog(@"%@", error);
+        if(!self.connectedToOnstageSession || ([eventData[@"status"] isEqualToString:@"L"] && self.errors)){
+            [self sendWarningSignal];
+        }
         [self showAlert:error.localizedDescription];
     }
     [session publish:_publisher error:&error];
@@ -496,6 +499,10 @@ static NSString* const kTextChatType = @"chatMessage";
  didFailWithError:(OTError*) error
 {
     NSLog(@"publisher didFailWithError %@", error);
+    if(!self.connectedToOnstageSession || ([eventData[@"status"] isEqualToString:@"L"] && self.errors)){
+        [self sendWarningSignal];
+    }
+    
     [self cleanupPublisher];
 }
 
@@ -516,6 +523,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_session subscribe: _subscribers[connectingTo] error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:connectingTo];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
@@ -528,6 +536,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_producerSession subscribe: _producerSubscriber error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:@"producer_backstage"];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -539,6 +548,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_session subscribe: _privateProducerSubscriber error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:@"producer_onstage"];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -566,7 +576,6 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     
     frameRate = @"30";
-    //    resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width,subscriber.stream.videoDimensions.height];
     resolution = @"640X480";
     
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
@@ -686,6 +695,8 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
+    //resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width,subscriber.stream.videoDimensions.height];
+    
     if (prevVideoTimestamp == 0)
     {
         prevVideoTimestamp = stats.timestamp;
@@ -1002,7 +1013,7 @@ didFailWithError:(OTError*)error
         [self statusChanged];
     }
     if([type isEqualToString:@"openChat"]){
-        self.chatBtn.hidden = NO;
+        //self.chatBtn.hidden = NO;
         _producerConnection = connection;
     }
     if([type isEqualToString:@"closeChat"]){
@@ -1203,7 +1214,7 @@ didFailWithError:(OTError*)error
 - (void)sendWarningSignal
 {
 
-    BOOL subscribing =  _subscribers.count == 0 ? false : true;
+    BOOL subscribing =  self.errors.count == 0 ? false : true;
     
     NSDictionary *data = @{
                            @"type" : @"warning",

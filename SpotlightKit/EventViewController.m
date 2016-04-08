@@ -455,7 +455,7 @@ static NSString* const kTextChatType = @"chatMessage";
         
         OTError *error = nil;
         [_producerSession subscribe: _selfSubscriber error:&error];
-        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
+        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
         if (error)
         {
             NSLog(@"subscribe self error");
@@ -592,8 +592,6 @@ static NSString* const kTextChatType = @"chatMessage";
         subscriber.subscribeToAudio = NO;
     }
     
-    
-    
 }
 
 - (void)subscriber:(OTSubscriberKit*)subscriber
@@ -722,8 +720,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         prevVideoPacketsLost = videoStats.videoPacketsLost;
         prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
     }
-    [self checkQualityAndSendSignal];
-    //[self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
+    //[self checkQualityAndSendSignal];
+    [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
 }
 
 - (void)checkQualityAndSendSignal
@@ -806,7 +804,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         
         NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
         [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
-        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
+        [self startNetworkTest];
+        //[self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
     }
 }
 ///end network test //

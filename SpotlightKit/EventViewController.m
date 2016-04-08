@@ -915,6 +915,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
+            if(_producerSession){
+                shouldResendProducerSignal = YES;
+            }
         }
         
     }
@@ -1058,11 +1061,6 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"resendNewFanSignal"]){
         
         if(shouldResendProducerSignal){
-//            [self disconnectBackstage];
-//            _producerSession = [[OTSession alloc] initWithApiKey:self.apikey
-//                                                       sessionId:self.connectionData[@"sessionIdProducer"]
-//                                                        delegate:self];
-//            [self inLineConnect];
             [self sendNewUserSignal];
         }
         

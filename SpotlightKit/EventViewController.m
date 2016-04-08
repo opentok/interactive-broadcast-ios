@@ -645,17 +645,19 @@ static NSString* const kTextChatType = @"chatMessage";
 -(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
 {
     
-    NSDictionary* videoLimits = @{@[@(250),@(350),@(600),@(1000)]:@"1280x720-30",
-                                 @[@(150),@(250),@(350),@(800)]: @"1280x720-15",
-                                  @[@(120),@(150),@(250),@(600)]:@"1280x720-7",
-                                 //VGA
-                                  @[@(600),@(250),@(250),@(600),@(150),@(150),@(120)]: @"640x480-30",
-                                  @[@(400),@(200),@(150),@(200),@(120),@(120),@(75)]: @"640x480-15",
-                                  @[@(200),@(150),@(120),@(150),@(75),@(50),@(50)]: @"640x480-7",
-                                 //QVGA
-                                  @[@(300),@(200),@(120),@(200),@(120),@(100)]: @"320X240-30",
-                                  @[@(200),@(150),@(120),@(150),@(120),@(100)]:@"320X240-15",
-                                  @[@(150),@(100),@(100),@(150),@(75),@(50)]: @"320X240-7"};
+    NSDictionary* videoLimits = @{
+                                  @"1280x720-30": @[@(250),@(350),@(600),@(1000)],
+                                  @"1280x720-15": @[@(150),@(250),@(350),@(800)],
+                                  @"1280x720-7": @[@(120),@(150),@(250),@(600)],
+                                  //VGA
+                                  @"640x480-30": @[@(600),@(250),@(250),@(600),@(150),@(150),@(120)],
+                                  @"640x480-15": @[@(400),@(200),@(150),@(200),@(120),@(120),@(75)],
+                                  @"640x480-7": @[@(200),@(150),@(120),@(150),@(75),@(50),@(50)],
+                                  //QVGA
+                                  @"320x240-30": @[@(300),@(200),@(120),@(200),@(120),@(100)],
+                                  @"320x240-15": @[@(200),@(150),@(120),@(150),@(120),@(100)],
+                                  @"320x240-7": @[@(150),@(100),@(100),@(150),@(75),@(50)]
+    };
     
     NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
     NSLog(@"%@",key);
@@ -666,7 +668,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if(!isBackstage){
         return;
     }
-    if(self.eventData[@"status"] = @"L"){
+    if([self.eventData[@"status"] isEqualToString:@"L"]) {
         if(_hostStream && _hostStream.hasVideo){
             OTSubscriber *test = _subscribers[@"host"];
             test.networkStatsDelegate = self;
@@ -729,57 +731,59 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     if(_publisher && _publisher.session){
         
         NSArray *aVideoLimits = [self getVideoLimits:resolution framerate:frameRate];
-        NSString *quality = @"";
+        if (!aVideoLimits) return;
         
-        if([resolution isEqualToString:@"1280X720"]){
-            if (video_bw < aVideoLimits[0]) {
+        NSString *quality;
+        
+        if([resolution isEqualToString:@"1280x720"]){
+            if (video_bw < [aVideoLimits[0] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[0] && video_bw <= aVideoLimits[1] && video_pl_ratio < 0.1 ) {
+            } else if (video_bw > [aVideoLimits[0] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[0] && video_pl_ratio > 0.1 ) {
+            } else if (video_bw > [aVideoLimits[0] longValue] && video_pl_ratio > 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[1] && video_bw <= aVideoLimits[2] && video_pl_ratio < 0.1 ) {
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[2] longValue] && video_pl_ratio < 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio < 0.02 ) {
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio < 0.02 ) {
                 quality = @"Good";
-            } else if (video_bw > aVideoLimits[3] && video_pl_ratio < 0.1) {
+            } else if (video_bw > [aVideoLimits[3] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Great";
             }
         }
         
-        if([resolution isEqualToString:@"640X480"]){
-            if(video_bw > aVideoLimits[0] && video_pl_ratio < 0.1) {
+        if([resolution isEqualToString:@"640x480"]){
+            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (video_bw > aVideoLimits[1] && video_bw <= aVideoLimits[0] && video_pl_ratio <0.02) {
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[4] && video_bw <= aVideoLimits[0] && video_pl_ratio < 0.1) {
+            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_pl_ratio > 0.1 && video_bw > aVideoLimits[5]) {
+            } else if (video_pl_ratio > 0.1 && video_bw > [aVideoLimits[5] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw >aVideoLimits[6] && video_bw <= aVideoLimits[4] && video_pl_ratio < 0.1) {
+            } else if (video_bw >[aVideoLimits[6] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw < aVideoLimits[6] || video_pl_ratio > 0.1) {
+            } else if (video_bw < [aVideoLimits[6] longValue] || video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }
-        if([resolution isEqualToString:@"320X240"]){
-            if(video_bw > aVideoLimits[0] && video_pl_ratio < 0.1) {
+        if([resolution isEqualToString:@"320x240"]){
+            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (video_bw > aVideoLimits[1] && video_bw <= aVideoLimits[0] && video_pl_ratio <0.02) {
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (video_bw > aVideoLimits[2] && video_bw <= aVideoLimits[3] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw > aVideoLimits[4] && video_bw <= aVideoLimits[1] && video_pl_ratio < 0.1) {
+            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_pl_ratio > 0.1 && video_bw >aVideoLimits[4]) {
+            } else if (video_pl_ratio > 0.1 && video_bw >[aVideoLimits[4] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw >aVideoLimits[5] && video_bw <= aVideoLimits[4] && video_pl_ratio < 0.1) {
+            } else if (video_bw >[aVideoLimits[5] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw < aVideoLimits[5] || video_pl_ratio > 0.1) {
+            } else if (video_bw < [aVideoLimits[5] longValue] || video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }

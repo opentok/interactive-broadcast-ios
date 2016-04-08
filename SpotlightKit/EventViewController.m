@@ -398,6 +398,7 @@ static NSString* const kTextChatType = @"chatMessage";
     }
     [self adjustChildrenWidth];
 }
+
 -(void) publishTo:(OTSession *)session
 {
     if(_publisher){
@@ -475,7 +476,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     NSLog(@"stream DESTROYED PUBLISHER");
 
-    if(!stream.connection) return;
+    if(!_publisher.stream && !stream.connection) return;
     
     NSLog(@"%ld",[stream.connection isMemberOfClass:[OTConnection class]]);
     
@@ -560,6 +561,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     OTSubscriber *_subscriber = _subscribers[type];
     if(_subscriber){
+        NSLog(@"SUBSCRIBER CLEANING UP");
         [_subscriber.view removeFromSuperview];
         [_subscribers removeObjectForKey:type];
         _subscriber = nil;
@@ -576,7 +578,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     
     frameRate = @"30";
-    resolution = @"640X480";
+    resolution = @"640x480";
     
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
@@ -913,6 +915,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
+            if(_producerSession){
+                shouldResendProducerSignal = YES;
+            }
         }
         
     }
@@ -948,7 +953,7 @@ streamDestroyed:(OTStream *)stream
             if([type isEqualToString:@"fan"]){
                 _fanStream = nil;
             }
-            [self cleanupSubscriber:type];
+           [self cleanupSubscriber:type];
         }
     }
     
@@ -1056,11 +1061,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"resendNewFanSignal"]){
         
         if(shouldResendProducerSignal){
-            [self disconnectBackstage];
-            _producerSession = [[OTSession alloc] initWithApiKey:self.apikey
-                                                       sessionId:self.connectionData[@"sessionIdProducer"]
-                                                        delegate:self];
-            [self inLineConnect];
+            [self sendNewUserSignal];
         }
         
     }
@@ -1270,11 +1271,11 @@ didFailWithError:(OTError*)error
         NSLog(@"signal sent of type newFan");
     }
     NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"newFan" string:stringified connection:_publisher.stream.connection error:&error];
+    [_producerSession signalWithType:@"newFan" string:stringified connection:nil error:&error];
 }
 
 - (void)captureAndSendScreenshot{
-    
+    self.inLineHolder.alpha = 1;
     UIView* screenCapture = [_publisher.view snapshotViewAfterScreenUpdates:YES];
     if(screenCapture){
         [self.inLineHolder addSubview:screenCapture];

@@ -948,19 +948,19 @@ connectionCreated:(OTConnection *)connection
 }
 
 
-- (void)    session:(OTSession *)session
-connectionDestroyed:(OTConnection *)connection
-{
-    NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
-    NSString *connectingTo =[self getStreamData:connection.data];
-    OTSubscriber *_subscriber = _subscribers[connectingTo];
-    
-    if ([_subscriber.stream.connection.connectionId
-         isEqualToString:connection.connectionId])
-    {
-        [self cleanupSubscriber:connectingTo];
-    }
-}
+//- (void)    session:(OTSession *)session
+//connectionDestroyed:(OTConnection *)connection
+//{
+//    NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
+//    NSString *connectingTo =[self getStreamData:connection.data];
+//    OTSubscriber *_subscriber = _subscribers[connectingTo];
+//    
+//    if ([_subscriber.stream.connection.connectionId
+//         isEqualToString:connection.connectionId])
+//    {
+//        [self cleanupSubscriber:connectingTo];
+//    }
+//}
 
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error

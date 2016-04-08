@@ -576,7 +576,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     
     frameRate = @"30";
-    resolution = @"640X480";
+    resolution = @"640x480";
     
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
@@ -948,7 +948,7 @@ streamDestroyed:(OTStream *)stream
             if([type isEqualToString:@"fan"]){
                 _fanStream = nil;
             }
-            [self cleanupSubscriber:type];
+//            [self cleanupSubscriber:type];
         }
     }
     

@@ -1242,6 +1242,8 @@ didFailWithError:(OTError*)error
 
 - (void)sendNewUserSignal
 {
+    NSLog(@"sending new user signal");
+    
     if(!self.connectionQuality){
         self.connectionQuality = @"Good";
     }
@@ -1252,7 +1254,9 @@ didFailWithError:(OTError*)error
                                    @"username": self.userName,
                                    @"quality":self.connectionQuality,
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@"true"
+                                   @"mobile":@"true",
+                                   @"os":@"iOS",
+                                   @"device":[[UIDevice currentDevice] model]
                                    },
                            @"chat" : @{
                                    @"chatting" : @"false",

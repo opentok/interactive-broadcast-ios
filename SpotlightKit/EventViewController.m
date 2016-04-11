@@ -127,6 +127,8 @@ long video_bw;
 long audio_bw;
 double video_pl_ratio;
 double audio_pl_ratio;
+NSString *frameRate;
+NSString *resolution;
 
 static NSString* const kTextChatType = @"chatMessage";
 
@@ -393,6 +395,7 @@ static NSString* const kTextChatType = @"chatMessage";
     }
     [self adjustChildrenWidth];
 }
+
 -(void) publishTo:(OTSession *)session
 {
     if(_publisher){
@@ -407,6 +410,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if (error)
     {
         NSLog(@"%@", error);
+        [self sendWarningSignal];
         [self showAlert:error.localizedDescription];
     }
     [session publish:_publisher error:&error];
@@ -445,11 +449,12 @@ static NSString* const kTextChatType = @"chatMessage";
     if(isBackstage){
         NSLog(@"stream Created PUBLISHER BACK");
         _selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        _selfSubscriber.networkStatsDelegate = self;
+        
         _selfSubscriber.subscribeToAudio = NO;
         
         OTError *error = nil;
         [_producerSession subscribe: _selfSubscriber error:&error];
+        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
         if (error)
         {
             NSLog(@"subscribe self error");
@@ -464,7 +469,6 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)publisher:(OTPublisherKit*)publisher
   streamDestroyed:(OTStream *)stream
 {
-    
     NSLog(@"stream DESTROYED PUBLISHER");
 
     NSString *connectingTo =[self getStreamData:stream.connection.data];
@@ -486,6 +490,8 @@ static NSString* const kTextChatType = @"chatMessage";
  didFailWithError:(OTError*) error
 {
     NSLog(@"publisher didFailWithError %@", error);
+    [self.errors setObject:error forKey:@"publisherError"];
+    [self sendWarningSignal];
     [self cleanupPublisher];
 }
 
@@ -506,6 +512,9 @@ static NSString* const kTextChatType = @"chatMessage";
         [_session subscribe: _subscribers[connectingTo] error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:connectingTo];
+
+            [self sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
@@ -518,6 +527,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_producerSession subscribe: _producerSubscriber error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:@"producer_backstage"];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -529,6 +539,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_session subscribe: _privateProducerSubscriber error:&error];
         if (error)
         {
+            [self.errors setObject:error forKey:@"producer_onstage"];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -539,8 +550,9 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)cleanupSubscriber:(NSString*)type
 {
     OTSubscriber *_subscriber = _subscribers[type];
-    [_subscriber.view removeFromSuperview];
     if(_subscriber){
+        NSLog(@"SUBSCRIBER CLEANING UP");
+        [_subscriber.view removeFromSuperview];
         [_subscribers removeObjectForKey:type];
         _subscriber = nil;
     }
@@ -554,6 +566,10 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
+    
+    frameRate = @"30";
+    resolution = @"640x480";
+    
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
@@ -622,12 +638,59 @@ static NSString* const kTextChatType = @"chatMessage";
         {
             return [subview removeFromSuperview];
         }
-    }}
+    }
+}
+
 //Network Test
 
-- (void)subscriber:(OTSubscriberKit*)subscriber
+-(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
+{
+    
+    NSDictionary* videoLimits = @{
+                                  @"1280x720-30": @[@(250),@(350),@(600),@(1000)],
+                                  @"1280x720-15": @[@(150),@(250),@(350),@(800)],
+                                  @"1280x720-7": @[@(120),@(150),@(250),@(600)],
+                                  //VGA
+                                  @"640x480-30": @[@(600),@(250),@(250),@(600),@(150),@(150),@(120)],
+                                  @"640x480-15": @[@(400),@(200),@(150),@(200),@(120),@(120),@(75)],
+                                  @"640x480-7": @[@(200),@(150),@(120),@(150),@(75),@(50),@(50)],
+                                  //QVGA
+                                  @"320x240-30": @[@(300),@(200),@(120),@(200),@(120),@(100)],
+                                  @"320x240-15": @[@(200),@(150),@(120),@(150),@(120),@(100)],
+                                  @"320x240-7": @[@(150),@(100),@(100),@(150),@(75),@(50)]
+    };
+    
+    NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
+    NSLog(@"%@",key);
+    return videoLimits[key];
+}
+
+-(void)startNetworkTest{
+    if(!isBackstage){
+        return;
+    }
+    if([self.eventData[@"status"] isEqualToString:@"L"]) {
+        if(_hostStream && _hostStream.hasVideo){
+            OTSubscriber *test = _subscribers[@"host"];
+            test.networkStatsDelegate = self;
+        }else if(_celebrityStream && _celebrityStream.hasVideo){
+            OTSubscriber *test = _subscribers[@"celebrity"];
+            test.networkStatsDelegate = self;
+        }else if(isBackstage && _selfSubscriber){
+            _selfSubscriber.networkStatsDelegate = self;
+        }
+    }else{
+        if(isBackstage && _selfSubscriber){
+            _selfSubscriber.networkStatsDelegate = self;
+        }
+    }
+}
+
+-(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
+    //resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width,subscriber.stream.videoDimensions.height];
+    
     if (prevVideoTimestamp == 0)
     {
         prevVideoTimestamp = stats.timestamp;
@@ -638,6 +701,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     {
         video_bw = (8 * (stats.videoBytesReceived - prevVideoBytes)) / ((stats.timestamp - prevVideoTimestamp) / 1000ull);
         
+        subscriber.delegate = nil;
         [self processStats:stats];
         prevVideoTimestamp = stats.timestamp;
         prevVideoBytes = stats.videoBytesReceived;
@@ -661,47 +725,97 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         prevVideoPacketsLost = videoStats.videoPacketsLost;
         prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
     }
-    
+    //[self checkQualityAndSendSignal];
     [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
 }
 
 - (void)checkQualityAndSendSignal
 {
-    BOOL canDoVideo = (video_bw >= 150000 && video_pl_ratio <= 0.03);
-//    BOOL canDoAudio = true;
-
-    if (!canDoVideo)
-    {
-        self.connectionQuality = @"Poor";
+    if(_publisher && _publisher.session){
         
-    } else
-    {
-        self.connectionQuality = @"Great";
+        NSArray *aVideoLimits = [self getVideoLimits:resolution framerate:frameRate];
+        if (!aVideoLimits) return;
+        
+        NSString *quality;
+        
+        if([resolution isEqualToString:@"1280x720"]){
+            if (video_bw < [aVideoLimits[0] longValue]) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[0] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1 ) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[0] longValue] && video_pl_ratio > 0.1 ) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[2] longValue] && video_pl_ratio < 0.1 ) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio < 0.02 ) {
+                quality = @"Good";
+            } else if (video_bw > [aVideoLimits[3] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Great";
+            }
+        }
+        
+        if([resolution isEqualToString:@"640x480"]){
+            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Great";
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
+                quality = @"Good";
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_pl_ratio > 0.1 && video_bw > [aVideoLimits[5] longValue]) {
+                quality = @"Poor";
+            } else if (video_bw >[aVideoLimits[6] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_bw < [aVideoLimits[6] longValue] || video_pl_ratio > 0.1) {
+                quality = @"Poor";
+            }
+        }
+        if([resolution isEqualToString:@"320x240"]){
+            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Great";
+            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
+                quality = @"Good";
+            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_pl_ratio > 0.1 && video_bw >[aVideoLimits[4] longValue]) {
+                quality = @"Poor";
+            } else if (video_bw >[aVideoLimits[5] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
+                quality = @"Poor";
+            } else if (video_bw < [aVideoLimits[5] longValue] || video_pl_ratio > 0.1) {
+                quality = @"Poor";
+            }
+        }
+        
+        
+        
+        NSDictionary *data = @{
+                               @"type" : @"qualityUpdate",
+                               @"data" :@{
+                                       @"connectionId": _publisher.session.connection.connectionId,
+                                       @"quality" : quality,
+                                       },
+                               };
+        
+        OTError* error = nil;
+        
+        if (error) {
+            NSLog(@"signal didFailWithError %@", error);
+        } else {
+            NSLog(@"quality update sent  %@",quality);
+        }
+        
+        NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+        [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
+        [self startNetworkTest];
+        //[self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
     }
-    
-    NSDictionary *data = @{
-                           @"type" : @"qualityUpdate",
-                           @"data" :@{
-                                   @"connectionId": _publisher.session.connection.connectionId,
-                                   @"quality" : self.connectionQuality,
-                                   },
-                           };
-    
-    OTError* error = nil;
-    
-    if (error) {
-        NSLog(@"signal didFailWithError %@", error);
-    } else {
-        NSLog(@"quality update sent  %@", self.connectionQuality);
-    }
-    
-    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
-    
-    
-    
 }
-
+///end network test //
 
 
 # pragma mark - OTSession delegate callbacks
@@ -746,8 +860,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         self.getInLineBtn.hidden = NO;
         shouldResendProducerSignal = YES;
         [self cleanupPublisher];
-        
-        
         self.leaveLineBtn.hidden = YES;
         [self hideNotification];
     }else{
@@ -791,6 +903,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
+            if(_producerSession){
+                shouldResendProducerSignal = YES;
+            }
         }
         
     }
@@ -895,7 +1010,7 @@ didFailWithError:(OTError*)error
         [self statusChanged];
     }
     if([type isEqualToString:@"openChat"]){
-        self.chatBtn.hidden = NO;
+        //self.chatBtn.hidden = NO;
         _producerConnection = connection;
     }
     if([type isEqualToString:@"closeChat"]){
@@ -934,11 +1049,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"resendNewFanSignal"]){
         
         if(shouldResendProducerSignal){
-            [self disconnectBackstage];
-            _producerSession = [[OTSession alloc] initWithApiKey:self.apikey
-                                                       sessionId:self.connectionData[@"sessionIdProducer"]
-                                                        delegate:self];
-            [self inLineConnect];
+            [self sendNewUserSignal];
         }
         
     }
@@ -982,14 +1093,14 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"disconnectProducer"]){
         if(!isOnstage){
-        OTError *error = nil;
-        [_producerSession unsubscribe: _producerSubscriber error:&error];
-        _producerSubscriber = nil;
-        inCallWithProducer = NO;
-        self.getInLineBtn.hidden = NO;
-        _publisher.publishAudio = NO;
-        [self muteOnstageSession:NO];
-        [self hideNotification];
+            OTError *error = nil;
+            [_producerSession unsubscribe: _producerSubscriber error:&error];
+            _producerSubscriber = nil;
+            inCallWithProducer = NO;
+            self.getInLineBtn.hidden = NO;
+            _publisher.publishAudio = NO;
+            [self muteOnstageSession:NO];
+            [self hideNotification];
         }
     }
     
@@ -1034,11 +1145,11 @@ didFailWithError:(OTError*)error
         // TODO: remove spinner
         [DotSpinnerViewController dismiss];
         [self doPublish];
-//        [NSTimer scheduledTimerWithTimeInterval:1.0
-//                                         target:self
-//                                       selector:@selector(doPublish)
-//                                       userInfo:nil
-//                                        repeats:NO];
+        //        [NSTimer scheduledTimerWithTimeInterval:1.0
+        //                                         target:self
+        //                                       selector:@selector(doPublish)
+        //                                       userInfo:nil
+        //                                        repeats:NO];
     }
     
     if([type isEqualToString:@"finishEvent"]){
@@ -1121,11 +1232,11 @@ didFailWithError:(OTError*)error
         NSLog(@"signal sent of type newFan");
     }
     NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"newFan" string:stringified connection:_publisher.stream.connection error:&error];
+    [_producerSession signalWithType:@"newFan" string:stringified connection:nil error:&error];
 }
 
 - (void)captureAndSendScreenshot{
-    
+    self.inLineHolder.alpha = 1;
     UIView* screenCapture = [_publisher.view snapshotViewAfterScreenUpdates:YES];
     if(screenCapture){
         [self.inLineHolder addSubview:screenCapture];

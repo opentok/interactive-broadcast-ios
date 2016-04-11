@@ -413,9 +413,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if (error)
     {
         NSLog(@"%@", error);
-        if(!self.connectedToOnstageSession || ([eventData[@"status"] isEqualToString:@"L"] && self.errors)){
-            [self sendWarningSignal];
-        }
+        [self sendWarningSignal];
         [self showAlert:error.localizedDescription];
     }
     [session publish:_publisher error:&error];
@@ -500,10 +498,8 @@ static NSString* const kTextChatType = @"chatMessage";
  didFailWithError:(OTError*) error
 {
     NSLog(@"publisher didFailWithError %@", error);
-    if(!self.connectedToOnstageSession || ([eventData[@"status"] isEqualToString:@"L"] && self.errors)){
-        [self sendWarningSignal];
-    }
-    
+    [self.errors setObject:error forKey:@"publisherError"];
+    [self sendWarningSignal];
     [self cleanupPublisher];
 }
 
@@ -525,6 +521,8 @@ static NSString* const kTextChatType = @"chatMessage";
         if (error)
         {
             [self.errors setObject:error forKey:connectingTo];
+
+            [self sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
@@ -1239,6 +1237,9 @@ didFailWithError:(OTError*)error
     }
     NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
     [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
+    
+    [self showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
 }
 
 - (void)sendNewUserSignal

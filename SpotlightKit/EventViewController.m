@@ -51,6 +51,10 @@
 @property (nonatomic) Boolean isCeleb;
 @property (nonatomic) Boolean isHost;
 
+
+@property (nonatomic) BOOL connectedToOnstageSession;
+@property (nonatomic) NSMutableDictionary *errors;
+
 @property (nonatomic) NSString *connectionQuality;
 
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
@@ -469,6 +473,10 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)publisher:(OTPublisherKit*)publisher
   streamDestroyed:(OTStream *)stream
 {
+    NSLog(@"stream DESTROYED PUBLISHER");
+
+    if(!_publisher.stream && !stream.connection) return;
+    
     NSLog(@"stream DESTROYED PUBLISHER");
 
     NSString *connectingTo =[self getStreamData:stream.connection.data];
@@ -955,19 +963,19 @@ connectionCreated:(OTConnection *)connection
 }
 
 
-- (void)    session:(OTSession *)session
-connectionDestroyed:(OTConnection *)connection
-{
-    NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
-    NSString *connectingTo =[self getStreamData:connection.data];
-    OTSubscriber *_subscriber = _subscribers[connectingTo];
-    
-    if ([_subscriber.stream.connection.connectionId
-         isEqualToString:connection.connectionId])
-    {
-        [self cleanupSubscriber:connectingTo];
-    }
-}
+//- (void)    session:(OTSession *)session
+//connectionDestroyed:(OTConnection *)connection
+//{
+//    NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
+//    NSString *connectingTo =[self getStreamData:connection.data];
+//    OTSubscriber *_subscriber = _subscribers[connectingTo];
+//    
+//    if ([_subscriber.stream.connection.connectionId
+//         isEqualToString:connection.connectionId])
+//    {
+//        [self cleanupSubscriber:connectingTo];
+//    }
+//}
 
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error
@@ -1202,6 +1210,34 @@ didFailWithError:(OTError*)error
         
         
     }
+}
+
+- (void)sendWarningSignal
+{
+
+    BOOL subscribing =  self.errors.count == 0 ? false : true;
+    
+    NSDictionary *data = @{
+                           @"type" : @"warning",
+                           @"data" :@{
+                                   @"connected": @(self.connectedToOnstageSession),
+                                   @"subscribing":@(subscribing),
+                                   @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
+                                   },
+                           };
+    
+    OTError* error = nil;
+    
+    if (error) {
+        NSLog(@"signal error %@", error);
+    } else {
+        NSLog(@"signal sent of type Warning");
+    }
+    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+    [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
+    
+    [self showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
 }
 
 - (void)sendNewUserSignal

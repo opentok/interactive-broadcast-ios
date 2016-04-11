@@ -411,24 +411,25 @@ static NSString* const kTextChatType = @"chatMessage";
     }
     
     OTError *error = nil;
+    [session publish:_publisher error:&error];
+
     if (error)
     {
         NSLog(@"%@", error);
         [self sendWarningSignal];
         [self showAlert:error.localizedDescription];
     }
-    [session publish:_publisher error:&error];
     
 }
 
 -(void)unpublishFrom:(OTSession *)session
 {
     OTError *error = nil;
+    [session unpublish:_publisher error:&error];
     if (error)
     {
         [self showAlert:error.localizedDescription];
     }
-    [session unpublish:_publisher error:&error];
 }
 
 -(void)cleanupPublisher{
@@ -477,8 +478,6 @@ static NSString* const kTextChatType = @"chatMessage";
 
     if(!_publisher.stream && !stream.connection) return;
     
-    NSLog(@"stream DESTROYED PUBLISHER");
-
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
@@ -811,16 +810,16 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         
         OTError* error = nil;
         
+        NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+        [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
+        
         if (error) {
             NSLog(@"signal didFailWithError %@", error);
         } else {
             NSLog(@"quality update sent  %@",quality);
         }
         
-        NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-        [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
         [self startNetworkTest];
-        //[self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:15.0];
     }
 }
 ///end network test //
@@ -1153,11 +1152,6 @@ didFailWithError:(OTError*)error
         // TODO: remove spinner
         [DotSpinnerViewController dismiss];
         [self doPublish];
-        //        [NSTimer scheduledTimerWithTimeInterval:1.0
-        //                                         target:self
-        //                                       selector:@selector(doPublish)
-        //                                       userInfo:nil
-        //                                        repeats:NO];
     }
     
     if([type isEqualToString:@"finishEvent"]){
@@ -1175,18 +1169,14 @@ didFailWithError:(OTError*)error
         self.closeEvenBtn.hidden = NO;
         [self hideChatBox];
         isOnstage = NO;
-        OTError *error = nil;
-        if (error)
-        {
-            NSLog(@"error: (%@)", error);
-            [self showAlert:error.localizedDescription];
-        }
+        
         if(_publisher){
             [self unpublishFrom:_session];
         }
         if(_producerSession){
             [_producerSession disconnect:nil];
         }
+        
         [self showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
         [self performSelector:@selector(hideNotification) withObject:nil afterDelay:5.0];
         
@@ -1228,13 +1218,14 @@ didFailWithError:(OTError*)error
     
     OTError* error = nil;
     
+    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+    [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
+    
     if (error) {
         NSLog(@"signal error %@", error);
     } else {
         NSLog(@"signal sent of type Warning");
     }
-    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
     
     [self showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
@@ -1266,13 +1257,15 @@ didFailWithError:(OTError*)error
     
     OTError* error = nil;
     
+    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
+    [_producerSession signalWithType:@"newFan" string:stringified connection:nil error:&error];
+    
     if (error) {
         NSLog(@"signal error %@", error);
     } else {
         NSLog(@"signal sent of type newFan");
     }
-    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"newFan" string:stringified connection:nil error:&error];
+
 }
 
 - (void)captureAndSendScreenshot{
@@ -1373,14 +1366,15 @@ didFailWithError:(OTError*)error
         self.leaveLineBtn.hidden = YES;
         
         OTError *error = nil;
+        
+        [_session disconnect:&error];
+        if(isBackstage){
+            [_producerSession disconnect:&error];
+        }
         if (error)
         {
             NSLog(@"error: (%@)", error);
             [self showAlert:error.localizedDescription];
-        }
-        [_session disconnect:&error];
-        if(isBackstage){
-            [_producerSession disconnect:&error];
         }
         [self cleanupPublisher];
         self.closeEvenBtn.hidden = NO;
@@ -1686,14 +1680,17 @@ didFailWithError:(OTError*)error
 - (IBAction)goBack:(id)sender {
     
     OTError *error = nil;
-    if (error)
-    {
-        [self showAlert:error.localizedDescription];
-    }
+    
     if(_producerSession){
         [_producerSession disconnect:&error];
     }
     [_session disconnect:&error];
+    
+    if (error)
+    {
+        [self showAlert:error.localizedDescription];
+    }
+    
     if([self.connectionData[@"enable_analytics"] boolValue]){
         [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
     }

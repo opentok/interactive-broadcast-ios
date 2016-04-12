@@ -50,9 +50,6 @@
 @property (nonatomic) NSString *userName;
 @property (nonatomic) Boolean isCeleb;
 @property (nonatomic) Boolean isHost;
-
-
-@property (nonatomic) BOOL connectedToOnstageSession;
 @property (nonatomic) NSMutableDictionary *errors;
 
 @property (nonatomic) NSString *connectionQuality;
@@ -417,6 +414,7 @@ static NSString* const kTextChatType = @"chatMessage";
     {
         NSLog(@"%@", error);
         [self sendWarningSignal];
+        
         [self showAlert:error.localizedDescription];
     }
     
@@ -608,6 +606,8 @@ static NSString* const kTextChatType = @"chatMessage";
     NSLog(@"subscriber %@ didFailWithError %@",
           subscriber.stream.streamId,
           error);
+    [self.errors setObject:error forKey:@"subscriberError"];
+    [self sendWarningSignal];
 }
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
@@ -980,6 +980,9 @@ connectionCreated:(OTConnection *)connection
 didFailWithError:(OTError*)error
 {
     NSLog(@"didFailWithError: (%@)", error);
+    [self.errors setObject:error forKey:@"sessionError"];
+    [self sendWarningSignal];
+    
 }
 
 
@@ -1204,13 +1207,14 @@ didFailWithError:(OTError*)error
 
 - (void)sendWarningSignal
 {
-
-    BOOL subscribing =  self.errors.count == 0 ? false : true;
+    if(!_producerSession) return;
+    
+    BOOL subscribing =  self.errors.count == 0 ? NO : YES;
     
     NSDictionary *data = @{
                            @"type" : @"warning",
                            @"data" :@{
-                                   @"connected": @(self.connectedToOnstageSession),
+                                   @"connected": @(_producerSession ? YES : NO),
                                    @"subscribing":@(subscribing),
                                    @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
                                    },
@@ -1245,7 +1249,7 @@ didFailWithError:(OTError*)error
                                    @"username": self.userName,
                                    @"quality":self.connectionQuality,
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@"true",
+                                   @"mobile":@(true),
                                    @"os":@"iOS",
                                    @"device":[[UIDevice currentDevice] model]
                                    },

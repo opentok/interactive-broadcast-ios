@@ -696,7 +696,11 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
-    //resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width,subscriber.stream.videoDimensions.height];
+    if(subscriber.stream && subscriber.stream.videoDimensions.width){
+        resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
+    }
+    
+    /// TODO : check how to update the framerate
     
     if (prevVideoTimestamp == 0)
     {
@@ -709,9 +713,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         video_bw = (8 * (stats.videoBytesReceived - prevVideoBytes)) / ((stats.timestamp - prevVideoTimestamp) / 1000ull);
         
         subscriber.delegate = nil;
-        [self processStats:stats];
         prevVideoTimestamp = stats.timestamp;
         prevVideoBytes = stats.videoBytesReceived;
+        [self processStats:stats];
     }
 }
 
@@ -910,7 +914,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
-            if(_producerSession){
+            if(_producerSession.connection){
                 shouldResendProducerSignal = YES;
             }
         }
@@ -1207,14 +1211,14 @@ didFailWithError:(OTError*)error
 
 - (void)sendWarningSignal
 {
-    if(!_producerSession) return;
+    if(!_producerSession.connection) return;
     
     BOOL subscribing =  self.errors.count == 0 ? NO : YES;
     
     NSDictionary *data = @{
                            @"type" : @"warning",
                            @"data" :@{
-                                   @"connected": @(_producerSession ? YES : NO),
+                                   @"connected": @(YES),
                                    @"subscribing":@(subscribing),
                                    @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
                                    },
@@ -1249,7 +1253,7 @@ didFailWithError:(OTError*)error
                                    @"username": self.userName,
                                    @"quality":self.connectionQuality,
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@(true),
+                                   @"mobile":@(YES),
                                    @"os":@"iOS",
                                    @"device":[[UIDevice currentDevice] model]
                                    },

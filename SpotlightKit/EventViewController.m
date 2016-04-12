@@ -696,9 +696,9 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
-    if(subscriber.stream && subscriber.stream.videoDimensions.width){
-        resolution = [NSString stringWithFormat:@"%@x%@",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
-    }
+//    if(subscriber.stream && subscriber.stream.videoDimensions.width){
+//        resolution = [NSString stringWithFormat:@"%.0fx%.0f",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
+//    }
     
     /// TODO : check how to update the framerate
     

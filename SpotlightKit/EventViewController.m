@@ -802,6 +802,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
         }
         
+        self.connectionQuality = quality;
         
         
         NSDictionary *data = @{
@@ -1244,7 +1245,7 @@ didFailWithError:(OTError*)error
     NSLog(@"sending new user signal");
     
     if(!self.connectionQuality){
-        self.connectionQuality = @"Good";
+        self.connectionQuality = @"";
     }
     
     NSDictionary *data = @{

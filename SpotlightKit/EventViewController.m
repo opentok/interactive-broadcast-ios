@@ -104,6 +104,7 @@ static bool inCallWithProducer = NO;
 static bool isLive = NO;
 static bool isSingleEvent = NO;
 static bool isFan = NO;
+static bool stopGoingLive = NO;
 
 CGRect screen;
 CGFloat screen_width;
@@ -353,47 +354,60 @@ static NSString* const kTextChatType = @"chatMessage";
     shouldResendProducerSignal = YES;
 }
 
+-(void)forceDisconnect
+{
+        [self cleanupPublisher];
+    NSString *text = self.isCeleb ? @"another someone was using url" : @"another someone was using url";
+        [self showNotification:text useColor:[UIColor SLBlueColor]];
+    
+}
+
 //Publishers
 
 - (void)doPublish{
+    if(isFan){
+        //FAN
+        if(isBackstage){
+            [self sendNewUserSignal];
+            [self publishTo:_producerSession];
+            
+            _publisher.view.layer.cornerRadius = 0.5;
+            [self.inLineHolder addSubview:_publisher.view];
+            [self.inLineHolder sendSubviewToBack:_publisher.view];
+            self.inLineHolder.alpha = 1;
+            self.closeEvenBtn.hidden = YES;
+            _publisher.publishAudio = NO;
+            (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
+            [self stopLoader];
+            [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
+            
+        }
+        if(isOnstage){
+            [self publishTo:_session];
+            self.statusLabel.text = @"\u2022 You are live";
+            [self.FanViewHolder addSubview:_publisher.view];
+            _publisher.view.frame = CGRectMake(0, 0, self.FanViewHolder.bounds.size.width, self.FanViewHolder.bounds.size.height);
+            self.closeEvenBtn.hidden = YES;
+            self.getInLineBtn.hidden = YES;
+        }
+    }else{
+        if(self.isCeleb && !stopGoingLive){
+            [self publishTo:_session];
+            [videoViews[@"celebrity"] addSubview:_publisher.view];
+            (_publisher.view).frame = CGRectMake(0, 0, self.CelebrityViewHolder.bounds.size.width, self.CelebrityViewHolder.bounds.size.height);
+            self.closeEvenBtn.hidden = NO;
+        }
+        if(self.isHost && !stopGoingLive){
+            [self publishTo:_session];
+            [videoViews[@"host"] addSubview:_publisher.view];
+            self.closeEvenBtn.hidden = NO;
+            (_publisher.view).frame = CGRectMake(0, 0, self.HostViewHolder.bounds.size.width, self.HostViewHolder.bounds.size.height);
+        }
+        if(stopGoingLive){
+            return [self forceDisconnect];
+        }
+    }
     
-    if(self.isCeleb){
-        [self publishTo:_session];
-        [videoViews[@"celebrity"] addSubview:_publisher.view];
-        (_publisher.view).frame = CGRectMake(0, 0, self.CelebrityViewHolder.bounds.size.width, self.CelebrityViewHolder.bounds.size.height);
-        self.closeEvenBtn.hidden = NO;
-    }
-    if(self.isHost){
-        [self publishTo:_session];
-        [videoViews[@"host"] addSubview:_publisher.view];
-        self.closeEvenBtn.hidden = NO;
-        (_publisher.view).frame = CGRectMake(0, 0, self.HostViewHolder.bounds.size.width, self.HostViewHolder.bounds.size.height);
-    }
-    
-    //FAN
-    if(isBackstage){
-        [self sendNewUserSignal];
-        [self publishTo:_producerSession];
-        
-        _publisher.view.layer.cornerRadius = 0.5;
-        [self.inLineHolder addSubview:_publisher.view];
-        [self.inLineHolder sendSubviewToBack:_publisher.view];
-        self.inLineHolder.alpha = 1;
-        self.closeEvenBtn.hidden = YES;
-        _publisher.publishAudio = NO;
-        (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
-        [self stopLoader];
-        [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
-        
-    }
-    if(isOnstage){
-        [self publishTo:_session];
-        self.statusLabel.text = @"\u2022 You are live";
-        [self.FanViewHolder addSubview:_publisher.view];
-        _publisher.view.frame = CGRectMake(0, 0, self.FanViewHolder.bounds.size.width, self.FanViewHolder.bounds.size.height);
-        self.closeEvenBtn.hidden = YES;
-        self.getInLineBtn.hidden = YES;
-    }
     [self adjustChildrenWidth];
 }
 
@@ -463,8 +477,10 @@ static NSString* const kTextChatType = @"chatMessage";
             NSLog(@"subscribe self error");
         }
     }else{
-        NSLog(@"stream Created PUBLISHER ONST");
-        [self doSubscribe:stream];
+        if(isFan){
+            NSLog(@"stream Created PUBLISHER ONST");
+            [self doSubscribe:stream];
+        }
     }
     
 }
@@ -583,7 +599,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSString *connectingTo =[self getStreamData:subscriber.stream.connection.data];
         OTSubscriber *_subscriber = _subscribers[connectingTo];
         
-        assert(_subscriber == subscriber);
+        //assert(_subscriber == subscriber);
         
         holder = videoViews[connectingTo];
         
@@ -835,12 +851,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 - (void)sessionDidConnect:(OTSession*)session
 {
     
-    if(self.isCeleb || self.isHost){
-        NSLog(@"sessionDidConnect to Onstage");
-        [self doPublish];
-        [self loadChat];
-        isOnstage = YES;
-    }else{
+    if(isFan){
         if(session.sessionId == _session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.statusLabel).text = @"";
@@ -858,6 +869,18 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
                 [[SpotlightApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
             }
         }
+    }else{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if(stopGoingLive){
+                [self forceDisconnect];
+            }else{
+                [self loadChat];
+                isOnstage = YES;
+                [self doPublish];
+            }
+
+        });
+
     }
 }
 
@@ -893,10 +916,16 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         }else{
             if([stream.connection.data isEqualToString:@"usertype=host"]){
                 _hostStream = stream;
+                if(self.isHost){
+                    stopGoingLive = YES;
+                }
             }
             
             if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
                 _celebrityStream = stream;
+                if(self.isCeleb){
+                    stopGoingLive = YES;
+                }
             }
             
             if([stream.connection.data isEqualToString:@"usertype=fan"]){

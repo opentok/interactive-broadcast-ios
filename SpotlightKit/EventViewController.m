@@ -356,10 +356,18 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)forceDisconnect
 {
-        [self cleanupPublisher];
-    NSString *text = self.isCeleb ? @"another someone was using url" : @"another someone was using url";
-        [self showNotification:text useColor:[UIColor SLBlueColor]];
+    [self cleanupPublisher];
+    NSString *text = self.isCeleb ? @"There is already celebrity on this event" : @"There is already host on this show";
+    [self showNotification:text useColor:[UIColor SLBlueColor]];
+    OTError *error = nil;
     
+    [_session disconnect:&error];
+    _videoHolder.hidden = YES;
+    if (error)
+    {
+        NSLog(@"%@", error);        
+        [self showAlert:error.localizedDescription];
+    }
 }
 
 //Publishers
@@ -599,7 +607,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSString *connectingTo =[self getStreamData:subscriber.stream.connection.data];
         OTSubscriber *_subscriber = _subscribers[connectingTo];
         
-        //assert(_subscriber == subscriber);
+        assert(_subscriber == subscriber);
         
         holder = videoViews[connectingTo];
         
@@ -870,6 +878,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
         }
     }else{
+        [self showLoader];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if(stopGoingLive){
                 [self forceDisconnect];
@@ -878,7 +887,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
                 isOnstage = YES;
                 [self doPublish];
             }
-
+            [self stopLoader];
         });
 
     }

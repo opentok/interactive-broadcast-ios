@@ -1212,6 +1212,10 @@ didFailWithError:(OTError*)error
 
 - (void)sendWarningSignal
 {
+    
+    [self showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+    
     if(!_producerSession.connection) return;
     
     BOOL subscribing =  self.errors.count == 0 ? NO : YES;
@@ -1236,8 +1240,7 @@ didFailWithError:(OTError*)error
         NSLog(@"signal sent of type Warning");
     }
     
-    [self showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
-    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+
 }
 
 - (void)sendNewUserSignal

@@ -758,9 +758,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             } else if (video_bw > [aVideoLimits[0] longValue] && video_pl_ratio > 0.1 ) {
                 quality = @"Poor";
             } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[2] longValue] && video_pl_ratio < 0.1 ) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio < 0.02 ) {
                 quality = @"Good";
             } else if (video_bw > [aVideoLimits[3] longValue] && video_pl_ratio < 0.1) {
@@ -774,9 +774,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
                 quality = @"Good";
             } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_pl_ratio > 0.1 && video_bw > [aVideoLimits[5] longValue]) {
                 quality = @"Poor";
             } else if (video_bw >[aVideoLimits[6] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
@@ -791,9 +791,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
                 quality = @"Good";
             } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1) {
-                quality = @"Poor";
+                quality = @"Good";
             } else if (video_pl_ratio > 0.1 && video_bw >[aVideoLimits[4] longValue]) {
                 quality = @"Poor";
             } else if (video_bw >[aVideoLimits[5] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {

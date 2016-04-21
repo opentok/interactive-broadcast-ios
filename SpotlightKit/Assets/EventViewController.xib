@@ -314,16 +314,16 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Fc-pWM">
-                            <rect key="frame" x="10" y="25" width="40" height="40"/>
+                            <rect key="frame" x="10" y="25" width="87" height="40"/>
                             <color key="backgroundColor" red="0.48627450980392156" green="0.49803921568627452" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="89K-Tt-BSU"/>
+                                <constraint firstAttribute="width" constant="87" id="89K-Tt-BSU"/>
                                 <constraint firstAttribute="height" constant="40" id="ZBx-dN-ksb"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
-                            <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                             <inset key="titleEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                            <state key="normal" image="chevron-back-white.png">
+                            <state key="normal" title="Done">
                                 <color key="titleColor" red="0.99092975061676347" green="1" blue="0.96843238796286801" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -345,7 +345,7 @@
                             </connections>
                         </button>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
-                            <rect key="frame" x="70" y="33" width="118" height="25"/>
+                            <rect key="frame" x="105" y="33" width="118" height="25"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="19"/>
                             <color key="textColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>
@@ -374,7 +374,7 @@
                         <constraint firstItem="tJ3-U1-PiD" firstAttribute="baseline" secondItem="0X6-Ae-NUS" secondAttribute="baseline" id="e1D-UP-rD7"/>
                         <constraint firstItem="jgu-Fc-pWM" firstAttribute="centerY" secondItem="0X6-Ae-NUS" secondAttribute="centerY" constant="6" id="f4h-zK-wIn"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="height" secondItem="0X6-Ae-NUS" secondAttribute="height" id="fm1-KW-tNW"/>
-                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="jgu-Fc-pWM" secondAttribute="trailing" constant="10" id="gXG-bj-4IO"/>
+                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="jgu-Fc-pWM" secondAttribute="trailing" constant="8" id="gXG-bj-4IO"/>
                         <constraint firstItem="tJ3-U1-PiD" firstAttribute="leading" secondItem="0X6-Ae-NUS" secondAttribute="leading" id="moc-Ga-yCl"/>
                         <constraint firstAttribute="trailing" secondItem="0X6-Ae-NUS" secondAttribute="trailing" constant="15" id="nDi-0j-8Zt"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="centerY" secondItem="0X6-Ae-NUS" secondAttribute="centerY" constant="1" id="peY-rm-1ZM"/>
@@ -460,7 +460,6 @@
     <resources>
         <image name="BackArrow-1.png" width="69" height="100"/>
         <image name="bg-graphic.png" width="890" height="230"/>
-        <image name="chevron-back-white.png" width="24" height="34"/>
         <image name="icon-bubble.png" width="56" height="56"/>
     </resources>
 </document>

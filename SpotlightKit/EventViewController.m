@@ -222,7 +222,8 @@ static NSString* const kTextChatType = @"chatMessage";
     [self.leaveLineBtn setBackgroundColor:[UIColor SLRedColor]];
     
     self.eventName.hidden = NO;
-    
+    self.closeEvenBtn.layer.cornerRadius = 3;
+
     self.statusLabel.layer.borderWidth = 2.0;
     self.statusLabel.layer.borderColor = [UIColor SLGreenColor].CGColor;
     self.statusLabel.layer.cornerRadius = 3;

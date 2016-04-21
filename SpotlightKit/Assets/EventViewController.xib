@@ -255,16 +255,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-sR-8GW">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                     <subviews>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
-                            <rect key="frame" x="56" y="34" width="118" height="25"/>
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="19"/>
-                            <color key="textColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                            <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                <rect key="frame" x="56" y="29" width="119" height="23"/>
-                            </variation>
-                        </label>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are live" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itk-rJ-bBi">
                             <rect key="frame" x="435" y="26" width="150" height="40"/>
                             <color key="backgroundColor" red="0.39854846820000001" green="0.2779659015" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -279,7 +269,7 @@
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.cornerRadius" value="YES"/>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X6-Ae-NUS">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X6-Ae-NUS">
                             <rect key="frame" x="435" y="25" width="150" height="40"/>
                             <color key="backgroundColor" red="0.191360215" green="0.63263494320000002" blue="0.49804624580000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -323,16 +313,30 @@
                                 <action selector="leaveLine:" destination="-1" eventType="touchUpInside" id="ZVG-S5-jIA"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Fc-pWM">
-                            <rect key="frame" x="17" y="34" width="31" height="26"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Fc-pWM">
+                            <rect key="frame" x="10" y="25" width="40" height="40"/>
+                            <color key="backgroundColor" red="0.48627450980392156" green="0.49803921568627452" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="31" id="89K-Tt-BSU"/>
-                                <constraint firstAttribute="height" constant="26" id="ZBx-dN-ksb"/>
+                                <constraint firstAttribute="width" constant="40" id="89K-Tt-BSU"/>
+                                <constraint firstAttribute="height" constant="40" id="ZBx-dN-ksb"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
-                            <state key="normal" title="X">
-                                <color key="titleColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                            <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                            <inset key="titleEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                            <state key="normal" image="chevron-back-white.png">
+                                <color key="titleColor" red="0.99092975061676347" green="1" blue="0.96843238796286801" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
                                 <rect key="frame" x="17" y="29" width="31" height="26"/>
                             </variation>
@@ -340,8 +344,18 @@
                                 <action selector="goBack:" destination="-1" eventType="touchUpInside" id="7qG-mN-aBt"/>
                             </connections>
                         </button>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
+                            <rect key="frame" x="70" y="33" width="118" height="25"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="19"/>
+                            <color key="textColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
+                                <rect key="frame" x="56" y="29" width="119" height="23"/>
+                            </variation>
+                        </label>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="HMb-Rp-gdV" firstAttribute="width" relation="lessThanOrEqual" secondItem="JrU-sR-8GW" secondAttribute="width" multiplier="1:2" id="85g-Fw-ZHp"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="top" secondItem="tJ3-U1-PiD" secondAttribute="top" id="8Zb-Oj-b2O"/>
@@ -349,23 +363,28 @@
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="bottom" secondItem="tJ3-U1-PiD" secondAttribute="bottom" id="CaS-rq-O3g"/>
                         <constraint firstItem="0X6-Ae-NUS" firstAttribute="centerY" secondItem="JrU-sR-8GW" secondAttribute="centerY" id="Drz-5R-b8d"/>
                         <constraint firstItem="HMb-Rp-gdV" firstAttribute="centerY" secondItem="tJ3-U1-PiD" secondAttribute="centerY" id="Fh2-W6-1e5"/>
-                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="top" secondItem="HMb-Rp-gdV" secondAttribute="top" id="HHC-LA-H3c"/>
+                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="centerY" secondItem="JrU-sR-8GW" secondAttribute="centerY" id="GQL-Ju-Rji"/>
+                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="top" secondItem="HMb-Rp-gdV" secondAttribute="top" constant="-2" id="HHC-LA-H3c"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="centerY" secondItem="tJ3-U1-PiD" secondAttribute="centerY" id="Klx-9w-fPJ"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="leading" secondItem="tJ3-U1-PiD" secondAttribute="leading" id="O6v-FW-VYk"/>
                         <constraint firstItem="tJ3-U1-PiD" firstAttribute="leading" secondItem="Itk-rJ-bBi" secondAttribute="leading" id="OGU-GL-hdc"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="trailing" secondItem="tJ3-U1-PiD" secondAttribute="trailing" id="WcB-sL-6Mk"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="width" secondItem="0X6-Ae-NUS" secondAttribute="width" id="Wdl-8o-Liu"/>
-                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="JrU-sR-8GW" secondAttribute="leadingMargin" constant="48" id="d7m-if-Tv2"/>
+                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="JrU-sR-8GW" secondAttribute="leadingMargin" constant="53" id="d7m-if-Tv2"/>
                         <constraint firstItem="tJ3-U1-PiD" firstAttribute="baseline" secondItem="0X6-Ae-NUS" secondAttribute="baseline" id="e1D-UP-rD7"/>
+                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="centerY" secondItem="0X6-Ae-NUS" secondAttribute="centerY" constant="6" id="f4h-zK-wIn"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="height" secondItem="0X6-Ae-NUS" secondAttribute="height" id="fm1-KW-tNW"/>
-                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="jgu-Fc-pWM" secondAttribute="trailing" constant="8" symbolic="YES" id="gXG-bj-4IO"/>
+                        <constraint firstItem="HMb-Rp-gdV" firstAttribute="leading" secondItem="jgu-Fc-pWM" secondAttribute="trailing" constant="10" id="gXG-bj-4IO"/>
                         <constraint firstItem="tJ3-U1-PiD" firstAttribute="leading" secondItem="0X6-Ae-NUS" secondAttribute="leading" id="moc-Ga-yCl"/>
                         <constraint firstAttribute="trailing" secondItem="0X6-Ae-NUS" secondAttribute="trailing" constant="15" id="nDi-0j-8Zt"/>
                         <constraint firstItem="Itk-rJ-bBi" firstAttribute="centerY" secondItem="0X6-Ae-NUS" secondAttribute="centerY" constant="1" id="peY-rm-1ZM"/>
-                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="leading" secondItem="JrU-sR-8GW" secondAttribute="leading" constant="17" id="z1r-Yt-heO"/>
+                        <constraint firstItem="jgu-Fc-pWM" firstAttribute="leading" secondItem="JrU-sR-8GW" secondAttribute="leading" constant="10" id="z1r-Yt-heO"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="HHC-LA-H3c"/>
+                            <exclude reference="f4h-zK-wIn"/>
+                            <exclude reference="d7m-if-Tv2"/>
                             <exclude reference="8Zb-Oj-b2O"/>
                             <exclude reference="CaS-rq-O3g"/>
                             <exclude reference="O6v-FW-VYk"/>
@@ -441,6 +460,7 @@
     <resources>
         <image name="BackArrow-1.png" width="69" height="100"/>
         <image name="bg-graphic.png" width="890" height="230"/>
+        <image name="chevron-back-white.png" width="24" height="34"/>
         <image name="icon-bubble.png" width="56" height="56"/>
     </resources>
 </document>

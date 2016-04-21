@@ -357,7 +357,10 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)forceDisconnect
 {
     [self cleanupPublisher];
-    NSString *text = self.isCeleb ? @"There is already celebrity on this event" : @"There is already host on this show";
+    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", isCeleb ? @"celebrity" : @"host"];
+    
+    
+    
     [self showNotification:text useColor:[UIColor SLBlueColor]];
     OTError *error = nil;
     

@@ -1,22 +1,22 @@
 //
-//  MultipleEventsExampleControllerViewController.m
+//  MultipleEventsExampleViewController.m
 //  IB-ios
 //
 //  If you want to implement your own multiple events controller you will need to import
 //
 
-#import "MultipleEventsExampleControllerViewController.h"
+#import "MultipleEventsExampleViewController.h"
 #import "dataButton.h"
 #import <QuartzCore/QuartzCore.h>
 #import "IBApi.h"
 #import "EventViewController.h"
 
-@interface MultipleEventsExampleControllerViewController ()
+@interface MultipleEventsExampleViewController ()
 @property EventViewController  *detailEvent;
 @end
 
 
-@implementation MultipleEventsExampleControllerViewController{
+@implementation MultipleEventsExampleViewController{
     NSMutableDictionary *eventsData;
     NSMutableDictionary *allEvents;
     NSArray *dataArray;

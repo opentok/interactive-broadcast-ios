@@ -25,14 +25,13 @@
 		0B175B9B1C407E9A0091A6BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B175B9A1C407E9A0091A6BE /* Images.xcassets */; };
 		0B175BAA1C40897E0091A6BE /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B175BA61C40897E0091A6BE /* Montserrat-Bold.ttf */; };
 		0B175BAB1C40897E0091A6BE /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B175BA71C40897E0091A6BE /* Montserrat-Regular.ttf */; };
-		0B175BAC1C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B175BA91C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m */; };
+		0B175BAC1C40897E0091A6BE /* MultipleEventsExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B175BA91C40897E0091A6BE /* MultipleEventsExampleViewController.m */; };
 		0B175BAE1C4089D50091A6BE /* ExampleEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B175BAD1C4089D50091A6BE /* ExampleEventCell.xib */; };
 		0B175BC71C4095B90091A6BE /* SIOSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B175BC41C4095B90091A6BE /* SIOSocket.h */; };
 		0B175BC81C4095B90091A6BE /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B175BC51C4095B90091A6BE /* SIOSocket.m */; };
 		0B175BC91C4095B90091A6BE /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B175BC61C4095B90091A6BE /* socket.io.js.h */; };
 		0B296A7C1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B296A7A1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h */; };
 		0B296A7D1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B296A7B1C80C77600BCA9A9 /* PerformSelectorWithDebounce.m */; };
-		0B41BFEB1C4EC00F002EAEF5 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* IBKit.framework */; };
 		0B41BFEC1C4EC00F002EAEF5 /* IBKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71C3761C4026EE00BE89DC /* IBKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0B71C3591C3F5D0F00BE89DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3581C3F5D0F00BE89DC /* main.m */; };
 		0B71C35C1C3F5D0F00BE89DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C35B1C3F5D0F00BE89DC /* AppDelegate.m */; };
@@ -97,26 +96,32 @@
 		0B71C4051C40273500BE89DC /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E61C40273500BE89DC /* IBApi.m */; };
 		0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */; };
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
-		0B7412FB1CCE71E800A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
+		0B7412FD1CCE765E00A06B1B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B651C40784B0091A6BE /* AudioToolbox.framework */; };
+		0B7412FE1CCE765E00A06B1B /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
+		0B7412FF1CCE765E00A06B1B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B661C40784B0091A6BE /* CoreGraphics.framework */; };
+		0B7413001CCE765E00A06B1B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B681C40784B0091A6BE /* CoreTelephony.framework */; };
+		0B7413011CCE765E00A06B1B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B691C40784B0091A6BE /* CoreVideo.framework */; };
+		0B7413021CCE765E00A06B1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
+		0B7413031CCE765E00A06B1B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6A1C40784B0091A6BE /* GLKit.framework */; };
+		0B7413041CCE765E00A06B1B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
+		0B7413051CCE765E00A06B1B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7B1C4078B20091A6BE /* libsqlite3.tbd */; };
+		0B7413061CCE765E00A06B1B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6C1C40784B0091A6BE /* OpenGLES.framework */; };
+		0B7413071CCE765E00A06B1B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B611C4075A30091A6BE /* QuartzCore.framework */; };
+		0B7413081CCE765E00A06B1B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6D1C40784B0091A6BE /* SystemConfiguration.framework */; };
+		0B7413091CCE765E00A06B1B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6E1C40784B0091A6BE /* UIKit.framework */; };
+		0B74130A1CCE765E00A06B1B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6F1C40784B0091A6BE /* VideoToolbox.framework */; };
+		0B74130B1CCE77B500A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
+		0B74130D1CCE78AF00A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
 		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
-		0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44ACA1C5044690076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
-		0BB44ACB1C50446A0076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
 		0BB44ACC1C50446D0076545C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7B1C4078B20091A6BE /* libsqlite3.tbd */; };
-		0BB44ACD1C50446E0076545C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7B1C4078B20091A6BE /* libsqlite3.tbd */; };
 		0BB44ACE1C5044720076545C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B651C40784B0091A6BE /* AudioToolbox.framework */; };
-		0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B651C40784B0091A6BE /* AudioToolbox.framework */; };
-		0BB44AD01C5044780076545C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B661C40784B0091A6BE /* CoreGraphics.framework */; };
 		0BB44AD11C5044790076545C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B661C40784B0091A6BE /* CoreGraphics.framework */; };
 		0BB44AD21C50447C0076545C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B671C40784B0091A6BE /* CoreMedia.framework */; };
-		0BB44AD31C50447D0076545C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B671C40784B0091A6BE /* CoreMedia.framework */; };
 		0BB44AD41C5044860076545C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B681C40784B0091A6BE /* CoreTelephony.framework */; };
-		0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B681C40784B0091A6BE /* CoreTelephony.framework */; };
 		0BB44AD61C50448A0076545C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B691C40784B0091A6BE /* CoreVideo.framework */; };
-		0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B691C40784B0091A6BE /* CoreVideo.framework */; };
 		0BB44AD81C5044900076545C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6A1C40784B0091A6BE /* GLKit.framework */; };
-		0BB44AD91C5044900076545C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6A1C40784B0091A6BE /* GLKit.framework */; };
 		0BB44ADA1C5044A60076545C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6C1C40784B0091A6BE /* OpenGLES.framework */; };
 		0BB44ADB1C5044A60076545C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6D1C40784B0091A6BE /* SystemConfiguration.framework */; };
 		0BB44ADC1C5044A60076545C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6E1C40784B0091A6BE /* UIKit.framework */; };
@@ -179,8 +184,8 @@
 		0B175B9A1C407E9A0091A6BE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0B175BA61C40897E0091A6BE /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		0B175BA71C40897E0091A6BE /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		0B175BA81C40897E0091A6BE /* MultipleEventsExampleControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleEventsExampleControllerViewController.h; sourceTree = "<group>"; };
-		0B175BA91C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleEventsExampleControllerViewController.m; sourceTree = "<group>"; };
+		0B175BA81C40897E0091A6BE /* MultipleEventsExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleEventsExampleViewController.h; sourceTree = "<group>"; };
+		0B175BA91C40897E0091A6BE /* MultipleEventsExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleEventsExampleViewController.m; sourceTree = "<group>"; };
 		0B175BAD1C4089D50091A6BE /* ExampleEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleEventCell.xib; sourceTree = "<group>"; };
 		0B175BC41C4095B90091A6BE /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
 		0B175BC51C4095B90091A6BE /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
@@ -278,17 +283,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B7412FB1CCE71E800A06B1B /* OpenTok.framework in Frameworks */,
-				0BB44AD31C50447D0076545C /* CoreMedia.framework in Frameworks */,
-				0BB44ACD1C50446E0076545C /* libsqlite3.tbd in Frameworks */,
-				0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */,
-				0BB44AD91C5044900076545C /* GLKit.framework in Frameworks */,
-				0BB44AD01C5044780076545C /* CoreGraphics.framework in Frameworks */,
-				0BB44ACB1C50446A0076545C /* AVKit.framework in Frameworks */,
-				0B41BFEB1C4EC00F002EAEF5 /* IBKit.framework in Frameworks */,
-				0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */,
-				0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */,
-				0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */,
+				0B7412FD1CCE765E00A06B1B /* AudioToolbox.framework in Frameworks */,
+				0B7412FE1CCE765E00A06B1B /* AVKit.framework in Frameworks */,
+				0B7412FF1CCE765E00A06B1B /* CoreGraphics.framework in Frameworks */,
+				0B7413001CCE765E00A06B1B /* CoreTelephony.framework in Frameworks */,
+				0B7413011CCE765E00A06B1B /* CoreVideo.framework in Frameworks */,
+				0B7413021CCE765E00A06B1B /* Foundation.framework in Frameworks */,
+				0B7413031CCE765E00A06B1B /* GLKit.framework in Frameworks */,
+				0B7413041CCE765E00A06B1B /* libc++.tbd in Frameworks */,
+				0B7413051CCE765E00A06B1B /* libsqlite3.tbd in Frameworks */,
+				0B7413061CCE765E00A06B1B /* OpenGLES.framework in Frameworks */,
+				0B7413071CCE765E00A06B1B /* QuartzCore.framework in Frameworks */,
+				0B7413081CCE765E00A06B1B /* SystemConfiguration.framework in Frameworks */,
+				0B7413091CCE765E00A06B1B /* UIKit.framework in Frameworks */,
+				0B74130B1CCE77B500A06B1B /* OpenTok.framework in Frameworks */,
+				0B74130A1CCE765E00A06B1B /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +315,7 @@
 				0BB44AD81C5044900076545C /* GLKit.framework in Frameworks */,
 				0BB44AD21C50447C0076545C /* CoreMedia.framework in Frameworks */,
 				0BB44ADA1C5044A60076545C /* OpenGLES.framework in Frameworks */,
+				0B74130D1CCE78AF00A06B1B /* OpenTok.framework in Frameworks */,
 				0BB44ADB1C5044A60076545C /* SystemConfiguration.framework in Frameworks */,
 				0BB44ADC1C5044A60076545C /* UIKit.framework in Frameworks */,
 				0BB44ADD1C5044A60076545C /* VideoToolbox.framework in Frameworks */,
@@ -353,8 +363,8 @@
 				0B175BAD1C4089D50091A6BE /* ExampleEventCell.xib */,
 				0B175BA61C40897E0091A6BE /* Montserrat-Bold.ttf */,
 				0B175BA71C40897E0091A6BE /* Montserrat-Regular.ttf */,
-				0B175BA81C40897E0091A6BE /* MultipleEventsExampleControllerViewController.h */,
-				0B175BA91C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m */,
+				0B175BA81C40897E0091A6BE /* MultipleEventsExampleViewController.h */,
+				0B175BA91C40897E0091A6BE /* MultipleEventsExampleViewController.m */,
 				0B175B9A1C407E9A0091A6BE /* Images.xcassets */,
 				0B71C35A1C3F5D0F00BE89DC /* AppDelegate.h */,
 				0B71C35B1C3F5D0F00BE89DC /* AppDelegate.m */,
@@ -748,7 +758,7 @@
 			files = (
 				0B71C35F1C3F5D0F00BE89DC /* ViewController.m in Sources */,
 				A056C36B1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
-				0B175BAC1C40897E0091A6BE /* MultipleEventsExampleControllerViewController.m in Sources */,
+				0B175BAC1C40897E0091A6BE /* MultipleEventsExampleViewController.m in Sources */,
 				0B71C35C1C3F5D0F00BE89DC /* AppDelegate.m in Sources */,
 				0B71C3591C3F5D0F00BE89DC /* main.m in Sources */,
 			);
@@ -879,7 +889,7 @@
 		0B71C36F1C3F5D0F00BE89DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -902,7 +912,7 @@
 		0B71C3701C3F5D0F00BE89DC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

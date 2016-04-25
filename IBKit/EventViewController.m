@@ -189,16 +189,16 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [SVProgressHUD show];
     [[IBApi sharedInstance] creteEventToken:self.user[@"type"]
-                                          back_url:instanceData[@"backend_base_url"]
-                                              data:self.eventData
-                                        completion:^(NSMutableDictionary *resultData) {
-                                            
-                                            [SVProgressHUD dismiss];
-                                            self.connectionData = resultData;
-                                            self.eventData = [self.connectionData[@"event"] mutableCopy];
-                                            [self statusChanged];
-                                            [self loadUser];
-                                        }];
+                                   back_url:instanceData[@"backend_base_url"]
+                                       data:self.eventData
+                                 completion:^(NSMutableDictionary *resultData) {
+                                     
+                                     [SVProgressHUD dismiss];
+                                     self.connectionData = resultData;
+                                     self.eventData = [self.connectionData[@"event"] mutableCopy];
+                                     [self statusChanged];
+                                     [self loadUser];
+                                 }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -224,7 +224,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     self.eventName.hidden = NO;
     self.closeEvenBtn.layer.cornerRadius = 3;
-
+    
     self.statusLabel.layer.borderWidth = 2.0;
     self.statusLabel.layer.borderColor = [UIColor SLGreenColor].CGColor;
     self.statusLabel.layer.cornerRadius = 3;
@@ -369,7 +369,7 @@ static NSString* const kTextChatType = @"chatMessage";
     _videoHolder.hidden = YES;
     if (error)
     {
-        NSLog(@"%@", error);        
+        NSLog(@"%@", error);
         [self showAlert:error.localizedDescription];
     }
 }
@@ -435,7 +435,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     OTError *error = nil;
     [session publish:_publisher error:&error];
-
+    
     if (error)
     {
         NSLog(@"%@", error);
@@ -483,7 +483,6 @@ static NSString* const kTextChatType = @"chatMessage";
         
         OTError *error = nil;
         [_producerSession subscribe: _selfSubscriber error:&error];
-        [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
         if (error)
         {
             NSLog(@"subscribe self error");
@@ -492,6 +491,8 @@ static NSString* const kTextChatType = @"chatMessage";
         NSLog(@"stream Created PUBLISHER ONST");
         [self doSubscribe:stream];
     }
+    [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
+
     
 }
 
@@ -499,7 +500,7 @@ static NSString* const kTextChatType = @"chatMessage";
   streamDestroyed:(OTStream *)stream
 {
     NSLog(@"stream DESTROYED PUBLISHER");
-
+    
     if(!_publisher.stream && !stream.connection) return;
     
     NSString *connectingTo =[self getStreamData:stream.connection.data];
@@ -544,7 +545,7 @@ static NSString* const kTextChatType = @"chatMessage";
         if (error)
         {
             [self.errors setObject:error forKey:connectingTo];
-
+            
             [self sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
@@ -691,7 +692,7 @@ static NSString* const kTextChatType = @"chatMessage";
                                   @"320x240-30": @[@(300),@(200),@(120),@(200),@(120),@(100)],
                                   @"320x240-15": @[@(200),@(150),@(120),@(150),@(120),@(100)],
                                   @"320x240-7": @[@(150),@(100),@(100),@(150),@(75),@(50)]
-    };
+                                  };
     
     NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
     NSLog(@"%@",key);
@@ -699,32 +700,25 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 -(void)startNetworkTest{
-    if(!isBackstage){
-        return;
-    }
-    if([self.eventData[@"status"] isEqualToString:@"L"]) {
-        if(_hostStream && _hostStream.hasVideo){
-            OTSubscriber *test = _subscribers[@"host"];
-            test.networkStatsDelegate = self;
-        }else if(_celebrityStream && _celebrityStream.hasVideo){
-            OTSubscriber *test = _subscribers[@"celebrity"];
-            test.networkStatsDelegate = self;
-        }else if(isBackstage && _selfSubscriber){
-            _selfSubscriber.networkStatsDelegate = self;
-        }
-    }else{
-        if(isBackstage && _selfSubscriber){
-            _selfSubscriber.networkStatsDelegate = self;
-        }
+    if(isBackstage || isOnstage){
+            if(_hostStream && _hostStream.hasVideo){
+                OTSubscriber *test = _subscribers[@"host"];
+                test.networkStatsDelegate = self;
+            }else if(_celebrityStream && _celebrityStream.hasVideo){
+                OTSubscriber *test = _subscribers[@"celebrity"];
+                test.networkStatsDelegate = self;
+            }else if(_selfSubscriber){
+                _selfSubscriber.networkStatsDelegate = self;
+            }
     }
 }
 
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
-//    if(subscriber.stream && subscriber.stream.videoDimensions.width){
-//        resolution = [NSString stringWithFormat:@"%.0fx%.0f",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
-//    }
+    //    if(subscriber.stream && subscriber.stream.videoDimensions.width){
+    //        resolution = [NSString stringWithFormat:@"%.0fx%.0f",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
+    //    }
     
     /// TODO : check how to update the framerate
     
@@ -889,7 +883,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
             [self stopLoader];
         });
-
+        
     }
 }
 
@@ -1011,7 +1005,7 @@ connectionCreated:(OTConnection *)connection
 //    NSLog(@"session connectionDestroyed (%@)", connection.connectionId);
 //    NSString *connectingTo =[self getStreamData:connection.data];
 //    OTSubscriber *_subscriber = _subscribers[connectingTo];
-//    
+//
 //    if ([_subscriber.stream.connection.connectionId
 //         isEqualToString:connection.connectionId])
 //    {
@@ -1278,7 +1272,7 @@ didFailWithError:(OTError*)error
         NSLog(@"signal sent of type Warning");
     }
     
-
+    
 }
 
 - (void)sendNewUserSignal
@@ -1315,7 +1309,7 @@ didFailWithError:(OTError*)error
     } else {
         NSLog(@"signal sent of type newFan");
     }
-
+    
 }
 
 - (void)captureAndSendScreenshot{

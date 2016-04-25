@@ -489,10 +489,8 @@ static NSString* const kTextChatType = @"chatMessage";
             NSLog(@"subscribe self error");
         }
     }else{
-        if(isFan){
-            NSLog(@"stream Created PUBLISHER ONST");
-            [self doSubscribe:stream];
-        }
+        NSLog(@"stream Created PUBLISHER ONST");
+        [self doSubscribe:stream];
     }
     
 }

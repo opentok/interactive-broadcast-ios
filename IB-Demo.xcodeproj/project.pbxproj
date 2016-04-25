@@ -97,6 +97,7 @@
 		0B71C4051C40273500BE89DC /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E61C40273500BE89DC /* IBApi.m */; };
 		0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */; };
 		0B71C4071C40273500BE89DC /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */; };
+		0B7412FB1CCE71E800A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
 		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
 		0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
@@ -123,10 +124,10 @@
 		0BB44ADE1C5044A60076545C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B611C4075A30091A6BE /* QuartzCore.framework */; };
 		0BB44ADF1C5044A60076545C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5E1C403B720091A6BE /* AVFoundation.framework */; };
 		0BB44AE01C5044A60076545C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
-		0BB918501CC92B6200F54161 /* chevron-back-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BB9184C1CC92B6200F54161 /* chevron-back-white.png */; };
-		0BB918511CC92B6200F54161 /* chevron-back-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BB9184D1CC92B6200F54161 /* chevron-back-white@2x.png */; };
-		0BB918521CC92B6200F54161 /* chevron-back-white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BB9184E1CC92B6200F54161 /* chevron-back-white@3x.png */; };
-		0BB918531CC92B6200F54161 /* chevron-back-white@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BB9184F1CC92B6200F54161 /* chevron-back-white@4x.png */; };
+		0BB918501CC92B6200F54161 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		0BB918511CC92B6200F54161 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		0BB918521CC92B6200F54161 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		0BB918531CC92B6200F54161 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */; };
 		A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */; };
 		A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */; };
@@ -255,6 +256,7 @@
 		0B71C3E61C40273500BE89DC /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
 		0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
+		0B7412FA1CCE71E800A06B1B /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B7412FB1CCE71E800A06B1B /* OpenTok.framework in Frameworks */,
 				0BB44AD31C50447D0076545C /* CoreMedia.framework in Frameworks */,
 				0BB44ACD1C50446E0076545C /* libsqlite3.tbd in Frameworks */,
 				0BB44AC11C5042EA0076545C /* libc++.tbd in Frameworks */,
@@ -328,6 +331,7 @@
 		0B71C34B1C3F5D0F00BE89DC = {
 			isa = PBXGroup;
 			children = (
+				0B7412FA1CCE71E800A06B1B /* OpenTok.framework */,
 				0B71C3561C3F5D0F00BE89DC /* IB-Demo */,
 				0B71C3771C4026EE00BE89DC /* IBKit */,
 				0B71C3551C3F5D0F00BE89DC /* Products */,
@@ -421,10 +425,6 @@
 		0B71C3831C40272000BE89DC /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				0BB9184C1CC92B6200F54161 /* chevron-back-white.png */,
-				0BB9184D1CC92B6200F54161 /* chevron-back-white@2x.png */,
-				0BB9184E1CC92B6200F54161 /* chevron-back-white@3x.png */,
-				0BB9184F1CC92B6200F54161 /* chevron-back-white@4x.png */,
 				0B71C3841C40272000BE89DC /* BackArrow-1.png */,
 				0B71C3851C40272000BE89DC /* BackArrow-2.png */,
 				0B71C3861C40272000BE89DC /* BackArrow.png */,
@@ -684,7 +684,7 @@
 				0B71C3BD1C40272000BE89DC /* OTKTextChatRecvTableViewCell.xib in Resources */,
 				0B71C3AC1C40272000BE89DC /* icon-bubble@2x.png in Resources */,
 				0B71C3AF1C40272000BE89DC /* icon-check.png in Resources */,
-				0BB918501CC92B6200F54161 /* chevron-back-white.png in Resources */,
+				0BB918501CC92B6200F54161 /* (null) in Resources */,
 				0B71C3AD1C40272000BE89DC /* icon-check-circle.png in Resources */,
 				0B71C3B11C40272000BE89DC /* icon-close-circle.png in Resources */,
 				A081FE261C8FA56D00D7DF9D /* DotSpinnerViewController.xib in Resources */,
@@ -694,7 +694,7 @@
 				0B71C3A71C40272000BE89DC /* bg-graphic.png in Resources */,
 				0B71C3B51C40272000BE89DC /* icon_sendMsgArrow_052015.png in Resources */,
 				0B71C3B41C40272000BE89DC /* icon-close@2x.png in Resources */,
-				0BB918521CC92B6200F54161 /* chevron-back-white@3x.png in Resources */,
+				0BB918521CC92B6200F54161 /* (null) in Resources */,
 				0B71C3A51C40272000BE89DC /* BackArrow-2.png in Resources */,
 				0B71C3AB1C40272000BE89DC /* icon-bubble.png in Resources */,
 				0B71C3A81C40272000BE89DC /* EventCell.xib in Resources */,
@@ -704,8 +704,8 @@
 				0B71C3BE1C40272000BE89DC /* OTKTextChatSentShortTableViewCell.xib in Resources */,
 				A0524D1D1C8E13C400FF08BB /* SVProgressHUD.bundle in Resources */,
 				0B71C3BC1C40272000BE89DC /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
-				0BB918511CC92B6200F54161 /* chevron-back-white@2x.png in Resources */,
-				0BB918531CC92B6200F54161 /* chevron-back-white@4x.png in Resources */,
+				0BB918511CC92B6200F54161 /* (null) in Resources */,
+				0BB918531CC92B6200F54161 /* (null) in Resources */,
 				0B71C3C11C40272000BE89DC /* recv-arrow@2x.png in Resources */,
 				0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */,
 				0B71C3C21C40272000BE89DC /* sent-arrow.png in Resources */,

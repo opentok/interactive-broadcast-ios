@@ -230,7 +230,7 @@ static OSStatus playout_cb(void *ref_con,
 {
     @synchronized(self) {
         OT_AUDIO_DEBUG(@"stopRendering");
-
+        
         if (!playing) {
             return YES;
         }
@@ -522,10 +522,10 @@ static bool CheckError(OSStatus error, NSString* function) {
             
         }
             break;
-        
+            
         default:
             OT_AUDIO_DEBUG(@"Audio Session Interruption Notification"
-                  " case default.");
+                           " case default.");
             break;
     }
 }
@@ -620,7 +620,7 @@ static bool CheckError(OSStatus error, NSString* function) {
         [center addObserver:self
                    selector:@selector(onRouteChangeEvent:)
                        name:AVAudioSessionRouteChangeNotification object:nil];
-
+        
         areListenerBlocksSetup = YES;
     }
 }
@@ -778,7 +778,7 @@ static OSStatus playout_cb(void *ref_con,
                            UInt32 num_frames,
                            AudioBufferList *buffer_list)
 {
-
+    
     OTDefaultAudioDevice *dev = (__bridge OTDefaultAudioDevice*) ref_con;
     
     if (!dev->playing) { return 0; }
@@ -786,7 +786,7 @@ static OSStatus playout_cb(void *ref_con,
     uint32_t count =
     [dev->_audioBus readRenderData:buffer_list->mBuffers[0].mData
                    numberOfSamples:num_frames];
-        
+    
     if (count != num_frames) {
         //TODO: Not really an error, but conerning. Network issues?
     }
@@ -993,9 +993,9 @@ static OSStatus playout_cb(void *ref_con,
     AURenderCallbackStruct render_callback;
     render_callback.inputProc = playout_cb;;
     render_callback.inputProcRefCon = (__bridge void *)(self);
-        OSStatus result = AudioUnitSetProperty(unit, kAudioUnitProperty_SetRenderCallback,
-                                 kAudioUnitScope_Input, kOutputBus, &render_callback,
-                                 sizeof(render_callback));
+    OSStatus result = AudioUnitSetProperty(unit, kAudioUnitProperty_SetRenderCallback,
+                                           kAudioUnitScope_Input, kOutputBus, &render_callback,
+                                           sizeof(render_callback));
     return (result == 0);
 }
 

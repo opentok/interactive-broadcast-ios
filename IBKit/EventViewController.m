@@ -1703,7 +1703,7 @@ didFailWithError:(OTError*)error
     }
     
     if([self.connectionData[@"enable_analytics"] boolValue]){
-        [[SpotlightApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
+        [[IBApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
     }
     [_session disconnect:&error];
     [[IBApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];

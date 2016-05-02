@@ -123,6 +123,8 @@
 		0BB44ADE1C5044A60076545C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B611C4075A30091A6BE /* QuartzCore.framework */; };
 		0BB44ADF1C5044A60076545C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5E1C403B720091A6BE /* AVFoundation.framework */; };
 		0BB44AE01C5044A60076545C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B5B1C4039E50091A6BE /* Foundation.framework */; };
+		0BC0F6E51CD7D24400BA8594 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC0F6E41CD7D24400BA8594 /* OpenTok.framework */; };
+		0BC0F6E61CD7D24400BA8594 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC0F6E41CD7D24400BA8594 /* OpenTok.framework */; };
 		A0524D1A1C8E13C400FF08BB /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */; };
 		A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */; };
 		A0524D1C1C8E13C400FF08BB /* SVProgressHUD-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */; };
@@ -252,6 +254,7 @@
 		0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
+		0BC0F6E41CD7D24400BA8594 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		A0524D141C8E13C400FF08BB /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -282,6 +285,7 @@
 				0BB44AD51C5044870076545C /* CoreTelephony.framework in Frameworks */,
 				0BB44ACF1C5044730076545C /* AudioToolbox.framework in Frameworks */,
 				0BB44AD71C50448B0076545C /* CoreVideo.framework in Frameworks */,
+				0BC0F6E51CD7D24400BA8594 /* OpenTok.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +303,7 @@
 				0BB44AD81C5044900076545C /* GLKit.framework in Frameworks */,
 				0BB44AD21C50447C0076545C /* CoreMedia.framework in Frameworks */,
 				0BB44ADA1C5044A60076545C /* OpenGLES.framework in Frameworks */,
+				0BC0F6E61CD7D24400BA8594 /* OpenTok.framework in Frameworks */,
 				0BB44ADB1C5044A60076545C /* SystemConfiguration.framework in Frameworks */,
 				0BB44ADC1C5044A60076545C /* UIKit.framework in Frameworks */,
 				0BB44ADD1C5044A60076545C /* VideoToolbox.framework in Frameworks */,
@@ -324,6 +329,7 @@
 		0B71C34B1C3F5D0F00BE89DC = {
 			isa = PBXGroup;
 			children = (
+				0BC0F6E41CD7D24400BA8594 /* OpenTok.framework */,
 				0B71C3561C3F5D0F00BE89DC /* IB-Demo */,
 				0B71C3771C4026EE00BE89DC /* IBKit */,
 				0B71C3551C3F5D0F00BE89DC /* Products */,

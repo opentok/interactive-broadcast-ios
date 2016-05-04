@@ -1,5 +1,5 @@
 //
-//  MultipleEventsExampleControllerViewController.h
+//  MultipleEventsExampleViewController.h
 //  IB-ios
 //
 //  Created by Andrea Phillips on 14/12/2015.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MultipleEventsExampleControllerViewController : UIViewController
+@interface MultipleEventsExampleViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIButton *Title;
 @property (strong, nonatomic) IBOutlet UICollectionView *eventsView;

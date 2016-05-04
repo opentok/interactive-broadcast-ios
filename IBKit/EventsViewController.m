@@ -16,7 +16,7 @@
     NSMutableDictionary *instanceData;
     NSArray *dataArray;
     NSMutableDictionary *user;
-    SIOSocket *signalingSocket;
+    SIOSocket *signalingSocketEvents;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *eventsView;
@@ -55,12 +55,12 @@
     
     [SIOSocket socketWithHost:instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
      {
-         signalingSocket = socket;
-         signalingSocket.onConnect = ^()
+         signalingSocketEvents = socket;
+         signalingSocketEvents.onConnect = ^()
          {
              NSLog(@"Connected to signaling server");
          };
-         [signalingSocket on:@"change-event-status" callback: ^(SIOParameterArray *args)
+         [signalingSocketEvents on:@"change-event-status" callback: ^(SIOParameterArray *args)
           {
               NSDictionary *eventChanged = [args firstObject];
               [self UpdateEventStatus:eventChanged];

@@ -112,6 +112,8 @@
 		0B74130A1CCE765E00A06B1B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B6F1C40784B0091A6BE /* VideoToolbox.framework */; };
 		0B74130B1CCE77B500A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
 		0B74130D1CCE78AF00A06B1B /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7412FA1CCE71E800A06B1B /* OpenTok.framework */; };
+		0B7413111CCE9B8700A06B1B /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B74130F1CCE9B8700A06B1B /* OTKAnalytics.h */; };
+		0B7413121CCE9B8700A06B1B /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7413101CCE9B8700A06B1B /* OTKAnalytics.m */; };
 		0B96C2CD1C8F2C8B00E2422A /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */; };
 		0BB44AC91C5044640076545C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7F1C407BED0091A6BE /* libc++.tbd */; };
 		0BB44ACA1C5044690076545C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B175B7D1C407B4C0091A6BE /* AVKit.framework */; };
@@ -262,6 +264,8 @@
 		0B71C3E71C40273500BE89DC /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		0B71C3E81C40273500BE89DC /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		0B7412FA1CCE71E800A06B1B /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
+		0B74130F1CCE9B8700A06B1B /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
+		0B7413101CCE9B8700A06B1B /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
 		0B96C2CC1C8F2C8B00E2422A /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0524D121C8E13C400FF08BB /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		A0524D131C8E13C400FF08BB /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 		0B71C3771C4026EE00BE89DC /* IBKit */ = {
 			isa = PBXGroup;
 			children = (
+				0B74130E1CCE9B7600A06B1B /* OTKAnalytics */,
 				A081FE201C8FA56D00D7DF9D /* DotSpinnerView */,
 				A0524D111C8E13C400FF08BB /* SVProgressHUD */,
 				0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */,
@@ -522,6 +527,15 @@
 			path = OTKTextChatLibrary;
 			sourceTree = "<group>";
 		};
+		0B74130E1CCE9B7600A06B1B /* OTKAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				0B74130F1CCE9B8700A06B1B /* OTKAnalytics.h */,
+				0B7413101CCE9B8700A06B1B /* OTKAnalytics.m */,
+			);
+			name = OTKAnalytics;
+			sourceTree = "<group>";
+		};
 		0BBB5AB21C7F845F00CBCD59 /* OTNetworkTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +597,7 @@
 				0B175BC71C4095B90091A6BE /* SIOSocket.h in Headers */,
 				A0524D201C8E13C400FF08BB /* SVRadialGradientLayer.h in Headers */,
 				0B71C3F11C40273500BE89DC /* DGActivityIndicatorAnimationProtocol.h in Headers */,
+				0B7413111CCE9B8700A06B1B /* OTKAnalytics.h in Headers */,
 				0B296A7C1C80C77600BCA9A9 /* PerformSelectorWithDebounce.h in Headers */,
 				0B71C3FD1C40273500BE89DC /* OTKTextChatTableViewCell.h in Headers */,
 				0B71C4061C40273500BE89DC /* UIColor+AppAdditions.h in Headers */,
@@ -747,7 +762,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"IBKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"SpotlightKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -775,6 +790,7 @@
 				0B71C3F01C40273500BE89DC /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
 				0B71C3F71C40273500BE89DC /* EventViewController.m in Sources */,
 				A0524D1F1C8E13C400FF08BB /* SVProgressHUD.m in Sources */,
+				0B7413121CCE9B8700A06B1B /* OTKAnalytics.m in Sources */,
 				A056C36C1C988E8000C9C44E /* OTDefaultAudioDevice.m in Sources */,
 				0B71C3F91C40273500BE89DC /* MainIBViewController.m in Sources */,
 				A0524D1B1C8E13C400FF08BB /* SVIndefiniteAnimatedView.m in Sources */,

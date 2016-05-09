@@ -420,7 +420,6 @@ static NSString* const kTextChatType = @"chatMessage";
             _publisher.publishAudio = NO;
             (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
             [self stopLoader];
-            [self performSelector:@selector(hideInlineHolder) withObject:nil afterDelay:10.0];
         }
         if(isOnstage){
             [self publishTo:_session];
@@ -1145,6 +1144,7 @@ didFailWithError:(OTError*)error
         self.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
         [self showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
+        [self hideInlineHolder];
     }
     
     if([type isEqualToString:@"newFanAck"]){

@@ -7,18 +7,18 @@
 //
 
 #import <OpenTok/OpenTok.h>
-#import "SIOSocket.h"
+#import "Source/SIOSocket.h"
 
-#import "OTKTextChatComponent.h"
+#import "OTKTextChat/OTKTextChatLibrary/OTKTextChatComponent.h"
 #import "IBApi.h"
 #import "PerformSelectorWithDebounce.h"
 
 #import "EventViewController.h"
-#import "DGActivityIndicatorView.h"
+#import "DGActivityIndicatorView/DGActivityIndicatorView.h"
 #import "UIColor+AppAdditions.h"
 
-#import "SVProgressHUD.h"
-#import "DotSpinnerViewController.h"
+#import "SVProgressHUD/SVProgressHUD.h"
+#import "DotSpinnerView/DotSpinnerViewController.h"
 
 #import "OTDefaultAudioDevice.h"
 #import "OTKAnalytics.h"
@@ -401,7 +401,9 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *apiKey = self.apikey;
     NSString *sessionId = _session.sessionId;
     NSInteger partner = [apiKey integerValue];
-    logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"1.0" source:@"ibKit"];
+    NSString* sourceId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    
+    logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.0.0" source:sourceId];
 }
 
 #pragma mark - publishers
@@ -942,7 +944,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             self.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            [[IBApi sharedInstance] sendMetric:@"get-inline" event_id:self.eventData[@"id"]];
             [logging logEventAction:@"fan_connects_backstage" variation:@"success"];
         }
     }else{
@@ -1779,10 +1780,6 @@ didFailWithError:(OTError*)error
 - (IBAction)goBack:(id)sender {
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        
-        if([self.connectionData[@"enable_analytics"] boolValue]){
-            [[IBApi sharedInstance] sendMetric:@"leave-event" event_id:self.eventData[@"id"]];
-        }
         
         OTError *error = nil;
         if(_producerSession){

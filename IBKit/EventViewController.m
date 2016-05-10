@@ -7,18 +7,18 @@
 //
 
 #import <OpenTok/OpenTok.h>
-#import "Source/SIOSocket.h"
+#import "SIOSocket.h"
 
-#import "OTKTextChat/OTKTextChatLibrary/OTKTextChatComponent.h"
+#import "OTKTextChatComponent.h"
 #import "IBApi.h"
 #import "PerformSelectorWithDebounce.h"
 
 #import "EventViewController.h"
-#import "DGActivityIndicatorView/DGActivityIndicatorView.h"
+#import "DGActivityIndicatorView.h"
 #import "UIColor+AppAdditions.h"
 
-#import "SVProgressHUD/SVProgressHUD.h"
-#import "DotSpinnerView/DotSpinnerViewController.h"
+#import "SVProgressHUD.h"
+#import "DotSpinnerViewController.h"
 
 #import "OTDefaultAudioDevice.h"
 #import "OTKAnalytics.h"

@@ -401,7 +401,7 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *apiKey = self.apikey;
     NSString *sessionId = _session.sessionId;
     NSInteger partner = [apiKey integerValue];
-    NSString* sourceId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.eventData[@"id"]];
     
     logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.0.0" source:sourceId];
 }

@@ -766,18 +766,17 @@ static NSString* const kTextChatType = @"chatMessage";
     NSLog(@"%@",key);
     return videoLimits[key];
 }
-
 -(void)startNetworkTest{
     if(isBackstage || isOnstage){
-            if(_hostStream && _hostStream.hasVideo){
-                OTSubscriber *test = _subscribers[@"host"];
-                test.networkStatsDelegate = self;
-            }else if(_celebrityStream && _celebrityStream.hasVideo){
-                OTSubscriber *test = _subscribers[@"celebrity"];
-                test.networkStatsDelegate = self;
-            }else if(_selfSubscriber){
-                _selfSubscriber.networkStatsDelegate = self;
-            }
+        if(_hostStream && _hostStream.hasVideo && isLive){
+            OTSubscriber *test = _subscribers[@"host"];
+            test.networkStatsDelegate = self;
+        }else if(_celebrityStream && _celebrityStream.hasVideo && isLive){
+            OTSubscriber *test = _subscribers[@"celebrity"];
+            test.networkStatsDelegate = self;
+        }else if(_selfSubscriber){
+            _selfSubscriber.networkStatsDelegate = self;
+        }
     }
 }
 

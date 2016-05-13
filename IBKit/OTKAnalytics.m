@@ -21,9 +21,9 @@ NSString *const kLoggingUrl = @"https://hlg.tokbox.com/prod/logging/ClientEvent"
 @property (nonatomic) NSString *connectionId;
 @property (nonatomic) NSInteger partnerId;
 @property (nonatomic) NSString *clientVersion;
+@property (nonatomic) NSString *source;
 @property (nonatomic) NSString *action;
 @property (nonatomic) NSString *variation;
-@property (nonatomic) NSString *source;
 
 // nonpublic properties
 @property (nonatomic) NSString *logVersion;
@@ -38,7 +38,7 @@ NSString *const kLoggingUrl = @"https://hlg.tokbox.com/prod/logging/ClientEvent"
 
 @implementation OTKAnalytics
 
--(instancetype)initWithSessionId:(NSString*) sessionId connectionId:(NSString*) connectionId partnerId:(NSInteger) partnerId clientVersion:(NSString*) clientVersion source: (NSString*) source{
+-(instancetype)initWithSessionId:(NSString*) sessionId connectionId:(NSString*) connectionId partnerId:(NSInteger) partnerId clientVersion:(NSString*) clientVersion source:(NSString*) source{
     
     if ( sessionId == nil || [ sessionId length ]==0 ) {
         NSLog (@"The sessionId field cannot be null in the log entry");
@@ -63,7 +63,8 @@ NSString *const kLoggingUrl = @"https://hlg.tokbox.com/prod/logging/ClientEvent"
     if ( source == nil || [ source length ]==0 ) {
         NSLog (@"The source field cannot be null in the log entry");
         return nil;
-    } 
+    }
+    
     if (self = [super init]) {
         _sessionId = sessionId;
         _connectionId = connectionId;
@@ -80,21 +81,27 @@ NSString *const kLoggingUrl = @"https://hlg.tokbox.com/prod/logging/ClientEvent"
         struct utsname systemInfo;
         uname(&systemInfo);
         _deviceModel = [NSString stringWithCString:systemInfo.machine
-                                               encoding:NSUTF8StringEncoding];
+                                          encoding:NSUTF8StringEncoding];
         
-        NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
-        NSInteger time = round(timeInMiliseconds);
-        _clientSystemTime = time;
-
+        _clientSystemTime = [self getClientTime];
+        
     }
     
     return self;
+}
+
+- (NSInteger) getClientTime {
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    NSInteger time = round(timeInMiliseconds);
+    
+    return time;
 }
 
 -(void)logEventAction:(NSString *)action variation:(NSString *) variation {
     
     _action = action;
     _variation = variation;
+    _clientSystemTime = [self getClientTime];
     
     NSDictionary *dictionary = @{
                                  @"sessionId" : _sessionId,

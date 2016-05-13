@@ -362,7 +362,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     [self unpublishFrom:_producerSession];
     isBackstage = NO;
-    self.inLineHolder.alpha = 0;
+    self.inLineHolder.hidden = YES;
     self.getInLineBtn.hidden = NO;
     shouldResendProducerSignal = YES;
 }
@@ -404,6 +404,10 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.eventData[@"id"]];
     
     logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.0.0" source:sourceId];
+    
+    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage",me];
+    [logging logEventAction:logtype variation:@"success"];
 }
 
 #pragma mark - publishers
@@ -414,10 +418,7 @@ static NSString* const kTextChatType = @"chatMessage";
             [self sendNewUserSignal];
             [self publishTo:_producerSession];
             
-            _publisher.view.layer.cornerRadius = 0.5;
-            [self.inLineHolder addSubview:_publisher.view];
-            [self.inLineHolder sendSubviewToBack:_publisher.view];
-            self.inLineHolder.alpha = 1;
+            //[self showVideoPreview];
             self.closeEvenBtn.hidden = YES;
             _publisher.publishAudio = NO;
             (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
@@ -457,12 +458,12 @@ static NSString* const kTextChatType = @"chatMessage";
     if(_publisher){
         NSLog(@"PUBLISHER EXISTED");
     }
+    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
+    NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@",me,session_name];
+
+    [logging logEventAction:logtype variation:@"attempt"];
     
-    if(session == _session && isFan){
-        [logging logEventAction:@"onstage_publishing" variation:@"attempt"];
-    }else{
-        [logging logEventAction:@"backstage_publishing" variation:@"attempt"];
-    }
     
     if(!_publisher){
         _publisher = [[OTPublisher alloc] initWithDelegate:self name:self.userName];
@@ -477,18 +478,11 @@ static NSString* const kTextChatType = @"chatMessage";
         [self sendWarningSignal];
         
         [self showAlert:error.localizedDescription];
-        if(session == _session){
-            [logging logEventAction:@"onstage_publishing" variation:@"failed"];
-        }else{
-            [logging logEventAction:@"backstage_publishing" variation:@"failed"];
-        }
+        [logging logEventAction:logtype variation:@"fail"];
+
 
     }else{
-        if(session == _session){
-            [logging logEventAction:@"onstage_publishing" variation:@"success"];
-        }else{
-            [logging logEventAction:@"backstage_publishing" variation:@"success"];
-        }
+        [logging logEventAction:logtype variation:@"success"];
     }
     
 }
@@ -497,19 +491,17 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     OTError *error = nil;
     [session unpublish:_publisher error:&error];
-    if(session.sessionId == _session.sessionId){
-        [logging logEventAction:@"onstage_unpublish" variation:@"attempt"];
-    }else{
-        [logging logEventAction:@"backstage_unpublish" variation:@"attempt"];
-    }
+    
+    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
+    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@",me,session_name];
+    
+    [logging logEventAction:logtype variation:@"attempt"];
+    
     if (error)
     {
         [self showAlert:error.localizedDescription];
-        if(session.sessionId == _session.sessionId){
-            [logging logEventAction:@"onstage_unpublish" variation:@"failed"];
-        }else{
-            [logging logEventAction:@"backstage_unpublish" variation:@"attempt"];
-        }
+        [logging logEventAction:logtype variation:@"fail"];
     }
 }
 
@@ -544,11 +536,9 @@ static NSString* const kTextChatType = @"chatMessage";
         {
             NSLog(@"subscribe self error");
         }
-        [logging logEventAction:@"backstage_publishing" variation:@"success"];
     }else{
         NSLog(@"stream Created PUBLISHER ONST");
         [self doSubscribe:stream];
-        [logging logEventAction:@"onstage_publishing" variation:@"success"];
     }
     [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
 
@@ -562,21 +552,28 @@ static NSString* const kTextChatType = @"chatMessage";
     
     if(!_publisher.stream && !stream.connection) return;
     
+    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    
+    
     NSString *connectingTo =[self getStreamData:stream.connection.data];
     OTSubscriber *_subscriber = _subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
-        [logging logEventAction:@"onstage_publisher_disconnect" variation:@"success"];
+        
+        NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
+        [logging logEventAction:logtype variation:@"success"];
+        
         [self cleanupSubscriber:connectingTo];
     }
     if(_selfSubscriber){
         [_producerSession unsubscribe:_selfSubscriber error:nil];
         _selfSubscriber = nil;
-        [logging logEventAction:@"backstage_publisher_disconnect" variation:@"success"];
-    }
+        
+        NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
+        [logging logEventAction:logtype variation:@"success"];    }
     
-    [self cleanupPublisher];
+        [self cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher
@@ -602,9 +599,6 @@ static NSString* const kTextChatType = @"chatMessage";
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _subscribers[connectingTo] = subs;
         
-        
-        [logging logEventAction:@"get_inline" variation:@"success"];
-
         NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
         [logging logEventAction:logtype variation:@"attempt"];
@@ -953,6 +947,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
                 [self forceDisconnect];
             }else{
                 [self loadChat];
+                [self addLogging];
                 isOnstage = YES;
                 [self doPublish];
             }
@@ -969,7 +964,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     NSLog(@"sessionDidDisconnect (%@)", alertMessage);
     if(session == _producerSession){
         isBackstage = NO;
-        self.inLineHolder.alpha = 0;
+        self.inLineHolder.hidden = YES;
         self.getInLineBtn.hidden = NO;
         shouldResendProducerSignal = YES;
         [self cleanupPublisher];
@@ -1144,8 +1139,8 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"joinBackstage"]){
         self.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
+        [self showVideoPreview];
         [self showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
-        [self hideInlineHolder];
     }
     
     if([type isEqualToString:@"newFanAck"]){
@@ -1169,6 +1164,7 @@ didFailWithError:(OTError*)error
         _publisher.publishAudio = YES;
         [self muteOnstageSession:YES];
         [self showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
+        [self showVideoPreview];
     }
     if([type isEqualToString:@"privateCall"]){
         if(isOnstage || isBackstage){
@@ -1177,6 +1173,9 @@ didFailWithError:(OTError*)error
                 inCallWithProducer = YES;
                 [self muteOnstageSession:YES];
                 [self showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
+                if(isFan && isBackstage){
+                    [self showVideoPreview];
+                }
             }else{
                 [self muteOnstageSession:YES];
                 [self showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
@@ -1192,6 +1191,9 @@ didFailWithError:(OTError*)error
                 [_session unsubscribe: _privateProducerSubscriber error:&error];
                 inCallWithProducer = NO;
                 [self muteOnstageSession:NO];
+                if(isFan && isBackstage){
+                    [self hideVideoPreview];
+                }
             }else{
                 NSLog(@"I CAN HEAR AGAIN");
                 [self muteOnstageSession:NO];
@@ -1210,6 +1212,7 @@ didFailWithError:(OTError*)error
             _publisher.publishAudio = NO;
             [self muteOnstageSession:NO];
             [self hideNotification];
+            [self hideVideoPreview];
         }
     }
     
@@ -1218,6 +1221,7 @@ didFailWithError:(OTError*)error
         self.statusLabel.text = @"IN LINE";
         _publisher.publishAudio = NO;
         [self hideNotification];
+        [self hideVideoPreview];
     }
     if([type isEqualToString:@"goLive"]){
         self.eventData[@"status"] = @"L";
@@ -1246,6 +1250,7 @@ didFailWithError:(OTError*)error
         if(![self.eventData[@"status"] isEqualToString:@"L"] && !isLive){
             [self goLive];
         }
+        [self hideVideoPreview];
         [DotSpinnerViewController show];
     }
     
@@ -1373,12 +1378,17 @@ didFailWithError:(OTError*)error
 }
 
 - (void)captureAndSendScreenshot{
-    self.inLineHolder.alpha = 1;
+    
     UIView* screenCapture = [_publisher.view snapshotViewAfterScreenUpdates:YES];
     if(screenCapture){
-        [self.inLineHolder addSubview:screenCapture];
-        UIImage *screenshot = [self imageFromView:self.inLineHolder];
+//        [self.inLineHolder addSubview:screenCapture];
+
+//        self.inLineHolder.hidden = NO;
+//        UIImage *screenshot = [self imageFromView:self.inLineHolder];
+//        self.inLineHolder.hidden = YES;
         
+        UIImage *screenshot = [self imageFromView:screenCapture];
+
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formated = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
@@ -1388,7 +1398,7 @@ didFailWithError:(OTError*)error
                                                        @"sessionId" : _producerSession.sessionId,
                                                        @"snapshot": formated
                                                        }]];
-        [screenCapture removeFromSuperview];
+//        [screenCapture removeFromSuperview];
     }
     
 }
@@ -1766,13 +1776,22 @@ didFailWithError:(OTError*)error
 }
 
 -(IBAction)dismissInlineTxt:(id)sender {
-    [self hideInlineHolder];
+    [self hideVideoPreview];
 }
 
--(void)hideInlineHolder{
-    [UIView animateWithDuration:5 animations:^{
-        self.inLineHolder.alpha = 0;
+-(void)hideVideoPreview{
+    [UIView animateWithDuration:3 animations:^{
+        self.inLineHolder.hidden = YES;
     }];
+}
+-(void)showVideoPreview{
+    if(_publisher){
+        _publisher.view.layer.cornerRadius = 0.5;
+        [self.inLineHolder addSubview:_publisher.view];
+        [self.inLineHolder sendSubviewToBack:_publisher.view];
+        self.inLineHolder.hidden = NO;
+    }
+    
 }
 
 //GO BACK

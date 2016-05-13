@@ -403,7 +403,7 @@ static NSString* const kTextChatType = @"chatMessage";
     NSInteger partner = [apiKey integerValue];
     NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.eventData[@"id"]];
     
-    logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.0.0" source:sourceId];
+    logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
     
     NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
     NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage",me];
@@ -1381,11 +1381,6 @@ didFailWithError:(OTError*)error
     
     UIView* screenCapture = [_publisher.view snapshotViewAfterScreenUpdates:YES];
     if(screenCapture){
-//        [self.inLineHolder addSubview:screenCapture];
-
-//        self.inLineHolder.hidden = NO;
-//        UIImage *screenshot = [self imageFromView:self.inLineHolder];
-//        self.inLineHolder.hidden = YES;
         
         UIImage *screenshot = [self imageFromView:screenCapture];
 
@@ -1398,7 +1393,6 @@ didFailWithError:(OTError*)error
                                                        @"sessionId" : _producerSession.sessionId,
                                                        @"snapshot": formated
                                                        }]];
-//        [screenCapture removeFromSuperview];
     }
     
 }

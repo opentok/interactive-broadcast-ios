@@ -1378,12 +1378,10 @@ didFailWithError:(OTError*)error
 }
 
 - (void)captureAndSendScreenshot{
-    
-    UIView* screenCapture = [_publisher.view snapshotViewAfterScreenUpdates:YES];
-    if(screenCapture){
-        
-        UIImage *screenshot = [self imageFromView:screenCapture];
 
+    if (_publisher.view) {
+        UIImage *screenshot = [self imageFromView:_publisher.view];
+        
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formated = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
@@ -1394,7 +1392,6 @@ didFailWithError:(OTError*)error
                                                        @"snapshot": formated
                                                        }]];
     }
-    
 }
 
 - (UIImage *) imageFromView:(UIView *)view

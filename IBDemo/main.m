@@ -1,9 +1,9 @@
 //
 //  main.m
-//  IB-Demo
+//  IBDemo
 //
-//  Created by Andrea Phillips on 07/01/2016.
-//  Copyright © 2016 Tokbox. All rights reserved.
+//  Created by Xi Huang on 5/16/16.
+//  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

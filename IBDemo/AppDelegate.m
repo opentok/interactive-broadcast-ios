@@ -1,14 +1,12 @@
 //
 //  AppDelegate.m
-//  IB-Demo
+//  IBDemo
 //
-//  Created by Andrea Phillips on 07/01/2016.
-//  Copyright © 2016 Tokbox. All rights reserved.
+//  Created by Xi Huang on 5/16/16.
+//  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "OTDefaultAudioDevice.h"
-#import <OpenTok/OpenTok.h>
 
 @interface AppDelegate ()
 
@@ -19,8 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
-    [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
     return YES;
 }
 
@@ -44,7 +40,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
 }
 
 @end

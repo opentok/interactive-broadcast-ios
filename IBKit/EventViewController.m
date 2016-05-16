@@ -148,6 +148,9 @@ static NSString* const kTextChatType = @"chatMessage";
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
+        OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
+        [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
+        
         instanceData = [aConnectionData mutableCopy];
         self.eventData = [aEventData mutableCopy];
         self.userName = aUser[@"name"] ? aUser[@"name"] : aUser[@"type"];

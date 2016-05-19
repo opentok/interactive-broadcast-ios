@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *detailView;
 @property (nonatomic) NSString *instance_id;
+@property (nonatomic) NSString *admins_id;
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) NSMutableArray *singleEventData;
 @property (nonatomic) NSString *backend_base_url;
@@ -43,6 +44,20 @@ static bool hasNetworkConnectivity = YES;
     return self;
 }
 
+- (instancetype)initWithAdminId:(NSString *)admins_id
+               backend_base_url:(NSString *)abackend_url
+                           user:(NSMutableDictionary *)aUser{
+    
+    if(self = [super initWithNibName:@"MainIBViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
+        self.admins_id = admins_id;
+        self.backend_base_url = abackend_url;
+        self.user = aUser;
+        
+    }
+    return self;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //UI ***************************
@@ -58,7 +73,12 @@ static bool hasNetworkConnectivity = YES;
     [self logReachability:self.internetReachability];
     
     if(hasNetworkConnectivity) {
-        self.instance_data = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+        if(self.instance_id){
+            self.instance_data = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+        }
+        else if(self.admins_id){
+            self.instance_data = [[IBApi sharedInstance] getEventsByAdmin:self.admins_id back_url:self.backend_base_url];
+        }
     }
     else{
         NSLog(@"error please check your internet");

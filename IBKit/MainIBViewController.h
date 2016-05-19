@@ -14,5 +14,9 @@
             backend_base_url:(NSString *)abackend_url
                         user:(NSMutableDictionary *)aUser;
 
+- (instancetype)initWithAdminId:(NSString *)admins_id
+            backend_base_url:(NSString *)abackend_url
+                        user:(NSMutableDictionary *)aUser;
+
 @end
 

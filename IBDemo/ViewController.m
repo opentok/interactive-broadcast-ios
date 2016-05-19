@@ -99,7 +99,7 @@
                                                                @"name":@"Fan",
                                                                }];
         vc.instance_id = self.instance_id;
-        vc.backend_base_url= @"https://chatshow-tesla.herokuapp.com";
+        vc.backend_base_url= @"https://tokbox-ib-staging-tesla.herokuapp.com";
         vc.user = user;
     }
 }
@@ -114,7 +114,7 @@
 //    NSString *MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
 //    NSString *mlbpass = @"spotlight-mlb-210216";
     
-    self.IBController = [[MainIBViewController alloc] initWithData:@"AAAA1" backend_base_url:stagingBackend user:userOptions];
+    self.IBController = [[MainIBViewController alloc] initWithAdminId:@"dxJa" backend_base_url:stagingBackend user:userOptions];
     [self presentViewController:self.IBController animated:NO completion:nil];
 }
 

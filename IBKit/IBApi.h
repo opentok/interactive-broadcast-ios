@@ -15,6 +15,9 @@
 - (NSMutableDictionary*)getEvents:(NSString*)instance_id
                          back_url:(NSString*)backend_base_url;
 
+- (NSMutableDictionary*)getEventsByAdmin:(NSString*)admins_id
+                         back_url:(NSString*)backend_base_url;
+
 - (NSMutableDictionary*)creteEventToken:(NSString*)user_type
                                back_url:(NSString*)backend_base_url
                                    data:(NSMutableDictionary *)event_data;

@@ -21,11 +21,19 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
+		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
+		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
+		A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */; };
+		A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD41CEE60A50009FBEF /* IBKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */; };
+		A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */; };
+		A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */; };
+		A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
 		A0C5262D1CEAD2D400706104 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C5262B1CEAD2D400706104 /* LaunchScreen.storyboard */; };
-		A0C5263C1CEAD2E000706104 /* IBKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5263B1CEAD2E000706104 /* IBKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C526401CEAD2E000706104 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; };
 		A0C526411CEAD2E000706104 /* IBKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A0C5264A1CEAD30C00706104 /* MultipleEventsExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526471CEAD30C00706104 /* MultipleEventsExampleViewController.m */; };
@@ -41,14 +49,9 @@
 		A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526551CEAD35A00706104 /* EventViewController.m */; };
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526571CEAD35A00706104 /* IBApi.m */; };
-		A0C5267F1CEAD35A00706104 /* IBKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526581CEAD35A00706104 /* IBKit.h */; };
 		A0C526801CEAD35A00706104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C526591CEAD35A00706104 /* Info.plist */; };
 		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265B1CEAD35A00706104 /* MainIBViewController.m */; };
-		A0C526831CEAD35A00706104 /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265C1CEAD35A00706104 /* OTDefaultAudioDevice.h */; };
-		A0C526841CEAD35A00706104 /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265D1CEAD35A00706104 /* OTDefaultAudioDevice.m */; };
-		A0C526851CEAD35A00706104 /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265E1CEAD35A00706104 /* OTKAnalytics.h */; };
-		A0C526861CEAD35A00706104 /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265F1CEAD35A00706104 /* OTKAnalytics.m */; };
 		A0C526871CEAD35A00706104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C526621CEAD35A00706104 /* Info.plist */; };
 		A0C526881CEAD35A00706104 /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526641CEAD35A00706104 /* OTKTextChatComponent.h */; };
 		A0C526891CEAD35A00706104 /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526651CEAD35A00706104 /* OTKTextChatComponent.m */; };
@@ -56,15 +59,6 @@
 		A0C5268B1CEAD35A00706104 /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526671CEAD35A00706104 /* OTKTextChatTableViewCell.m */; };
 		A0C5268C1CEAD35A00706104 /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526681CEAD35A00706104 /* OTKTextChatView.h */; };
 		A0C5268D1CEAD35A00706104 /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526691CEAD35A00706104 /* OTKTextChatView.m */; };
-		A0C5268E1CEAD35A00706104 /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5266A1CEAD35A00706104 /* PerformSelectorWithDebounce.h */; };
-		A0C5268F1CEAD35A00706104 /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5266B1CEAD35A00706104 /* PerformSelectorWithDebounce.m */; };
-		A0C526901CEAD35A00706104 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5266C1CEAD35A00706104 /* Reachability.h */; };
-		A0C526911CEAD35A00706104 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5266D1CEAD35A00706104 /* Reachability.m */; };
-		A0C526921CEAD35A00706104 /* SIOSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5266F1CEAD35A00706104 /* SIOSocket.h */; };
-		A0C526931CEAD35A00706104 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526701CEAD35A00706104 /* SIOSocket.m */; };
-		A0C526941CEAD35A00706104 /* socket.io.js.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526711CEAD35A00706104 /* socket.io.js.h */; };
-		A0C526951CEAD35A00706104 /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526721CEAD35A00706104 /* UIColor+AppAdditions.h */; };
-		A0C526961CEAD35A00706104 /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526731CEAD35A00706104 /* UIColor+AppAdditions.m */; };
 		A0C526B91CEAD36800706104 /* BackArrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526981CEAD36800706104 /* BackArrow-1.png */; };
 		A0C526BA1CEAD36800706104 /* BackArrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526991CEAD36800706104 /* BackArrow-2.png */; };
 		A0C526BB1CEAD36800706104 /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269A1CEAD36800706104 /* BackArrow.png */; };
@@ -127,6 +121,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
+		A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
+		A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
+		A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
+		A0156FD41CEE60A50009FBEF /* IBKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBKit.h; sourceTree = "<group>"; };
+		A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
+		A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
+		A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -135,8 +138,6 @@
 		A0C5262C1CEAD2D400706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0C5262E1CEAD2D400706104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C526391CEAD2E000706104 /* IBKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0C5263B1CEAD2E000706104 /* IBKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBKit.h; sourceTree = "<group>"; };
-		A0C5263D1CEAD2E000706104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C526461CEAD30C00706104 /* MultipleEventsExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleEventsExampleViewController.h; sourceTree = "<group>"; };
 		A0C526471CEAD30C00706104 /* MultipleEventsExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleEventsExampleViewController.m; sourceTree = "<group>"; };
 		A0C526481CEAD30C00706104 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -152,14 +153,9 @@
 		A0C526551CEAD35A00706104 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		A0C526561CEAD35A00706104 /* IBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi.h; sourceTree = "<group>"; };
 		A0C526571CEAD35A00706104 /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
-		A0C526581CEAD35A00706104 /* IBKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBKit.h; sourceTree = "<group>"; };
 		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
 		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
-		A0C5265C1CEAD35A00706104 /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
-		A0C5265D1CEAD35A00706104 /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
-		A0C5265E1CEAD35A00706104 /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
-		A0C5265F1CEAD35A00706104 /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
 		A0C526621CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C526641CEAD35A00706104 /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
 		A0C526651CEAD35A00706104 /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
@@ -167,15 +163,6 @@
 		A0C526671CEAD35A00706104 /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
 		A0C526681CEAD35A00706104 /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
 		A0C526691CEAD35A00706104 /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
-		A0C5266A1CEAD35A00706104 /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
-		A0C5266B1CEAD35A00706104 /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
-		A0C5266C1CEAD35A00706104 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		A0C5266D1CEAD35A00706104 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		A0C5266F1CEAD35A00706104 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
-		A0C526701CEAD35A00706104 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
-		A0C526711CEAD35A00706104 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
-		A0C526721CEAD35A00706104 /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
-		A0C526731CEAD35A00706104 /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		A0C526981CEAD36800706104 /* BackArrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-1.png"; sourceTree = "<group>"; };
 		A0C526991CEAD36800706104 /* BackArrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-2.png"; sourceTree = "<group>"; };
 		A0C5269A1CEAD36800706104 /* BackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackArrow.png; sourceTree = "<group>"; };
@@ -232,6 +219,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0156FCF1CEE60A50009FBEF /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */,
+				A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */,
+				A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */,
+				A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		A0156FDA1CEE60A90009FBEF /* OpenTok */ = {
+			isa = PBXGroup;
+			children = (
+				A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */,
+				A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */,
+				A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */,
+				A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */,
+			);
+			path = OpenTok;
+			sourceTree = "<group>";
+		};
 		A0C526111CEAD2D400706104 = {
 			isa = PBXGroup;
 			children = (
@@ -280,34 +289,23 @@
 		A0C5263A1CEAD2E000706104 /* IBKit */ = {
 			isa = PBXGroup;
 			children = (
-				A0C526971CEAD36800706104 /* Assets */,
-				A0C5263B1CEAD2E000706104 /* IBKit.h */,
-				A0C5264C1CEAD35A00706104 /* dataButton.h */,
-				A0C5264D1CEAD35A00706104 /* dataButton.m */,
-				A0C5264E1CEAD35A00706104 /* DotSpinnerView */,
+				A0156FD41CEE60A50009FBEF /* IBKit.h */,
+				A0C526561CEAD35A00706104 /* IBApi.h */,
+				A0C526571CEAD35A00706104 /* IBApi.m */,
 				A0C526521CEAD35A00706104 /* EventsViewController.h */,
 				A0C526531CEAD35A00706104 /* EventsViewController.m */,
 				A0C526541CEAD35A00706104 /* EventViewController.h */,
 				A0C526551CEAD35A00706104 /* EventViewController.m */,
-				A0C526561CEAD35A00706104 /* IBApi.h */,
-				A0C526571CEAD35A00706104 /* IBApi.m */,
-				A0C526581CEAD35A00706104 /* IBKit.h */,
-				A0C526591CEAD35A00706104 /* Info.plist */,
 				A0C5265A1CEAD35A00706104 /* MainIBViewController.h */,
 				A0C5265B1CEAD35A00706104 /* MainIBViewController.m */,
-				A0C5265C1CEAD35A00706104 /* OTDefaultAudioDevice.h */,
-				A0C5265D1CEAD35A00706104 /* OTDefaultAudioDevice.m */,
-				A0C5265E1CEAD35A00706104 /* OTKAnalytics.h */,
-				A0C5265F1CEAD35A00706104 /* OTKAnalytics.m */,
+				A0C5264C1CEAD35A00706104 /* dataButton.h */,
+				A0C5264D1CEAD35A00706104 /* dataButton.m */,
+				A0156FDA1CEE60A90009FBEF /* OpenTok */,
+				A0156FCF1CEE60A50009FBEF /* Categories */,
+				A0C5264E1CEAD35A00706104 /* DotSpinnerView */,
+				A0C526591CEAD35A00706104 /* Info.plist */,
 				A0C526601CEAD35A00706104 /* OTKTextChat */,
-				A0C5266A1CEAD35A00706104 /* PerformSelectorWithDebounce.h */,
-				A0C5266B1CEAD35A00706104 /* PerformSelectorWithDebounce.m */,
-				A0C5266C1CEAD35A00706104 /* Reachability.h */,
-				A0C5266D1CEAD35A00706104 /* Reachability.m */,
-				A0C5266E1CEAD35A00706104 /* Source */,
-				A0C526721CEAD35A00706104 /* UIColor+AppAdditions.h */,
-				A0C526731CEAD35A00706104 /* UIColor+AppAdditions.m */,
-				A0C5263D1CEAD2E000706104 /* Info.plist */,
+				A0C526971CEAD36800706104 /* Assets */,
 			);
 			path = IBKit;
 			sourceTree = "<group>";
@@ -350,16 +348,6 @@
 				A0C526691CEAD35A00706104 /* OTKTextChatView.m */,
 			);
 			path = OTKTextChatLibrary;
-			sourceTree = "<group>";
-		};
-		A0C5266E1CEAD35A00706104 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				A0C5266F1CEAD35A00706104 /* SIOSocket.h */,
-				A0C526701CEAD35A00706104 /* SIOSocket.m */,
-				A0C526711CEAD35A00706104 /* socket.io.js.h */,
-			);
-			path = Source;
 			sourceTree = "<group>";
 		};
 		A0C526971CEAD36800706104 /* Assets */ = {
@@ -409,24 +397,20 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,
+				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0C526791CEAD35A00706104 /* EventsViewController.h in Headers */,
+				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
 				A0C5268C1CEAD35A00706104 /* OTKTextChatView.h in Headers */,
 				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
 				A0C5268A1CEAD35A00706104 /* OTKTextChatTableViewCell.h in Headers */,
 				A0C526881CEAD35A00706104 /* OTKTextChatComponent.h in Headers */,
-				A0C526941CEAD35A00706104 /* socket.io.js.h in Headers */,
-				A0C526921CEAD35A00706104 /* SIOSocket.h in Headers */,
-				A0C526851CEAD35A00706104 /* OTKAnalytics.h in Headers */,
 				A0C526741CEAD35A00706104 /* dataButton.h in Headers */,
-				A0C526831CEAD35A00706104 /* OTDefaultAudioDevice.h in Headers */,
-				A0C526901CEAD35A00706104 /* Reachability.h in Headers */,
-				A0C5267F1CEAD35A00706104 /* IBKit.h in Headers */,
-				A0C5268E1CEAD35A00706104 /* PerformSelectorWithDebounce.h in Headers */,
+				A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */,
 				A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */,
-				A0C526951CEAD35A00706104 /* UIColor+AppAdditions.h in Headers */,
-				A0C5263C1CEAD2E000706104 /* IBKit.h in Headers */,
+				A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,21 +583,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C526911CEAD35A00706104 /* Reachability.m in Sources */,
 				A0C526891CEAD35A00706104 /* OTKTextChatComponent.m in Sources */,
+				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A0C5268D1CEAD35A00706104 /* OTKTextChatView.m in Sources */,
 				A0C5268B1CEAD35A00706104 /* OTKTextChatTableViewCell.m in Sources */,
 				A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */,
+				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
 				A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */,
+				A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */,
 				A0C5267A1CEAD35A00706104 /* EventsViewController.m in Sources */,
 				A0C526751CEAD35A00706104 /* dataButton.m in Sources */,
-				A0C526961CEAD35A00706104 /* UIColor+AppAdditions.m in Sources */,
-				A0C526931CEAD35A00706104 /* SIOSocket.m in Sources */,
-				A0C526841CEAD35A00706104 /* OTDefaultAudioDevice.m in Sources */,
 				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
-				A0C5268F1CEAD35A00706104 /* PerformSelectorWithDebounce.m in Sources */,
+				A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,
-				A0C526861CEAD35A00706104 /* OTKAnalytics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

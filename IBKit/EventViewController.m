@@ -31,6 +31,7 @@
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 @property (weak, nonatomic) IBOutlet UIView *videoHolder;
 
+//---UI
 @property (weak, nonatomic) IBOutlet UIView *statusBar;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
@@ -42,6 +43,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
 @property (weak, nonatomic) IBOutlet UIButton *dismissInline;
 @property (weak, nonatomic) IBOutlet UILabel *inlineNotification;
+@property (weak, nonatomic) IBOutlet UIView *internalHolder;
+@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *inLineHolder;
+@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
+@property (weak, nonatomic) IBOutlet UIView *notificationBar;
+@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+//---UI
 
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) NSMutableDictionary *eventData;
@@ -49,90 +59,77 @@
 
 @property (nonatomic) NSString *apikey;
 @property (nonatomic) NSString *userName;
-@property (nonatomic) Boolean isCeleb;
-@property (nonatomic) Boolean isHost;
+@property (nonatomic) BOOL isCeleb;
+@property (nonatomic) BOOL isHost;
 @property (nonatomic) NSMutableDictionary *errors;
 
 @property (nonatomic) NSString *connectionQuality;
 
-@property (weak, nonatomic) IBOutlet UIView *internalHolder;
-@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *inLineHolder;
-@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
+@property (nonatomic) NSMutableDictionary *instanceData;
 
-@property (weak, nonatomic) IBOutlet UIView *notificationBar;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (nonatomic) OTSession* session;
+@property (nonatomic) OTSession* producerSession;
+@property (nonatomic) OTPublisher* publisher;
+
+@property (nonatomic) NSMutableDictionary *subscribers;
+@property (nonatomic) OTSubscriber* producerSubscriber;
+@property (nonatomic) OTSubscriber* privateProducerSubscriber;
+@property (nonatomic) OTSubscriber* selfSubscriber;
+
+@property (nonatomic) id<OTVideoCapture> cameraCapture;
+
+@property (nonatomic) OTStream* celebrityStream;
+@property (nonatomic) OTStream* hostStream;
+@property (nonatomic) OTStream* fanStream;
+@property (nonatomic) OTStream* producerStream;
+@property (nonatomic) OTStream* privateProducerStream;
+
+@property (nonatomic) OTConnection* producerConnection;
+
+@property (nonatomic)DGActivityIndicatorView *activityIndicatorView;
+@property (nonatomic)OTKTextChatComponent *textChat;
+@property (nonatomic)OTKAnalytics *logging;
+@property (nonatomic)SIOSocket *signalingSocket;
+
+@property (nonatomic)NSMutableDictionary* videoViews;
+
+@property (nonatomic) CGRect screen;
+@property (nonatomic) CGFloat screen_width;
+@property (nonatomic) CGFloat chatYPosition;
+@property (nonatomic) CGFloat activeStreams;
+
+//Network Testing
+@property (nonatomic)  NSTimer *sampleTimer;
+@property (nonatomic)  BOOL runQualityStatsTest;
+@property (nonatomic)  int qualityTestDuration;
+@property (nonatomic)  double prevVideoTimestamp;
+@property (nonatomic) double prevVideoBytes;
+@property (nonatomic)  double prevAudioTimestamp;
+@property (nonatomic)  double prevAudioBytes;
+@property (nonatomic)  uint64_t prevVideoPacketsLost;
+@property (nonatomic) uint64_t prevVideoPacketsRcvd;
+@property (nonatomic) uint64_t prevAudioPacketsLost;
+@property (nonatomic) uint64_t prevAudioPacketsRcvd;
+@property (nonatomic) long video_bw;
+@property (nonatomic) long audio_bw;
+@property (nonatomic) double video_pl_ratio;
+@property (nonatomic) double audio_pl_ratio;
+@property (nonatomic) NSString *frameRate;
+@property (nonatomic) NSString *resolution;
+
 @end
 
 @implementation EventViewController
 
-NSMutableDictionary *instanceData;
-
-OTSession* _session;
-OTSession* _producerSession;
-OTPublisher* _publisher;
-
-
-NSMutableDictionary *_subscribers;
-OTSubscriber* _producerSubscriber;
-OTSubscriber* _privateProducerSubscriber;
-OTSubscriber* _selfSubscriber;
-
-
-id<OTVideoCapture> _cameraCapture;
-
-OTStream* _celebrityStream;
-OTStream* _hostStream;
-OTStream* _fanStream;
-OTStream* _producerStream;
-OTStream* _privateProducerStream;
-
-OTConnection* _producerConnection;
-
-DGActivityIndicatorView *activityIndicatorView;
-OTKTextChatComponent *textChat;
-OTKAnalytics *logging;
-
-SIOSocket *signalingSocket;
-
-NSMutableDictionary* videoViews;
-
-static bool isBackstage = NO;
-static bool isOnstage = NO;
-static bool shouldResendProducerSignal = NO;
-static bool inCallWithProducer = NO;
-static bool isLive = NO;
-static bool isSingleEvent = NO;
-static bool isFan = NO;
-static bool stopGoingLive = NO;
-
-CGRect screen;
-CGFloat screen_width;
-CGFloat chatYPosition;
-CGFloat activeStreams;
+static BOOL isBackstage = NO;
+static BOOL isOnstage = NO;
+static BOOL shouldResendProducerSignal = NO;
+static BOOL inCallWithProducer = NO;
+static BOOL isLive = NO;
+static BOOL isSingleEvent = NO;
+static BOOL isFan = NO;
+static BOOL stopGoingLive = NO;
 CGFloat unreadCount = 0;
-
-
-//Network Testing
-NSTimer *_sampleTimer;
-BOOL _runQualityStatsTest;
-int _qualityTestDuration;
-double prevVideoTimestamp;
-double prevVideoBytes;
-double prevAudioTimestamp;
-double prevAudioBytes;
-uint64_t prevVideoPacketsLost;
-uint64_t prevVideoPacketsRcvd;
-uint64_t prevAudioPacketsLost;
-uint64_t prevAudioPacketsRcvd;
-long video_bw;
-long audio_bw;
-double video_pl_ratio;
-double audio_pl_ratio;
-NSString *frameRate;
-NSString *resolution;
 
 static NSString* const kTextChatType = @"chatMessage";
 
@@ -151,7 +148,7 @@ static NSString* const kTextChatType = @"chatMessage";
         OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
         
-        instanceData = [aConnectionData mutableCopy];
+        _instanceData = [aConnectionData mutableCopy];
         self.eventData = [aEventData mutableCopy];
         self.userName = aUser[@"name"] ? aUser[@"name"] : aUser[@"type"];
         self.user = aUser;
@@ -182,10 +179,10 @@ static NSString* const kTextChatType = @"chatMessage";
     isLive = NO;
     
     [self.statusBar setBackgroundColor: [UIColor BarColor]];
-    videoViews = [[NSMutableDictionary alloc] init];
-    videoViews[@"fan"] = self.FanViewHolder;
-    videoViews[@"celebrity"] = self.CelebrityViewHolder;
-    videoViews[@"host"] = self.HostViewHolder;
+    _videoViews = [[NSMutableDictionary alloc] init];
+    _videoViews[@"fan"] = self.FanViewHolder;
+    _videoViews[@"celebrity"] = self.CelebrityViewHolder;
+    _videoViews[@"host"] = self.HostViewHolder;
     
     _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
     
@@ -198,7 +195,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)createEventToken{
     [[IBApi sharedInstance] creteEventToken:self.user[@"type"]
-                                   back_url:instanceData[@"backend_base_url"]
+                                   back_url:_instanceData[@"backend_base_url"]
                                        data:self.eventData
                                  completion:^(NSMutableDictionary *resultData) {
                                      
@@ -213,8 +210,8 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    screen = [UIScreen mainScreen].bounds;
-    screen_width = CGRectGetWidth(screen);
+    _screen = [UIScreen mainScreen].bounds;
+    _screen_width = CGRectGetWidth(_screen);
     [self performSelector:@selector(adjustChildrenWidth) withObject:nil afterDelay:1.0];
 }
 
@@ -249,18 +246,18 @@ static NSString* const kTextChatType = @"chatMessage";
     
 }
 -(void)startSession{
-    prevVideoTimestamp = 0;
-    prevVideoBytes = 0;
-    prevAudioTimestamp = 0;
-    prevAudioBytes = 0;
-    prevVideoPacketsLost = 0;
-    prevVideoPacketsRcvd = 0;
-    prevAudioPacketsLost = 0;
-    prevAudioPacketsRcvd = 0;
-    video_bw = 0;
-    audio_bw = 0;
-    video_pl_ratio = -1;
-    audio_pl_ratio = -1;
+    _prevVideoTimestamp = 0;
+    _prevVideoBytes = 0;
+    _prevAudioTimestamp = 0;
+    _prevAudioBytes = 0;
+    _prevVideoPacketsLost = 0;
+    _prevVideoPacketsRcvd = 0;
+    _prevAudioPacketsLost = 0;
+    _prevAudioPacketsRcvd = 0;
+    _video_bw = 0;
+    _audio_bw = 0;
+    _video_pl_ratio = -1;
+    _audio_pl_ratio = -1;
     
     NSNumber *api = self.connectionData[@"apiKey"];
     self.apikey = [NSString stringWithFormat:@"%@", api];
@@ -287,39 +284,39 @@ static NSString* const kTextChatType = @"chatMessage";
         currentSession = _session;
     }
     
-    textChat = [[OTKTextChatComponent alloc] init];
+    _textChat = [[OTKTextChatComponent alloc] init];
     
-    textChat.delegate = self;
+    _textChat.delegate = self;
     
-    [textChat setMaxLength:1050];
+    [_textChat setMaxLength:1050];
     
-    [textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
+    [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
     
-    chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
+    _chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
     
     CGRect r = self.view.bounds;
-    r.origin.y += chatYPosition;
-    r.size.height -= chatYPosition;
-    (textChat.view).frame = r;
-    [self.view insertSubview:textChat.view belowSubview:self.chatBar];
+    r.origin.y += _chatYPosition;
+    r.size.height -= _chatYPosition;
+    (_textChat.view).frame = r;
+    [self.view insertSubview:_textChat.view belowSubview:self.chatBar];
     
     if(!isFan){
         self.chatBtn.hidden = NO;
     }
     
-    textChat.view.alpha = 0;
+    _textChat.view.alpha = 0;
     chatBar.hidden = YES;
     
 }
 
 -(void)connectFanSignaling{
     
-    [SIOSocket socketWithHost:instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
+    [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
      {
-         signalingSocket = socket;
-         signalingSocket.onConnect = ^()
+         _signalingSocket = socket;
+         _signalingSocket.onConnect = ^()
          {
-             [signalingSocket emit:@"joinRoom" args:@[self.connectionData[@"sessionIdProducer"]]];
+             [_signalingSocket emit:@"joinRoom" args:@[self.connectionData[@"sessionIdProducer"]]];
          };
      }];
 }
@@ -333,12 +330,10 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *logType = isHost ? @"host_connects_onstage" : isCeleb ? @"celeb_connects_onstage" : @"fan_connects_onstage";
     
     [_session connectWithToken:self.connectionData[@"tokenHost"] error:&error];
-    //[logging logEventAction:logType variation:@"attempt"];
 
     if (error)
     {
         NSLog(@"connect error");
-        //[logging logEventAction:logType variation:@"failed"];
         [self showAlert:error.localizedDescription];
     }
 }
@@ -350,13 +345,13 @@ static NSString* const kTextChatType = @"chatMessage";
     [self showLoader];
     
     self.getInLineBtn.hidden = YES;
-    [logging logEventAction:@"fan_connects_backstage" variation:@"attempt"];
+    [_logging logEventAction:@"fan_connects_backstage" variation:@"attempt"];
     [_producerSession connectWithToken:self.connectionData[@"tokenProducer"] error:&error];
     
     if (error)
     {
         [self showAlert:error.localizedDescription];
-        [logging logEventAction:@"fan_connects_backstage" variation:@"failed"];
+        [_logging logEventAction:@"fan_connects_backstage" variation:@"failed"];
     }
     
 }
@@ -376,7 +371,7 @@ static NSString* const kTextChatType = @"chatMessage";
         [_producerSession disconnect:&error];
     }
     if(error){
-        [logging logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+        [_logging logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
     }
 }
 
@@ -406,11 +401,11 @@ static NSString* const kTextChatType = @"chatMessage";
     NSInteger partner = [apiKey integerValue];
     NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.eventData[@"id"]];
     
-    logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
+    _logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
     
     NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
     NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage",me];
-    [logging logEventAction:logtype variation:@"success"];
+    [_logging logEventAction:logtype variation:@"success"];
 }
 
 #pragma mark - publishers
@@ -438,13 +433,13 @@ static NSString* const kTextChatType = @"chatMessage";
     }else{
         if(self.isCeleb && !stopGoingLive){
             [self publishTo:_session];
-            [videoViews[@"celebrity"] addSubview:_publisher.view];
+            [_videoViews[@"celebrity"] addSubview:_publisher.view];
             (_publisher.view).frame = CGRectMake(0, 0, self.CelebrityViewHolder.bounds.size.width, self.CelebrityViewHolder.bounds.size.height);
             self.closeEvenBtn.hidden = NO;
         }
         if(self.isHost && !stopGoingLive){
             [self publishTo:_session];
-            [videoViews[@"host"] addSubview:_publisher.view];
+            [_videoViews[@"host"] addSubview:_publisher.view];
             self.closeEvenBtn.hidden = NO;
             (_publisher.view).frame = CGRectMake(0, 0, self.HostViewHolder.bounds.size.width, self.HostViewHolder.bounds.size.height);
         }
@@ -465,7 +460,7 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@",me,session_name];
 
-    [logging logEventAction:logtype variation:@"attempt"];
+    [_logging logEventAction:logtype variation:@"attempt"];
     
     
     if(!_publisher){
@@ -481,11 +476,11 @@ static NSString* const kTextChatType = @"chatMessage";
         [self sendWarningSignal];
         
         [self showAlert:error.localizedDescription];
-        [logging logEventAction:logtype variation:@"fail"];
+        [_logging logEventAction:logtype variation:@"fail"];
 
 
     }else{
-        [logging logEventAction:logtype variation:@"success"];
+        [_logging logEventAction:logtype variation:@"success"];
     }
     
 }
@@ -499,12 +494,12 @@ static NSString* const kTextChatType = @"chatMessage";
     NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@",me,session_name];
     
-    [logging logEventAction:logtype variation:@"attempt"];
+    [_logging logEventAction:logtype variation:@"attempt"];
     
     if (error)
     {
         [self showAlert:error.localizedDescription];
-        [logging logEventAction:logtype variation:@"fail"];
+        [_logging logEventAction:logtype variation:@"fail"];
     }
 }
 
@@ -565,7 +560,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
-        [logging logEventAction:logtype variation:@"success"];
+        [_logging logEventAction:logtype variation:@"success"];
         
         [self cleanupSubscriber:connectingTo];
     }
@@ -574,7 +569,7 @@ static NSString* const kTextChatType = @"chatMessage";
         _selfSubscriber = nil;
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
-        [logging logEventAction:logtype variation:@"success"];    }
+        [_logging logEventAction:logtype variation:@"success"];    }
     
         [self cleanupPublisher];
 }
@@ -604,7 +599,7 @@ static NSString* const kTextChatType = @"chatMessage";
         
         NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
-        [logging logEventAction:logtype variation:@"attempt"];
+        [_logging logEventAction:logtype variation:@"attempt"];
 
         
         OTError *error = nil;
@@ -612,7 +607,7 @@ static NSString* const kTextChatType = @"chatMessage";
         if (error)
         {
             [self.errors setObject:error forKey:connectingTo];
-            [logging logEventAction:logtype variation:@"fail"];
+            [_logging logEventAction:logtype variation:@"fail"];
             [self sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
@@ -666,8 +661,8 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
     
-    frameRate = @"30";
-    resolution = @"640x480";
+    _frameRate = @"30";
+    _resolution = @"640x480";
     
     if(subscriber.session.connection.connectionId == _session.connection.connectionId && subscriber.stream != _privateProducerStream){
         
@@ -679,11 +674,11 @@ static NSString* const kTextChatType = @"chatMessage";
         
         NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
-        [logging logEventAction:logtype variation:@"success"];
+        [_logging logEventAction:logtype variation:@"success"];
         
         assert(_subscriber == subscriber);
         
-        holder = videoViews[connectingTo];
+        holder = _videoViews[connectingTo];
         
         (_subscriber.view).frame = CGRectMake(0, 0, holder.bounds.size.width,holder.bounds.size.height);
         
@@ -724,7 +719,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void) showAvatarFor:(NSString*)feed
 {
-    UIView *feedView = videoViews[feed];
+    UIView *feedView = _videoViews[feed];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
     avatar.contentMode = UIViewContentModeScaleAspectFill;
@@ -732,12 +727,12 @@ static NSString* const kTextChatType = @"chatMessage";
     CGRect frame = feedView.frame;
     avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
     
-    [videoViews[feed] addSubview:avatar];
+    [_videoViews[feed] addSubview:avatar];
 }
 
 - (void) hideAvatarFor:(NSString*)feed
 {
-    for(UIView* subview in [videoViews[feed] subviews])
+    for(UIView* subview in [_videoViews[feed] subviews])
     {
         if([subview isKindOfClass:[UIImageView class]])
         {
@@ -792,19 +787,19 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     
     /// TODO : check how to update the framerate
     
-    if (prevVideoTimestamp == 0)
+    if (_prevVideoTimestamp == 0)
     {
-        prevVideoTimestamp = stats.timestamp;
-        prevVideoBytes = stats.videoBytesReceived;
+        _prevVideoTimestamp = stats.timestamp;
+        _prevVideoBytes = stats.videoBytesReceived;
     }
     
-    if (stats.timestamp - prevVideoTimestamp >= TIME_WINDOW)
+    if (stats.timestamp - _prevVideoTimestamp >= TIME_WINDOW)
     {
-        video_bw = (8 * (stats.videoBytesReceived - prevVideoBytes)) / ((stats.timestamp - prevVideoTimestamp) / 1000ull);
+        _video_bw = (8 * (stats.videoBytesReceived - _prevVideoBytes)) / ((stats.timestamp - _prevVideoTimestamp) / 1000ull);
         
         subscriber.delegate = nil;
-        prevVideoTimestamp = stats.timestamp;
-        prevVideoBytes = stats.videoBytesReceived;
+        _prevVideoTimestamp = stats.timestamp;
+        _prevVideoBytes = stats.videoBytesReceived;
         [self processStats:stats];
     }
 }
@@ -813,18 +808,18 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     if ([stats isKindOfClass:[OTSubscriberKitVideoNetworkStats class]])
     {
-        video_pl_ratio = -1;
+        _video_pl_ratio = -1;
         OTSubscriberKitVideoNetworkStats *videoStats =
         (OTSubscriberKitVideoNetworkStats *) stats;
-        if (prevVideoPacketsRcvd != 0) {
-            uint64_t pl = videoStats.videoPacketsLost - prevVideoPacketsLost;
-            uint64_t pr = videoStats.videoPacketsReceived - prevVideoPacketsRcvd;
+        if (_prevVideoPacketsRcvd != 0) {
+            uint64_t pl = videoStats.videoPacketsLost - _prevVideoPacketsLost;
+            uint64_t pr = videoStats.videoPacketsReceived - _prevVideoPacketsRcvd;
             uint64_t pt = pl + pr;
             if (pt > 0)
-                video_pl_ratio = (double) pl / (double) pt;
+                _video_pl_ratio = (double) pl / (double) pt;
         }
-        prevVideoPacketsLost = videoStats.videoPacketsLost;
-        prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
+        _prevVideoPacketsLost = videoStats.videoPacketsLost;
+        _prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
     }
     //[self checkQualityAndSendSignal];
     [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
@@ -834,60 +829,60 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     if(_publisher && _publisher.session){
         
-        NSArray *aVideoLimits = [self getVideoLimits:resolution framerate:frameRate];
+        NSArray *aVideoLimits = [self getVideoLimits:_resolution framerate:_frameRate];
         if (!aVideoLimits) return;
         
         NSString *quality;
         
-        if([resolution isEqualToString:@"1280x720"]){
-            if (video_bw < [aVideoLimits[0] longValue]) {
+        if([_resolution isEqualToString:@"1280x720"]){
+            if (_video_bw < [aVideoLimits[0] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw > [aVideoLimits[0] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1 ) {
+            } else if (_video_bw > [aVideoLimits[0] longValue] && _video_bw <= [aVideoLimits[1] longValue] && _video_pl_ratio < 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > [aVideoLimits[0] longValue] && video_pl_ratio > 0.1 ) {
+            } else if (_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio > 0.1 ) {
                 quality = @"Poor";
-            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[2] longValue] && video_pl_ratio < 0.1 ) {
+            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[2] longValue] && _video_pl_ratio < 0.1 ) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio > 0.02 && video_pl_ratio < 0.1 ) {
+            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio > 0.02 && _video_pl_ratio < 0.1 ) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio < 0.02 ) {
+            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio < 0.02 ) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[3] longValue] && video_pl_ratio < 0.1) {
+            } else if (_video_bw > [aVideoLimits[3] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Great";
             }
         }
         
-        if([resolution isEqualToString:@"640x480"]){
-            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+        if([_resolution isEqualToString:@"640x480"]){
+            if(_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
+            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio >0.02 && _video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+            } else if (_video_bw > [aVideoLimits[4] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (video_pl_ratio > 0.1 && video_bw > [aVideoLimits[5] longValue]) {
+            } else if (_video_pl_ratio > 0.1 && _video_bw > [aVideoLimits[5] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw >[aVideoLimits[6] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
+            } else if (_video_bw >[aVideoLimits[6] longValue] && _video_bw <= [aVideoLimits[4] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw < [aVideoLimits[6] longValue] || video_pl_ratio > 0.1) {
+            } else if (_video_bw < [aVideoLimits[6] longValue] || _video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }
-        if([resolution isEqualToString:@"320x240"]){
-            if(video_bw > [aVideoLimits[0] longValue] && video_pl_ratio < 0.1) {
+        if([_resolution isEqualToString:@"320x240"]){
+            if(_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (video_bw > [aVideoLimits[1] longValue] && video_bw <= [aVideoLimits[0] longValue] && video_pl_ratio <0.02) {
+            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[2] longValue] && video_bw <= [aVideoLimits[3] longValue] && video_pl_ratio >0.02 && video_pl_ratio < 0.1) {
+            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio >0.02 && _video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (video_bw > [aVideoLimits[4] longValue] && video_bw <= [aVideoLimits[1] longValue] && video_pl_ratio < 0.1) {
+            } else if (_video_bw > [aVideoLimits[4] longValue] && _video_bw <= [aVideoLimits[1] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (video_pl_ratio > 0.1 && video_bw >[aVideoLimits[4] longValue]) {
+            } else if (_video_pl_ratio > 0.1 && _video_bw >[aVideoLimits[4] longValue]) {
                 quality = @"Poor";
-            } else if (video_bw >[aVideoLimits[5] longValue] && video_bw <= [aVideoLimits[4] longValue] && video_pl_ratio < 0.1) {
+            } else if (_video_bw >[aVideoLimits[5] longValue] && _video_bw <= [aVideoLimits[4] longValue] && _video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (video_bw < [aVideoLimits[5] longValue] || video_pl_ratio > 0.1) {
+            } else if (_video_bw < [aVideoLimits[5] longValue] || _video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }
@@ -940,7 +935,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             self.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            [logging logEventAction:@"fan_connects_backstage" variation:@"success"];
+            [_logging logEventAction:@"fan_connects_backstage" variation:@"success"];
         }
     }else{
         [self showLoader];
@@ -1299,7 +1294,7 @@ didFailWithError:(OTError*)error
             msg.senderId = connection.connectionId;
             msg.text = userInfo[@"message"][@"message"];
             unreadCount ++;
-            [textChat addMessage:msg];
+            [_textChat addMessage:msg];
             [self.chatBtn setTitle:[[NSNumber numberWithFloat:unreadCount] stringValue] forState:UIControlStateNormal];
             
         }
@@ -1388,7 +1383,7 @@ didFailWithError:(OTError*)error
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formated = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
         
-        [signalingSocket emit:@"mySnapshot" args:@[@{
+        [_signalingSocket emit:@"mySnapshot" args:@[@{
                                                        @"connectionId": _publisher.session.connection.connectionId,
                                                        @"sessionId" : _producerSession.sessionId,
                                                        @"snapshot": formated
@@ -1431,7 +1426,7 @@ didFailWithError:(OTError*)error
             self.eventImage.hidden = YES;
         }else{
             self.eventImage.hidden = NO;
-            [self updateEventImage: [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
+            [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
             self.getInLineBtn.hidden = YES;
             self.getInLineBtn.alpha = 1;
         }
@@ -1441,14 +1436,14 @@ didFailWithError:(OTError*)error
             self.eventImage.hidden = YES;
         }else{
             self.eventImage.hidden = NO;
-            NSString *url = [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image"]];
+            NSString *url = [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]];
             [self updateEventImage: url];
             self.getInLineBtn.hidden = NO;
         }
         
     };
     if([self.eventData[@"status"] isEqualToString:@"L"]){
-        NSString *url = [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image"]];
+        NSString *url = [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]];
         [self updateEventImage: url];
         
         if (_subscribers.count > 0) {
@@ -1464,7 +1459,7 @@ didFailWithError:(OTError*)error
     };
     if([self.eventData[@"status"] isEqualToString:@"C"]){
         if(self.eventData[@"event_image_end"]){
-            [self updateEventImage: [NSString stringWithFormat:@"%@%@", instanceData[@"frontend_url"], self.eventData[@"event_image_end"]]];
+            [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image_end"]]];
         }
         //Event Closed, disconect fan and show image
         self.eventImage.hidden = NO;
@@ -1511,12 +1506,12 @@ didFailWithError:(OTError*)error
     NSDictionary* info = aNotification.userInfo;
     CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     double duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    chatYPosition = 106 - textChat.view.bounds.size.height ;
+    _chatYPosition = 106 - _textChat.view.bounds.size.height ;
     [UIView animateWithDuration:duration animations:^{
         CGRect r = self.view.bounds;
-        r.origin.y += chatYPosition;
-        r.size.height -= chatYPosition + kbSize.height;
-        textChat.view.frame = r;
+        r.origin.y += _chatYPosition;
+        r.size.height -= _chatYPosition + kbSize.height;
+        _textChat.view.frame = r;
     }];
 }
 
@@ -1524,14 +1519,14 @@ didFailWithError:(OTError*)error
 {
     NSDictionary* info = aNotification.userInfo;
     double duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
+    _chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
     
     [UIView animateWithDuration:duration animations:^{
         
         CGRect r = self.view.bounds;
-        r.origin.y += chatYPosition;
-        r.size.height -= chatYPosition;
-        textChat.view.frame = r;
+        r.origin.y += _chatYPosition;
+        r.size.height -= _chatYPosition;
+        _textChat.view.frame = r;
         
         
     }];
@@ -1574,23 +1569,23 @@ didFailWithError:(OTError*)error
     }
     else{
         self.eventImage.hidden = YES;
-        new_width = screen_width/_subscribers.count;
+        new_width = _screen_width/_subscribers.count;
     }
     
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
     
     for(NSString *viewName in viewNames){
         if(_subscribers[viewName]){
-            [videoViews[viewName] setHidden:NO];
+            [_videoViews[viewName] setHidden:NO];
             OTSubscriber *temp = _subscribers[viewName];
             
-            [videoViews[viewName] setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
+            [_videoViews[viewName] setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
             temp.view.frame = CGRectMake(0, 0, new_width,new_height);
             c++;
             
         }else{
-            [videoViews[viewName] setHidden:YES];
-            [videoViews[viewName] setFrame:CGRectMake(0, 0, 5,new_height)];
+            [_videoViews[viewName] setHidden:YES];
+            [_videoViews[viewName] setFrame:CGRectMake(0, 0, 5,new_height)];
         }
         
     }
@@ -1745,27 +1740,27 @@ didFailWithError:(OTError*)error
 
 -(void)showChatBox{
     self.chatBtn.hidden = YES;
-    textChat.view.alpha = 1;
+    _textChat.view.alpha = 1;
     chatBar.hidden = NO;
 }
 
 -(void)hideChatBox{
-    textChat.view.alpha = 0;
+    _textChat.view.alpha = 0;
     chatBar.hidden = YES;
 }
 
 -(void)showLoader{
-    activityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeFiveDots
+    _activityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeFiveDots
                                                                 tintColor:[UIColor SLBlueColor] size:50.0f];
-    activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, screen_width, 100.0f);
-    [self.view addSubview:activityIndicatorView];
-    [self.view bringSubviewToFront:activityIndicatorView];
-    [activityIndicatorView startAnimating];
+    _activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, _screen_width, 100.0f);
+    [self.view addSubview:_activityIndicatorView];
+    [self.view bringSubviewToFront:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
 }
 
 -(void)stopLoader{
-    [activityIndicatorView stopAnimating];
-    [activityIndicatorView removeFromSuperview];
+    [_activityIndicatorView stopAnimating];
+    [_activityIndicatorView removeFromSuperview];
 }
 
 -(IBAction)dismissInlineTxt:(id)sender {

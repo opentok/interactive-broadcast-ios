@@ -12,16 +12,18 @@
 #import "SIOSocket.h"
 
 @interface EventsViewController () {
-    NSMutableDictionary *eventsData;
-    NSMutableDictionary *instanceData;
-    NSArray *dataArray;
-    NSMutableDictionary *user;
-    SIOSocket *signalingSocketEvents;
+    
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *eventsView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
 @property (nonatomic) UIViewController  *currentDetailViewController;
+@property (nonatomic) NSMutableDictionary *eventsData;
+@property (nonatomic) NSMutableDictionary *instanceData;
+@property (nonatomic) NSArray *dataArray;
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) SIOSocket *signalingSocketEvents;
+
 @end
 
 @implementation EventsViewController
@@ -30,10 +32,10 @@
                              user:(NSMutableDictionary *)aUser {
     
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
-        instanceData = aEventData;
-        eventsData = [aEventData[@"events"] mutableCopy];
-        dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
-        user = aUser;
+        _instanceData = aEventData;
+        _eventsData = [aEventData[@"events"] mutableCopy];
+        _dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
+        _user = aUser;
     }
     return self;
 }
@@ -53,14 +55,14 @@
 
 -(void)connectSignaling{
     
-    [SIOSocket socketWithHost:instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
+    [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
      {
-         signalingSocketEvents = socket;
-         signalingSocketEvents.onConnect = ^()
+         _signalingSocketEvents = socket;
+         _signalingSocketEvents.onConnect = ^()
          {
              NSLog(@"Connected to signaling server");
          };
-         [signalingSocketEvents on:@"change-event-status" callback: ^(SIOParameterArray *args)
+         [_signalingSocketEvents on:@"change-event-status" callback: ^(SIOParameterArray *args)
           {
               NSDictionary *eventChanged = [args firstObject];
               [self UpdateEventStatus:eventChanged];
@@ -70,21 +72,21 @@
 }
 -(void)UpdateEventStatus:(NSDictionary *)event{
     NSString *find = [NSString stringWithFormat:@"id == %@",event[@"id"]];
-    NSArray *changedEvent = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
+    NSArray *changedEvent = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
     if([changedEvent count] != 0){
-        [dataArray[[dataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
+        [_dataArray[[_dataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
     }
     [self.eventsView reloadData];
 }
 
 //Collection stuff
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [dataArray count];
+    return [_dataArray count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSMutableDictionary *data = dataArray[indexPath.row];
+    NSMutableDictionary *data = _dataArray[indexPath.row];
     
     static NSString *cellIdentifier = @"eCell";
     
@@ -108,7 +110,7 @@
     if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
         //Should we change to the default image
     }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",instanceData[@"frontend_url"], data[@"event_image"]]];
+        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_instanceData[@"frontend_url"], data[@"event_image"]]];
     }
     
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
@@ -133,7 +135,7 @@
     NSMutableDictionary* eventData = [sender getData];
     
     //instanceData[@"backend_base_url"] = self
-    EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:instanceData user:user isSingle:NO];
+    EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user isSingle:NO];
     [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];
 

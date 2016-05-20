@@ -13,13 +13,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventsViewController">
             <connections>
-                <outlet property="eventsView" destination="6MV-f6-iIB" id="uDy-dy-Bcx"/>
-                <outlet property="eventsViewLayout" destination="Nhz-gv-FKk" id="Go2-oh-lYg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="EventsView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -80,7 +78,11 @@
                 <constraint firstItem="6MV-f6-iIB" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="iCs-8J-rhK"/>
                 <constraint firstItem="782-PQ-CdT" firstAttribute="top" secondItem="K3I-37-Lkm" secondAttribute="bottom" constant="7" id="oOX-JC-n4A"/>
             </constraints>
-            <point key="canvasLocation" x="202" y="231"/>
+            <connections>
+                <outlet property="eventsCollectionView" destination="6MV-f6-iIB" id="3Bg-i8-jYO"/>
+                <outlet property="eventsViewFlowLayout" destination="Nhz-gv-FKk" id="lQ9-rd-5kd"/>
+            </connections>
+            <point key="canvasLocation" x="214" y="231"/>
         </view>
     </objects>
 </document>

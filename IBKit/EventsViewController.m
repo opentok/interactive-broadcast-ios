@@ -11,19 +11,16 @@
 #import "dataButton.h"
 #import "SIOSocket.h"
 
-@interface EventsViewController () {
-    
-}
+#import "EventsView.h"
 
-@property (weak, nonatomic) IBOutlet UICollectionView *eventsView;
-@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
-@property (nonatomic) UIViewController  *currentDetailViewController;
+@interface EventsViewController ()
+
+@property (nonatomic) EventsView *eventsView;
 @property (nonatomic) NSMutableDictionary *eventsData;
 @property (nonatomic) NSMutableDictionary *instanceData;
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) SIOSocket *signalingSocketEvents;
-
 @end
 
 @implementation EventsViewController
@@ -43,12 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.eventsView = (EventsView *)self.view;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UINib *cellNib = [UINib nibWithNibName:@"EventCell" bundle:bundle];
-    [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
+    [self.eventsView.eventsCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
     
     CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
+    self.eventsView.eventsViewFlowLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
     [self connectSignaling];
      
 }
@@ -76,7 +74,7 @@
     if([changedEvent count] != 0){
         [_dataArray[[_dataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
     }
-    [self.eventsView reloadData];
+    [self.eventsView.eventsCollectionView reloadData];
 }
 
 //Collection stuff

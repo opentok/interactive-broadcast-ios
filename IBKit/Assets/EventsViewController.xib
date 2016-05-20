@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,7 +11,7 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventsViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventsView">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -30,9 +30,6 @@
                             <state key="normal" title="IB Demo">
                                 <color key="titleColor" red="0.26274509800000001" green="0.31372549020000001" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
-                            <connections>
-                                <action selector="closeEventsView:" destination="-1" eventType="touchUpInside" id="Mvf-Ei-lsg"/>
-                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.81960784313725488" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
@@ -79,8 +76,8 @@
                 <constraint firstItem="782-PQ-CdT" firstAttribute="top" secondItem="K3I-37-Lkm" secondAttribute="bottom" constant="7" id="oOX-JC-n4A"/>
             </constraints>
             <connections>
-                <outlet property="eventsCollectionView" destination="6MV-f6-iIB" id="3Bg-i8-jYO"/>
-                <outlet property="eventsViewFlowLayout" destination="Nhz-gv-FKk" id="lQ9-rd-5kd"/>
+                <outlet property="eventsCollectionView" destination="6MV-f6-iIB" id="Z7H-gI-M0L"/>
+                <outlet property="eventsViewFlowLayout" destination="Nhz-gv-FKk" id="0vU-af-diN"/>
             </connections>
             <point key="canvasLocation" x="214" y="231"/>
         </view>

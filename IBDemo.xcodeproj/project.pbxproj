@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		A012A1971CEFAD4B00935C9E /* EventsView.h in Headers */ = {isa = PBXBuildFile; fileRef = A012A1951CEFAD4B00935C9E /* EventsView.h */; };
 		A012A1981CEFAD4B00935C9E /* EventsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A012A1961CEFAD4B00935C9E /* EventsView.m */; };
+		0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A012A1961CEFAD4B00935C9E /* EventsView.m */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
@@ -590,6 +591,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C526891CEAD35A00706104 /* OTKTextChatComponent.m in Sources */,
+				0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A0C5268D1CEAD35A00706104 /* OTKTextChatView.m in Sources */,
 				A0C5268B1CEAD35A00706104 /* OTKTextChatTableViewCell.m in Sources */,

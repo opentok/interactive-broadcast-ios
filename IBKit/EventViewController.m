@@ -98,20 +98,20 @@
 @property (nonatomic) NSString *resolution;
 
 @property (nonatomic) EventView *eventView;
-
-@property (nonatomic) static BOOL isBackstage = NO;
-@property (nonatomic) static BOOL isOnstage = NO;
-@property (nonatomic) static BOOL shouldResendProducerSignal = NO;
-@property (nonatomic) static BOOL inCallWithProducer = NO;
-@property (nonatomic) static BOOL isLive = NO;
-@property (nonatomic) static BOOL isSingleEvent = NO;
-@property (nonatomic) static BOOL isFan = NO;
-@property (nonatomic) static BOOL stopGoingLive = NO;
-@property (nonatomic)CGFloat unreadCount = 0;
+@property (nonatomic) BOOL isBackstage;
+@property (nonatomic) BOOL isOnstage;
+@property (nonatomic) BOOL shouldResendProducerSignal;
+@property (nonatomic) BOOL inCallWithProducer;
+@property (nonatomic) BOOL isLive;
+@property (nonatomic) BOOL isSingleEvent;
+@property (nonatomic) BOOL isFan;
+@property (nonatomic) BOOL stopGoingLive;
+@property (nonatomic) CGFloat unreadCount;
 
 @end
 
 @implementation EventViewController
+
 
 static NSString* const kTextChatType = @"chatMessage";
 
@@ -136,9 +136,9 @@ static NSString* const kTextChatType = @"chatMessage";
         self.isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
         self.isHost = [aUser[@"type"] isEqualToString:@"host"];
         
-        isFan = !_isCeleb && !_isHost;
+        _isFan = !_isCeleb && !_isHost;
         
-        isSingleEvent = aSingle;
+        _isSingleEvent = aSingle;
         
         
         //observers
@@ -159,7 +159,7 @@ static NSString* const kTextChatType = @"chatMessage";
     [super viewDidLoad];
     self.eventView = (EventView *)self.view;
 
-    isLive = NO;
+    _isLive = NO;
     
     [self.eventView.statusBar setBackgroundColor: [UIColor BarColor]];
     _videoViews = [[NSMutableDictionary alloc] init];
@@ -253,7 +253,7 @@ static NSString* const kTextChatType = @"chatMessage";
     [self statusChanged];
     [self doConnect];
     
-    if(isFan){
+    if(_isFan){
         [self connectFanSignaling];
     }
     
@@ -261,7 +261,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)loadChat{
     OTSession *currentSession;
     
-    if(isBackstage){
+    if(_isBackstage){
         currentSession = _producerSession;
     }else{
         currentSession = _session;
@@ -283,13 +283,13 @@ static NSString* const kTextChatType = @"chatMessage";
     (_textChat.view).frame = r;
     [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
     
-    if(!isFan){
+    if(!_isFan){
         self.eventView.chatBtn.hidden = NO;
     }
     
     _textChat.view.alpha = 0;
     self.eventView.chatBar.hidden = YES;
-    
+    _unreadCount = 0;
 }
 
 -(void)connectFanSignaling{
@@ -342,10 +342,10 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)disconnectBackstage
 {
     [self unpublishFrom:_producerSession];
-    isBackstage = NO;
+    _isBackstage = NO;
     self.eventView.inLineHolder.hidden = YES;
     self.eventView.getInLineBtn.hidden = NO;
-    shouldResendProducerSignal = YES;
+    _shouldResendProducerSignal = YES;
 }
 
 -(void)disconnectBackstageSession{
@@ -393,9 +393,9 @@ static NSString* const kTextChatType = @"chatMessage";
 
 #pragma mark - publishers
 - (void)doPublish{
-    if(isFan){
+    if(_isFan){
         //FAN
-        if(isBackstage){
+        if(_isBackstage){
             [self sendNewUserSignal];
             [self publishTo:_producerSession];
             
@@ -405,7 +405,7 @@ static NSString* const kTextChatType = @"chatMessage";
             (_publisher.view).frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self stopLoader];
         }
-        if(isOnstage){
+        if(_isOnstage){
             [self publishTo:_session];
             self.eventView.statusLabel.text = @"\u2022 You are live";
             [self.eventView.FanViewHolder addSubview:_publisher.view];
@@ -414,19 +414,19 @@ static NSString* const kTextChatType = @"chatMessage";
             self.eventView.getInLineBtn.hidden = YES;
         }
     }else{
-        if(self.isCeleb && !stopGoingLive){
+        if(self.isCeleb && !_stopGoingLive){
             [self publishTo:_session];
             [_videoViews[@"celebrity"] addSubview:_publisher.view];
             (_publisher.view).frame = CGRectMake(0, 0, self.eventView.CelebrityViewHolder.bounds.size.width, self.eventView.CelebrityViewHolder.bounds.size.height);
             self.eventView.closeEvenBtn.hidden = NO;
         }
-        if(_isHost && !stopGoingLive){
+        if(_isHost && !_stopGoingLive){
             [self publishTo:_session];
             [_videoViews[@"host"] addSubview:_publisher.view];
             self.eventView.closeEvenBtn.hidden = NO;
             (_publisher.view).frame = CGRectMake(0, 0, self.eventView.HostViewHolder.bounds.size.width, self.eventView.HostViewHolder.bounds.size.height);
         }
-        if(stopGoingLive){
+        if(_stopGoingLive){
             return [self forceDisconnect];
         }
     }
@@ -505,7 +505,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)publisher:(OTPublisherKit *)publisher
     streamCreated:(OTStream *)stream
 {
-    if(isBackstage){
+    if(_isBackstage){
         NSLog(@"stream Created PUBLISHER BACK");
         _selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         
@@ -748,11 +748,11 @@ static NSString* const kTextChatType = @"chatMessage";
     return videoLimits[key];
 }
 -(void)startNetworkTest{
-    if(isBackstage || isOnstage){
-        if(_hostStream && _hostStream.hasVideo && isLive){
+    if(_isBackstage || _isOnstage){
+        if(_hostStream && _hostStream.hasVideo && _isLive){
             OTSubscriber *test = _subscribers[@"host"];
             test.networkStatsDelegate = self;
-        }else if(_celebrityStream && _celebrityStream.hasVideo && isLive){
+        }else if(_celebrityStream && _celebrityStream.hasVideo && _isLive){
             OTSubscriber *test = _subscribers[@"celebrity"];
             test.networkStatsDelegate = self;
         }else if(_selfSubscriber){
@@ -903,7 +903,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 - (void)sessionDidConnect:(OTSession*)session
 {
     
-    if(isFan){
+    if(_isFan){
         if(session.sessionId == _session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.eventView.statusLabel).text = @"";
@@ -912,7 +912,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         }
         if(session.sessionId == _producerSession.sessionId){
             NSLog(@"sessionDidConnect to Backstage");
-            isBackstage = YES;
+            _isBackstage = YES;
             self.eventView.closeEvenBtn.hidden = YES;
             self.eventView.leaveLineBtn.hidden = NO;
             self.eventView.getInLineBtn.hidden = YES;
@@ -923,12 +923,12 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     }else{
         [self showLoader];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if(stopGoingLive){
+            if(_stopGoingLive){
                 [self forceDisconnect];
             }else{
                 [self loadChat];
                 [self addLogging];
-                isOnstage = YES;
+                _isOnstage = YES;
                 [self doPublish];
             }
             [self stopLoader];
@@ -943,10 +943,10 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     [NSString stringWithFormat:@"Session disconnected: (%@)", session.sessionId];
     NSLog(@"sessionDidDisconnect (%@)", alertMessage);
     if(session == _producerSession){
-        isBackstage = NO;
+        _isBackstage = NO;
         self.eventView.inLineHolder.hidden = YES;
         self.eventView.getInLineBtn.hidden = NO;
-        shouldResendProducerSignal = YES;
+        _shouldResendProducerSignal = YES;
         [self cleanupPublisher];
         self.eventView.leaveLineBtn.hidden = YES;
         [self hideNotification];
@@ -970,14 +970,14 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             if([stream.connection.data isEqualToString:@"usertype=host"]){
                 _hostStream = stream;
                 if(self.isHost){
-                    stopGoingLive = YES;
+                    _stopGoingLive = YES;
                 }
             }
             
             if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
                 _celebrityStream = stream;
                 if(self.isCeleb){
-                    stopGoingLive = YES;
+                    _stopGoingLive = YES;
                 }
             }
             
@@ -986,7 +986,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
             
             
-            if(isLive || _isCeleb || _isHost){
+            if(_isLive || _isCeleb || _isHost){
                 [self doSubscribe:stream];
             }
         }
@@ -998,7 +998,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
             if(_producerSession.connection){
-                shouldResendProducerSignal = YES;
+                _shouldResendProducerSignal = YES;
             }
         }
         
@@ -1089,7 +1089,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"startEvent"]){
         self.eventData[@"status"] = @"P";
         self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
-        shouldResendProducerSignal = YES;
+        _shouldResendProducerSignal = YES;
         [self statusChanged];
     }
     if([type isEqualToString:@"openChat"]){
@@ -1097,7 +1097,7 @@ didFailWithError:(OTError*)error
         _producerConnection = connection;
     }
     if([type isEqualToString:@"closeChat"]){
-        if(isFan){
+        if(_isFan){
             [self hideChatBox];
             self.eventView.chatBtn.hidden = YES;
         }
@@ -1111,7 +1111,7 @@ didFailWithError:(OTError*)error
         [messageData[@"video"] isEqualToString:@"on"] ? [_publisher setPublishVideo: YES] : [_publisher setPublishVideo: NO];
     }
     if([type isEqualToString:@"newBackstageFan"]){
-        if(!isFan){
+        if(!_isFan){
             [self showNotification:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
             [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
         }
@@ -1124,15 +1124,15 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"newFanAck"]){
-        shouldResendProducerSignal = NO;
+        _shouldResendProducerSignal = NO;
         [self performSelector:@selector(captureAndSendScreenshot) withObject:nil afterDelay:2.0];
     }
     if([type isEqualToString:@"producerLeaving"]){
-        shouldResendProducerSignal = YES;
+        _shouldResendProducerSignal = YES;
     }
     if([type isEqualToString:@"resendNewFanSignal"]){
         
-        if(shouldResendProducerSignal){
+        if(_shouldResendProducerSignal){
             [self sendNewUserSignal];
         }
         
@@ -1140,20 +1140,20 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"joinProducer"]){
         [self doSubscribe:_producerStream];
-        inCallWithProducer = YES;
+        _inCallWithProducer = YES;
         _publisher.publishAudio = YES;
         [self muteOnstageSession:YES];
         [self showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
         [self showVideoPreview];
     }
     if([type isEqualToString:@"privateCall"]){
-        if(isOnstage || isBackstage){
+        if(_isOnstage || _isBackstage){
             if ([messageData[@"callWith"] isEqualToString: _publisher.stream.connection.connectionId ]) {
                 [self doSubscribe:_privateProducerStream];
-                inCallWithProducer = YES;
+                _inCallWithProducer = YES;
                 [self muteOnstageSession:YES];
                 [self showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                if(isFan && isBackstage){
+                if(_isFan && _isBackstage){
                     [self showVideoPreview];
                 }
             }else{
@@ -1165,13 +1165,13 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"endPrivateCall"]){
-        if(isBackstage || isOnstage){
-            if(inCallWithProducer){
+        if(_isBackstage || _isOnstage){
+            if(_inCallWithProducer){
                 OTError *error = nil;
                 [_session unsubscribe: _privateProducerSubscriber error:&error];
-                inCallWithProducer = NO;
+                _inCallWithProducer = NO;
                 [self muteOnstageSession:NO];
-                if(isFan && isBackstage){
+                if(_isFan && _isBackstage){
                     [self hideVideoPreview];
                 }
             }else{
@@ -1183,11 +1183,11 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"disconnectProducer"]){
-        if(!isOnstage){
+        if(!_isOnstage){
             OTError *error = nil;
             [_producerSession unsubscribe: _producerSubscriber error:&error];
             _producerSubscriber = nil;
-            inCallWithProducer = NO;
+            _inCallWithProducer = NO;
             self.eventView.getInLineBtn.hidden = NO;
             _publisher.publishAudio = NO;
             [self muteOnstageSession:NO];
@@ -1206,7 +1206,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"goLive"]){
         self.eventData[@"status"] = @"L";
         self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
-        if(!isLive){
+        if(!_isLive){
             [self goLive];
         }
         [self statusChanged];
@@ -1217,7 +1217,7 @@ didFailWithError:(OTError*)error
         
         [self disconnectBackstage];
         
-        isOnstage = YES;
+        _isOnstage = YES;
         
         self.eventView.statusLabel.text = @"\u2022 You are live";
         self.eventView.statusLabel.hidden = NO;
@@ -1227,7 +1227,7 @@ didFailWithError:(OTError*)error
         [self hideNotification];
         self.eventView.chatBtn.hidden = YES;
         
-        if(![self.eventData[@"status"] isEqualToString:@"L"] && !isLive){
+        if(![self.eventData[@"status"] isEqualToString:@"L"] && !_isLive){
             [self goLive];
         }
         [self hideVideoPreview];
@@ -1255,7 +1255,7 @@ didFailWithError:(OTError*)error
         self.eventView.chatBtn.hidden = YES;
         self.eventView.closeEvenBtn.hidden = NO;
         [self hideChatBox];
-        isOnstage = NO;
+        _isOnstage = NO;
         
         if(_publisher){
             [self unpublishFrom:_session];
@@ -1276,9 +1276,9 @@ didFailWithError:(OTError*)error
             msg.senderAlias = [self getStreamData:connection.data];
             msg.senderId = connection.connectionId;
             msg.text = userInfo[@"message"][@"message"];
-            unreadCount ++;
+            _unreadCount ++;
             [_textChat addMessage:msg];
-            [self.eventView.chatBtn setTitle:[[NSNumber numberWithFloat:unreadCount] stringValue] forState:UIControlStateNormal];
+            [self.eventView.chatBtn setTitle:[[NSNumber numberWithFloat:_unreadCount] stringValue] forState:UIControlStateNormal];
             
         }
         
@@ -1405,7 +1405,7 @@ didFailWithError:(OTError*)error
 
 -(void) statusChanged{
     if([self.eventData[@"status"] isEqualToString:@"N"]){
-        if(!isFan){
+        if(!_isFan){
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
@@ -1415,7 +1415,7 @@ didFailWithError:(OTError*)error
         }
     };
     if([self.eventData[@"status"] isEqualToString:@"P"]){
-        if(!isFan){
+        if(!_isFan){
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
@@ -1434,11 +1434,11 @@ didFailWithError:(OTError*)error
         }else{
             self.eventView.eventImage.hidden = NO;
         }
-        if(!_isCeleb && !_isHost && !isBackstage && !isOnstage){
+        if(!_isCeleb && !_isHost && !_isBackstage && !_isOnstage){
             self.eventView.getInLineBtn.hidden = NO;
             self.eventView.getInLineBtn.alpha = 1;
         }
-        isLive = YES;
+        _isLive = YES;
     };
     if([self.eventData[@"status"] isEqualToString:@"C"]){
         if(self.eventData[@"event_image_end"]){
@@ -1453,7 +1453,7 @@ didFailWithError:(OTError*)error
         OTError *error = nil;
         
         [_session disconnect:&error];
-        if(isBackstage){
+        if(_isBackstage){
             [self disconnectBackstageSession];
         }
         if (error)
@@ -1470,7 +1470,7 @@ didFailWithError:(OTError*)error
 
 -(void)goLive{
     NSLog(@"Event changed status to LIVE");
-    isLive = YES;
+    _isLive = YES;
     if(_hostStream && !_subscribers[@"host"]){
         [self doSubscribe:_hostStream];
     }
@@ -1662,7 +1662,7 @@ didFailWithError:(OTError*)error
     [UIView animateWithDuration:0.5 animations:^() {
         //_connectingLabel.alpha = 0;
         [self showChatBox];
-        unreadCount = 0;
+        _unreadCount = 0;
         [self.eventView.chatBtn setTitle:@"" forState:UIControlStateNormal];
     }];
 }
@@ -1670,7 +1670,7 @@ didFailWithError:(OTError*)error
 - (IBAction)closeChat:(id)sender {
     [UIView animateWithDuration:0.5 animations:^() {
         [self hideChatBox];
-        if(!isFan){
+        if(!_isFan){
             self.eventView.chatBtn.hidden = NO;
         }
         
@@ -1790,7 +1790,7 @@ didFailWithError:(OTError*)error
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:NULL];
     
-    if(isSingleEvent){
+    if(_isSingleEvent){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
                                                             object:nil
                                                           userInfo:nil];

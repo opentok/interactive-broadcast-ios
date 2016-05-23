@@ -23,35 +23,15 @@
 #import "OTDefaultAudioDevice.h"
 #import "OTKAnalytics.h"
 
+#import "EventView.h"
+
 
 #define TIME_WINDOW 3000 // 3 seconds
 #define AUDIO_ONLY_TEST_DURATION 6 // 6 seconds
 
 
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
-@property (weak, nonatomic) IBOutlet UIView *videoHolder;
 
-//---UI
-@property (weak, nonatomic) IBOutlet UIView *statusBar;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventName;
-@property (weak, nonatomic) IBOutlet UIButton *getInLineBtn;
-@property (weak, nonatomic) IBOutlet UIButton *leaveLineBtn;
-@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
-@property (weak, nonatomic) IBOutlet UIButton *closeChat;
-@property (weak, nonatomic) IBOutlet UIView *chatBar;
-@property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
-@property (weak, nonatomic) IBOutlet UIButton *dismissInline;
-@property (weak, nonatomic) IBOutlet UILabel *inlineNotification;
-@property (weak, nonatomic) IBOutlet UIView *internalHolder;
-@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *inLineHolder;
-@property (weak, nonatomic) IBOutlet UIImageView *eventImage;
-@property (weak, nonatomic) IBOutlet UIView *notificationBar;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
-//---UI
 
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) NSMutableDictionary *eventData;
@@ -117,6 +97,9 @@
 @property (nonatomic) NSString *frameRate;
 @property (nonatomic) NSString *resolution;
 
+@property (nonatomic) EventView *eventView;
+
+
 @end
 
 @implementation EventViewController
@@ -133,8 +116,6 @@ CGFloat unreadCount = 0;
 
 static NSString* const kTextChatType = @"chatMessage";
 
-@synthesize apikey, userName, isCeleb, isHost, eventData,connectionData,user,eventName,statusBar,chatBar;
-
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                    connectionData:(NSMutableDictionary *)aConnectionData
                              user:(NSMutableDictionary *)aUser
@@ -142,6 +123,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
     [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
+    
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
@@ -155,7 +137,7 @@ static NSString* const kTextChatType = @"chatMessage";
         self.isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
         self.isHost = [aUser[@"type"] isEqualToString:@"host"];
         
-        isFan = !self.isCeleb && !self.isHost;
+        isFan = !_isCeleb && !_isHost;
         
         isSingleEvent = aSingle;
         
@@ -176,13 +158,15 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)viewDidLoad {
     
     [super viewDidLoad];
+    self.eventView = (EventView *)self.view;
+
     isLive = NO;
     
-    [self.statusBar setBackgroundColor: [UIColor BarColor]];
+    [self.eventView.statusBar setBackgroundColor: [UIColor BarColor]];
     _videoViews = [[NSMutableDictionary alloc] init];
-    _videoViews[@"fan"] = self.FanViewHolder;
-    _videoViews[@"celebrity"] = self.CelebrityViewHolder;
-    _videoViews[@"host"] = self.HostViewHolder;
+    _videoViews[@"fan"] = self.eventView.FanViewHolder;
+    _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
+    _videoViews[@"host"] = self.eventView.HostViewHolder;
     
     _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
     
@@ -224,23 +208,23 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void) loadUser{
     
     //Load UI
-    self.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
     
-    [self.getInLineBtn setBackgroundColor:[UIColor SLGreenColor]];
-    [self.leaveLineBtn setBackgroundColor:[UIColor SLRedColor]];
+    [self.eventView.getInLineBtn setBackgroundColor:[UIColor SLGreenColor]];
+    [self.eventView.leaveLineBtn setBackgroundColor:[UIColor SLRedColor]];
     
-    self.eventName.hidden = NO;
-    self.closeEvenBtn.layer.cornerRadius = 3;
+    self.eventView.eventName.hidden = NO;
+    self.eventView.closeEvenBtn.layer.cornerRadius = 3;
     
-    self.statusLabel.layer.borderWidth = 2.0;
-    self.statusLabel.layer.borderColor = [UIColor SLGreenColor].CGColor;
-    self.statusLabel.layer.cornerRadius = 3;
-    self.getInLineBtn.layer.cornerRadius = 3;
-    self.leaveLineBtn.layer.cornerRadius = 3;
+    self.eventView.statusLabel.layer.borderWidth = 2.0;
+    self.eventView.statusLabel.layer.borderColor = [UIColor SLGreenColor].CGColor;
+    self.eventView.statusLabel.layer.cornerRadius = 3;
+    self.eventView.getInLineBtn.layer.cornerRadius = 3;
+    self.eventView.leaveLineBtn.layer.cornerRadius = 3;
     
-    self.inLineHolder.layer.cornerRadius = 3;
-    self.inLineHolder.layer.borderColor = [UIColor SLGrayColor].CGColor;;
-    self.inLineHolder.layer.borderWidth = 3.0f;
+    self.eventView.inLineHolder.layer.cornerRadius = 3;
+    self.eventView.inLineHolder.layer.borderColor = [UIColor SLGrayColor].CGColor;;
+    self.eventView.inLineHolder.layer.borderWidth = 3.0f;
     
     [self startSession];
     
@@ -266,7 +250,7 @@ static NSString* const kTextChatType = @"chatMessage";
                                        sessionId:self.connectionData[@"sessionIdHost"]
                                         delegate:self];
     
-    self.getInLineBtn.hidden = YES;
+    self.eventView.getInLineBtn.hidden = YES;
     [self statusChanged];
     [self doConnect];
     
@@ -292,20 +276,20 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
     
-    _chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
+    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
     
     CGRect r = self.view.bounds;
     r.origin.y += _chatYPosition;
     r.size.height -= _chatYPosition;
     (_textChat.view).frame = r;
-    [self.view insertSubview:_textChat.view belowSubview:self.chatBar];
+    [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
     
     if(!isFan){
-        self.chatBtn.hidden = NO;
+        self.eventView.chatBtn.hidden = NO;
     }
     
     _textChat.view.alpha = 0;
-    chatBar.hidden = YES;
+    self.eventView.chatBar.hidden = YES;
     
 }
 
@@ -327,7 +311,7 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     OTError *error = nil;
     
-    NSString *logType = isHost ? @"host_connects_onstage" : isCeleb ? @"celeb_connects_onstage" : @"fan_connects_onstage";
+    NSString *logType = _isHost ? @"host_connects_onstage" : _isCeleb ? @"celeb_connects_onstage" : @"fan_connects_onstage";
     
     [_session connectWithToken:self.connectionData[@"tokenHost"] error:&error];
 
@@ -344,7 +328,7 @@ static NSString* const kTextChatType = @"chatMessage";
     OTError *error = nil;
     [self showLoader];
     
-    self.getInLineBtn.hidden = YES;
+    self.eventView.getInLineBtn.hidden = YES;
     [_logging logEventAction:@"fan_connects_backstage" variation:@"attempt"];
     [_producerSession connectWithToken:self.connectionData[@"tokenProducer"] error:&error];
     
@@ -360,8 +344,8 @@ static NSString* const kTextChatType = @"chatMessage";
 {
     [self unpublishFrom:_producerSession];
     isBackstage = NO;
-    self.inLineHolder.hidden = YES;
-    self.getInLineBtn.hidden = NO;
+    self.eventView.inLineHolder.hidden = YES;
+    self.eventView.getInLineBtn.hidden = NO;
     shouldResendProducerSignal = YES;
 }
 
@@ -378,7 +362,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)forceDisconnect
 {
     [self cleanupPublisher];
-    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", isCeleb ? @"celebrity" : @"host"];
+    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", _isCeleb ? @"celebrity" : @"host"];
     
     
     
@@ -386,7 +370,7 @@ static NSString* const kTextChatType = @"chatMessage";
     OTError *error = nil;
     
     [_session disconnect:&error];
-    _videoHolder.hidden = YES;
+    self.eventView.videoHolder.hidden = YES;
     if (error)
     {
         NSLog(@"%@", error);
@@ -403,7 +387,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     _logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
     
-    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage",me];
     [_logging logEventAction:logtype variation:@"success"];
 }
@@ -417,31 +401,31 @@ static NSString* const kTextChatType = @"chatMessage";
             [self publishTo:_producerSession];
             
             //[self showVideoPreview];
-            self.closeEvenBtn.hidden = YES;
+            self.eventView.closeEvenBtn.hidden = YES;
             _publisher.publishAudio = NO;
-            (_publisher.view).frame = CGRectMake(0, 0, self.inLineHolder.bounds.size.width, self.inLineHolder.bounds.size.height);
+            (_publisher.view).frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self stopLoader];
         }
         if(isOnstage){
             [self publishTo:_session];
-            self.statusLabel.text = @"\u2022 You are live";
-            [self.FanViewHolder addSubview:_publisher.view];
-            _publisher.view.frame = CGRectMake(0, 0, self.FanViewHolder.bounds.size.width, self.FanViewHolder.bounds.size.height);
-            self.closeEvenBtn.hidden = YES;
-            self.getInLineBtn.hidden = YES;
+            self.eventView.statusLabel.text = @"\u2022 You are live";
+            [self.eventView.FanViewHolder addSubview:_publisher.view];
+            _publisher.view.frame = CGRectMake(0, 0, self.eventView.FanViewHolder.bounds.size.width, self.eventView.FanViewHolder.bounds.size.height);
+            self.eventView.closeEvenBtn.hidden = YES;
+            self.eventView.getInLineBtn.hidden = YES;
         }
     }else{
         if(self.isCeleb && !stopGoingLive){
             [self publishTo:_session];
             [_videoViews[@"celebrity"] addSubview:_publisher.view];
-            (_publisher.view).frame = CGRectMake(0, 0, self.CelebrityViewHolder.bounds.size.width, self.CelebrityViewHolder.bounds.size.height);
-            self.closeEvenBtn.hidden = NO;
+            (_publisher.view).frame = CGRectMake(0, 0, self.eventView.CelebrityViewHolder.bounds.size.width, self.eventView.CelebrityViewHolder.bounds.size.height);
+            self.eventView.closeEvenBtn.hidden = NO;
         }
-        if(self.isHost && !stopGoingLive){
+        if(_isHost && !stopGoingLive){
             [self publishTo:_session];
             [_videoViews[@"host"] addSubview:_publisher.view];
-            self.closeEvenBtn.hidden = NO;
-            (_publisher.view).frame = CGRectMake(0, 0, self.HostViewHolder.bounds.size.width, self.HostViewHolder.bounds.size.height);
+            self.eventView.closeEvenBtn.hidden = NO;
+            (_publisher.view).frame = CGRectMake(0, 0, self.eventView.HostViewHolder.bounds.size.width, self.eventView.HostViewHolder.bounds.size.height);
         }
         if(stopGoingLive){
             return [self forceDisconnect];
@@ -456,7 +440,7 @@ static NSString* const kTextChatType = @"chatMessage";
     if(_publisher){
         NSLog(@"PUBLISHER EXISTED");
     }
-    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@",me,session_name];
 
@@ -490,7 +474,7 @@ static NSString* const kTextChatType = @"chatMessage";
     OTError *error = nil;
     [session unpublish:_publisher error:&error];
     
-    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     NSString *session_name = _session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@",me,session_name];
     
@@ -550,7 +534,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     if(!_publisher.stream && !stream.connection) return;
     
-    NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     
     
     NSString *connectingTo =[self getStreamData:stream.connection.data];
@@ -597,7 +581,7 @@ static NSString* const kTextChatType = @"chatMessage";
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _subscribers[connectingTo] = subs;
         
-        NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+        NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
         [_logging logEventAction:logtype variation:@"attempt"];
 
@@ -672,7 +656,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSString *connectingTo =[self getStreamData:subscriber.stream.connection.data];
         OTSubscriber *_subscriber = _subscribers[connectingTo];
         
-        NSString *me = isHost ? @"host" : isCeleb ? @"celebrity" : @"fan";
+        NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
         [_logging logEventAction:logtype variation:@"success"];
         
@@ -683,7 +667,7 @@ static NSString* const kTextChatType = @"chatMessage";
         (_subscriber.view).frame = CGRectMake(0, 0, holder.bounds.size.width,holder.bounds.size.height);
         
         [holder addSubview:_subscriber.view];
-        self.eventImage.hidden = YES;
+        self.eventView.eventImage.hidden = YES;
         [self adjustChildrenWidth];
         
     }
@@ -923,16 +907,16 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     if(isFan){
         if(session.sessionId == _session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
-            (self.statusLabel).text = @"";
-            self.closeEvenBtn.hidden = NO;
+            (self.eventView.statusLabel).text = @"";
+            self.eventView.closeEvenBtn.hidden = NO;
             [self addLogging];
         }
         if(session.sessionId == _producerSession.sessionId){
             NSLog(@"sessionDidConnect to Backstage");
             isBackstage = YES;
-            self.closeEvenBtn.hidden = YES;
-            self.leaveLineBtn.hidden = NO;
-            self.getInLineBtn.hidden = YES;
+            self.eventView.closeEvenBtn.hidden = YES;
+            self.eventView.leaveLineBtn.hidden = NO;
+            self.eventView.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
             [_logging logEventAction:@"fan_connects_backstage" variation:@"success"];
@@ -961,14 +945,14 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     NSLog(@"sessionDidDisconnect (%@)", alertMessage);
     if(session == _producerSession){
         isBackstage = NO;
-        self.inLineHolder.hidden = YES;
-        self.getInLineBtn.hidden = NO;
+        self.eventView.inLineHolder.hidden = YES;
+        self.eventView.getInLineBtn.hidden = NO;
         shouldResendProducerSignal = YES;
         [self cleanupPublisher];
-        self.leaveLineBtn.hidden = YES;
+        self.eventView.leaveLineBtn.hidden = YES;
         [self hideNotification];
     }else{
-        self.getInLineBtn.hidden = YES;
+        self.eventView.getInLineBtn.hidden = YES;
         _session = nil;
     }
 }
@@ -1003,7 +987,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
             
             
-            if(isLive || isCeleb || isHost){
+            if(isLive || _isCeleb || _isHost){
                 [self doSubscribe:stream];
             }
         }
@@ -1105,7 +1089,7 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"startEvent"]){
         self.eventData[@"status"] = @"P";
-        self.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
         shouldResendProducerSignal = YES;
         [self statusChanged];
     }
@@ -1116,7 +1100,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"closeChat"]){
         if(isFan){
             [self hideChatBox];
-            self.chatBtn.hidden = YES;
+            self.eventView.chatBtn.hidden = YES;
         }
         
     }
@@ -1128,13 +1112,13 @@ didFailWithError:(OTError*)error
         [messageData[@"video"] isEqualToString:@"on"] ? [_publisher setPublishVideo: YES] : [_publisher setPublishVideo: NO];
     }
     if([type isEqualToString:@"newBackstageFan"]){
-        if(isHost || isCeleb){
+        if(!isFan){
             [self showNotification:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
             [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
         }
     }
     if([type isEqualToString:@"joinBackstage"]){
-        self.statusLabel.text = @"BACKSTAGE";
+        self.eventView.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
         [self showVideoPreview];
         [self showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
@@ -1205,7 +1189,7 @@ didFailWithError:(OTError*)error
             [_producerSession unsubscribe: _producerSubscriber error:&error];
             _producerSubscriber = nil;
             inCallWithProducer = NO;
-            self.getInLineBtn.hidden = NO;
+            self.eventView.getInLineBtn.hidden = NO;
             _publisher.publishAudio = NO;
             [self muteOnstageSession:NO];
             [self hideNotification];
@@ -1214,20 +1198,20 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"disconnectBackstage"]){
-        self.leaveLineBtn.hidden = NO;
-        self.statusLabel.text = @"IN LINE";
+        self.eventView.leaveLineBtn.hidden = NO;
+        self.eventView.statusLabel.text = @"IN LINE";
         _publisher.publishAudio = NO;
         [self hideNotification];
         [self hideVideoPreview];
     }
     if([type isEqualToString:@"goLive"]){
         self.eventData[@"status"] = @"L";
-        self.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
         if(!isLive){
             [self goLive];
         }
         [self statusChanged];
-        self.eventImage.hidden = YES;
+        self.eventView.eventImage.hidden = YES;
         
     }
     if([type isEqualToString:@"joinHost"]){
@@ -1236,13 +1220,13 @@ didFailWithError:(OTError*)error
         
         isOnstage = YES;
         
-        self.statusLabel.text = @"\u2022 You are live";
-        self.statusLabel.hidden = NO;
-        self.leaveLineBtn.hidden = YES;
-        self.getInLineBtn.hidden = YES;
+        self.eventView.statusLabel.text = @"\u2022 You are live";
+        self.eventView.statusLabel.hidden = NO;
+        self.eventView.leaveLineBtn.hidden = YES;
+        self.eventView.getInLineBtn.hidden = YES;
         [self hideChatBox];
         [self hideNotification];
-        self.chatBtn.hidden = YES;
+        self.eventView.chatBtn.hidden = YES;
         
         if(![self.eventData[@"status"] isEqualToString:@"L"] && !isLive){
             [self goLive];
@@ -1260,17 +1244,17 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"finishEvent"]){
         self.eventData[@"status"] = @"C";
-        self.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
-        self.statusLabel.hidden = YES;
-        self.chatBtn.hidden = YES;
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.statusLabel.hidden = YES;
+        self.eventView.chatBtn.hidden = YES;
         [self statusChanged];
     }
     
     if([type isEqualToString:@"disconnect"]){
         
-        self.statusLabel.hidden = YES;
-        self.chatBtn.hidden = YES;
-        self.closeEvenBtn.hidden = NO;
+        self.eventView.statusLabel.hidden = YES;
+        self.eventView.chatBtn.hidden = YES;
+        self.eventView.closeEvenBtn.hidden = NO;
         [self hideChatBox];
         isOnstage = NO;
         
@@ -1286,7 +1270,7 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"chatMessage"]){
         if (![connection.connectionId isEqualToString:session.connection.connectionId]) {
-            self.chatBtn.hidden = NO;
+            self.eventView.chatBtn.hidden = NO;
             _producerConnection = connection;
             NSDictionary *userInfo = [self parseJSON:string];
             OTKChatMessage *msg = [[OTKChatMessage alloc]init];
@@ -1295,7 +1279,7 @@ didFailWithError:(OTError*)error
             msg.text = userInfo[@"message"][@"message"];
             unreadCount ++;
             [_textChat addMessage:msg];
-            [self.chatBtn setTitle:[[NSNumber numberWithFloat:unreadCount] stringValue] forState:UIControlStateNormal];
+            [self.eventView.chatBtn setTitle:[[NSNumber numberWithFloat:unreadCount] stringValue] forState:UIControlStateNormal];
             
         }
         
@@ -1422,23 +1406,23 @@ didFailWithError:(OTError*)error
 
 -(void) statusChanged{
     if([self.eventData[@"status"] isEqualToString:@"N"]){
-        if(isCeleb || isHost){
-            self.eventImage.hidden = YES;
+        if(!isFan){
+            self.eventView.eventImage.hidden = YES;
         }else{
-            self.eventImage.hidden = NO;
+            self.eventView.eventImage.hidden = NO;
             [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
-            self.getInLineBtn.hidden = YES;
-            self.getInLineBtn.alpha = 1;
+            self.eventView.getInLineBtn.hidden = YES;
+            self.eventView.getInLineBtn.alpha = 1;
         }
     };
     if([self.eventData[@"status"] isEqualToString:@"P"]){
-        if(isCeleb || isHost){
-            self.eventImage.hidden = YES;
+        if(!isFan){
+            self.eventView.eventImage.hidden = YES;
         }else{
-            self.eventImage.hidden = NO;
+            self.eventView.eventImage.hidden = NO;
             NSString *url = [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]];
             [self updateEventImage: url];
-            self.getInLineBtn.hidden = NO;
+            self.eventView.getInLineBtn.hidden = NO;
         }
         
     };
@@ -1447,13 +1431,13 @@ didFailWithError:(OTError*)error
         [self updateEventImage: url];
         
         if (_subscribers.count > 0) {
-            self.eventImage.hidden = YES;
+            self.eventView.eventImage.hidden = YES;
         }else{
-            self.eventImage.hidden = NO;
+            self.eventView.eventImage.hidden = NO;
         }
-        if(!isCeleb && !isHost && !isBackstage && !isOnstage){
-            self.getInLineBtn.hidden = NO;
-            self.getInLineBtn.alpha = 1;
+        if(!_isCeleb && !_isHost && !isBackstage && !isOnstage){
+            self.eventView.getInLineBtn.hidden = NO;
+            self.eventView.getInLineBtn.alpha = 1;
         }
         isLive = YES;
     };
@@ -1462,10 +1446,10 @@ didFailWithError:(OTError*)error
             [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image_end"]]];
         }
         //Event Closed, disconect fan and show image
-        self.eventImage.hidden = NO;
-        self.getInLineBtn.hidden = YES;
-        self.getInLineBtn.alpha = 0;
-        self.leaveLineBtn.hidden = YES;
+        self.eventView.eventImage.hidden = NO;
+        self.eventView.getInLineBtn.hidden = YES;
+        self.eventView.getInLineBtn.alpha = 0;
+        self.eventView.leaveLineBtn.hidden = YES;
         
         OTError *error = nil;
         
@@ -1479,7 +1463,7 @@ didFailWithError:(OTError*)error
             [self showAlert:error.localizedDescription];
         }
         [self cleanupPublisher];
-        self.closeEvenBtn.hidden = NO;
+        self.eventView.closeEvenBtn.hidden = NO;
         
     };
     
@@ -1519,7 +1503,7 @@ didFailWithError:(OTError*)error
 {
     NSDictionary* info = aNotification.userInfo;
     double duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    _chatYPosition = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
+    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
     
     [UIView animateWithDuration:duration animations:^{
         
@@ -1555,7 +1539,7 @@ didFailWithError:(OTError*)error
     NSURL *finalUrl = [NSURL URLWithString:url];
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
     if(imageData){
-        [self.eventImage setImage:[UIImage imageWithData:imageData]];
+        [self.eventView.eventImage setImage:[UIImage imageWithData:imageData]];
     }
     
 }
@@ -1563,12 +1547,12 @@ didFailWithError:(OTError*)error
 - (void) adjustChildrenWidth{
     CGFloat c = 0;
     CGFloat new_width = 1;
-    CGFloat new_height = self.internalHolder.bounds.size.height;
+    CGFloat new_height = self.eventView.internalHolder.bounds.size.height;
     if(_subscribers.count == 0){
-        self.eventImage.hidden = NO;
+        self.eventView.eventImage.hidden = NO;
     }
     else{
-        self.eventImage.hidden = YES;
+        self.eventView.eventImage.hidden = YES;
         new_width = _screen_width/_subscribers.count;
     }
     
@@ -1645,13 +1629,13 @@ didFailWithError:(OTError*)error
 
 - (void) changeStatusLabelColor{
     if (_session.sessionConnectionStatus==OTSessionConnectionStatusConnected) {
-        self.statusLabel.textColor = [UIColor greenColor];
+        self.eventView.statusLabel.textColor = [UIColor greenColor];
     }else if (_session.sessionConnectionStatus==OTSessionConnectionStatusConnecting) {
-        self.statusLabel.textColor = [UIColor blueColor];
+        self.eventView.statusLabel.textColor = [UIColor blueColor];
     }else if (_session.sessionConnectionStatus==OTSessionConnectionStatusDisconnecting) {
-        self.statusLabel.textColor = [UIColor blueColor];
+        self.eventView.statusLabel.textColor = [UIColor blueColor];
     }else {
-        self.statusLabel.textColor = [UIColor SLBlueColor];
+        self.eventView.statusLabel.textColor = [UIColor SLBlueColor];
     }
 }
 
@@ -1680,7 +1664,7 @@ didFailWithError:(OTError*)error
         //_connectingLabel.alpha = 0;
         [self showChatBox];
         unreadCount = 0;
-        [self.chatBtn setTitle:@"" forState:UIControlStateNormal];
+        [self.eventView.chatBtn setTitle:@"" forState:UIControlStateNormal];
     }];
 }
 
@@ -1688,7 +1672,7 @@ didFailWithError:(OTError*)error
     [UIView animateWithDuration:0.5 animations:^() {
         [self hideChatBox];
         if(!isFan){
-            self.chatBtn.hidden = NO;
+            self.eventView.chatBtn.hidden = NO;
         }
         
     }];
@@ -1703,13 +1687,13 @@ didFailWithError:(OTError*)error
 }
 
 - (IBAction)leaveLine:(id)sender {
-    self.leaveLineBtn.hidden = YES;
-    self.chatBtn.hidden = YES;
-    self.closeEvenBtn.hidden = NO;
+    self.eventView.leaveLineBtn.hidden = YES;
+    self.eventView.chatBtn.hidden = YES;
+    self.eventView.closeEvenBtn.hidden = NO;
     [self disconnectBackstage];
     [self disconnectBackstageSession];
-    self.statusLabel.text = @"";
-    self.getInLineBtn.hidden = NO;
+    self.eventView.statusLabel.text = @"";
+    self.eventView.getInLineBtn.hidden = NO;
     
 }
 
@@ -1722,13 +1706,13 @@ didFailWithError:(OTError*)error
 
 #pragma mark - notifications
 - (void)showNotification:(NSString *)text useColor:(UIColor *)nColor {
-    self.notificationLabel.text = text;
-    self.notificationBar.backgroundColor = nColor;
-    self.notificationBar.hidden = NO;
+    self.eventView.notificationLabel.text = text;
+    self.eventView.notificationBar.backgroundColor = nColor;
+    self.eventView.notificationBar.hidden = NO;
 }
 
 -(void)hideNotification{
-    self.notificationBar.hidden = YES;
+    self.eventView.notificationBar.hidden = YES;
 }
 
 //UI
@@ -1739,14 +1723,14 @@ didFailWithError:(OTError*)error
 }
 
 -(void)showChatBox{
-    self.chatBtn.hidden = YES;
+    self.eventView.chatBtn.hidden = YES;
     _textChat.view.alpha = 1;
-    chatBar.hidden = NO;
+    self.eventView.chatBar.hidden = NO;
 }
 
 -(void)hideChatBox{
     _textChat.view.alpha = 0;
-    chatBar.hidden = YES;
+    self.eventView.chatBar.hidden = YES;
 }
 
 -(void)showLoader{
@@ -1769,15 +1753,15 @@ didFailWithError:(OTError*)error
 
 -(void)hideVideoPreview{
     [UIView animateWithDuration:3 animations:^{
-        self.inLineHolder.hidden = YES;
+        self.eventView.inLineHolder.hidden = YES;
     }];
 }
 -(void)showVideoPreview{
     if(_publisher){
         _publisher.view.layer.cornerRadius = 0.5;
-        [self.inLineHolder addSubview:_publisher.view];
-        [self.inLineHolder sendSubviewToBack:_publisher.view];
-        self.inLineHolder.hidden = NO;
+        [self.eventView.inLineHolder addSubview:_publisher.view];
+        [self.eventView.inLineHolder sendSubviewToBack:_publisher.view];
+        self.eventView.inLineHolder.hidden = NO;
     }
     
 }

@@ -30,6 +30,9 @@
                             <state key="normal" title="IB Demo">
                                 <color key="titleColor" red="0.26274509800000001" green="0.31372549020000001" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="goBack:" destination="-1" eventType="touchUpInside" id="4HQ-QU-PsU"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.81960784313725488" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,7 +79,7 @@
                 <constraint firstItem="782-PQ-CdT" firstAttribute="top" secondItem="K3I-37-Lkm" secondAttribute="bottom" constant="7" id="oOX-JC-n4A"/>
             </constraints>
             <connections>
-                <outlet property="eventsCollectionView" destination="6MV-f6-iIB" id="Z7H-gI-M0L"/>
+                <outlet property="eventsCollectionView" destination="6MV-f6-iIB" id="4B3-lD-IxD"/>
                 <outlet property="eventsViewFlowLayout" destination="Nhz-gv-FKk" id="0vU-af-diN"/>
             </connections>
             <point key="canvasLocation" x="214" y="231"/>

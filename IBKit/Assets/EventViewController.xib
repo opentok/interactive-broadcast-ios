@@ -26,33 +26,13 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventView">
             <connections>
-                <outlet property="CelebrityViewHolder" destination="dI5-P0-OBa" id="ZEk-8X-3qa"/>
-                <outlet property="FanViewHolder" destination="1Vg-Tc-XbD" id="dIg-I1-jjG"/>
-                <outlet property="HostViewHolder" destination="o0K-yn-m3H" id="Mg0-ds-aZo"/>
-                <outlet property="chatBar" destination="PzH-nh-WWa" id="SEP-PC-xvN"/>
-                <outlet property="chatBtn" destination="sgd-9K-em0" id="yc3-Kv-t36"/>
-                <outlet property="closeChat" destination="fgA-0L-GnS" id="5wc-3u-cwV"/>
-                <outlet property="closeEvenBtn" destination="jgu-Fc-pWM" id="oIM-90-yKY"/>
-                <outlet property="dismissInline" destination="2eW-aR-FL2" id="62Z-3N-5fj"/>
-                <outlet property="eventImage" destination="3OI-XM-flL" id="kQ8-UC-YNm"/>
-                <outlet property="eventName" destination="HMb-Rp-gdV" id="NfD-q8-8EM"/>
-                <outlet property="getInLineBtn" destination="0X6-Ae-NUS" id="VAe-pH-vdx"/>
-                <outlet property="inLineHolder" destination="65j-ak-aqS" id="0kf-ow-hH2"/>
-                <outlet property="inlineNotification" destination="UPr-Sn-B7a" id="yA1-5a-cek"/>
-                <outlet property="internalHolder" destination="fJu-a8-Zwd" id="Nmb-6v-wOZ"/>
-                <outlet property="leaveLineBtn" destination="tJ3-U1-PiD" id="kDv-kN-qfm"/>
-                <outlet property="notificationBar" destination="LTX-cC-jKo" id="Fey-4m-MKN"/>
-                <outlet property="notificationLabel" destination="7t4-cZ-Lbj" id="rcb-vO-4gt"/>
-                <outlet property="statusBar" destination="JrU-sR-8GW" id="e0X-vb-YlL"/>
-                <outlet property="statusLabel" destination="Itk-rJ-bBi" id="iei-92-7uW"/>
-                <outlet property="videoHolder" destination="E4T-AZ-cSQ" id="78D-II-YjB"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="KVy-ms-5xK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="PK1-SL-QEk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="EventView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -288,7 +268,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="getInLineClick:" destination="-1" eventType="touchUpInside" id="UmR-k8-J7L"/>
+                                <action selector="getInLineClick:" destination="-1" eventType="touchUpInside" id="J5Y-Q2-bA9"/>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJ3-U1-PiD">
@@ -310,7 +290,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="leaveLine:" destination="-1" eventType="touchUpInside" id="ZVG-S5-jIA"/>
+                                <action selector="leaveLine:" destination="-1" eventType="touchUpInside" id="hID-2N-13D"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Fc-pWM">
@@ -341,11 +321,11 @@
                                 <rect key="frame" x="17" y="29" width="31" height="26"/>
                             </variation>
                             <connections>
-                                <action selector="goBack:" destination="-1" eventType="touchUpInside" id="7qG-mN-aBt"/>
+                                <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Obi-lr-8Eg"/>
                             </connections>
                         </button>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
-                            <rect key="frame" x="105" y="33" width="118" height="25"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
+                            <rect key="frame" x="105" y="34" width="118" height="23.5"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="19"/>
                             <color key="textColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>
@@ -454,6 +434,25 @@
                     <exclude reference="ih6-fa-dwe"/>
                 </mask>
             </variation>
+            <connections>
+                <outlet property="CelebrityViewHolder" destination="dI5-P0-OBa" id="4DR-4A-d0q"/>
+                <outlet property="FanViewHolder" destination="1Vg-Tc-XbD" id="SvA-la-XMQ"/>
+                <outlet property="HostViewHolder" destination="o0K-yn-m3H" id="OTp-gW-aqg"/>
+                <outlet property="chatBar" destination="PzH-nh-WWa" id="Jtu-Tg-wyj"/>
+                <outlet property="chatBtn" destination="sgd-9K-em0" id="3Vy-pg-2ev"/>
+                <outlet property="closeChat" destination="fgA-0L-GnS" id="mEC-e2-Plw"/>
+                <outlet property="closeEvenBtn" destination="jgu-Fc-pWM" id="r12-ai-Eo4"/>
+                <outlet property="eventImage" destination="3OI-XM-flL" id="gGN-LW-2Fa"/>
+                <outlet property="eventName" destination="HMb-Rp-gdV" id="9Ie-dK-mXo"/>
+                <outlet property="getInLineBtn" destination="0X6-Ae-NUS" id="F7t-JE-w1T"/>
+                <outlet property="inLineHolder" destination="65j-ak-aqS" id="BoA-8h-qE6"/>
+                <outlet property="internalHolder" destination="fJu-a8-Zwd" id="5of-1y-reH"/>
+                <outlet property="leaveLineBtn" destination="tJ3-U1-PiD" id="bvm-16-PwH"/>
+                <outlet property="notificationBar" destination="LTX-cC-jKo" id="5Lv-73-dlH"/>
+                <outlet property="statusBar" destination="JrU-sR-8GW" id="W4Y-Cz-CkD"/>
+                <outlet property="statusLabel" destination="Itk-rJ-bBi" id="xkz-Pv-nKP"/>
+                <outlet property="videoHolder" destination="E4T-AZ-cSQ" id="lUP-8m-tBv"/>
+            </connections>
             <point key="canvasLocation" x="488" y="345"/>
         </view>
     </objects>

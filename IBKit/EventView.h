@@ -38,12 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIView *notificationBar;
 @property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 
-- (IBAction)goBack:(id)sender;
-- (IBAction)getInLineClick:(id)sender;
-- (IBAction)leaveLine:(id)sender;
-- (IBAction)chatNow:(id)sender;
-- (IBAction)closeChat:(id)sender;
-- (IBAction)dismissInlineTxt:(id)sender;
+
 
 
 

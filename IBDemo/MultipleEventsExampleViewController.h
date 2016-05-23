@@ -13,9 +13,4 @@
 @property (strong, nonatomic) IBOutlet UIButton *Title;
 @property (strong, nonatomic) IBOutlet UICollectionView *eventsView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
-
-@property (strong, nonatomic) NSMutableDictionary *user;
-@property (strong, nonatomic) NSString *instance_id;
-@property (strong, nonatomic) NSString *backend_base_url;
-
 @end

@@ -13,17 +13,17 @@
 
 @interface MultipleEventsExampleViewController ()
 @property EventViewController  *detailEvent;
+@property (nonatomic) NSMutableDictionary *user;
+@property (nonatomic) NSString *instance_id;
+@property (nonatomic) NSString *backend_base_url;
+@property (nonatomic) NSMutableDictionary *eventsData;
+@property (nonatomic) NSMutableDictionary *allEvents;
+@property (nonatomic) NSArray *dataArray;
+
 @end
 
 
-@implementation MultipleEventsExampleViewController{
-    NSMutableDictionary *eventsData;
-    NSMutableDictionary *allEvents;
-    NSArray *dataArray;
-}
-
-
-@synthesize instance_id,user,backend_base_url;
+@implementation MultipleEventsExampleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,22 +34,22 @@
     CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
     
-    allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
-    if(allEvents)
+    _allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+    if(_allEvents)
     {
         //We filter our closed events
-        dataArray = [allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
+        _dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
         [self.eventsView reloadData];
     }
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [dataArray count];
+    return [_dataArray count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSMutableDictionary *data = dataArray[indexPath.row];
+    NSMutableDictionary *data = _dataArray[indexPath.row];
     
     static NSString *cellIdentifier = @"eCell";
     
@@ -70,9 +70,9 @@
     }
     NSURL *finalUrl;
     if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",allEvents[@"frontend_url"], allEvents[@"default_event_image"]]];
+        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_allEvents[@"frontend_url"], _allEvents[@"default_event_image"]]];
     }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",allEvents[@"frontend_url"], data[@"event_image"]]];
+        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_allEvents[@"frontend_url"], data[@"event_image"]]];
     }
     
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
@@ -100,7 +100,7 @@
 -(void)onCellClick:(id)sender{
     NSMutableDictionary* eventData = [sender getData];
     //we now show our event view.
-    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:allEvents user:user isSingle:YES];
+    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user isSingle:YES];
     [detailEvent setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:detailEvent animated:YES completion:nil];
     

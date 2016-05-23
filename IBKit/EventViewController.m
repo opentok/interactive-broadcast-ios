@@ -99,20 +99,19 @@
 
 @property (nonatomic) EventView *eventView;
 
+@property (nonatomic) static BOOL isBackstage = NO;
+@property (nonatomic) static BOOL isOnstage = NO;
+@property (nonatomic) static BOOL shouldResendProducerSignal = NO;
+@property (nonatomic) static BOOL inCallWithProducer = NO;
+@property (nonatomic) static BOOL isLive = NO;
+@property (nonatomic) static BOOL isSingleEvent = NO;
+@property (nonatomic) static BOOL isFan = NO;
+@property (nonatomic) static BOOL stopGoingLive = NO;
+@property (nonatomic)CGFloat unreadCount = 0;
 
 @end
 
 @implementation EventViewController
-
-static BOOL isBackstage = NO;
-static BOOL isOnstage = NO;
-static BOOL shouldResendProducerSignal = NO;
-static BOOL inCallWithProducer = NO;
-static BOOL isLive = NO;
-static BOOL isSingleEvent = NO;
-static BOOL isFan = NO;
-static BOOL stopGoingLive = NO;
-CGFloat unreadCount = 0;
 
 static NSString* const kTextChatType = @"chatMessage";
 

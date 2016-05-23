@@ -66,7 +66,7 @@
                             <constraint firstItem="s2f-B2-5Sg" firstAttribute="centerX" secondItem="TVf-Vb-SAq" secondAttribute="centerX" id="kdA-Ko-01s"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnS-Od-Hmb" customClass="dataButton">
+                    <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnS-Od-Hmb">
                         <rect key="frame" x="5" y="155" width="190" height="40"/>
                         <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>

@@ -8,7 +8,6 @@
 
 #import "EventsViewController.h"
 #import "EventViewController.h"
-#import "dataButton.h"
 #import "SIOSocket.h"
 
 #import "EventsView.h"
@@ -93,8 +92,7 @@
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
     UILabel *statusLabel = (UILabel *)[cell viewWithTag:101];
     UIImageView *eventImageHolder = (UIImageView *)[cell viewWithTag:104];
-    dataButton *eventButton = (dataButton *)[cell viewWithTag:103];
-    
+    UIButton *eventButton = (UIButton *)[cell viewWithTag:103];
     
     [titleLabel setText:data[@"event_name"]];
     if([data[@"status"] isEqualToString:@"N"]){
@@ -106,7 +104,6 @@
     
     NSURL *finalUrl;
     if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
-        //Should we change to the default image
     }else{
         finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_instanceData[@"frontend_url"], data[@"event_image"]]];
     }
@@ -116,7 +113,6 @@
         eventImageHolder.image = [UIImage imageWithData:imageData];
     }
 
-    [eventButton setUserData:data];
     [eventButton addTarget:self
                     action:@selector(onCellClick:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -129,10 +125,15 @@
     return cell;
     
 }
+
 -(void)onCellClick:(id)sender{
-    NSMutableDictionary* eventData = [sender getData];
     
-    //instanceData[@"backend_base_url"] = self
+    UICollectionViewCell *clickedCell = [[sender superview] superview];
+    CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView.eventsCollectionView];
+    NSIndexPath *iPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
+    
+    NSMutableDictionary*eventData = _dataArray[iPath.row];
+    
     EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user isSingle:NO];
     [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];

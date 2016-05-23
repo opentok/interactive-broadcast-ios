@@ -6,7 +6,6 @@
 //
 
 #import "MultipleEventsExampleViewController.h"
-#import "dataButton.h"
 #import <QuartzCore/QuartzCore.h>
 #import "IBApi.h"
 #import "EventViewController.h"
@@ -58,7 +57,7 @@
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
     UILabel *statusLabel = (UILabel *)[cell viewWithTag:101];
     UIImageView *eventImageHolder = (UIImageView *)[cell viewWithTag:104];
-    dataButton *eventButton = (dataButton *)[cell viewWithTag:103];
+    UIButton *eventButton = (UIButton *)[cell viewWithTag:103];
     
     
     [titleLabel setText:data[@"event_name"]];
@@ -79,12 +78,6 @@
     if(imageData){
         eventImageHolder.image = [UIImage imageWithData:imageData];
     }
-
-
-    
-    
-    
-    [eventButton setUserData:data];
     [eventButton addTarget:self
                     action:@selector(onCellClick:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -98,7 +91,11 @@
     
 }
 -(void)onCellClick:(id)sender{
-    NSMutableDictionary* eventData = [sender getData];
+    UICollectionViewCell *clickedCell = [[sender superview] superview];
+    CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView];
+    NSIndexPath *iPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
+    NSMutableDictionary*eventData = _dataArray[iPath.row];
+    
     //we now show our event view.
     EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user isSingle:YES];
     [detailEvent setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
@@ -144,11 +141,5 @@
     
 }
 
-- (IBAction)closeEventsView:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
-                                                        object:nil
-                                                      userInfo:nil];
-}
 
 @end

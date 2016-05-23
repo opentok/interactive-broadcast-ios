@@ -31,8 +31,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *chatBar;
 @property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
-@property (weak, nonatomic) IBOutlet UIButton *dismissInline;
-@property (weak, nonatomic) IBOutlet UILabel *inlineNotification;
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
 @property (weak, nonatomic) IBOutlet UIView *notificationBar;

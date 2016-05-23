@@ -13,20 +13,10 @@
 
 @interface UIColor (AppAdditions)
 
-+ (UIColor *)Emerald;
-+ (UIColor *)Pomegranete;
-+ (UIColor *)Turqoise;
-+ (UIColor *)SunFlower;
-+ (UIColor *)PeterRiver;
-+ (UIColor *)Transparent;
-
 + (UIColor *)BarColor;
 + (UIColor *)SLBlueColor;
 + (UIColor *)SLRedColor;
 + (UIColor *)SLGreenColor;
-+ (UIColor *)TransparentBlack;
 + (UIColor *)SLGrayColor;
-
-
 
 @end

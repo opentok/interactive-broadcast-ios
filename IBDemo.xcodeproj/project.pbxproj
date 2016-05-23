@@ -35,6 +35,12 @@
 		A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */; };
 		A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */; };
 		A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */; };
+		A060AF811CF388D400589311 /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF7B1CF388D400589311 /* OTKTextChatComponent.h */; };
+		A060AF821CF388D400589311 /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF7C1CF388D400589311 /* OTKTextChatComponent.m */; };
+		A060AF831CF388D400589311 /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF7D1CF388D400589311 /* OTKTextChatTableViewCell.h */; };
+		A060AF841CF388D400589311 /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF7E1CF388D400589311 /* OTKTextChatTableViewCell.m */; };
+		A060AF851CF388D400589311 /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF7F1CF388D400589311 /* OTKTextChatView.h */; };
+		A060AF861CF388D400589311 /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF801CF388D400589311 /* OTKTextChatView.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -57,13 +63,6 @@
 		A0C526801CEAD35A00706104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C526591CEAD35A00706104 /* Info.plist */; };
 		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265B1CEAD35A00706104 /* MainIBViewController.m */; };
-		A0C526871CEAD35A00706104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C526621CEAD35A00706104 /* Info.plist */; };
-		A0C526881CEAD35A00706104 /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526641CEAD35A00706104 /* OTKTextChatComponent.h */; };
-		A0C526891CEAD35A00706104 /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526651CEAD35A00706104 /* OTKTextChatComponent.m */; };
-		A0C5268A1CEAD35A00706104 /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526661CEAD35A00706104 /* OTKTextChatTableViewCell.h */; };
-		A0C5268B1CEAD35A00706104 /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526671CEAD35A00706104 /* OTKTextChatTableViewCell.m */; };
-		A0C5268C1CEAD35A00706104 /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526681CEAD35A00706104 /* OTKTextChatView.h */; };
-		A0C5268D1CEAD35A00706104 /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526691CEAD35A00706104 /* OTKTextChatView.m */; };
 		A0C526B91CEAD36800706104 /* BackArrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526981CEAD36800706104 /* BackArrow-1.png */; };
 		A0C526BA1CEAD36800706104 /* BackArrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526991CEAD36800706104 /* BackArrow-2.png */; };
 		A0C526BB1CEAD36800706104 /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269A1CEAD36800706104 /* BackArrow.png */; };
@@ -138,6 +137,12 @@
 		A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
 		A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
 		A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
+		A060AF7B1CF388D400589311 /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
+		A060AF7C1CF388D400589311 /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
+		A060AF7D1CF388D400589311 /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
+		A060AF7E1CF388D400589311 /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
+		A060AF7F1CF388D400589311 /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
+		A060AF801CF388D400589311 /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -164,13 +169,6 @@
 		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
 		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
-		A0C526621CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0C526641CEAD35A00706104 /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
-		A0C526651CEAD35A00706104 /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
-		A0C526661CEAD35A00706104 /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
-		A0C526671CEAD35A00706104 /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
-		A0C526681CEAD35A00706104 /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
-		A0C526691CEAD35A00706104 /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
 		A0C526981CEAD36800706104 /* BackArrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-1.png"; sourceTree = "<group>"; };
 		A0C526991CEAD36800706104 /* BackArrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-2.png"; sourceTree = "<group>"; };
 		A0C5269A1CEAD36800706104 /* BackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackArrow.png; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 				A0156FDA1CEE60A90009FBEF /* OpenTok */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
 				A0C5264E1CEAD35A00706104 /* DotSpinnerView */,
-				A0C526591CEAD35A00706104 /* Info.plist */,
 				A0C526601CEAD35A00706104 /* OTKTextChat */,
 				A0C526971CEAD36800706104 /* Assets */,
 				0B38E33F1CEFBAD300418998 /* EventView.h */,
@@ -320,6 +317,7 @@
 				A0C526541CEAD35A00706104 /* EventViewController.h */,
 				A0C526551CEAD35A00706104 /* EventViewController.m */,
 				A0C5269E1CEAD36800706104 /* EventViewController.xib */,
+				A0C526591CEAD35A00706104 /* Info.plist */,
 			);
 			path = IBKit;
 			sourceTree = "<group>";
@@ -337,31 +335,14 @@
 		A0C526601CEAD35A00706104 /* OTKTextChat */ = {
 			isa = PBXGroup;
 			children = (
-				A0C526611CEAD35A00706104 /* OTKTextChatFramework */,
-				A0C526631CEAD35A00706104 /* OTKTextChatLibrary */,
+				A060AF7B1CF388D400589311 /* OTKTextChatComponent.h */,
+				A060AF7C1CF388D400589311 /* OTKTextChatComponent.m */,
+				A060AF7D1CF388D400589311 /* OTKTextChatTableViewCell.h */,
+				A060AF7E1CF388D400589311 /* OTKTextChatTableViewCell.m */,
+				A060AF7F1CF388D400589311 /* OTKTextChatView.h */,
+				A060AF801CF388D400589311 /* OTKTextChatView.m */,
 			);
 			path = OTKTextChat;
-			sourceTree = "<group>";
-		};
-		A0C526611CEAD35A00706104 /* OTKTextChatFramework */ = {
-			isa = PBXGroup;
-			children = (
-				A0C526621CEAD35A00706104 /* Info.plist */,
-			);
-			path = OTKTextChatFramework;
-			sourceTree = "<group>";
-		};
-		A0C526631CEAD35A00706104 /* OTKTextChatLibrary */ = {
-			isa = PBXGroup;
-			children = (
-				A0C526641CEAD35A00706104 /* OTKTextChatComponent.h */,
-				A0C526651CEAD35A00706104 /* OTKTextChatComponent.m */,
-				A0C526661CEAD35A00706104 /* OTKTextChatTableViewCell.h */,
-				A0C526671CEAD35A00706104 /* OTKTextChatTableViewCell.m */,
-				A0C526681CEAD35A00706104 /* OTKTextChatView.h */,
-				A0C526691CEAD35A00706104 /* OTKTextChatView.m */,
-			);
-			path = OTKTextChatLibrary;
 			sourceTree = "<group>";
 		};
 		A0C526971CEAD36800706104 /* Assets */ = {
@@ -413,15 +394,15 @@
 				0B38E3411CEFBAD300418998 /* EventView.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,
+				A060AF811CF388D400589311 /* OTKTextChatComponent.h in Headers */,
+				A060AF851CF388D400589311 /* OTKTextChatView.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				0B38E3431CEFE0A700418998 /* EventsView.h in Headers */,
 				A0C526791CEAD35A00706104 /* EventsViewController.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
-				A0C5268C1CEAD35A00706104 /* OTKTextChatView.h in Headers */,
 				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
-				A0C5268A1CEAD35A00706104 /* OTKTextChatTableViewCell.h in Headers */,
-				A0C526881CEAD35A00706104 /* OTKTextChatComponent.h in Headers */,
 				A0C526741CEAD35A00706104 /* dataButton.h in Headers */,
+				A060AF831CF388D400589311 /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */,
 				A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */,
 				A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */,
@@ -559,7 +540,6 @@
 				A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */,
 				A0C526781CEAD35A00706104 /* DotSpinnerViewController.xib in Resources */,
 				A0C526C41CEAD36800706104 /* icon-check.png in Resources */,
-				A0C526871CEAD35A00706104 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,12 +577,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C526891CEAD35A00706104 /* OTKTextChatComponent.m in Sources */,
 				0B38E3421CEFBAD300418998 /* EventView.m in Sources */,
+				A060AF861CF388D400589311 /* OTKTextChatView.m in Sources */,
+				A060AF841CF388D400589311 /* OTKTextChatTableViewCell.m in Sources */,
 				0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
-				A0C5268D1CEAD35A00706104 /* OTKTextChatView.m in Sources */,
-				A0C5268B1CEAD35A00706104 /* OTKTextChatTableViewCell.m in Sources */,
 				A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
 				A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */,
@@ -611,6 +590,7 @@
 				A0C526751CEAD35A00706104 /* dataButton.m in Sources */,
 				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
 				A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */,
+				A060AF821CF388D400589311 /* OTKTextChatComponent.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

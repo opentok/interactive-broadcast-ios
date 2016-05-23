@@ -176,7 +176,7 @@
      }
     
 }
-- (IBAction)closeEventsView:(id)sender {
+- (IBAction)goBack:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
                                                             object:nil

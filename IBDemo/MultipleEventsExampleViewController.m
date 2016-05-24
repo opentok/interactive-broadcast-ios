@@ -91,7 +91,7 @@
     
 }
 -(void)onCellClick:(id)sender{
-    UICollectionViewCell *clickedCell = [[sender superview] superview];
+    UICollectionViewCell *clickedCell = (UICollectionViewCell *)[[sender superview] superview];
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView];
     NSIndexPath *iPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
     NSMutableDictionary*eventData = _dataArray[iPath.row];

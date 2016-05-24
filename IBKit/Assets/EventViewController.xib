@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment version="2096" identifier="iOS"/>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -26,7 +26,7 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventView">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventViewController">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="PK1-SL-QEk"/>
             </connections>
@@ -207,7 +207,7 @@
                             <color key="backgroundColor" red="0.89411764705882357" green="0.89411764705882357" blue="0.89411764705882357" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                            <state key="normal" image="BackArrow-1.png">
+                            <state key="normal" image="BackArrow.png">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" red="0.96897396650000001" green="1" blue="0.96630337870000005" alpha="0.0" colorSpace="calibratedRGB"/>
                             </state>
@@ -458,7 +458,7 @@
         </view>
     </objects>
     <resources>
-        <image name="BackArrow-1.png" width="69" height="100"/>
+        <image name="BackArrow.png" width="69" height="100"/>
         <image name="bg-graphic.png" width="890" height="230"/>
         <image name="icon-bubble.png" width="56" height="56"/>
     </resources>

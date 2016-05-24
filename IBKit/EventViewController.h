@@ -15,12 +15,4 @@
                              user:(NSMutableDictionary *)aUser
                          isSingle:(BOOL)aSingle NS_DESIGNATED_INITIALIZER;
 
-
-- (IBAction)goBack:(id)sender;
-- (IBAction)getInLineClick:(id)sender;
-- (IBAction)leaveLine:(id)sender;
-- (IBAction)chatNow:(id)sender;
-- (IBAction)closeChat:(id)sender;
-- (IBAction)dismissInlineTxt:(id)sender;
-
 @end

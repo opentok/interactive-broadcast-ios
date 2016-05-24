@@ -35,12 +35,12 @@
 		A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */; };
 		A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */; };
 		A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */; };
-		A060AF8D1CF3BE9400589311 /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */; };
-		A060AF8E1CF3BE9400589311 /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */; };
-		A060AF8F1CF3BE9400589311 /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */; };
-		A060AF901CF3BE9400589311 /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */; };
-		A060AF911CF3BE9400589311 /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */; };
-		A060AF921CF3BE9400589311 /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */; };
+		A0166D391CF4DC8600DED33F /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */; };
+		A0166D3A1CF4DC8800DED33F /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */; };
+		A0166D3B1CF4DC8A00DED33F /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */; };
+		A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */; };
+		A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */; };
+		A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -58,28 +58,12 @@
 		A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526551CEAD35A00706104 /* EventViewController.m */; };
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526571CEAD35A00706104 /* IBApi.m */; };
-		A0C526801CEAD35A00706104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C526591CEAD35A00706104 /* Info.plist */; };
 		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265B1CEAD35A00706104 /* MainIBViewController.m */; };
-		A0C526B91CEAD36800706104 /* BackArrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526981CEAD36800706104 /* BackArrow-1.png */; };
-		A0C526BA1CEAD36800706104 /* BackArrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526991CEAD36800706104 /* BackArrow-2.png */; };
-		A0C526BB1CEAD36800706104 /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269A1CEAD36800706104 /* BackArrow.png */; };
 		A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269B1CEAD36800706104 /* bg-graphic.png */; };
 		A0C526BD1CEAD36800706104 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269C1CEAD36800706104 /* EventCell.xib */; };
 		A0C526BE1CEAD36800706104 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269D1CEAD36800706104 /* EventsViewController.xib */; };
-		A0C526C01CEAD36800706104 /* icon-bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269F1CEAD36800706104 /* icon-bubble.png */; };
-		A0C526C11CEAD36800706104 /* icon-bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A01CEAD36800706104 /* icon-bubble@2x.png */; };
-		A0C526C21CEAD36800706104 /* icon-check-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A11CEAD36800706104 /* icon-check-circle.png */; };
-		A0C526C31CEAD36800706104 /* icon-check-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A21CEAD36800706104 /* icon-check-circle@2x.png */; };
-		A0C526C41CEAD36800706104 /* icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A31CEAD36800706104 /* icon-check.png */; };
-		A0C526C51CEAD36800706104 /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A41CEAD36800706104 /* icon-check@2x.png */; };
-		A0C526C61CEAD36800706104 /* icon-close-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A51CEAD36800706104 /* icon-close-circle.png */; };
-		A0C526C71CEAD36800706104 /* icon-close-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A61CEAD36800706104 /* icon-close-circle@2x.png */; };
-		A0C526C81CEAD36800706104 /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A71CEAD36800706104 /* icon-close.png */; };
-		A0C526C91CEAD36800706104 /* icon-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A81CEAD36800706104 /* icon-close@2x.png */; };
-		A0C526CA1CEAD36800706104 /* icon_sendMsgArrow_052015.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526A91CEAD36800706104 /* icon_sendMsgArrow_052015.png */; };
 		A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AA1CEAD36800706104 /* MainIBViewController.xib */; };
-		A0C526CC1CEAD36800706104 /* MainSpotlightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AB1CEAD36800706104 /* MainSpotlightView.xib */; };
 		A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */; };
 		A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */; };
 		A0C526CF1CEAD36800706104 /* OTKTextChatComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */; };
@@ -88,10 +72,6 @@
 		A0C526D21CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B11CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib */; };
 		A0C526D31CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B21CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib */; };
 		A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B31CEAD36800706104 /* OTKTextChatSentTableViewCell.xib */; };
-		A0C526D51CEAD36800706104 /* recv-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B41CEAD36800706104 /* recv-arrow.png */; };
-		A0C526D61CEAD36800706104 /* recv-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B51CEAD36800706104 /* recv-arrow@2x.png */; };
-		A0C526D71CEAD36800706104 /* sent-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B61CEAD36800706104 /* sent-arrow.png */; };
-		A0C526D81CEAD36800706104 /* sent-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B71CEAD36800706104 /* sent-arrow@2x.png */; };
 		A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */; };
 		A0C526DB1CEAD3D500706104 /* ExampleEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */; };
 		A0C526DE1CEAD40100706104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DC1CEAD40100706104 /* Main.storyboard */; };
@@ -165,26 +145,11 @@
 		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
 		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
-		A0C526981CEAD36800706104 /* BackArrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-1.png"; sourceTree = "<group>"; };
-		A0C526991CEAD36800706104 /* BackArrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackArrow-2.png"; sourceTree = "<group>"; };
-		A0C5269A1CEAD36800706104 /* BackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackArrow.png; sourceTree = "<group>"; };
 		A0C5269B1CEAD36800706104 /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
 		A0C5269C1CEAD36800706104 /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
 		A0C5269D1CEAD36800706104 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventsViewController.xib; path = Assets/EventsViewController.xib; sourceTree = "<group>"; };
 		A0C5269E1CEAD36800706104 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Assets/EventViewController.xib; sourceTree = "<group>"; };
-		A0C5269F1CEAD36800706104 /* icon-bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble.png"; sourceTree = "<group>"; };
-		A0C526A01CEAD36800706104 /* icon-bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble@2x.png"; sourceTree = "<group>"; };
-		A0C526A11CEAD36800706104 /* icon-check-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check-circle.png"; sourceTree = "<group>"; };
-		A0C526A21CEAD36800706104 /* icon-check-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check-circle@2x.png"; sourceTree = "<group>"; };
-		A0C526A31CEAD36800706104 /* icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check.png"; sourceTree = "<group>"; };
-		A0C526A41CEAD36800706104 /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
-		A0C526A51CEAD36800706104 /* icon-close-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close-circle.png"; sourceTree = "<group>"; };
-		A0C526A61CEAD36800706104 /* icon-close-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close-circle@2x.png"; sourceTree = "<group>"; };
-		A0C526A71CEAD36800706104 /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
-		A0C526A81CEAD36800706104 /* icon-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close@2x.png"; sourceTree = "<group>"; };
-		A0C526A91CEAD36800706104 /* icon_sendMsgArrow_052015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sendMsgArrow_052015.png; sourceTree = "<group>"; };
 		A0C526AA1CEAD36800706104 /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
-		A0C526AB1CEAD36800706104 /* MainSpotlightView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainSpotlightView.xib; sourceTree = "<group>"; };
 		A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatComponent.xib; sourceTree = "<group>"; };
@@ -193,10 +158,6 @@
 		A0C526B11CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatRecvTableViewCell.xib; sourceTree = "<group>"; };
 		A0C526B21CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentShortTableViewCell.xib; sourceTree = "<group>"; };
 		A0C526B31CEAD36800706104 /* OTKTextChatSentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentTableViewCell.xib; sourceTree = "<group>"; };
-		A0C526B41CEAD36800706104 /* recv-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recv-arrow.png"; sourceTree = "<group>"; };
-		A0C526B51CEAD36800706104 /* recv-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recv-arrow@2x.png"; sourceTree = "<group>"; };
-		A0C526B61CEAD36800706104 /* sent-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow.png"; sourceTree = "<group>"; };
-		A0C526B71CEAD36800706104 /* sent-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent-arrow@2x.png"; sourceTree = "<group>"; };
 		A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleEventCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -342,24 +303,9 @@
 		A0C526971CEAD36800706104 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				A0C526981CEAD36800706104 /* BackArrow-1.png */,
-				A0C526991CEAD36800706104 /* BackArrow-2.png */,
-				A0C5269A1CEAD36800706104 /* BackArrow.png */,
 				A0C5269B1CEAD36800706104 /* bg-graphic.png */,
 				A0C5269C1CEAD36800706104 /* EventCell.xib */,
-				A0C5269F1CEAD36800706104 /* icon-bubble.png */,
-				A0C526A01CEAD36800706104 /* icon-bubble@2x.png */,
-				A0C526A11CEAD36800706104 /* icon-check-circle.png */,
-				A0C526A21CEAD36800706104 /* icon-check-circle@2x.png */,
-				A0C526A31CEAD36800706104 /* icon-check.png */,
-				A0C526A41CEAD36800706104 /* icon-check@2x.png */,
-				A0C526A51CEAD36800706104 /* icon-close-circle.png */,
-				A0C526A61CEAD36800706104 /* icon-close-circle@2x.png */,
-				A0C526A71CEAD36800706104 /* icon-close.png */,
-				A0C526A81CEAD36800706104 /* icon-close@2x.png */,
-				A0C526A91CEAD36800706104 /* icon_sendMsgArrow_052015.png */,
 				A0C526AA1CEAD36800706104 /* MainIBViewController.xib */,
-				A0C526AB1CEAD36800706104 /* MainSpotlightView.xib */,
 				A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */,
 				A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */,
 				A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */,
@@ -368,10 +314,6 @@
 				A0C526B11CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib */,
 				A0C526B21CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib */,
 				A0C526B31CEAD36800706104 /* OTKTextChatSentTableViewCell.xib */,
-				A0C526B41CEAD36800706104 /* recv-arrow.png */,
-				A0C526B51CEAD36800706104 /* recv-arrow@2x.png */,
-				A0C526B61CEAD36800706104 /* sent-arrow.png */,
-				A0C526B71CEAD36800706104 /* sent-arrow@2x.png */,
 				A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */,
 			);
 			path = Assets;
@@ -385,17 +327,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
+				A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */,
 				0B38E3411CEFBAD300418998 /* EventView.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,
-				A060AF8D1CF3BE9400589311 /* OTKTextChatComponent.h in Headers */,
-				A060AF911CF3BE9400589311 /* OTKTextChatView.h in Headers */,
+				A0166D3B1CF4DC8A00DED33F /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				0B38E3431CEFE0A700418998 /* EventsView.h in Headers */,
 				A0C526791CEAD35A00706104 /* EventsViewController.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
+				A0166D391CF4DC8600DED33F /* OTKTextChatComponent.h in Headers */,
 				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
-				A060AF8F1CF3BE9400589311 /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */,
 				A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */,
 				A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */,
@@ -498,41 +440,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C526D81CEAD36800706104 /* sent-arrow@2x.png in Resources */,
 				0B38E3441CEFE6FB00418998 /* EventViewController.xib in Resources */,
-				A0C526C31CEAD36800706104 /* icon-check-circle@2x.png in Resources */,
 				A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */,
 				A0C526BD1CEAD36800706104 /* EventCell.xib in Resources */,
-				A0C526C51CEAD36800706104 /* icon-check@2x.png in Resources */,
-				A0C526C81CEAD36800706104 /* icon-close.png in Resources */,
 				A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */,
-				A0C526B91CEAD36800706104 /* BackArrow-1.png in Resources */,
-				A0C526801CEAD35A00706104 /* Info.plist in Resources */,
-				A0C526C91CEAD36800706104 /* icon-close@2x.png in Resources */,
-				A0C526D51CEAD36800706104 /* recv-arrow.png in Resources */,
-				A0C526BB1CEAD36800706104 /* BackArrow.png in Resources */,
 				A0C526BE1CEAD36800706104 /* EventsViewController.xib in Resources */,
-				A0C526BA1CEAD36800706104 /* BackArrow-2.png in Resources */,
 				A0C526D01CEAD36800706104 /* OTKTextChatDivTableViewCell.xib in Resources */,
 				A0C526D11CEAD36800706104 /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
-				A0C526D61CEAD36800706104 /* recv-arrow@2x.png in Resources */,
-				A0C526C01CEAD36800706104 /* icon-bubble.png in Resources */,
 				A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */,
 				A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */,
 				A0C526D31CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib in Resources */,
 				A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */,
-				A0C526CC1CEAD36800706104 /* MainSpotlightView.xib in Resources */,
-				A0C526C61CEAD36800706104 /* icon-close-circle.png in Resources */,
-				A0C526CA1CEAD36800706104 /* icon_sendMsgArrow_052015.png in Resources */,
 				A0C526D21CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib in Resources */,
-				A0C526D71CEAD36800706104 /* sent-arrow.png in Resources */,
-				A0C526C11CEAD36800706104 /* icon-bubble@2x.png in Resources */,
 				A0C526CF1CEAD36800706104 /* OTKTextChatComponent.xib in Resources */,
-				A0C526C21CEAD36800706104 /* icon-check-circle.png in Resources */,
-				A0C526C71CEAD36800706104 /* icon-close-circle@2x.png in Resources */,
 				A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */,
 				A0C526781CEAD35A00706104 /* DotSpinnerViewController.xib in Resources */,
-				A0C526C41CEAD36800706104 /* icon-check.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,10 +493,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B38E3421CEFBAD300418998 /* EventView.m in Sources */,
-				A060AF921CF3BE9400589311 /* OTKTextChatView.m in Sources */,
-				A060AF901CF3BE9400589311 /* OTKTextChatTableViewCell.m in Sources */,
 				0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */,
+				A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
+				A0166D3A1CF4DC8800DED33F /* OTKTextChatComponent.m in Sources */,
 				A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
 				A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */,
@@ -582,7 +504,7 @@
 				A0C5267A1CEAD35A00706104 /* EventsViewController.m in Sources */,
 				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
 				A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */,
-				A060AF8E1CF3BE9400589311 /* OTKTextChatComponent.m in Sources */,
+				A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

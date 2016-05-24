@@ -11,5 +11,4 @@
 @interface EventsView : UIView
 @property (weak, nonatomic) IBOutlet UICollectionView *eventsCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewFlowLayout;
-- (IBAction)goBack:(id)sender;
 @end

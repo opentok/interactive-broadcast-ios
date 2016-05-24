@@ -294,12 +294,13 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)connectFanSignaling{
     
+    __weak EventViewController *weakSelf = self;
     [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
      {
          _signalingSocket = socket;
          _signalingSocket.onConnect = ^()
          {
-             [_signalingSocket emit:@"joinRoom" args:@[self.connectionData[@"sessionIdProducer"]]];
+             [weakSelf.signalingSocket emit:@"joinRoom" args:@[weakSelf.connectionData[@"sessionIdProducer"]]];
          };
      }];
 }
@@ -309,9 +310,6 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)doConnect
 {
     OTError *error = nil;
-    
-    NSString *logType = _isHost ? @"host_connects_onstage" : _isCeleb ? @"celeb_connects_onstage" : @"fan_connects_onstage";
-    
     [_session connectWithToken:self.connectionData[@"tokenHost"] error:&error];
 
     if (error)

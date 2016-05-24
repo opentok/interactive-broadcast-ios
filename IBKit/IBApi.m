@@ -198,7 +198,6 @@ NSString *BACKEND_URL;
     NSString *_url = [NSString stringWithFormat:@"%@_url", user_type];
     
     NSString *event_url = event_data[_url];
-    NSString *admins_id = [self getEventHash:[NSString stringWithFormat:@"%ld",[event_data[@"admins_id"] integerValue]] back_url:backend_base_url];
     
     //user_type should be @"fan", @'celebrity' or @"host"
     NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@",backend_base_url, user_type, event_url];
@@ -233,7 +232,6 @@ NSString *BACKEND_URL;
     NSLog(@"%@",event_data[@"admins_id"]);
     
     NSString *admins_id = [self getEventHash:[NSString stringWithFormat:@"%ld",[event_data[@"admins_id"] integerValue]] back_url:backend_base_url];
-    NSLog(admins_id);
     
     NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
     NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];

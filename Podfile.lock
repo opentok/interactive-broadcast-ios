@@ -1,0 +1,24 @@
+PODS:
+  - DGActivityIndicatorView (2.0)
+  - OpenTok (2.8.1)
+  - Reachability (3.2)
+  - SIOSocket (0.2.0)
+  - SVProgressHUD (2.0.3)
+
+DEPENDENCIES:
+  - DGActivityIndicatorView
+  - OpenTok (~> 2.8.1)
+  - Reachability
+  - SIOSocket
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
+  OpenTok: f73eef8701e460543de2577dbb051d84de002fa2
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+
+PODFILE CHECKSUM: 72c34e4f3a77d6ea3255c9b9542b02e5904ed882
+
+COCOAPODS: 1.0.0

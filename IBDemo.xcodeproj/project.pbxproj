@@ -21,10 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A012A1961CEFAD4B00935C9E /* EventsView.m */; };
 		0B38E3411CEFBAD300418998 /* EventView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B38E33F1CEFBAD300418998 /* EventView.h */; };
 		0B38E3421CEFBAD300418998 /* EventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38E3401CEFBAD300418998 /* EventView.m */; };
-		0B38E3431CEFE0A700418998 /* EventsView.h in Headers */ = {isa = PBXBuildFile; fileRef = A012A1951CEFAD4B00935C9E /* EventsView.h */; };
 		0B38E3441CEFE6FB00418998 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269E1CEAD36800706104 /* EventViewController.xib */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
@@ -41,6 +39,14 @@
 		A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */; };
 		A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */; };
 		A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */; };
+		A022F6051CF60D83008E8C70 /* EventCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F5FD1CF60D83008E8C70 /* EventCell.h */; };
+		A022F6061CF60D83008E8C70 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F5FE1CF60D83008E8C70 /* EventCell.m */; };
+		A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F5FF1CF60D83008E8C70 /* EventCell.xib */; };
+		A022F6081CF60D83008E8C70 /* EventsView.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6001CF60D83008E8C70 /* EventsView.h */; };
+		A022F6091CF60D83008E8C70 /* EventsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6011CF60D83008E8C70 /* EventsView.m */; };
+		A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6021CF60D83008E8C70 /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6031CF60D83008E8C70 /* EventsViewController.m */; };
+		A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F6041CF60D83008E8C70 /* EventsViewController.xib */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -52,8 +58,6 @@
 		A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */; };
 		A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */; };
 		A0C526781CEAD35A00706104 /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526511CEAD35A00706104 /* DotSpinnerViewController.xib */; };
-		A0C526791CEAD35A00706104 /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526521CEAD35A00706104 /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A0C5267A1CEAD35A00706104 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526531CEAD35A00706104 /* EventsViewController.m */; };
 		A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526541CEAD35A00706104 /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526551CEAD35A00706104 /* EventViewController.m */; };
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -61,8 +65,6 @@
 		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265B1CEAD35A00706104 /* MainIBViewController.m */; };
 		A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269B1CEAD36800706104 /* bg-graphic.png */; };
-		A0C526BD1CEAD36800706104 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269C1CEAD36800706104 /* EventCell.xib */; };
-		A0C526BE1CEAD36800706104 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269D1CEAD36800706104 /* EventsViewController.xib */; };
 		A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AA1CEAD36800706104 /* MainIBViewController.xib */; };
 		A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */; };
 		A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */; };
@@ -75,6 +77,7 @@
 		A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */; };
 		A0C526DB1CEAD3D500706104 /* ExampleEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */; };
 		A0C526DE1CEAD40100706104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DC1CEAD40100706104 /* Main.storyboard */; };
+		F421D602C2B961CC1C2A7B5F /* libPods-IBKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F6606C998415DDE219BB0A /* libPods-IBKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,8 +107,8 @@
 /* Begin PBXFileReference section */
 		0B38E33F1CEFBAD300418998 /* EventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventView.h; sourceTree = "<group>"; };
 		0B38E3401CEFBAD300418998 /* EventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventView.m; sourceTree = "<group>"; };
-		A012A1951CEFAD4B00935C9E /* EventsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsView.h; sourceTree = "<group>"; };
-		A012A1961CEFAD4B00935C9E /* EventsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsView.m; sourceTree = "<group>"; };
+		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
 		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
 		A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
 		A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
@@ -115,6 +118,14 @@
 		A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
 		A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
 		A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
+		A022F5FD1CF60D83008E8C70 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
+		A022F5FE1CF60D83008E8C70 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
+		A022F5FF1CF60D83008E8C70 /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
+		A022F6001CF60D83008E8C70 /* EventsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsView.h; sourceTree = "<group>"; };
+		A022F6011CF60D83008E8C70 /* EventsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsView.m; sourceTree = "<group>"; };
+		A022F6021CF60D83008E8C70 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		A022F6031CF60D83008E8C70 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		A022F6041CF60D83008E8C70 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
 		A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
 		A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
 		A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
@@ -136,8 +147,6 @@
 		A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
 		A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
 		A0C526511CEAD35A00706104 /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
-		A0C526521CEAD35A00706104 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
-		A0C526531CEAD35A00706104 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		A0C526541CEAD35A00706104 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		A0C526551CEAD35A00706104 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		A0C526561CEAD35A00706104 /* IBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi.h; sourceTree = "<group>"; };
@@ -146,8 +155,6 @@
 		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
 		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
 		A0C5269B1CEAD36800706104 /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
-		A0C5269C1CEAD36800706104 /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
-		A0C5269D1CEAD36800706104 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventsViewController.xib; path = Assets/EventsViewController.xib; sourceTree = "<group>"; };
 		A0C5269E1CEAD36800706104 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Assets/EventViewController.xib; sourceTree = "<group>"; };
 		A0C526AA1CEAD36800706104 /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
 		A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -161,6 +168,7 @@
 		A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleEventCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,12 +184,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F421D602C2B961CC1C2A7B5F /* libPods-IBKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57899C55768908A26D0C90AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13F6606C998415DDE219BB0A /* libPods-IBKit.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A0156FCF1CEE60A50009FBEF /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,12 +221,29 @@
 			path = OpenTok;
 			sourceTree = "<group>";
 		};
+		A022F5FC1CF60D2D008E8C70 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				A022F5FD1CF60D83008E8C70 /* EventCell.h */,
+				A022F5FE1CF60D83008E8C70 /* EventCell.m */,
+				A022F5FF1CF60D83008E8C70 /* EventCell.xib */,
+				A022F6001CF60D83008E8C70 /* EventsView.h */,
+				A022F6011CF60D83008E8C70 /* EventsView.m */,
+				A022F6021CF60D83008E8C70 /* EventsViewController.h */,
+				A022F6031CF60D83008E8C70 /* EventsViewController.m */,
+				A022F6041CF60D83008E8C70 /* EventsViewController.xib */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		A0C526111CEAD2D400706104 = {
 			isa = PBXGroup;
 			children = (
 				A0C5261C1CEAD2D400706104 /* IBDemo */,
 				A0C5263A1CEAD2E000706104 /* IBKit */,
 				A0C5261B1CEAD2D400706104 /* Products */,
+				BA26CEB99AF510213EF94875 /* Pods */,
+				57899C55768908A26D0C90AD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -255,13 +289,9 @@
 				A0156FD41CEE60A50009FBEF /* IBKit.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
-				A012A1951CEFAD4B00935C9E /* EventsView.h */,
-				A012A1961CEFAD4B00935C9E /* EventsView.m */,
-				A0C526521CEAD35A00706104 /* EventsViewController.h */,
-				A0C526531CEAD35A00706104 /* EventsViewController.m */,
-				A0C5269D1CEAD36800706104 /* EventsViewController.xib */,
 				A0C5265A1CEAD35A00706104 /* MainIBViewController.h */,
 				A0C5265B1CEAD35A00706104 /* MainIBViewController.m */,
+				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FDA1CEE60A90009FBEF /* OpenTok */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
 				A0C5264E1CEAD35A00706104 /* DotSpinnerView */,
@@ -304,7 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				A0C5269B1CEAD36800706104 /* bg-graphic.png */,
-				A0C5269C1CEAD36800706104 /* EventCell.xib */,
 				A0C526AA1CEAD36800706104 /* MainIBViewController.xib */,
 				A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */,
 				A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */,
@@ -319,6 +348,15 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		BA26CEB99AF510213EF94875 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */,
+				954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -328,17 +366,18 @@
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
 				A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */,
+				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				0B38E3411CEFBAD300418998 /* EventView.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,
+				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
 				A0166D3B1CF4DC8A00DED33F /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
-				0B38E3431CEFE0A700418998 /* EventsView.h in Headers */,
-				A0C526791CEAD35A00706104 /* EventsViewController.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
 				A0166D391CF4DC8600DED33F /* OTKTextChatComponent.h in Headers */,
 				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
 				A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */,
+				A022F6051CF60D83008E8C70 /* EventCell.h in Headers */,
 				A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */,
 				A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */,
 			);
@@ -370,10 +409,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0C526421CEAD2E000706104 /* Build configuration list for PBXNativeTarget "IBKit" */;
 			buildPhases = (
+				CA111D6649F81513F982DB0D /* 📦 Check Pods Manifest.lock */,
 				A0C526341CEAD2E000706104 /* Sources */,
 				A0C526351CEAD2E000706104 /* Frameworks */,
 				A0C526361CEAD2E000706104 /* Headers */,
 				A0C526371CEAD2E000706104 /* Resources */,
+				3758352D26F9CE54974CFD80 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -441,13 +482,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B38E3441CEFE6FB00418998 /* EventViewController.xib in Resources */,
+				A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */,
 				A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */,
-				A0C526BD1CEAD36800706104 /* EventCell.xib in Resources */,
 				A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */,
-				A0C526BE1CEAD36800706104 /* EventsViewController.xib in Resources */,
 				A0C526D01CEAD36800706104 /* OTKTextChatDivTableViewCell.xib in Resources */,
 				A0C526D11CEAD36800706104 /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */,
+				A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */,
 				A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */,
 				A0C526D31CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib in Resources */,
 				A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */,
@@ -461,6 +502,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3758352D26F9CE54974CFD80 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKit/Pods-IBKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A0A754D21CEB909900D6D516 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -473,6 +529,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nWORKSPACE_NAME=\"IBDemo.xcworkspace\"\nFRAMEWORK_NAME=\"IBKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+		};
+		CA111D6649F81513F982DB0D /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -493,15 +564,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B38E3421CEFBAD300418998 /* EventView.m in Sources */,
-				0B38E33E1CEFB8DE00418998 /* EventsView.m in Sources */,
+				A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */,
+				A022F6091CF60D83008E8C70 /* EventsView.m in Sources */,
 				A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
+				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
 				A0166D3A1CF4DC8800DED33F /* OTKTextChatComponent.m in Sources */,
 				A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
 				A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */,
 				A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */,
-				A0C5267A1CEAD35A00706104 /* EventsViewController.m in Sources */,
 				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
 				A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */,
 				A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */,
@@ -661,6 +733,7 @@
 		};
 		A0C526431CEAD2E000706104 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -680,6 +753,7 @@
 		};
 		A0C526441CEAD2E000706104 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -707,6 +781,7 @@
 				A0A754D01CEB909600D6D516 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0C526151CEAD2D400706104 /* Build configuration list for PBXProject "IBDemo" */ = {
 			isa = XCConfigurationList;

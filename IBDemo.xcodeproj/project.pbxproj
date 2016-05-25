@@ -53,7 +53,7 @@
 		A0C5262D1CEAD2D400706104 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C5262B1CEAD2D400706104 /* LaunchScreen.storyboard */; };
 		A0C526401CEAD2E000706104 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; };
 		A0C526411CEAD2E000706104 /* IBKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A0C5264A1CEAD30C00706104 /* MultipleEventsExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526471CEAD30C00706104 /* MultipleEventsExampleViewController.m */; };
+		A0C5264A1CEAD30C00706104 /* CustomEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526471CEAD30C00706104 /* CustomEventsViewController.m */; };
 		A0C5264B1CEAD30C00706104 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526491CEAD30C00706104 /* ViewController.m */; };
 		A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */; };
 		A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */; };
@@ -75,7 +75,7 @@
 		A0C526D31CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B21CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib */; };
 		A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B31CEAD36800706104 /* OTKTextChatSentTableViewCell.xib */; };
 		A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */; };
-		A0C526DB1CEAD3D500706104 /* ExampleEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */; };
+		A0C526DB1CEAD3D500706104 /* CustomEventsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */; };
 		A0C526DE1CEAD40100706104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DC1CEAD40100706104 /* Main.storyboard */; };
 		F421D602C2B961CC1C2A7B5F /* libPods-IBKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F6606C998415DDE219BB0A /* libPods-IBKit.a */; };
 /* End PBXBuildFile section */
@@ -140,8 +140,8 @@
 		A0C5262C1CEAD2D400706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0C5262E1CEAD2D400706104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C526391CEAD2E000706104 /* IBKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0C526461CEAD30C00706104 /* MultipleEventsExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleEventsExampleViewController.h; sourceTree = "<group>"; };
-		A0C526471CEAD30C00706104 /* MultipleEventsExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleEventsExampleViewController.m; sourceTree = "<group>"; };
+		A0C526461CEAD30C00706104 /* CustomEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomEventsViewController.h; sourceTree = "<group>"; };
+		A0C526471CEAD30C00706104 /* CustomEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomEventsViewController.m; sourceTree = "<group>"; };
 		A0C526481CEAD30C00706104 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		A0C526491CEAD30C00706104 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		A0C526B21CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentShortTableViewCell.xib; sourceTree = "<group>"; };
 		A0C526B31CEAD36800706104 /* OTKTextChatSentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatSentTableViewCell.xib; sourceTree = "<group>"; };
 		A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
-		A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleEventCell.xib; sourceTree = "<group>"; };
+		A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomEventsCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -261,9 +261,9 @@
 			children = (
 				A0C526201CEAD2D400706104 /* AppDelegate.h */,
 				A0C526211CEAD2D400706104 /* AppDelegate.m */,
-				A0C526461CEAD30C00706104 /* MultipleEventsExampleViewController.h */,
-				A0C526471CEAD30C00706104 /* MultipleEventsExampleViewController.m */,
-				A0C526DA1CEAD3D500706104 /* ExampleEventCell.xib */,
+				A0C526461CEAD30C00706104 /* CustomEventsViewController.h */,
+				A0C526471CEAD30C00706104 /* CustomEventsViewController.m */,
+				A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */,
 				A0C526481CEAD30C00706104 /* ViewController.h */,
 				A0C526491CEAD30C00706104 /* ViewController.m */,
 				A0C526DC1CEAD40100706104 /* Main.storyboard */,
@@ -472,7 +472,7 @@
 			files = (
 				A0C5262D1CEAD2D400706104 /* LaunchScreen.storyboard in Resources */,
 				A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */,
-				A0C526DB1CEAD3D500706104 /* ExampleEventCell.xib in Resources */,
+				A0C526DB1CEAD3D500706104 /* CustomEventsCell.xib in Resources */,
 				A0C526DE1CEAD40100706104 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -552,7 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C5264A1CEAD30C00706104 /* MultipleEventsExampleViewController.m in Sources */,
+				A0C5264A1CEAD30C00706104 /* CustomEventsViewController.m in Sources */,
 				A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */,
 				A0C5264B1CEAD30C00706104 /* ViewController.m in Sources */,
 				A0C5261F1CEAD2D400706104 /* main.m in Sources */,

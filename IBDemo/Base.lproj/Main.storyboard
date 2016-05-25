@@ -11,9 +11,6 @@
         </mutableArray>
         <mutableArray key="Montserrat-Regular.ttf">
             <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -29,103 +26,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RY9-iz-rRW">
-                                <rect key="frame" x="0.0" y="135" width="1024" height="77"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeB-hV-MX0">
-                                        <rect key="frame" x="309" y="39" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.1176470588" green="0.56078431370000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="130" id="WmC-I1-h8C"/>
-                                        </constraints>
-                                        <state key="normal" title="CELEBRITY">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="309" y="38" width="130" height="30"/>
-                                        </variation>
-                                        <connections>
-                                            <action selector="openSingleInstance:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6r8-Rm-4yo"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2u-xx-5Hf">
-                                        <rect key="frame" x="447" y="39" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.1176470588" green="0.56078431370000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="130" id="TBv-QG-Aq2"/>
-                                        </constraints>
-                                        <state key="normal" title="HOST">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="447" y="38" width="130" height="30"/>
-                                        </variation>
-                                        <connections>
-                                            <action selector="singleInstanceAsHost:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ODB-e8-M6D"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2W-9P-6PS">
-                                        <rect key="frame" x="585" y="39" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.1176470588" green="0.56078431370000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="130" id="F7i-lE-QWb"/>
-                                        </constraints>
-                                        <state key="normal" title="FAN">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="585" y="38" width="130" height="30"/>
-                                        </variation>
-                                        <connections>
-                                            <action selector="singleInstanceAsFan:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sXV-tx-Zw7"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SINGLE EVENT VIEW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzs-Cn-wzX">
-                                        <rect key="frame" x="423" y="10" width="178" height="21"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="430" y="10" width="164" height="20"/>
-                                        </variation>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.334443306" blue="0.41137160379999999" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7V-Xv-Egs">
+                                <rect key="frame" x="307" y="129" width="410" height="30"/>
+                                <color key="backgroundColor" red="0.26274509800000001" green="0.60784313729999995" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Jzs-Cn-wzX" firstAttribute="centerX" secondItem="g2u-xx-5Hf" secondAttribute="centerX" id="6CD-lA-3Vg"/>
-                                    <constraint firstItem="g2u-xx-5Hf" firstAttribute="centerY" secondItem="jeB-hV-MX0" secondAttribute="centerY" id="9DZ-Zf-WSH"/>
-                                    <constraint firstItem="V2W-9P-6PS" firstAttribute="leading" secondItem="g2u-xx-5Hf" secondAttribute="trailing" constant="8" id="Nmj-lh-H6p"/>
-                                    <constraint firstItem="Jzs-Cn-wzX" firstAttribute="centerX" secondItem="RY9-iz-rRW" secondAttribute="centerX" id="OBm-DC-sUL"/>
-                                    <constraint firstItem="Jzs-Cn-wzX" firstAttribute="top" secondItem="RY9-iz-rRW" secondAttribute="top" constant="10" id="QVY-fz-tlp"/>
-                                    <constraint firstAttribute="height" constant="77" id="Vk1-2s-8it"/>
-                                    <constraint firstItem="V2W-9P-6PS" firstAttribute="centerY" secondItem="g2u-xx-5Hf" secondAttribute="centerY" id="bMk-Xo-FkD"/>
-                                    <constraint firstItem="g2u-xx-5Hf" firstAttribute="top" secondItem="Jzs-Cn-wzX" secondAttribute="bottom" constant="8" id="cWo-7L-cyv"/>
-                                    <constraint firstItem="g2u-xx-5Hf" firstAttribute="leading" secondItem="jeB-hV-MX0" secondAttribute="trailing" constant="8" id="o8X-jQ-TgJ"/>
+                                    <constraint firstAttribute="width" constant="410" id="46K-sK-S0h"/>
+                                    <constraint firstAttribute="height" constant="30" id="yfq-NV-Bcy"/>
                                 </constraints>
-                            </view>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" title="CUSTOM EVENTS">
+                                    <color key="titleColor" red="0.94434022630000003" green="0.94434022630000003" blue="0.94434022630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g7k-lP-K7A"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ClB-cd-5rv">
-                                <rect key="frame" x="0.0" y="220" width="1024" height="77"/>
+                                <rect key="frame" x="0.0" y="20" width="1024" height="77"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhQ-c6-Fn2">
-                                        <rect key="frame" x="309" y="37" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="130" id="G8n-c5-eLY"/>
-                                        </constraints>
-                                        <state key="normal" title="CELEBRITY">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="309" y="36" width="130" height="30"/>
-                                        </variation>
-                                        <connections>
-                                            <action selector="multipleAsCeleb:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kNC-9e-8Vh"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Fb-Pc-PVG">
                                         <rect key="frame" x="447" y="37" width="130" height="30"/>
                                         <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
@@ -140,11 +58,11 @@
                                             <rect key="frame" x="447" y="36" width="130" height="30"/>
                                         </variation>
                                         <connections>
-                                            <action selector="multipleAsHost:" destination="BYZ-38-t0r" eventType="touchUpInside" id="794-ch-R6D"/>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ka-B7-YS2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MULTIPLE EVENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgG-aS-bjC">
-                                        <rect key="frame" x="437" y="8" width="150" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgG-aS-bjC">
+                                        <rect key="frame" x="456" y="8" width="112.5" height="21"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -152,6 +70,23 @@
                                             <rect key="frame" x="443" y="8" width="138" height="20"/>
                                         </variation>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhQ-c6-Fn2">
+                                        <rect key="frame" x="309" y="37" width="130" height="30"/>
+                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="G8n-c5-eLY"/>
+                                        </constraints>
+                                        <state key="normal" title="CELEBRITY">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="309" y="36" width="130" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y3q-aW-uWS"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Ad-ce1">
                                         <rect key="frame" x="585" y="37" width="130" height="30"/>
                                         <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
@@ -166,7 +101,7 @@
                                             <rect key="frame" x="585" y="36" width="130" height="30"/>
                                         </variation>
                                         <connections>
-                                            <action selector="openMultipleInstance:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8h9-Re-QNj"/>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b2m-hY-UlL"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -175,6 +110,7 @@
                                     <constraint firstItem="dgG-aS-bjC" firstAttribute="centerX" secondItem="ClB-cd-5rv" secondAttribute="centerX" id="4Nv-zw-YnC"/>
                                     <constraint firstItem="dgG-aS-bjC" firstAttribute="centerX" secondItem="6Fb-Pc-PVG" secondAttribute="centerX" id="5LU-F1-5we"/>
                                     <constraint firstItem="ec7-Ad-ce1" firstAttribute="centerY" secondItem="6Fb-Pc-PVG" secondAttribute="centerY" id="LMT-wn-oke"/>
+                                    <constraint firstAttribute="height" constant="77" id="SDb-Au-7Hy"/>
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="centerY" secondItem="HhQ-c6-Fn2" secondAttribute="centerY" id="con-9q-rTc"/>
                                     <constraint firstItem="ec7-Ad-ce1" firstAttribute="leading" secondItem="6Fb-Pc-PVG" secondAttribute="trailing" constant="8" id="dnc-v7-9y4"/>
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="top" secondItem="dgG-aS-bjC" secondAttribute="bottom" constant="8" id="hDI-wv-vO7"/>
@@ -182,99 +118,34 @@
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="leading" secondItem="HhQ-c6-Fn2" secondAttribute="trailing" constant="8" id="sX5-Hg-DBV"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7V-Xv-Egs">
-                                <rect key="frame" x="307" y="329" width="410" height="30"/>
-                                <color key="backgroundColor" red="0.103141177" green="0.47900883840000003" blue="0.2591915904" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="410" id="46K-sK-S0h"/>
-                                    <constraint firstAttribute="height" constant="30" id="yfq-NV-Bcy"/>
-                                </constraints>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="SELF IMPLEMENTED MULTIPLE EVENTS VIEW">
-                                    <color key="titleColor" red="0.94434022630000003" green="0.94434022630000003" blue="0.94434022630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="aCu-6J-jgv" kind="show" identifier="GoToMultipleEvents" id="mtE-no-oUz"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CUSTOM MULTIPLE EVENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-uD-Kre">
-                                <rect key="frame" x="396" y="305" width="232" height="21"/>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=regular" misplaced="YES">
-                                    <rect key="frame" x="404" y="305" width="216" height="20"/>
-                                </variation>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le3-SG-RP0">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="77"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USER NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5B-FQ-EBk">
-                                        <rect key="frame" x="459" y="8" width="107" height="21"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="463" y="8" width="99" height="20"/>
-                                        </variation>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7EL-vm-onI">
-                                        <rect key="frame" x="388" y="37" width="249" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="249" id="EAL-dX-Bx8"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="388" y="36" width="249" height="30"/>
-                                        </variation>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.33444330601163874" blue="0.41137160375327031" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="O5B-FQ-EBk" firstAttribute="centerX" secondItem="7EL-vm-onI" secondAttribute="centerX" id="4Ht-C9-Aaa"/>
-                                    <constraint firstItem="7EL-vm-onI" firstAttribute="top" secondItem="O5B-FQ-EBk" secondAttribute="bottom" constant="8" symbolic="YES" id="GuF-aL-QAz"/>
-                                    <constraint firstItem="O5B-FQ-EBk" firstAttribute="top" secondItem="le3-SG-RP0" secondAttribute="topMargin" id="SL6-8i-gbW"/>
-                                    <constraint firstItem="O5B-FQ-EBk" firstAttribute="centerX" secondItem="le3-SG-RP0" secondAttribute="centerX" id="mj1-ar-cu2"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ClB-cd-5rv" firstAttribute="width" secondItem="RY9-iz-rRW" secondAttribute="width" id="1Tq-3s-GxM"/>
-                            <constraint firstItem="ClB-cd-5rv" firstAttribute="centerX" secondItem="RY9-iz-rRW" secondAttribute="centerX" id="1lP-G6-DJA"/>
-                            <constraint firstItem="le3-SG-RP0" firstAttribute="centerX" secondItem="RY9-iz-rRW" secondAttribute="centerX" id="Ca7-JY-XkJ"/>
-                            <constraint firstItem="le3-SG-RP0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="DVS-rG-WRv"/>
-                            <constraint firstItem="lbl-uD-Kre" firstAttribute="centerX" secondItem="d7V-Xv-Egs" secondAttribute="centerX" id="E2G-RI-oTs"/>
-                            <constraint firstItem="RY9-iz-rRW" firstAttribute="top" secondItem="le3-SG-RP0" secondAttribute="bottom" constant="8" id="FJb-11-wUk"/>
-                            <constraint firstItem="le3-SG-RP0" firstAttribute="width" secondItem="RY9-iz-rRW" secondAttribute="width" id="JPE-Kg-s7O"/>
+                            <constraint firstItem="ClB-cd-5rv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Lt-Ym-Uhu"/>
+                            <constraint firstItem="ClB-cd-5rv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Pbs-JH-n6z"/>
+                            <constraint firstAttribute="trailing" secondItem="ClB-cd-5rv" secondAttribute="trailing" id="QtE-Ve-VKd"/>
                             <constraint firstItem="d7V-Xv-Egs" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="bottom" constant="32" id="Wvg-8u-5y5"/>
-                            <constraint firstItem="RY9-iz-rRW" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="Z5z-X2-Q9I"/>
-                            <constraint firstItem="ClB-cd-5rv" firstAttribute="height" secondItem="RY9-iz-rRW" secondAttribute="height" id="ZNY-bI-m2u"/>
                             <constraint firstItem="d7V-Xv-Egs" firstAttribute="centerX" secondItem="ClB-cd-5rv" secondAttribute="centerX" id="iFj-Ee-02Q"/>
-                            <constraint firstItem="lbl-uD-Kre" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="bottom" constant="8" symbolic="YES" id="k8k-lk-epB"/>
-                            <constraint firstItem="le3-SG-RP0" firstAttribute="height" secondItem="RY9-iz-rRW" secondAttribute="height" id="l0q-De-6Sb"/>
-                            <constraint firstItem="ClB-cd-5rv" firstAttribute="top" secondItem="RY9-iz-rRW" secondAttribute="bottom" constant="8" id="qZm-HY-Q8I"/>
-                            <constraint firstItem="RY9-iz-rRW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w3S-QP-BvA"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
-                        <outlet property="SingleInstanceButton" destination="jeB-hV-MX0" id="hM8-ke-Mbm"/>
-                        <outlet property="SingleInstanceFan" destination="V2W-9P-6PS" id="3Km-YJ-FTG"/>
-                        <outlet property="SingleInstanceHost" destination="g2u-xx-5Hf" id="EB0-To-igi"/>
-                        <outlet property="nameTextField" destination="7EL-vm-onI" id="mAA-Hw-vzD"/>
+                        <outlet property="celebrityButton" destination="HhQ-c6-Fn2" id="wRG-hy-jdp"/>
+                        <outlet property="customEventsButton" destination="d7V-Xv-Egs" id="tP4-Q6-zcm"/>
+                        <outlet property="fanButton" destination="ec7-Ad-ce1" id="S5x-Fe-hqN"/>
+                        <outlet property="hostButton" destination="6Fb-Pc-PVG" id="2zO-p3-a3m"/>
+                        <segue destination="aCu-6J-jgv" kind="presentation" identifier="EventSegueIdentifier" id="ll0-oH-An9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="230" y="244"/>
+            <point key="canvasLocation" x="-289" y="222"/>
         </scene>
-        <!--Multiple Events Example View Controller-->
+        <!--Custom Events View Controller-->
         <scene sceneID="9fd-c0-IGT">
             <objects>
-                <viewController id="aCu-6J-jgv" customClass="MultipleEventsExampleViewController" sceneMemberID="viewController">
+                <viewController id="aCu-6J-jgv" customClass="CustomEventsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Awx-lv-Mg0"/>
                         <viewControllerLayoutGuide type="bottom" id="FUx-i8-EFQ"/>
@@ -296,7 +167,7 @@
                                                     <color key="titleColor" red="0.26274509800000001" green="0.31372549020000001" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="BYZ-38-t0r" kind="show" id="dnz-hB-buE"/>
+                                                    <action selector="titleButtonPressed:" destination="aCu-6J-jgv" eventType="touchUpInside" id="8Qo-Nt-Cuo"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -356,14 +227,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="Title" destination="htZ-Yu-fbd" id="kLc-PV-6tP"/>
                         <outlet property="eventsView" destination="w1Z-iY-siO" id="aOT-l8-WtV"/>
                         <outlet property="eventsViewLayout" destination="iid-pk-uyv" id="kIn-rE-08f"/>
+                        <outlet property="titleButton" destination="htZ-Yu-fbd" id="iEB-pJ-aC0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vmp-On-K2h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1380" y="182"/>
+            <point key="canvasLocation" x="975" y="222"/>
         </scene>
     </scenes>
 </document>

@@ -29,12 +29,17 @@
     UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
     
-    self.allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
-    if(self.allEvents) {
-        //We filter our closed events
-        self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
-        [self.eventsView reloadData];
-    }
+    [IBApi getEventsWithInstanceId:self.instance_id
+                                         backendURL:self.backend_base_url
+                                         completion:^(NSDictionary *data, NSError *error) {
+                                             
+                                             if (!error) {
+                                                 self.allEvents = [NSMutableDictionary dictionaryWithDictionary:data];
+                                                 // we filter out closed events
+                                                 self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
+                                                 [self.eventsView reloadData];
+                                             }
+                                         }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -93,6 +98,7 @@
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView];
     NSIndexPath *iPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
     NSMutableDictionary*eventData = _dataArray[iPath.row];
+    _allEvents[@"backend_base_url"] = self.backend_base_url;
     
     //we now show our event view.
     EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user isSingle:YES];
@@ -132,10 +138,10 @@
         dateFormat.dateFormat = @"dd MMM YYYY HH:mm:ss";
         
         return [dateFormat stringFromDate:date];
-    }else{
+    }
+    else{
         return @"Not Started";
     }
-    
 }
 
 - (IBAction)titleButtonPressed:(id)sender {

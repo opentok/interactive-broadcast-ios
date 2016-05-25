@@ -10,15 +10,15 @@
 
 @interface IBApi : NSObject;
 
-+ (IBApi*)sharedInstance;
++ (void)getEventsWithInstanceId:(NSString *)instandId
+                     backendURL:(NSString *)backendURL
+                     completion:(void (^)(NSDictionary *data, NSError *error))completion;
 
-- (NSMutableDictionary*)getEvents:(NSString*)instance_id
-                         back_url:(NSString*)backend_base_url;
++ (void)getEventsWithAdminId:(NSString *)adminId
+                  backendURL:(NSString *)backendURL
+                  completion:(void (^)(NSDictionary *data, NSError *error))completion;
 
-- (NSMutableDictionary*)getEventsByAdmin:(NSString*)admins_id
-                         back_url:(NSString*)backend_base_url;
-
-- (void)creteEventToken:(NSString*)user_type
++ (void)creteEventToken:(NSString*)user_type
                back_url:(NSString*)backend_base_url
                    data:(NSMutableDictionary *)event_data
              completion:(void (^)(NSMutableDictionary *))completion;

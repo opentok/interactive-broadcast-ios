@@ -64,8 +64,6 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     }
 }
 
-
-///SELF IMPLEMENTED MULTIPLE EVENTS VIEW
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     
     CustomEventsViewController *vc = [segue destinationViewController];

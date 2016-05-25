@@ -10,8 +10,6 @@
 
 @interface EventView : UIView
 
-@property (strong, nonatomic) IBOutlet EventView *view;
-
 @property (weak, nonatomic) IBOutlet UIView *videoHolder;
 @property (weak, nonatomic) IBOutlet UIView *statusBar;
 

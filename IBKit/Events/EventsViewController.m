@@ -40,18 +40,9 @@
     [super viewDidLoad];
     
     self.eventsView = (EventsView *)self.view;
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    UINib *cellNib = [UINib nibWithNibName:@"EventCell" bundle:bundle];
+    UINib *cellNib = [UINib nibWithNibName:@"EventCell" bundle:[NSBundle bundleForClass:[self class]]];
     [self.eventsView.eventsCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
-    
-    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    self.eventsView.eventsViewFlowLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
-    [self connectSignaling];
-     
-}
 
--(void)connectSignaling{
-    
     [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
      {
          _signalingSocketEvents = socket;
@@ -67,6 +58,12 @@
           }];
      }];
 }
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.eventsView.eventsViewFlowLayout.itemSize = CGSizeMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 30) /3, 200);
+}
+
 -(void)UpdateEventStatus:(NSDictionary *)event{
     NSString *find = [NSString stringWithFormat:@"id == %@",event[@"id"]];
     NSArray *changedEvent = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
@@ -135,7 +132,6 @@
     NSMutableDictionary*eventData = _dataArray[iPath.row];
     
     EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user isSingle:NO];
-    [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];
 
 }

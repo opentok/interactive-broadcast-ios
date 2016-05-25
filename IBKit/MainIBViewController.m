@@ -74,22 +74,34 @@ static bool hasNetworkConnectivity = YES;
     
     if(hasNetworkConnectivity) {
         if(self.instance_id){
-            self.instance_data = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+
+            [IBApi getEventsWithInstanceId:self.instance_id
+                                                 backendURL:self.backend_base_url
+                                                 completion:^(NSDictionary *data, NSError *error) {
+                                                     if (!error) {
+                                                         self.instance_data = [NSMutableDictionary dictionaryWithDictionary:data];
+                                                         self.instance_data[@"backend_base_url"] = self.backend_base_url;
+                                                         [self loadInstanceView];
+                                                     }
+                                                 }];
         }
         else if(self.admins_id){
-            self.instance_data = [[IBApi sharedInstance] getEventsByAdmin:self.admins_id back_url:self.backend_base_url];
+
+            [IBApi getEventsWithAdminId:self.admins_id
+                                              backendURL:self.backend_base_url
+                                              completion:^(NSDictionary *data, NSError *error) {
+                                                  
+                                                  if (!error) {
+                                                      self.instance_data = [NSMutableDictionary dictionaryWithDictionary:data];
+                                                      self.instance_data[@"backend_base_url"] = self.backend_base_url;
+                                                      [self loadInstanceView];
+                                                  }
+                                              }];
         }
     }
     else{
         NSLog(@"error please check your internet");
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if(self.instance_data) {
-            self.instance_data[@"backend_base_url"] = self.backend_base_url;
-            [self loadInstanceView];
-        }
-    });
 }
 
 - (void)reachabilityChanged:(NSNotification *)notification {

@@ -72,9 +72,6 @@
 @property (nonatomic)SIOSocket *signalingSocket;
 
 @property (nonatomic)NSMutableDictionary* videoViews;
-
-@property (nonatomic) CGRect screen;
-@property (nonatomic) CGFloat screen_width;
 @property (nonatomic) CGFloat chatYPosition;
 @property (nonatomic) CGFloat activeStreams;
 
@@ -119,10 +116,6 @@ static NSString* const kTextChatType = @"chatMessage";
                    connectionData:(NSMutableDictionary *)aConnectionData
                              user:(NSMutableDictionary *)aUser
                          isSingle:(BOOL)aSingle {
-    
-    OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
-    [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
-    
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
@@ -177,7 +170,7 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 - (void)createEventToken{
-    [[IBApi sharedInstance] creteEventToken:self.user[@"type"]
+    [IBApi creteEventToken:self.user[@"type"]
                                    back_url:_instanceData[@"backend_base_url"]
                                        data:self.eventData
                                  completion:^(NSMutableDictionary *resultData) {
@@ -193,8 +186,6 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    _screen = [UIScreen mainScreen].bounds;
-    _screen_width = CGRectGetWidth(_screen);
     [self performSelector:@selector(adjustChildrenWidth) withObject:nil afterDelay:1.0];
 }
 
@@ -1550,7 +1541,7 @@ didFailWithError:(OTError*)error
     }
     else{
         self.eventView.eventImage.hidden = YES;
-        new_width = _screen_width/_subscribers.count;
+        new_width = CGRectGetWidth([UIScreen mainScreen].bounds) / _subscribers.count;
     }
     
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
@@ -1733,7 +1724,7 @@ didFailWithError:(OTError*)error
 -(void)showLoader{
     _activityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeFiveDots
                                                                 tintColor:[UIColor SLBlueColor] size:50.0f];
-    _activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, _screen_width, 100.0f);
+    _activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, CGRectGetWidth([UIScreen mainScreen].bounds), 100.0f);
     [self.view addSubview:_activityIndicatorView];
     [self.view bringSubviewToFront:_activityIndicatorView];
     [_activityIndicatorView startAnimating];

@@ -44,7 +44,7 @@
 		A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F5FF1CF60D83008E8C70 /* EventCell.xib */; };
 		A022F6081CF60D83008E8C70 /* EventsView.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6001CF60D83008E8C70 /* EventsView.h */; };
 		A022F6091CF60D83008E8C70 /* EventsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6011CF60D83008E8C70 /* EventsView.m */; };
-		A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6021CF60D83008E8C70 /* EventsViewController.h */; };
+		A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6021CF60D83008E8C70 /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6031CF60D83008E8C70 /* EventsViewController.m */; };
 		A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F6041CF60D83008E8C70 /* EventsViewController.xib */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
@@ -364,9 +364,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
 				A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */,
+				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				0B38E3411CEFBAD300418998 /* EventView.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,

@@ -9,5 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface EventCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIButton *eventButton;
+@property (weak, nonatomic) IBOutlet EventCell *eventCell;
+
+-(void) updateCell:(NSMutableDictionary*)data;
 
 @end

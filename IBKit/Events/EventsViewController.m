@@ -11,6 +11,7 @@
 #import "SIOSocket.h"
 
 #import "EventsView.h"
+#import "EventCell.h"
 
 @interface EventsViewController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) SIOSocket *signalingSocketEvents;
+@property (nonatomic) EventCell *eventCell;
 @end
 
 @implementation EventsViewController
@@ -85,43 +87,10 @@
     
     NSMutableDictionary *data = _dataArray[indexPath.row];
     
-    static NSString *cellIdentifier = @"eCell";
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"eCell" forIndexPath:indexPath];
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
-    UILabel *statusLabel = (UILabel *)[cell viewWithTag:101];
-    UIImageView *eventImageHolder = (UIImageView *)[cell viewWithTag:104];
-    UIButton *eventButton = (UIButton *)[cell viewWithTag:103];
-    
-    [titleLabel setText:data[@"event_name"]];
-    if([data[@"status"] isEqualToString:@"N"]){
-        [statusLabel setText: [self getFormattedDate:data[@"date_time_start"]]];
+    //[cell updateCell:data];
 
-    }else{
-        [statusLabel setText: [self getEventStatus:data[@"status"]]];
-    }
-    
-    NSURL *finalUrl;
-    if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
-    }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_instanceData[@"frontend_url"], data[@"event_image"]]];
-    }
-    
-    NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
-    if(imageData){
-        eventImageHolder.image = [UIImage imageWithData:imageData];
-    }
-
-    [eventButton addTarget:self
-                    action:@selector(onCellClick:)
-       forControlEvents:UIControlEventTouchUpInside];
-    CGFloat borderWidth = 1.0f;
-    
-    cell.layer.borderColor = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1].CGColor;
-    cell.layer.borderWidth = borderWidth;
-    cell.layer.cornerRadius = 3.0;
-    
     return cell;
     
 }

@@ -44,6 +44,7 @@
     self.eventsView = (EventsView *)self.view;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UINib *cellNib = [UINib nibWithNibName:@"EventCell" bundle:bundle];
+    
     [self.eventsView.eventsCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
     
     CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
@@ -86,11 +87,15 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableDictionary *data = _dataArray[indexPath.row];
-    
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"eCell" forIndexPath:indexPath];
-    
-    //[cell updateCell:data];
+    [data setObject:[self getEventStatus:data[@"status"]] forKey:@"formated_status"];
+    [data setObject:_instanceData[@"frontend_url"] forKey:@"frontend_url"];
 
+    EventCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"eCell" forIndexPath:indexPath];
+    
+    [cell updateCell:data];
+    [cell.eventButton addTarget:self
+                     action:@selector(onCellClick:)
+           forControlEvents:UIControlEventTouchUpInside];
     return cell;
     
 }
@@ -128,24 +133,7 @@
     
 }
 
-- (NSString*)getFormattedDate:(NSString *)dateString
-{
-    if(dateString != (id)[NSNull null]){
-        NSDateFormatter * dateFormat = [[NSDateFormatter alloc]init];
-        [dateFormat setTimeZone:[NSTimeZone systemTimeZone]];
-        [dateFormat setLocale:[NSLocale currentLocale]];
-        [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss.0"];
-        [dateFormat setFormatterBehavior:NSDateFormatterBehaviorDefault];
 
-        NSDate *date = [dateFormat dateFromString:dateString];
-        dateFormat.dateFormat = @"dd MMM YYYY HH:mm:ss";
-        
-        return [dateFormat stringFromDate:date];
-    }else{
-        return @"Not Started";
-     }
-    
-}
 - (IBAction)goBack:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"

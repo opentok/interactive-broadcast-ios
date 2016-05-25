@@ -5,16 +5,15 @@
 //  If you want to implement your own multiple events controller you will need to import
 //
 
-#import "MultipleEventsExampleViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "IBApi.h"
-#import "EventViewController.h"
+#import "CustomEventsViewController.h"
+#import <IBKit/IBKit.h>
 
-@interface MultipleEventsExampleViewController ()
-@property EventViewController  *detailEvent;
-@property (nonatomic) NSMutableDictionary *user;
-@property (nonatomic) NSString *instance_id;
-@property (nonatomic) NSString *backend_base_url;
+@interface CustomEventsViewController ()
+
+@property (strong, nonatomic) IBOutlet UIButton *titleButton;
+@property (strong, nonatomic) IBOutlet UICollectionView *eventsView;
+@property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
+
 @property (nonatomic) NSMutableDictionary *eventsData;
 @property (nonatomic) NSMutableDictionary *allEvents;
 @property (nonatomic) NSArray *dataArray;
@@ -22,37 +21,36 @@
 @end
 
 
-@implementation MultipleEventsExampleViewController
+@implementation CustomEventsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UINib *cellNib = [UINib nibWithNibName:@"ExampleEventCell" bundle:nil];
-    [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
+    [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
     
-    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    self.eventsViewLayout.itemSize = CGSizeMake((screenWidth - 30) /3 ,200);
-    
-    _allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
-    if(_allEvents)
-    {
+    self.allEvents = [[IBApi sharedInstance] getEvents:self.instance_id back_url:self.backend_base_url];
+    if(self.allEvents) {
         //We filter our closed events
-        _dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
+        self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
         [self.eventsView reloadData];
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.eventsViewLayout.itemSize = CGSizeMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 30) /3 ,200);
+}
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_dataArray count];
+    return [self.dataArray count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSMutableDictionary *data = _dataArray[indexPath.row];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CustomEventsCellIdentifier" forIndexPath:indexPath];
     
-    static NSString *cellIdentifier = @"eCell";
-    
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    NSMutableDictionary *data = self.dataArray[indexPath.row];
     
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
     UILabel *statusLabel = (UILabel *)[cell viewWithTag:101];
@@ -119,7 +117,6 @@
         status = @"Closed";
     };
     return status;
-    
 }
 
 - (NSString*)getFormattedDate:(NSString *)dateString
@@ -139,6 +136,10 @@
         return @"Not Started";
     }
     
+}
+
+- (IBAction)titleButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

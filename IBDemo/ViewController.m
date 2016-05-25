@@ -7,115 +7,74 @@
 //
 
 #import "ViewController.h"
-#import "MainIBViewController.h"
+#import "CustomEventsViewController.h"
+#import <IBKit/IBKit.h>
+
+static NSString * const instanceIdentifier = @"AAAA1";
+static NSString * const backendBaseUrl = @"https://tokbox-ib-staging-tesla.herokuapp.com";
+static NSString * const demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
+static NSString * const MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
+static NSString * const mlbpass = @"spotlight-mlb-210216";
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceButton;
-@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceHost;
-@property (weak, nonatomic) IBOutlet UIButton *SingleInstanceFan;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (nonatomic) MainIBViewController  *IBController;
-@property (nonatomic) NSString *instance_id;
-@property (nonatomic) NSString *backend_base_url;
-@property (nonatomic) NSDictionary* user;
+@property (weak, nonatomic) IBOutlet UIButton *celebrityButton;
+@property (weak, nonatomic) IBOutlet UIButton *hostButton;
+@property (weak, nonatomic) IBOutlet UIButton *fanButton;
+@property (weak, nonatomic) IBOutlet UIButton *customEventsButton;
+
+@property (nonatomic) NSDictionary *requestData;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.instance_id = @"AAAA1";
-}
-
-- (IBAction)openSingleInstance:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
+    
+    _requestData = @{
+                     @(self.celebrityButton.hash): @{
                                 @"type":@"celebrity",
-                                @"name":@"Celebridad",
-                                @"id":@1234,
-                                  }];
+                                @"name":@"Celebrity"
+                             },
+                     @(self.hostButton.hash): @{
+                                @"type":@"host",
+                                @"name":@"Host"
+                             },
+                     @(self.fanButton.hash): @{
+                                @"type":@"fan",
+                                @"name":@"FanName"
+                             },
+                     @(self.customEventsButton.hash): @{
+                                @"type":@"fan",
+                                @"name":@"Fan"
+                             }
+        
+                     };
+}
+
+- (IBAction)eventButtonPressed:(UIButton *)sender {
     
-    [self presentController:user];
+    if (sender != self.customEventsButton) {
+        
+        MainIBViewController *viewController = [[MainIBViewController alloc] initWithAdminId:@"dxJa" backend_base_url:backendBaseUrl user:self.requestData[@(sender.hash)]];
+        [self presentViewController:viewController animated:YES completion:nil];
+    }
+    else {
+        
+        [self performSegueWithIdentifier:@"EventSegueIdentifier" sender:sender];
+    }
 }
 
-- (IBAction)singleInstanceAsHost:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
-                                                           @"type":@"host",
-                                                           @"name":@"HOST NAME",
-                                                           @"id":@1235,
-                                                           }];
-    
-    [self presentController:user];
-
-    
-}
-- (IBAction)singleInstanceAsFan:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
-                                                           @"type":@"fan",
-                                                           @"name":@"FanName",
-                                                           }];
-    [self presentController:user];
-
-}
-
-
-
-- (IBAction)openMultipleInstance:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
-                                                           @"type":@"fan",
-                                                           @"name":@"Fan",
-                                                           }];
-    [self presentController:user];
-
-}
-- (IBAction)multipleAsHost:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
-                                                           @"type":@"host",
-                                                           @"name":@"Host",
-                                                           }];
-    [self presentController:user];
-}
-- (IBAction)multipleAsCeleb:(id)sender {
-    NSMutableDictionary *user =[NSMutableDictionary
-                                dictionaryWithDictionary:@{
-                                                           @"type":@"celebrity",
-                                                           @"name":@"Celebrity",
-                                                           }];
-    [self presentController:user];
-}
 
 ///SELF IMPLEMENTED MULTIPLE EVENTS VIEW
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     
-    if ([segue.identifier isEqualToString:@"GoToMultipleEvents"]) {
-        ViewController *vc = [segue destinationViewController];
-        NSMutableDictionary *user =[NSMutableDictionary
-                                    dictionaryWithDictionary:@{
-                                                               @"type":@"fan",
-                                                               @"name":@"Fan",
-                                                               }];
-        vc.instance_id = self.instance_id;
-        vc.backend_base_url= @"https://tokbox-ib-staging-tesla.herokuapp.com";
-        vc.user = user;
-    }
-}
-
-
--(void) presentController:(NSMutableDictionary*)userOptions{
-    if(![self.nameTextField.text isEqualToString:@"" ]){
-        userOptions[@"name"] = self.nameTextField.text;
-    }
-    NSString *stagingBackend = @"https://tokbox-ib-staging-tesla.herokuapp.com";
-//    NSString *demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
-//    NSString *MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
-//    NSString *mlbpass = @"spotlight-mlb-210216";
+    CustomEventsViewController *vc = [segue destinationViewController];
     
-    self.IBController = [[MainIBViewController alloc] initWithAdminId:@"dxJa" backend_base_url:stagingBackend user:userOptions];
-    [self presentViewController:self.IBController animated:NO completion:nil];
+    if ([segue.identifier isEqualToString:@"EventSegueIdentifier"]) {
+        vc.instance_id = instanceIdentifier;
+        vc.backend_base_url= backendBaseUrl;
+        vc.user = self.requestData[@(sender.hash)];
+    }
 }
 
 @end

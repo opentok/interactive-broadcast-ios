@@ -17,10 +17,4 @@ profile
 DerivedData
 .idea/
 
-# Pods - for those of you who use CocoaPods
-Pods
-
-#Frameworks
-**/OpenTok.framework
-**/OpenTok.framework/OpenTok
 **/SpotlightKit.framework

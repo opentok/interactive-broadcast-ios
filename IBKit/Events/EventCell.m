@@ -23,7 +23,7 @@
 
     [_titleLabel setText:data[@"event_name"]];
     if([data[@"status"] isEqualToString:@"N"]){
-        [_statusLabel setText:[self getFormattedDate:data[@"date_time_start"]] ];
+        [_statusLabel setText:[self getFormattedDate:data[@"date_time_start"] ]];
     }else{
         [_statusLabel setText: data[@"formated_status"] ];
     }

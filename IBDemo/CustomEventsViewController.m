@@ -8,6 +8,9 @@
 #import "CustomEventsViewController.h"
 #import <IBKit/IBKit.h>
 
+#import "EventViewController.h"
+#import "IBDateFormatter.h"
+
 @interface CustomEventsViewController ()
 
 @property (strong, nonatomic) IBOutlet UIButton *titleButton;
@@ -128,20 +131,9 @@
 - (NSString*)getFormattedDate:(NSString *)dateString
 {
     if(dateString != (id)[NSNull null]){
-        NSDateFormatter * dateFormat = [[NSDateFormatter alloc]init];
-        [dateFormat setTimeZone:[NSTimeZone systemTimeZone]];
-        [dateFormat setLocale:[NSLocale currentLocale]];
-        [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss.0"];
-        [dateFormat setFormatterBehavior:NSDateFormatterBehaviorDefault];
-        
-        NSDate *date = [dateFormat dateFromString:dateString];
-        dateFormat.dateFormat = @"dd MMM YYYY HH:mm:ss";
-        
-        return [dateFormat stringFromDate:date];
+        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
     }
-    else{
-        return @"Not Started";
-    }
+    return @"Not Started";
 }
 
 - (IBAction)titleButtonPressed:(id)sender {

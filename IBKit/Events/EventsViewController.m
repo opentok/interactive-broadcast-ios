@@ -9,8 +9,9 @@
 #import "EventsViewController.h"
 #import "EventViewController.h"
 #import "SIOSocket.h"
-
 #import "EventsView.h"
+
+#import "IBDateFormatter.h"
 
 @interface EventsViewController ()
 
@@ -158,21 +159,11 @@
 - (NSString*)getFormattedDate:(NSString *)dateString
 {
     if(dateString != (id)[NSNull null]){
-        NSDateFormatter * dateFormat = [[NSDateFormatter alloc]init];
-        [dateFormat setTimeZone:[NSTimeZone systemTimeZone]];
-        [dateFormat setLocale:[NSLocale currentLocale]];
-        [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss.0"];
-        [dateFormat setFormatterBehavior:NSDateFormatterBehaviorDefault];
-
-        NSDate *date = [dateFormat dateFromString:dateString];
-        dateFormat.dateFormat = @"dd MMM YYYY HH:mm:ss";
-        
-        return [dateFormat stringFromDate:date];
-    }else{
-        return @"Not Started";
-     }
-    
+        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
+    }
+    return @"Not Started";
 }
+
 - (IBAction)goBack:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"

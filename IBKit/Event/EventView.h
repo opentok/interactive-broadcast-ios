@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
 @property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
-@property (nonatomic) IBOutlet UIView *CelebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *inLineHolder;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -31,11 +31,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeEvenBtn;
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImage;
-@property (weak, nonatomic) IBOutlet UIView *notificationBar;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 
+#pragma mark - notification bar
+- (void)showNotification:(NSString *)text
+                useColor:(UIColor *)nColor;
+- (void)hideNotification;
 
+#pragma mark - loader
+- (void)showLoader;
+- (void)stopLoader;
 
-
+- (void)hideVideoPreview;
 
 @end

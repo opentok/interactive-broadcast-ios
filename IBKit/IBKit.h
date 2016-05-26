@@ -9,4 +9,3 @@
 #import <IBKit/IBApi.h>
 #import <IBKit/EventViewController.h>
 #import <IBKit/EventsViewController.h>
-#import <IBKit/MainIBViewController.h>

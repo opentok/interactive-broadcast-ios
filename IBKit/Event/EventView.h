@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <OpenTok/OpenTok.h>
 
 @interface EventView : UIView
 
@@ -41,6 +42,8 @@
 - (void)showLoader;
 - (void)stopLoader;
 
+#pragma mark - video preview
+- (void)showVideoPreviewWithPublisher:(OTPublisher *)publisher;
 - (void)hideVideoPreview;
 
 @end

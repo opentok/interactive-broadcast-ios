@@ -104,10 +104,9 @@
     _allEvents[@"backend_base_url"] = self.backend_base_url;
     
     //we now show our event view.
-    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user isSingle:YES];
+    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user];
     [detailEvent setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:detailEvent animated:YES completion:nil];
-    
 }
 
 - (NSString*)getEventStatus:(NSString *)statusLabel

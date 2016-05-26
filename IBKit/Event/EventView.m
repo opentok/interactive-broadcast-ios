@@ -40,12 +40,6 @@
     self.inLineHolder.layer.borderWidth = 3.0f;
 }
 
--(void)hideVideoPreview {
-    [UIView animateWithDuration:3 animations:^{
-        self.inLineHolder.hidden = YES;
-    }];
-}
-
 #pragma mark - notification bar
 - (void)showNotification:(NSString *)text
                 useColor:(UIColor *)nColor {
@@ -72,6 +66,22 @@
 - (void)stopLoader {
     [self.activityIndicatorView stopAnimating];
     [self.activityIndicatorView removeFromSuperview];
+}
+
+#pragma mark - video preview
+- (void)showVideoPreviewWithPublisher:(OTPublisher *)publisher {
+    if (!publisher) return;
+    
+    publisher.view.layer.cornerRadius = 0.5;
+    [self.inLineHolder addSubview:publisher.view];
+    [self.inLineHolder sendSubviewToBack:publisher.view];
+    self.inLineHolder.hidden = NO;
+}
+
+-(void)hideVideoPreview {
+    [UIView animateWithDuration:3 animations:^{
+        self.inLineHolder.hidden = YES;
+    }];
 }
 
 @end

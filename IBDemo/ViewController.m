@@ -55,8 +55,27 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     
     if (sender != self.customEventsButton) {
         
-        MainIBViewController *viewController = [[MainIBViewController alloc] initWithAdminId:@"dxJa" backend_base_url:backendBaseUrl user:self.requestData[@(sender.hash)]];
-        [self presentViewController:viewController animated:YES completion:nil];
+        
+        [IBApi getEventsWithAdminId:@"dxJa"
+                         backendURL:backendBaseUrl
+                         completion:^(NSDictionary *data, NSError *error) {
+                             
+                             if (!error) {
+                                 NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:data];
+                                 instance_data[@"backend_base_url"] = backendBaseUrl;
+                                 
+                                 UIViewController *viewcontroller;
+                                 if([instance_data[@"events"] count] != 1){
+                                     
+                                     viewcontroller = [[EventsViewController alloc] initEventWithData:instance_data user:self.requestData[@(sender.hash)]];
+                                 }
+                                 else {
+                                     viewcontroller = [[EventViewController alloc] initEventWithData:instance_data[@"events"][0] connectionData:instance_data user:self.requestData[@(sender.hash)]];
+                                 }
+                                 
+                                 [self presentViewController:viewcontroller animated:YES completion:nil];
+                             }
+                         }];
     }
     else {
         

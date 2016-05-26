@@ -48,6 +48,10 @@
 		A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E444F1CF7602B00D20CFA /* OTKTextChatView.m */; };
 		A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E445D1CF7837D00D20CFA /* UIView+Category.h */; };
 		A01E44601CF7837D00D20CFA /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E445E1CF7837D00D20CFA /* UIView+Category.m */; };
+		A01E44631CF7968200D20CFA /* UIImageView+Category.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44611CF7968200D20CFA /* UIImageView+Category.h */; };
+		A01E44641CF7968200D20CFA /* UIImageView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44621CF7968200D20CFA /* UIImageView+Category.m */; };
+		A01E446B1CF79CD200D20CFA /* AppUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44691CF79CD200D20CFA /* AppUtil.h */; };
+		A01E446C1CF79CD200D20CFA /* AppUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E446A1CF79CD200D20CFA /* AppUtil.m */; };
 		A022F6051CF60D83008E8C70 /* EventCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F5FD1CF60D83008E8C70 /* EventCell.h */; };
 		A022F6061CF60D83008E8C70 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F5FE1CF60D83008E8C70 /* EventCell.m */; };
 		A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F5FF1CF60D83008E8C70 /* EventCell.xib */; };
@@ -66,8 +70,6 @@
 		A0C5264B1CEAD30C00706104 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526491CEAD30C00706104 /* ViewController.m */; };
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526571CEAD35A00706104 /* IBApi.m */; };
-		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5265B1CEAD35A00706104 /* MainIBViewController.m */; };
 		A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269B1CEAD36800706104 /* bg-graphic.png */; };
 		A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AA1CEAD36800706104 /* MainIBViewController.xib */; };
 		A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */; };
@@ -138,6 +140,10 @@
 		A01E444F1CF7602B00D20CFA /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
 		A01E445D1CF7837D00D20CFA /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		A01E445E1CF7837D00D20CFA /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
+		A01E44611CF7968200D20CFA /* UIImageView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Category.h"; sourceTree = "<group>"; };
+		A01E44621CF7968200D20CFA /* UIImageView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Category.m"; sourceTree = "<group>"; };
+		A01E44691CF79CD200D20CFA /* AppUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtil.h; sourceTree = "<group>"; };
+		A01E446A1CF79CD200D20CFA /* AppUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtil.m; sourceTree = "<group>"; };
 		A022F5FD1CF60D83008E8C70 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		A022F5FE1CF60D83008E8C70 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		A022F5FF1CF60D83008E8C70 /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
@@ -161,8 +167,6 @@
 		A0C526561CEAD35A00706104 /* IBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi.h; sourceTree = "<group>"; };
 		A0C526571CEAD35A00706104 /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
 		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IBKit/Info.plist; sourceTree = "<group>"; };
-		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
-		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
 		A0C5269B1CEAD36800706104 /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
 		A0C526AA1CEAD36800706104 /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
 		A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */,
 				A01E445D1CF7837D00D20CFA /* UIView+Category.h */,
 				A01E445E1CF7837D00D20CFA /* UIView+Category.m */,
+				A01E44611CF7968200D20CFA /* UIImageView+Category.h */,
+				A01E44621CF7968200D20CFA /* UIImageView+Category.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -235,6 +241,8 @@
 		A01E442D1CF75C9000D20CFA /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A01E44691CF79CD200D20CFA /* AppUtil.h */,
+				A01E446A1CF79CD200D20CFA /* AppUtil.m */,
 				A01E443B1CF75CDA00D20CFA /* IBDateFormatter.h */,
 				A01E443C1CF75CDA00D20CFA /* IBDateFormatter.m */,
 			);
@@ -354,8 +362,6 @@
 				A0156FD41CEE60A50009FBEF /* IBKit.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
-				A0C5265A1CEAD35A00706104 /* MainIBViewController.h */,
-				A0C5265B1CEAD35A00706104 /* MainIBViewController.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -403,6 +409,7 @@
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
 				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
 				A01E44191CF75C1B00D20CFA /* EventViewController.h in Headers */,
+				A01E44631CF7968200D20CFA /* UIImageView+Category.h in Headers */,
 				A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */,
 				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
@@ -413,7 +420,7 @@
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
 				A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */,
-				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
+				A01E446B1CF79CD200D20CFA /* AppUtil.h in Headers */,
 				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
 				A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */,
 				A01E445B1CF7602B00D20CFA /* OTKTextChatView.h in Headers */,
@@ -604,7 +611,9 @@
 				A01E44601CF7837D00D20CFA /* UIView+Category.m in Sources */,
 				A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */,
 				A01E44511CF7602B00D20CFA /* DotSpinnerViewController.m in Sources */,
+				A01E446C1CF79CD200D20CFA /* AppUtil.m in Sources */,
 				A01E443E1CF75CDA00D20CFA /* IBDateFormatter.m in Sources */,
+				A01E44641CF7968200D20CFA /* UIImageView+Category.m in Sources */,
 				A022F6091CF60D83008E8C70 /* EventsView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
@@ -614,7 +623,6 @@
 				A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */,
 				A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
-				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
 				A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */,
 				A01E441A1CF75C1B00D20CFA /* EventViewController.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,

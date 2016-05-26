@@ -12,7 +12,5 @@
 
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                    connectionData:(NSMutableDictionary *)aConnectionData
-                             user:(NSMutableDictionary *)aUser
-                         isSingle:(BOOL)aSingle NS_DESIGNATED_INITIALIZER;
-
+                             user:(NSMutableDictionary *)aUser NS_DESIGNATED_INITIALIZER;
 @end

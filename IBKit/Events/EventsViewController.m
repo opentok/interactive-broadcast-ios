@@ -12,7 +12,10 @@
 #import "EventsView.h"
 #import "EventCell.h"
 
+#import "AppUtil.h"
 #import "IBDateFormatter.h"
+
+#import <Reachability/Reachability.h>
 
 @interface EventsViewController ()
 
@@ -22,6 +25,8 @@
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) SIOSocket *signalingSocketEvents;
+
+@property (nonatomic) Reachability *internetReachability;
 @end
 
 @implementation EventsViewController
@@ -34,6 +39,9 @@
         _eventsData = [aEventData[@"events"] mutableCopy];
         _dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
         _user = aUser;
+        
+        _internetReachability = [Reachability reachabilityForInternetConnection];
+        [_internetReachability startNotifier];
     }
     return self;
 }
@@ -44,21 +52,46 @@
     self.eventsView = (EventsView *)self.view;
     UINib *cellNib = [UINib nibWithNibName:@"EventCell" bundle:[NSBundle bundleForClass:[self class]]];
     [self.eventsView.eventsCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"eCell"];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 
-    [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
-     {
-         _signalingSocketEvents = socket;
-         _signalingSocketEvents.onConnect = ^()
-         {
-             NSLog(@"Connected to signaling server");
-         };
-         [_signalingSocketEvents on:@"change-event-status" callback: ^(SIOParameterArray *args)
-          {
-              NSDictionary *eventChanged = [args firstObject];
-              [self UpdateEventStatus:eventChanged];
-              
-          }];
-     }];
+    if (self.internetReachability.currentReachabilityStatus != NotReachable) {
+        [self connectToSignalServer];
+    }
+}
+
+- (void)reachabilityChanged:(NSNotification *)notification {
+    Reachability *reachability = [notification object];
+    switch (reachability.currentReachabilityStatus) {
+        case NotReachable:
+            break;
+        case ReachableViaWWAN:
+        case ReachableViaWiFi:{
+            
+            [self connectToSignalServer];
+            break;
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)connectToSignalServer {
+    [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket) {
+        _signalingSocketEvents = socket;
+        _signalingSocketEvents.onConnect = ^() {
+            NSLog(@"Connected to signaling server");
+        };
+        
+        [_signalingSocketEvents on:@"change-event-status"
+                          callback: ^(SIOParameterArray *args) {
+                              NSDictionary *eventChanged = [args firstObject];
+                              [self UpdateEventStatus:eventChanged];
+                          }];
+    }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -75,7 +108,6 @@
     [self.eventsView.eventsCollectionView reloadData];
 }
 
-//Collection stuff
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [_dataArray count];
 }
@@ -89,7 +121,7 @@
     EventCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     data[@"frontend_url"] = _instanceData[@"frontend_url"];
-    data[@"formated_status"] =[self getEventStatus:data[@"status"]];
+    data[@"formated_status"] = [AppUtil convertToStatusString:data];
     
     [cell updateCell:data];
 
@@ -109,44 +141,14 @@
     
     NSMutableDictionary*eventData = _dataArray[iPath.row];
     
-    EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user isSingle:NO];
+    EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user];
+    [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];
 
 }
 
-- (NSString*)getEventStatus:(NSString *)statusLabel
-{
-    NSString* status = @"";
-    if([statusLabel isEqualToString:@"N"]){
-        status = @"Not Started";
-    };
-    if([statusLabel isEqualToString:@"P"]){
-        status = @"Not Started";
-    };
-    if([statusLabel isEqualToString:@"L"]){
-        status = @"Live";
-    };
-    if([statusLabel isEqualToString:@"C"]){
-        status = @"Closed";
-    };
-    return status;
-    
-}
-
-- (NSString*)getFormattedDate:(NSString *)dateString
-{
-    if(dateString != (id)[NSNull null]){
-        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
-    }
-    return @"Not Started";
-}
-
 - (IBAction)goBack:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
-                                                            object:nil
-                                                          userInfo:nil];
-    
 }
 
 #pragma mark - orientation

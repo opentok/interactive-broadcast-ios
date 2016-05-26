@@ -22,10 +22,13 @@
 
 #import "EventView.h"
 #import "IBDateFormatter.h"
-
+#import "AppUtil.h"
 #import "UIColor+AppAdditions.h"
 #import "UIView+Category.h"
+#import "UIImageView+Category.h"
 #import "PerformSelectorWithDebounce.h"
+
+#import <Reachability/Reachability.h>
 
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 
@@ -62,23 +65,19 @@
 
 @property (nonatomic) OTConnection* producerConnection;
 
-@property (nonatomic)OTKTextChatComponent *textChat;
-@property (nonatomic)OTKAnalytics *logging;
-@property (nonatomic)SIOSocket *signalingSocket;
+@property (nonatomic) OTKTextChatComponent *textChat;
+@property (nonatomic) OTKAnalytics *logging;
+@property (nonatomic) SIOSocket *signalingSocket;
 
-@property (nonatomic)NSMutableDictionary* videoViews;
+@property (nonatomic) NSMutableDictionary* videoViews;
 @property (nonatomic) CGFloat chatYPosition;
-@property (nonatomic) CGFloat activeStreams;
 
 //Network Testing
-@property (nonatomic)  NSTimer *sampleTimer;
-@property (nonatomic)  BOOL runQualityStatsTest;
-@property (nonatomic)  int qualityTestDuration;
-@property (nonatomic)  double prevVideoTimestamp;
+@property (nonatomic) double prevVideoTimestamp;
 @property (nonatomic) double prevVideoBytes;
-@property (nonatomic)  double prevAudioTimestamp;
-@property (nonatomic)  double prevAudioBytes;
-@property (nonatomic)  uint64_t prevVideoPacketsLost;
+@property (nonatomic) double prevAudioTimestamp;
+@property (nonatomic) double prevAudioBytes;
+@property (nonatomic) uint64_t prevVideoPacketsLost;
 @property (nonatomic) uint64_t prevVideoPacketsRcvd;
 @property (nonatomic) uint64_t prevAudioPacketsLost;
 @property (nonatomic) uint64_t prevAudioPacketsRcvd;
@@ -95,11 +94,12 @@
 @property (nonatomic) BOOL shouldResendProducerSignal;
 @property (nonatomic) BOOL inCallWithProducer;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic) BOOL isSingleEvent;
 @property (nonatomic) BOOL isFan;
 @property (nonatomic) BOOL stopGoingLive;
 @property (nonatomic) CGFloat unreadCount;
 
+// Reachability
+@property (nonatomic) Reachability *internetReachability;
 @end
 
 @implementation EventViewController
@@ -109,8 +109,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                    connectionData:(NSMutableDictionary *)aConnectionData
-                             user:(NSMutableDictionary *)aUser
-                         isSingle:(BOOL)aSingle {
+                             user:(NSMutableDictionary *)aUser {
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
@@ -118,16 +117,20 @@ static NSString* const kTextChatType = @"chatMessage";
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
         
         _instanceData = [aConnectionData mutableCopy];
-        self.eventData = [aEventData mutableCopy];
-        self.userName = aUser[@"name"] ? aUser[@"name"] : aUser[@"type"];
-        self.user = aUser;
-        self.isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
-        self.isHost = [aUser[@"type"] isEqualToString:@"host"];
+        _eventData = [aEventData mutableCopy];
+        _userName = aUser[@"name"] ? aUser[@"name"] : aUser[@"type"];
+        _user = aUser;
+        _isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
+        _isHost = [aUser[@"type"] isEqualToString:@"host"];
+        
+        _videoViews = [[NSMutableDictionary alloc] init];
+        _videoViews[@"fan"] = self.eventView.FanViewHolder;
+        _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
+        _videoViews[@"host"] = self.eventView.HostViewHolder;
+        
+        _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
         
         _isFan = !_isCeleb && !_isHost;
-        
-        _isSingleEvent = aSingle;
-        
         
         //observers
         [self.eventData  addObserver:self
@@ -138,6 +141,9 @@ static NSString* const kTextChatType = @"chatMessage";
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         
+        
+        _internetReachability = [Reachability reachabilityForInternetConnection];
+        [_internetReachability startNotifier];
     }
     return self;
 }
@@ -146,38 +152,47 @@ static NSString* const kTextChatType = @"chatMessage";
     
     [super viewDidLoad];
     self.eventView = (EventView *)self.view;
-
-    _isLive = NO;
-
-    _videoViews = [[NSMutableDictionary alloc] init];
-    _videoViews[@"fan"] = self.eventView.FanViewHolder;
-    _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
-    _videoViews[@"host"] = self.eventView.HostViewHolder;
-    
-    _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
-    [SVProgressHUD show];
-    [self createEventToken];
+    if (self.internetReachability.currentReachabilityStatus != NotReachable) {
+        [self createEventToken];
+    }
+}
+
+- (void)reachabilityChanged:(NSNotification *)notification {
+    Reachability *reachability = [notification object];
+    switch (reachability.currentReachabilityStatus) {
+        case NotReachable:
+            break;
+        case ReachableViaWWAN:
+        case ReachableViaWiFi:{
+            
+            if (!self.connectionData) {
+                [self createEventToken];
+            }
+            break;
+        }
+    }
 }
 
 - (void)createEventToken{
+    
+    [SVProgressHUD show];
     [IBApi creteEventToken:self.user[@"type"]
-                                   back_url:_instanceData[@"backend_base_url"]
-                                       data:self.eventData
-                                 completion:^(NSMutableDictionary *resultData) {
-                                     
-                                     [SVProgressHUD dismiss];
-                                     self.connectionData = resultData;
-                                     self.eventData = [self.connectionData[@"event"] mutableCopy];
-                                     [self statusChanged];
-                                     self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
-                                     [self startSession];
-                                 }];
+                  back_url:_instanceData[@"backend_base_url"]
+                      data:self.eventData
+                completion:^(NSMutableDictionary *resultData) {
+                    [SVProgressHUD dismiss];
+                    self.connectionData = resultData;
+                    self.eventData = [self.connectionData[@"event"] mutableCopy];
+                    [self statusChanged];
+                    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.eventData[@"event_name"], [AppUtil convertToStatusString:self.eventData]];
+                    [self startSession];
+                }];
 }
-
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -1027,7 +1042,7 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"startEvent"]){
         self.eventData[@"status"] = @"P";
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"], [AppUtil convertToStatusString:self.eventData]];
         _shouldResendProducerSignal = YES;
         [self statusChanged];
     }
@@ -1058,7 +1073,7 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"joinBackstage"]){
         self.eventView.statusLabel.text = @"BACKSTAGE";
         _publisher.publishAudio = YES;
-        [self showVideoPreview];
+        [self.eventView showVideoPreviewWithPublisher:self.publisher];
         [self.eventView showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
     }
     
@@ -1083,7 +1098,7 @@ didFailWithError:(OTError*)error
         _publisher.publishAudio = YES;
         [self muteOnstageSession:YES];
         [self.eventView showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-        [self showVideoPreview];
+        [self.eventView showVideoPreviewWithPublisher:self.publisher];
     }
     if([type isEqualToString:@"privateCall"]){
         if(_isOnstage || _isBackstage){
@@ -1093,7 +1108,7 @@ didFailWithError:(OTError*)error
                 [self muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
                 if(_isFan && _isBackstage){
-                    [self showVideoPreview];
+                    [self.eventView showVideoPreviewWithPublisher:self.publisher];
                 }
             }else{
                 [self muteOnstageSession:YES];
@@ -1144,7 +1159,7 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"goLive"]){
         self.eventData[@"status"] = @"L";
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"], [AppUtil convertToStatusString:self.eventData]];
         if(!_isLive){
             [self goLive];
         }
@@ -1182,7 +1197,7 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"finishEvent"]){
         self.eventData[@"status"] = @"C";
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],[self getEventStatus]];
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.eventData[@"event_name"],  [AppUtil convertToStatusString:self.eventData]];
         self.eventView.statusLabel.hidden = YES;
         self.eventView.chatBtn.hidden = YES;
         [self statusChanged];
@@ -1330,7 +1345,7 @@ didFailWithError:(OTError*)error
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
-            [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
             self.eventView.getInLineBtn.hidden = YES;
         }
     };
@@ -1339,15 +1354,13 @@ didFailWithError:(OTError*)error
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
-            NSString *url = [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]];
-            [self updateEventImage: url];
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
             self.eventView.getInLineBtn.hidden = NO;
         }
         
     };
     if([self.eventData[@"status"] isEqualToString:@"L"]){
-        NSString *url = [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]];
-        [self updateEventImage: url];
+        [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image"]]];
         
         if (_subscribers.count > 0) {
             self.eventView.eventImage.hidden = YES;
@@ -1361,7 +1374,7 @@ didFailWithError:(OTError*)error
     };
     if([self.eventData[@"status"] isEqualToString:@"C"]){
         if(self.eventData[@"event_image_end"]){
-            [self updateEventImage: [NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image_end"]]];
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", _instanceData[@"frontend_url"], self.eventData[@"event_image_end"]]];
         }
         //Event Closed, disconect fan and show image
         self.eventView.eventImage.hidden = NO;
@@ -1447,16 +1460,6 @@ didFailWithError:(OTError*)error
 
 
 #pragma mark - Utils
-
-- (void) updateEventImage:(NSString *)url {
-    NSURL *finalUrl = [NSURL URLWithString:url];
-    NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
-    if(imageData){
-        [self.eventView.eventImage setImage:[UIImage imageWithData:imageData]];
-    }
-    
-}
-
 - (void) adjustChildrenWidth{
     CGFloat c = 0;
     CGFloat new_width = 1;
@@ -1488,45 +1491,8 @@ didFailWithError:(OTError*)error
     }
 }
 
-- (NSString*)getEventStatus {
-    NSString* status = @"";
-    if([self.eventData[@"status"] isEqualToString:@"N"]){
-        status = [self getFormattedDate:self.eventData[@"date_time_start"]];
-    };
-    if([self.eventData[@"status"] isEqualToString:@"P"]){
-        status = @"Not Started";
-    };
-    if([self.eventData[@"status"] isEqualToString:@"L"]){
-        status = @"Live";
-    };
-    if([self.eventData[@"status"] isEqualToString:@"C"]){
-        status = @"Closed";
-    };
-    return status;
-    
-}
-
-- (NSString*)getFormattedDate:(NSString *)dateString{
-    if(dateString != (id)[NSNull null]){
-        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
-    }
-    return @"Not Started";
-}
-
-- (void) changeStatusLabelColor{
-    if (_session.sessionConnectionStatus==OTSessionConnectionStatusConnected) {
-        self.eventView.statusLabel.textColor = [UIColor greenColor];
-    }else if (_session.sessionConnectionStatus==OTSessionConnectionStatusConnecting) {
-        self.eventView.statusLabel.textColor = [UIColor blueColor];
-    }else if (_session.sessionConnectionStatus==OTSessionConnectionStatusDisconnecting) {
-        self.eventView.statusLabel.textColor = [UIColor blueColor];
-    }else {
-        self.eventView.statusLabel.textColor = [UIColor SLBlueColor];
-    }
-}
-
--(NSString*)getStreamData:(NSString*)data{
-    return [data stringByReplacingOccurrencesOfString:@"usertype="withString:@""];
+-(NSString*)getStreamData:(NSString*)data {
+    return [data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
 }
 
 -(NSDictionary*)parseJSON:(NSString*)string{
@@ -1543,7 +1509,6 @@ didFailWithError:(OTError*)error
     return string;
 }
 
-
 #pragma mark - fan Actions
 - (IBAction)chatNow:(id)sender {
     [UIView animateWithDuration:0.5 animations:^() {
@@ -1559,7 +1524,6 @@ didFailWithError:(OTError*)error
         if(!_isFan){
             self.eventView.chatBtn.hidden = NO;
         }
-        
     }];
 }
 
@@ -1611,16 +1575,6 @@ didFailWithError:(OTError*)error
     [self.eventView hideVideoPreview];
 }
 
--(void)showVideoPreview{
-    if(_publisher){
-        _publisher.view.layer.cornerRadius = 0.5;
-        [self.eventView.inLineHolder addSubview:_publisher.view];
-        [self.eventView.inLineHolder sendSubviewToBack:_publisher.view];
-        self.eventView.inLineHolder.hidden = NO;
-    }
-    
-}
-
 //GO BACK
 
 - (IBAction)goBack:(id)sender {
@@ -1644,12 +1598,6 @@ didFailWithError:(OTError*)error
 
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:NULL];
-    
-    if(_isSingleEvent){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissMainController"
-                                                            object:nil
-                                                          userInfo:nil];
-    }
 }
 
 #pragma mark - orientation

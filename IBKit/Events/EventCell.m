@@ -7,7 +7,7 @@
 //
 
 #import "EventCell.h"
-
+#import "IBDateFormatter.h"
 
 @implementation EventCell
 
@@ -19,7 +19,7 @@
     _eventCell.layer.cornerRadius = 3.0;
 }
 
--(void) updateCell:(NSMutableDictionary*)data{
+-(void)updateCell:(NSMutableDictionary*)data{
 
     [_titleLabel setText:data[@"event_name"]];
     if([data[@"status"] isEqualToString:@"N"]){
@@ -45,20 +45,9 @@
 - (NSString*)getFormattedDate:(NSString *)dateString
 {
     if(dateString != (id)[NSNull null]){
-        NSDateFormatter * dateFormat = [[NSDateFormatter alloc]init];
-        [dateFormat setTimeZone:[NSTimeZone systemTimeZone]];
-        [dateFormat setLocale:[NSLocale currentLocale]];
-        [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss.0"];
-        [dateFormat setFormatterBehavior:NSDateFormatterBehaviorDefault];
-        
-        NSDate *date = [dateFormat dateFromString:dateString];
-        dateFormat.dateFormat = @"dd MMM YYYY HH:mm:ss";
-        
-        return [dateFormat stringFromDate:date];
-    }else{
-        return @"Not Started";
+        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
     }
-    
+    return @"Not Started";
 }
 
 @end

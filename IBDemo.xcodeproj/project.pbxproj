@@ -21,24 +21,33 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0B38E3411CEFBAD300418998 /* EventView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B38E33F1CEFBAD300418998 /* EventView.h */; };
-		0B38E3421CEFBAD300418998 /* EventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38E3401CEFBAD300418998 /* EventView.m */; };
-		0B38E3441CEFE6FB00418998 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269E1CEAD36800706104 /* EventViewController.xib */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
 		A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */; };
 		A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD41CEE60A50009FBEF /* IBKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */; };
-		A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */; };
-		A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */; };
-		A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */; };
-		A0166D391CF4DC8600DED33F /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */; };
-		A0166D3A1CF4DC8800DED33F /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */; };
-		A0166D3B1CF4DC8A00DED33F /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */; };
-		A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */; };
-		A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */; };
-		A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */; };
+		A01E44171CF75C1B00D20CFA /* EventView.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44121CF75C1B00D20CFA /* EventView.h */; };
+		A01E44181CF75C1B00D20CFA /* EventView.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44131CF75C1B00D20CFA /* EventView.m */; };
+		A01E44191CF75C1B00D20CFA /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44141CF75C1B00D20CFA /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A01E441A1CF75C1B00D20CFA /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44151CF75C1B00D20CFA /* EventViewController.m */; };
+		A01E441B1CF75C1B00D20CFA /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01E44161CF75C1B00D20CFA /* EventViewController.xib */; };
+		A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E443B1CF75CDA00D20CFA /* IBDateFormatter.h */; };
+		A01E443E1CF75CDA00D20CFA /* IBDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E443C1CF75CDA00D20CFA /* IBDateFormatter.m */; };
+		A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44411CF7602B00D20CFA /* DotSpinnerViewController.h */; };
+		A01E44511CF7602B00D20CFA /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44421CF7602B00D20CFA /* DotSpinnerViewController.m */; };
+		A01E44521CF7602B00D20CFA /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01E44431CF7602B00D20CFA /* DotSpinnerViewController.xib */; };
+		A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */; };
+		A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */; };
+		A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44471CF7602B00D20CFA /* OTKAnalytics.h */; };
+		A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44481CF7602B00D20CFA /* OTKAnalytics.m */; };
+		A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E444A1CF7602B00D20CFA /* OTKTextChatComponent.h */; };
+		A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E444B1CF7602B00D20CFA /* OTKTextChatComponent.m */; };
+		A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E444C1CF7602B00D20CFA /* OTKTextChatTableViewCell.h */; };
+		A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E444D1CF7602B00D20CFA /* OTKTextChatTableViewCell.m */; };
+		A01E445B1CF7602B00D20CFA /* OTKTextChatView.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E444E1CF7602B00D20CFA /* OTKTextChatView.h */; };
+		A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E444F1CF7602B00D20CFA /* OTKTextChatView.m */; };
+		A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E445D1CF7837D00D20CFA /* UIView+Category.h */; };
+		A01E44601CF7837D00D20CFA /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E445E1CF7837D00D20CFA /* UIView+Category.m */; };
 		A022F6051CF60D83008E8C70 /* EventCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F5FD1CF60D83008E8C70 /* EventCell.h */; };
 		A022F6061CF60D83008E8C70 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F5FE1CF60D83008E8C70 /* EventCell.m */; };
 		A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F5FF1CF60D83008E8C70 /* EventCell.xib */; };
@@ -55,11 +64,6 @@
 		A0C526411CEAD2E000706104 /* IBKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A0C5264A1CEAD30C00706104 /* CustomEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526471CEAD30C00706104 /* CustomEventsViewController.m */; };
 		A0C5264B1CEAD30C00706104 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526491CEAD30C00706104 /* ViewController.m */; };
-		A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */; };
-		A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */; };
-		A0C526781CEAD35A00706104 /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526511CEAD35A00706104 /* DotSpinnerViewController.xib */; };
-		A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526541CEAD35A00706104 /* EventViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526551CEAD35A00706104 /* EventViewController.m */; };
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526571CEAD35A00706104 /* IBApi.m */; };
 		A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C5265A1CEAD35A00706104 /* MainIBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,8 +109,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0B38E33F1CEFBAD300418998 /* EventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventView.h; sourceTree = "<group>"; };
-		0B38E3401CEFBAD300418998 /* EventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventView.m; sourceTree = "<group>"; };
 		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
 		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
@@ -114,10 +116,28 @@
 		A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
 		A0156FD41CEE60A50009FBEF /* IBKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBKit.h; sourceTree = "<group>"; };
-		A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
-		A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
-		A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
-		A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
+		A01E44121CF75C1B00D20CFA /* EventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventView.h; sourceTree = "<group>"; };
+		A01E44131CF75C1B00D20CFA /* EventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventView.m; sourceTree = "<group>"; };
+		A01E44141CF75C1B00D20CFA /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		A01E44151CF75C1B00D20CFA /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
+		A01E44161CF75C1B00D20CFA /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
+		A01E443B1CF75CDA00D20CFA /* IBDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBDateFormatter.h; sourceTree = "<group>"; };
+		A01E443C1CF75CDA00D20CFA /* IBDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatter.m; sourceTree = "<group>"; };
+		A01E44411CF7602B00D20CFA /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
+		A01E44421CF7602B00D20CFA /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
+		A01E44431CF7602B00D20CFA /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
+		A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
+		A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		A01E44471CF7602B00D20CFA /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
+		A01E44481CF7602B00D20CFA /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
+		A01E444A1CF7602B00D20CFA /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
+		A01E444B1CF7602B00D20CFA /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
+		A01E444C1CF7602B00D20CFA /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
+		A01E444D1CF7602B00D20CFA /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
+		A01E444E1CF7602B00D20CFA /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
+		A01E444F1CF7602B00D20CFA /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
+		A01E445D1CF7837D00D20CFA /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
+		A01E445E1CF7837D00D20CFA /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		A022F5FD1CF60D83008E8C70 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		A022F5FE1CF60D83008E8C70 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		A022F5FF1CF60D83008E8C70 /* EventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
@@ -126,12 +146,6 @@
 		A022F6021CF60D83008E8C70 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		A022F6031CF60D83008E8C70 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		A022F6041CF60D83008E8C70 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
-		A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
-		A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
-		A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
-		A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatTableViewCell.m; sourceTree = "<group>"; };
-		A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatView.h; sourceTree = "<group>"; };
-		A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatView.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -144,18 +158,12 @@
 		A0C526471CEAD30C00706104 /* CustomEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomEventsViewController.m; sourceTree = "<group>"; };
 		A0C526481CEAD30C00706104 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		A0C526491CEAD30C00706104 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotSpinnerViewController.h; sourceTree = "<group>"; };
-		A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotSpinnerViewController.m; sourceTree = "<group>"; };
-		A0C526511CEAD35A00706104 /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
-		A0C526541CEAD35A00706104 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
-		A0C526551CEAD35A00706104 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		A0C526561CEAD35A00706104 /* IBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi.h; sourceTree = "<group>"; };
 		A0C526571CEAD35A00706104 /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
-		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IBKit/Info.plist; sourceTree = "<group>"; };
 		A0C5265A1CEAD35A00706104 /* MainIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainIBViewController.h; sourceTree = "<group>"; };
 		A0C5265B1CEAD35A00706104 /* MainIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainIBViewController.m; sourceTree = "<group>"; };
 		A0C5269B1CEAD36800706104 /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
-		A0C5269E1CEAD36800706104 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Assets/EventViewController.xib; sourceTree = "<group>"; };
 		A0C526AA1CEAD36800706104 /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
 		A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -206,19 +214,75 @@
 				A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */,
 				A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */,
 				A0156FD31CEE60A50009FBEF /* UIColor+AppAdditions.m */,
+				A01E445D1CF7837D00D20CFA /* UIView+Category.h */,
+				A01E445E1CF7837D00D20CFA /* UIView+Category.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		A0156FDA1CEE60A90009FBEF /* OpenTok */ = {
+		A01E44111CF75BE000D20CFA /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				A0156FDB1CEE60A90009FBEF /* OTDefaultAudioDevice.h */,
-				A0156FDC1CEE60A90009FBEF /* OTDefaultAudioDevice.m */,
-				A0156FDD1CEE60A90009FBEF /* OTKAnalytics.h */,
-				A0156FDE1CEE60A90009FBEF /* OTKAnalytics.m */,
+				A01E44121CF75C1B00D20CFA /* EventView.h */,
+				A01E44131CF75C1B00D20CFA /* EventView.m */,
+				A01E44141CF75C1B00D20CFA /* EventViewController.h */,
+				A01E44151CF75C1B00D20CFA /* EventViewController.m */,
+				A01E44161CF75C1B00D20CFA /* EventViewController.xib */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		A01E442D1CF75C9000D20CFA /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A01E443B1CF75CDA00D20CFA /* IBDateFormatter.h */,
+				A01E443C1CF75CDA00D20CFA /* IBDateFormatter.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		A01E443F1CF7602B00D20CFA /* ThirdParties */ = {
+			isa = PBXGroup;
+			children = (
+				A01E44401CF7602B00D20CFA /* DotSpinnerView */,
+				A01E44441CF7602B00D20CFA /* OpenTok */,
+				A01E44491CF7602B00D20CFA /* OTKTextChat */,
+			);
+			path = ThirdParties;
+			sourceTree = "<group>";
+		};
+		A01E44401CF7602B00D20CFA /* DotSpinnerView */ = {
+			isa = PBXGroup;
+			children = (
+				A01E44411CF7602B00D20CFA /* DotSpinnerViewController.h */,
+				A01E44421CF7602B00D20CFA /* DotSpinnerViewController.m */,
+				A01E44431CF7602B00D20CFA /* DotSpinnerViewController.xib */,
+			);
+			path = DotSpinnerView;
+			sourceTree = "<group>";
+		};
+		A01E44441CF7602B00D20CFA /* OpenTok */ = {
+			isa = PBXGroup;
+			children = (
+				A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */,
+				A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */,
+				A01E44471CF7602B00D20CFA /* OTKAnalytics.h */,
+				A01E44481CF7602B00D20CFA /* OTKAnalytics.m */,
 			);
 			path = OpenTok;
+			sourceTree = "<group>";
+		};
+		A01E44491CF7602B00D20CFA /* OTKTextChat */ = {
+			isa = PBXGroup;
+			children = (
+				A01E444A1CF7602B00D20CFA /* OTKTextChatComponent.h */,
+				A01E444B1CF7602B00D20CFA /* OTKTextChatComponent.m */,
+				A01E444C1CF7602B00D20CFA /* OTKTextChatTableViewCell.h */,
+				A01E444D1CF7602B00D20CFA /* OTKTextChatTableViewCell.m */,
+				A01E444E1CF7602B00D20CFA /* OTKTextChatView.h */,
+				A01E444F1CF7602B00D20CFA /* OTKTextChatView.m */,
+			);
+			path = OTKTextChat;
 			sourceTree = "<group>";
 		};
 		A022F5FC1CF60D2D008E8C70 /* Events */ = {
@@ -241,6 +305,7 @@
 			children = (
 				A0C5261C1CEAD2D400706104 /* IBDemo */,
 				A0C5263A1CEAD2E000706104 /* IBKit */,
+				A0C526591CEAD35A00706104 /* Info.plist */,
 				A0C5261B1CEAD2D400706104 /* Products */,
 				BA26CEB99AF510213EF94875 /* Pods */,
 				57899C55768908A26D0C90AD /* Frameworks */,
@@ -291,43 +356,14 @@
 				A0C526571CEAD35A00706104 /* IBApi.m */,
 				A0C5265A1CEAD35A00706104 /* MainIBViewController.h */,
 				A0C5265B1CEAD35A00706104 /* MainIBViewController.m */,
+				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
-				A0156FDA1CEE60A90009FBEF /* OpenTok */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
-				A0C5264E1CEAD35A00706104 /* DotSpinnerView */,
-				A0C526591CEAD35A00706104 /* Info.plist */,
-				A0C526601CEAD35A00706104 /* OTKTextChat */,
+				A01E443F1CF7602B00D20CFA /* ThirdParties */,
+				A01E442D1CF75C9000D20CFA /* Util */,
 				A0C526971CEAD36800706104 /* Assets */,
-				0B38E33F1CEFBAD300418998 /* EventView.h */,
-				0B38E3401CEFBAD300418998 /* EventView.m */,
-				A0C526541CEAD35A00706104 /* EventViewController.h */,
-				A0C526551CEAD35A00706104 /* EventViewController.m */,
-				A0C5269E1CEAD36800706104 /* EventViewController.xib */,
 			);
 			path = IBKit;
-			sourceTree = "<group>";
-		};
-		A0C5264E1CEAD35A00706104 /* DotSpinnerView */ = {
-			isa = PBXGroup;
-			children = (
-				A0C5264F1CEAD35A00706104 /* DotSpinnerViewController.h */,
-				A0C526501CEAD35A00706104 /* DotSpinnerViewController.m */,
-				A0C526511CEAD35A00706104 /* DotSpinnerViewController.xib */,
-			);
-			path = DotSpinnerView;
-			sourceTree = "<group>";
-		};
-		A0C526601CEAD35A00706104 /* OTKTextChat */ = {
-			isa = PBXGroup;
-			children = (
-				A060AF871CF3BE9400589311 /* OTKTextChatComponent.h */,
-				A060AF881CF3BE9400589311 /* OTKTextChatComponent.m */,
-				A060AF891CF3BE9400589311 /* OTKTextChatTableViewCell.h */,
-				A060AF8A1CF3BE9400589311 /* OTKTextChatTableViewCell.m */,
-				A060AF8B1CF3BE9400589311 /* OTKTextChatView.h */,
-				A060AF8C1CF3BE9400589311 /* OTKTextChatView.m */,
-			);
-			path = OTKTextChat;
 			sourceTree = "<group>";
 		};
 		A0C526971CEAD36800706104 /* Assets */ = {
@@ -365,21 +401,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
-				A0166D3D1CF4DC8D00DED33F /* OTKTextChatView.h in Headers */,
+				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
+				A01E44191CF75C1B00D20CFA /* EventViewController.h in Headers */,
+				A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */,
 				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
-				0B38E3411CEFBAD300418998 /* EventView.h in Headers */,
+				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
-				A0C5267B1CEAD35A00706104 /* EventViewController.h in Headers */,
+				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
-				A0166D3B1CF4DC8A00DED33F /* OTKTextChatTableViewCell.h in Headers */,
+				A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
-				A0166D391CF4DC8600DED33F /* OTKTextChatComponent.h in Headers */,
+				A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */,
 				A0C526811CEAD35A00706104 /* MainIBViewController.h in Headers */,
-				A0156FDF1CEE60A90009FBEF /* OTDefaultAudioDevice.h in Headers */,
+				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
+				A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */,
+				A01E445B1CF7602B00D20CFA /* OTKTextChatView.h in Headers */,
 				A022F6051CF60D83008E8C70 /* EventCell.h in Headers */,
-				A0C526761CEAD35A00706104 /* DotSpinnerViewController.h in Headers */,
-				A0156FE11CEE60A90009FBEF /* OTKAnalytics.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +519,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B38E3441CEFE6FB00418998 /* EventViewController.xib in Resources */,
 				A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */,
 				A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */,
 				A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */,
@@ -489,13 +526,14 @@
 				A0C526D11CEAD36800706104 /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */,
 				A022F6071CF60D83008E8C70 /* EventCell.xib in Resources */,
+				A01E441B1CF75C1B00D20CFA /* EventViewController.xib in Resources */,
 				A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */,
 				A0C526D31CEAD36800706104 /* OTKTextChatSentShortTableViewCell.xib in Resources */,
 				A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */,
 				A0C526D21CEAD36800706104 /* OTKTextChatRecvTableViewCell.xib in Resources */,
+				A01E44521CF7602B00D20CFA /* DotSpinnerViewController.xib in Resources */,
 				A0C526CF1CEAD36800706104 /* OTKTextChatComponent.xib in Resources */,
 				A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */,
-				A0C526781CEAD35A00706104 /* DotSpinnerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,20 +601,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B38E3421CEFBAD300418998 /* EventView.m in Sources */,
+				A01E44601CF7837D00D20CFA /* UIView+Category.m in Sources */,
 				A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */,
+				A01E44511CF7602B00D20CFA /* DotSpinnerViewController.m in Sources */,
+				A01E443E1CF75CDA00D20CFA /* IBDateFormatter.m in Sources */,
 				A022F6091CF60D83008E8C70 /* EventsView.m in Sources */,
-				A0166D3E1CF4DC8D00DED33F /* OTKTextChatView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
-				A0166D3A1CF4DC8800DED33F /* OTKTextChatComponent.m in Sources */,
-				A0C526771CEAD35A00706104 /* DotSpinnerViewController.m in Sources */,
+				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,
+				A01E44181CF75C1B00D20CFA /* EventView.m in Sources */,
+				A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */,
+				A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */,
+				A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
-				A0C5267C1CEAD35A00706104 /* EventViewController.m in Sources */,
-				A0156FE01CEE60A90009FBEF /* OTDefaultAudioDevice.m in Sources */,
 				A0C526821CEAD35A00706104 /* MainIBViewController.m in Sources */,
-				A0156FE21CEE60A90009FBEF /* OTKAnalytics.m in Sources */,
-				A0166D3C1CF4DC8D00DED33F /* OTKTextChatTableViewCell.m in Sources */,
+				A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */,
+				A01E441A1CF75C1B00D20CFA /* EventViewController.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,6 +780,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -760,6 +801,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

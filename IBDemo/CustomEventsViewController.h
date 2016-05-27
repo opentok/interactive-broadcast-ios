@@ -13,6 +13,5 @@
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) NSString *instance_id;
 @property (nonatomic) NSString *backend_base_url;
-@property (nonatomic) BOOL usePredefinedUI;
 
 @end

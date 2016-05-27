@@ -6,7 +6,7 @@
 //  Copyright © 2015 Andrea Phillips. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <IBKit/IBInstance.h>
 
 @interface IBApi : NSObject;
 

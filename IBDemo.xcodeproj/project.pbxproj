@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3303B8576609283931392 /* libPods-IBKitTests.a */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
@@ -64,6 +65,8 @@
 		A08D96C71CF7C79200877619 /* IBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C51CF7C79200877619 /* IBEvent.m */; };
 		A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C81CF7D2E800877619 /* IBInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C91CF7D2E800877619 /* IBInstance.m */; };
+		A08D96D71CF8DCB200877619 /* IBKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96D61CF8DCB200877619 /* IBKitTests.m */; };
+		A08D96D91CF8DCB200877619 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -90,6 +93,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A08D96DA1CF8DCB200877619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0C526121CEAD2D400706104 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0C526381CEAD2E000706104;
+			remoteInfo = IBKit;
+		};
 		A0C5263E1CEAD2E000706104 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A0C526121CEAD2D400706104 /* Project object */;
@@ -114,7 +124,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01B3303B8576609283931392 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
 		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
 		A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
@@ -159,6 +171,9 @@
 		A08D96C51CF7C79200877619 /* IBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEvent.m; sourceTree = "<group>"; };
 		A08D96C81CF7D2E800877619 /* IBInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance.h; sourceTree = "<group>"; };
 		A08D96C91CF7D2E800877619 /* IBInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstance.m; sourceTree = "<group>"; };
+		A08D96D41CF8DCB200877619 /* IBKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IBKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A08D96D61CF8DCB200877619 /* IBKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBKitTests.m; sourceTree = "<group>"; };
+		A08D96D81CF8DCB200877619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -186,10 +201,20 @@
 		A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomEventsCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A08D96D11CF8DCB200877619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A08D96D91CF8DCB200877619 /* IBKit.framework in Frameworks */,
+				7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0C526171CEAD2D400706104 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -213,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				13F6606C998415DDE219BB0A /* libPods-IBKit.a */,
+				01B3303B8576609283931392 /* libPods-IBKitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -314,12 +340,22 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		A08D96D51CF8DCB200877619 /* IBKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				A08D96D61CF8DCB200877619 /* IBKitTests.m */,
+				A08D96D81CF8DCB200877619 /* Info.plist */,
+			);
+			path = IBKitTests;
+			sourceTree = "<group>";
+		};
 		A0C526111CEAD2D400706104 = {
 			isa = PBXGroup;
 			children = (
 				A0C5261C1CEAD2D400706104 /* IBDemo */,
 				A0C5263A1CEAD2E000706104 /* IBKit */,
 				A0C526591CEAD35A00706104 /* Info.plist */,
+				A08D96D51CF8DCB200877619 /* IBKitTests */,
 				A0C5261B1CEAD2D400706104 /* Products */,
 				BA26CEB99AF510213EF94875 /* Pods */,
 				57899C55768908A26D0C90AD /* Frameworks */,
@@ -331,6 +367,7 @@
 			children = (
 				A0C5261A1CEAD2D400706104 /* IBDemo.app */,
 				A0C526391CEAD2E000706104 /* IBKit.framework */,
+				A08D96D41CF8DCB200877619 /* IBKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,6 +441,8 @@
 			children = (
 				DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */,
 				954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */,
+				C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */,
+				3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -442,6 +481,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		A08D96D31CF8DCB200877619 /* IBKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A08D96DE1CF8DCB200877619 /* Build configuration list for PBXNativeTarget "IBKitTests" */;
+			buildPhases = (
+				51FF9BDB78187ED885D11ABA /* 📦 Check Pods Manifest.lock */,
+				A08D96D01CF8DCB200877619 /* Sources */,
+				A08D96D11CF8DCB200877619 /* Frameworks */,
+				A08D96D21CF8DCB200877619 /* Resources */,
+				4EF9E5A82736204DC385B015 /* 📦 Embed Pods Frameworks */,
+				C45E87CD51EFF18C4A1C0FE9 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A08D96DB1CF8DCB200877619 /* PBXTargetDependency */,
+			);
+			name = IBKitTests;
+			productName = IBKitTests;
+			productReference = A08D96D41CF8DCB200877619 /* IBKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A0C526191CEAD2D400706104 /* IBDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0C526311CEAD2D400706104 /* Build configuration list for PBXNativeTarget "IBDemo" */;
@@ -490,6 +550,9 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Tokbox, Inc.";
 				TargetAttributes = {
+					A08D96D31CF8DCB200877619 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					A0A754CE1CEB909600D6D516 = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -517,11 +580,19 @@
 				A0C526191CEAD2D400706104 /* IBDemo */,
 				A0C526381CEAD2E000706104 /* IBKit */,
 				A0A754CE1CEB909600D6D516 /* BuildFatFramework */,
+				A08D96D31CF8DCB200877619 /* IBKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A08D96D21CF8DCB200877619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0C526181CEAD2D400706104 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -572,6 +643,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKit/Pods-IBKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4EF9E5A82736204DC385B015 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		51FF9BDB78187ED885D11ABA /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		A0A754D21CEB909900D6D516 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -584,6 +685,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nWORKSPACE_NAME=\"IBDemo.xcworkspace\"\nFRAMEWORK_NAME=\"IBKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+		};
+		C45E87CD51EFF18C4A1C0FE9 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		CA111D6649F81513F982DB0D /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -603,6 +719,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A08D96D01CF8DCB200877619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A08D96D71CF8DCB200877619 /* IBKitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0C526161CEAD2D400706104 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -644,6 +768,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A08D96DB1CF8DCB200877619 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0C526381CEAD2E000706104 /* IBKit */;
+			targetProxy = A08D96DA1CF8DCB200877619 /* PBXContainerItemProxy */;
+		};
 		A0C5263F1CEAD2E000706104 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A0C526381CEAD2E000706104 /* IBKit */;
@@ -671,6 +800,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A08D96DC1CF8DCB200877619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = IBKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A08D96DD1CF8DCB200877619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = IBKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A0A754CF1CEB909600D6D516 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -722,7 +873,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -761,7 +912,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -774,6 +925,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IBDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -785,6 +937,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IBDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -803,6 +956,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -824,6 +978,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IBKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucashuang.IBKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -836,6 +991,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A08D96DE1CF8DCB200877619 /* Build configuration list for PBXNativeTarget "IBKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A08D96DC1CF8DCB200877619 /* Debug */,
+				A08D96DD1CF8DCB200877619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A0A754D11CEB909600D6D516 /* Build configuration list for PBXAggregateTarget "BuildFatFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

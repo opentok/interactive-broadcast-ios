@@ -8,3 +8,7 @@ target 'IBKit' do
   pod 'Reachability'
   pod 'AFNetworking'
 end
+
+target 'IBKitTests' do
+	pod 'Kiwi'
+end

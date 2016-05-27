@@ -122,11 +122,7 @@ static NSString* const kTextChatType = @"chatMessage";
         _user = aUser;
         _isCeleb = [aUser[@"type"] isEqualToString:@"celebrity"];
         _isHost = [aUser[@"type"] isEqualToString:@"host"];
-        
-        _videoViews = [[NSMutableDictionary alloc] init];
-        _videoViews[@"fan"] = self.eventView.FanViewHolder;
-        _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
-        _videoViews[@"host"] = self.eventView.HostViewHolder;
+    
         
         _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
         
@@ -193,6 +189,10 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    _videoViews = [[NSMutableDictionary alloc] init];
+    _videoViews[@"fan"] = self.eventView.FanViewHolder;
+    _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
+    _videoViews[@"host"] = self.eventView.HostViewHolder;
     [self performSelector:@selector(adjustChildrenWidth) withObject:nil afterDelay:1.0];
 }
 
@@ -214,6 +214,7 @@ static NSString* const kTextChatType = @"chatMessage";
     _audio_bw = 0;
     _video_pl_ratio = -1;
     _audio_pl_ratio = -1;
+    
     
     NSNumber *api = self.connectionData[@"apiKey"];
     self.apikey = [NSString stringWithFormat:@"%@", api];

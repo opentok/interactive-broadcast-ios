@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -42,6 +42,44 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E4T-AZ-cSQ">
                     <rect key="frame" x="0.0" y="90" width="600" height="510"/>
                     <subviews>
+                        <view hidden="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="65j-ak-aqS">
+                            <rect key="frame" x="435" y="40" width="150" height="150"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Camera Preview:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UPr-Sn-B7a">
+                                    <rect key="frame" x="1" y="0.0" width="112" height="35"/>
+                                    <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="e9u-eT-6NP"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
+                                    <color key="textColor" red="0.96897396650000001" green="1" blue="0.96630337870000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eW-aR-FL2">
+                                    <rect key="frame" x="113" y="0.0" width="37" height="35"/>
+                                    <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="q7k-5B-XVQ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
+                                    <state key="normal" title=" ON  ">
+                                        <color key="titleColor" red="0.103141177" green="0.47900883840000003" blue="0.2591915904" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="dismissInlineTxt:" destination="-1" eventType="touchUpInside" id="kV8-XP-YmS"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="0.46827491554054052" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="2eW-aR-FL2" secondAttribute="trailing" id="7hP-l8-7am"/>
+                                <constraint firstItem="UPr-Sn-B7a" firstAttribute="top" secondItem="65j-ak-aqS" secondAttribute="top" id="BwY-zK-DRI"/>
+                                <constraint firstItem="UPr-Sn-B7a" firstAttribute="width" secondItem="65j-ak-aqS" secondAttribute="width" multiplier="3:4" id="GXN-s8-WTD"/>
+                                <constraint firstItem="2eW-aR-FL2" firstAttribute="centerY" secondItem="UPr-Sn-B7a" secondAttribute="centerY" id="RdS-ae-1aI"/>
+                                <constraint firstItem="2eW-aR-FL2" firstAttribute="leading" secondItem="UPr-Sn-B7a" secondAttribute="trailing" id="hv9-Wf-Gv8"/>
+                                <constraint firstItem="2eW-aR-FL2" firstAttribute="width" secondItem="65j-ak-aqS" secondAttribute="width" multiplier="1:4" id="lCX-AR-FgK"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJu-a8-Zwd">
                             <rect key="frame" x="0.0" y="86" width="600" height="338"/>
                             <subviews>
@@ -97,44 +135,6 @@
                                 </view>
                             </subviews>
                             <color key="backgroundColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="0.0" colorSpace="calibratedRGB"/>
-                        </view>
-                        <view hidden="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="65j-ak-aqS">
-                            <rect key="frame" x="435" y="40" width="150" height="150"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Camera Preview:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UPr-Sn-B7a">
-                                    <rect key="frame" x="1" y="0.0" width="112" height="35"/>
-                                    <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="35" id="e9u-eT-6NP"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
-                                    <color key="textColor" red="0.96897396650000001" green="1" blue="0.96630337870000005" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eW-aR-FL2">
-                                    <rect key="frame" x="113" y="0.0" width="37" height="35"/>
-                                    <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="35" id="q7k-5B-XVQ"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
-                                    <state key="normal" title=" ON  ">
-                                        <color key="titleColor" red="0.103141177" green="0.47900883840000003" blue="0.2591915904" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="dismissInlineTxt:" destination="-1" eventType="touchUpInside" id="kV8-XP-YmS"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="0.46827491554054052" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="2eW-aR-FL2" secondAttribute="trailing" id="7hP-l8-7am"/>
-                                <constraint firstItem="UPr-Sn-B7a" firstAttribute="top" secondItem="65j-ak-aqS" secondAttribute="top" id="BwY-zK-DRI"/>
-                                <constraint firstItem="UPr-Sn-B7a" firstAttribute="width" secondItem="65j-ak-aqS" secondAttribute="width" multiplier="3:4" id="GXN-s8-WTD"/>
-                                <constraint firstItem="2eW-aR-FL2" firstAttribute="centerY" secondItem="UPr-Sn-B7a" secondAttribute="centerY" id="RdS-ae-1aI"/>
-                                <constraint firstItem="2eW-aR-FL2" firstAttribute="leading" secondItem="UPr-Sn-B7a" secondAttribute="trailing" id="hv9-Wf-Gv8"/>
-                                <constraint firstItem="2eW-aR-FL2" firstAttribute="width" secondItem="65j-ak-aqS" secondAttribute="width" multiplier="1:4" id="lCX-AR-FgK"/>
-                            </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.96897396650000001" green="1" blue="0.96630337870000005" alpha="0.6176361908783784" colorSpace="calibratedRGB"/>
@@ -325,7 +325,7 @@
                             </connections>
                         </button>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-Rp-gdV">
-                            <rect key="frame" x="105" y="34" width="118" height="23.5"/>
+                            <rect key="frame" x="105" y="34" width="118" height="24"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="19"/>
                             <color key="textColor" red="0.2786599864" green="0.2786599864" blue="0.2786599864" alpha="1" colorSpace="calibratedRGB"/>

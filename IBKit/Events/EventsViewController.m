@@ -24,7 +24,7 @@
 @property (nonatomic) NSMutableDictionary *instanceData;
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) NSMutableDictionary *user;
-@property (nonatomic) SIOSocket *signalingSocketEvents;
+@property (nonatomic) SIOSocket *signalingSocket;
 
 @property (nonatomic) Reachability *internetReachability;
 @end
@@ -64,6 +64,7 @@
     Reachability *reachability = [notification object];
     switch (reachability.currentReachabilityStatus) {
         case NotReachable:
+            [self.signalingSocket close];
             break;
         case ReachableViaWWAN:
         case ReachableViaWiFi:{
@@ -80,13 +81,15 @@
 }
 
 - (void)connectToSignalServer {
+    
+    __weak EventsViewController *weakSelf = self;
     [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket) {
-        _signalingSocketEvents = socket;
-        _signalingSocketEvents.onConnect = ^() {
+        weakSelf.signalingSocket = socket;
+        weakSelf.signalingSocket.onConnect = ^() {
             NSLog(@"Connected to signaling server");
         };
         
-        [_signalingSocketEvents on:@"change-event-status"
+        [weakSelf.signalingSocket on:@"change-event-status"
                           callback: ^(SIOParameterArray *args) {
                               NSDictionary *eventChanged = [args firstObject];
                               [self UpdateEventStatus:eventChanged];
@@ -148,7 +151,7 @@
 }
 
 - (IBAction)goBack:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - orientation

@@ -60,6 +60,8 @@
 		A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A022F6021CF60D83008E8C70 /* EventsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6031CF60D83008E8C70 /* EventsViewController.m */; };
 		A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F6041CF60D83008E8C70 /* EventsViewController.xib */; };
+		A08D96C61CF7C79200877619 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C41CF7C79200877619 /* Event.h */; };
+		A08D96C71CF7C79200877619 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C51CF7C79200877619 /* Event.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -71,7 +73,6 @@
 		A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C526561CEAD35A00706104 /* IBApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526571CEAD35A00706104 /* IBApi.m */; };
 		A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5269B1CEAD36800706104 /* bg-graphic.png */; };
-		A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AA1CEAD36800706104 /* MainIBViewController.xib */; };
 		A0C526CD1CEAD36800706104 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */; };
 		A0C526CE1CEAD36800706104 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */; };
 		A0C526CF1CEAD36800706104 /* OTKTextChatComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */; };
@@ -152,6 +153,8 @@
 		A022F6021CF60D83008E8C70 /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		A022F6031CF60D83008E8C70 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		A022F6041CF60D83008E8C70 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
+		A08D96C41CF7C79200877619 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		A08D96C51CF7C79200877619 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -168,7 +171,6 @@
 		A0C526571CEAD35A00706104 /* IBApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApi.m; sourceTree = "<group>"; };
 		A0C526591CEAD35A00706104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IBKit/Info.plist; sourceTree = "<group>"; };
 		A0C5269B1CEAD36800706104 /* bg-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-graphic.png"; sourceTree = "<group>"; };
-		A0C526AA1CEAD36800706104 /* MainIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainIBViewController.xib; sourceTree = "<group>"; };
 		A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTKTextChatComponent.xib; sourceTree = "<group>"; };
@@ -362,6 +364,8 @@
 				A0156FD41CEE60A50009FBEF /* IBKit.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
+				A08D96C41CF7C79200877619 /* Event.h */,
+				A08D96C51CF7C79200877619 /* Event.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -376,7 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				A0C5269B1CEAD36800706104 /* bg-graphic.png */,
-				A0C526AA1CEAD36800706104 /* MainIBViewController.xib */,
 				A0C526AC1CEAD36800706104 /* Montserrat-Bold.ttf */,
 				A0C526AD1CEAD36800706104 /* Montserrat-Regular.ttf */,
 				A0C526AE1CEAD36800706104 /* OTKTextChatComponent.xib */,
@@ -413,6 +416,7 @@
 				A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */,
 				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
+				A08D96C61CF7C79200877619 /* Event.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
@@ -528,7 +532,6 @@
 			files = (
 				A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */,
 				A0C526D41CEAD36800706104 /* OTKTextChatSentTableViewCell.xib in Resources */,
-				A0C526CB1CEAD36800706104 /* MainIBViewController.xib in Resources */,
 				A0C526D01CEAD36800706104 /* OTKTextChatDivTableViewCell.xib in Resources */,
 				A0C526D11CEAD36800706104 /* OTKTextChatRecvShortTableViewCell.xib in Resources */,
 				A0C526BC1CEAD36800706104 /* bg-graphic.png in Resources */,
@@ -614,6 +617,7 @@
 				A01E446C1CF79CD200D20CFA /* AppUtil.m in Sources */,
 				A01E443E1CF75CDA00D20CFA /* IBDateFormatter.m in Sources */,
 				A01E44641CF7968200D20CFA /* UIImageView+Category.m in Sources */,
+				A08D96C71CF7C79200877619 /* Event.m in Sources */,
 				A022F6091CF60D83008E8C70 /* EventsView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,

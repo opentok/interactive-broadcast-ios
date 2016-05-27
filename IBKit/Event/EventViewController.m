@@ -139,9 +139,6 @@ static NSString* const kTextChatType = @"chatMessage";
                                       NSKeyValueObservingOptionOld)
                              context:NULL];
         
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-        
-        
         _internetReachability = [Reachability reachabilityForInternetConnection];
         [_internetReachability startNotifier];
     }
@@ -1595,9 +1592,8 @@ didFailWithError:(OTError*)error
             });
         }
     });
-
-    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-    [self.presentingViewController dismissViewControllerAnimated:NO completion:NULL];
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - orientation

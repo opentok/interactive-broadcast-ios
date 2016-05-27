@@ -108,7 +108,6 @@
             <size key="customSize" width="200" height="200"/>
             <connections>
                 <outlet property="eventButton" destination="xh1-AK-D4S" id="ucv-b9-kac"/>
-                <outlet property="eventCell" destination="qSy-Of-7kQ" id="XK1-IK-W4T"/>
                 <outlet property="imageView" destination="dFa-zw-LUK" id="Ktr-Sg-WEe"/>
                 <outlet property="statusLabel" destination="Nqz-B4-43S" id="Lfd-gu-dla"/>
                 <outlet property="titleLabel" destination="2jB-Zh-nLU" id="Kmc-BB-FgV"/>

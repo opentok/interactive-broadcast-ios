@@ -9,37 +9,37 @@
 #import "EventCell.h"
 #import "IBDateFormatter.h"
 
+#import "UIImageView+Category.h"
+
+@interface EventCell()
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@end
+
 @implementation EventCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    NSLog(@"awake from nib");
-    _eventCell.layer.borderColor = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1].CGColor;
-    _eventCell.layer.borderWidth = 1.0f;
-    _eventCell.layer.cornerRadius = 3.0;
+    self.layer.borderColor = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1].CGColor;
+    self.layer.borderWidth = 1.0f;
+    self.layer.cornerRadius = 3.0;
 }
 
 -(void)updateCell:(NSMutableDictionary*)data{
 
-    [_titleLabel setText:data[@"event_name"]];
-    if([data[@"status"] isEqualToString:@"N"]){
-        [_statusLabel setText:[self getFormattedDate:data[@"date_time_start"] ]];
-    }else{
-        [_statusLabel setText: data[@"formated_status"] ];
+    [self.titleLabel setText:data[@"event_name"]];
+    
+    if ([data[@"status"] isEqualToString:@"N"]) {
+        [self.statusLabel setText:[self getFormattedDate:data[@"date_time_start"] ]];
     }
-
-    NSURL *finalUrl;
-    if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
-    }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",data[@"frontend_url"], data[@"event_image"]]];
+    else{
+        [self.statusLabel setText: data[@"formated_status"] ];
     }
     
-    NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
-    if(imageData){
-        _imageView.image = [UIImage imageWithData:imageData];
+    if (!data[@"event_image"] && ![data[@"event_image"] isEqual:[NSNull class]]) {
+        [self.imageView loadImageWithUrl:[NSString stringWithFormat:@"%@%@",data[@"frontend_url"], data[@"event_image"]]];
     }
-    
-    
 }
 
 - (NSString*)getFormattedDate:(NSString *)dateString

@@ -22,7 +22,7 @@
 @property (nonatomic) EventsView *eventsView;
 @property (nonatomic) NSMutableDictionary *eventsData;
 @property (nonatomic) NSMutableDictionary *instanceData;
-@property (nonatomic) NSArray *dataArray;
+@property (nonatomic) NSArray *openedEventsDataArray;
 @property (nonatomic) NSMutableDictionary *user;
 @property (nonatomic) SIOSocket *signalingSocket;
 
@@ -37,7 +37,7 @@
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         _instanceData = aEventData;
         _eventsData = [aEventData[@"events"] mutableCopy];
-        _dataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
+        _openedEventsDataArray = [[[aEventData[@"events"] mutableCopy] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"status != C"]] mutableCopy];
         _user = aUser;
         
         _internetReachability = [Reachability reachabilityForInternetConnection];
@@ -104,20 +104,20 @@
 
 -(void)UpdateEventStatus:(NSDictionary *)event{
     NSString *find = [NSString stringWithFormat:@"id == %@",event[@"id"]];
-    NSArray *changedEvent = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
+    NSArray *changedEvent = [self.openedEventsDataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
     if([changedEvent count] != 0){
-        [_dataArray[[_dataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
+        [self.openedEventsDataArray[[self.openedEventsDataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
     }
     [self.eventsView.eventsCollectionView reloadData];
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_dataArray count];
+    return [self.openedEventsDataArray count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSMutableDictionary *data = [ _dataArray[indexPath.row] mutableCopy];
+    NSMutableDictionary *data = [self.openedEventsDataArray[indexPath.row] mutableCopy];
     
     static NSString *cellIdentifier = @"eCell";
     
@@ -142,7 +142,7 @@
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView.eventsCollectionView];
     NSIndexPath *iPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
     
-    NSMutableDictionary*eventData = _dataArray[iPath.row];
+    NSMutableDictionary*eventData = self.openedEventsDataArray[iPath.row];
     
     EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:_instanceData user:_user];
     [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];

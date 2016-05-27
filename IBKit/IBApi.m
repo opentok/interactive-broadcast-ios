@@ -42,7 +42,11 @@
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+        
+        
+        IBInstance *instances = [[IBInstance alloc] initWithJson:responseObject];
         completion(responseObject, nil);
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
     }];

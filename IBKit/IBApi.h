@@ -12,11 +12,15 @@
 
 + (void)getEventsWithInstanceId:(NSString *)instandId
                      backendURL:(NSString *)backendURL
-                     completion:(void (^)(NSDictionary *data, NSError *error))completion;
+                     completion:(void (^)(NSDictionary *, NSError *))completion;
 
-+ (void)getEventsWithAdminId:(NSString *)adminId
-                  backendURL:(NSString *)backendURL
-                  completion:(void (^)(NSDictionary *data, NSError *error))completion;
++ (void)getInstanceWithId:(NSString *)instandId
+               backendURL:(NSString *)backendURL
+               completion:(void (^)(IBInstance *, NSError *))completion;
+
++ (void)getInstanceWithAdminId:(NSString *)adminId
+                    backendURL:(NSString *)backendURL
+                    completion:(void (^)(IBInstance *, NSError *))completion;
 
 + (void)creteEventToken:(NSString*)user_type
                back_url:(NSString*)backend_base_url

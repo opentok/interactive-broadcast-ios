@@ -23,6 +23,7 @@
 #import "EventView.h"
 #import "IBDateFormatter.h"
 #import "AppUtil.h"
+#import "JSON.h"
 #import "UIColor+AppAdditions.h"
 #import "UIView+Category.h"
 #import "UIImageView+Category.h"
@@ -849,9 +850,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
                                };
         
         OTError* error = nil;
-        
-        NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-        [_producerSession signalWithType:@"qualityUpdate" string:stringified connection:_producerSubscriber.stream.connection error:&error];
+        NSString *parsedString = [JSON stringify:data];
+        [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
         
         if (error) {
             NSLog(@"signal didFailWithError %@", error);
@@ -1031,8 +1031,8 @@ didFailWithError:(OTError*)error
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)string {
     NSDictionary* messageData;
     
-    if(string){
-        messageData = [self parseJSON:string];
+    if (string){
+        messageData = [JSON parseJSON:string];
     }
     
     NSLog(@"session did receiveSignalType: (%@)", type);
@@ -1222,7 +1222,7 @@ didFailWithError:(OTError*)error
         if (![connection.connectionId isEqualToString:session.connection.connectionId]) {
             self.eventView.chatBtn.hidden = NO;
             _producerConnection = connection;
-            NSDictionary *userInfo = [self parseJSON:string];
+            NSDictionary *userInfo = [JSON parseJSON:string];
             OTKChatMessage *msg = [[OTKChatMessage alloc]init];
             msg.senderAlias = [self getStreamData:connection.data];
             msg.senderId = connection.connectionId;
@@ -1259,8 +1259,8 @@ didFailWithError:(OTError*)error
     
     OTError* error = nil;
     
-    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"warning" string:stringified connection:_publisher.stream.connection error:&error];
+    NSString *parsedString = [JSON stringify:data];
+    [_producerSession signalWithType:@"warning" string:parsedString connection:_publisher.stream.connection error:&error];
     
     if (error) {
         NSLog(@"signal error %@", error);
@@ -1297,8 +1297,8 @@ didFailWithError:(OTError*)error
     
     OTError* error = nil;
     
-    NSString *stringified = [NSString stringWithFormat:@"%@", [self stringify:data]];
-    [_producerSession signalWithType:@"newFan" string:stringified connection:nil error:&error];
+    NSString *parsedString = [JSON stringify:data];
+    [_producerSession signalWithType:@"newFan" string:parsedString connection:nil error:&error];
     
     if (error) {
         NSLog(@"signal error %@", error);
@@ -1448,7 +1448,7 @@ didFailWithError:(OTError*)error
     NSDictionary *user_message = @{@"message": message.text};
     NSDictionary *userInfo = @{@"message": user_message};
     
-    [currentSession signalWithType:kTextChatType string:[self stringify:userInfo] connection: _producerConnection error:&error];
+    [currentSession signalWithType:kTextChatType string:[JSON stringify:userInfo] connection: _producerConnection error:&error];
     if (error) {
         return NO;
     }
@@ -1490,20 +1490,6 @@ didFailWithError:(OTError*)error
 
 -(NSString*)getStreamData:(NSString*)data {
     return [data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
-}
-
--(NSDictionary*)parseJSON:(NSString*)string{
-    NSString *toParse = [[NSString alloc] initWithString:string];
-    NSError *errorDictionary = nil;
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[toParse dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&errorDictionary];
-    return dictionary;
-}
-
--(NSString*)stringify:(NSDictionary*)data{
-    NSError *err;
-    NSData *jsonData = [NSJSONSerialization  dataWithJSONObject:data options:0 error:&err];
-    NSString *string = [[NSString alloc] initWithData:jsonData   encoding:NSUTF8StringEncoding];
-    return string;
 }
 
 #pragma mark - fan Actions
@@ -1573,7 +1559,6 @@ didFailWithError:(OTError*)error
 }
 
 //GO BACK
-
 - (IBAction)goBack:(id)sender {
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){

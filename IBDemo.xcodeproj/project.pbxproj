@@ -64,6 +64,8 @@
 		A08D96C71CF7C79200877619 /* IBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C51CF7C79200877619 /* IBEvent.m */; };
 		A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C81CF7D2E800877619 /* IBInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C91CF7D2E800877619 /* IBInstance.m */; };
+		A08D96CE1CF80D2800877619 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96CC1CF80D2800877619 /* JSON.h */; };
+		A08D96CF1CF80D2800877619 /* JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96CD1CF80D2800877619 /* JSON.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -159,6 +161,8 @@
 		A08D96C51CF7C79200877619 /* IBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEvent.m; sourceTree = "<group>"; };
 		A08D96C81CF7D2E800877619 /* IBInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance.h; sourceTree = "<group>"; };
 		A08D96C91CF7D2E800877619 /* IBInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstance.m; sourceTree = "<group>"; };
+		A08D96CC1CF80D2800877619 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		A08D96CD1CF80D2800877619 /* JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSON.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 				A01E446A1CF79CD200D20CFA /* AppUtil.m */,
 				A01E443B1CF75CDA00D20CFA /* IBDateFormatter.h */,
 				A01E443C1CF75CDA00D20CFA /* IBDateFormatter.m */,
+				A08D96CC1CF80D2800877619 /* JSON.h */,
+				A08D96CD1CF80D2800877619 /* JSON.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
+				A08D96CE1CF80D2800877619 /* JSON.h in Headers */,
 				A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
@@ -622,6 +629,7 @@
 				A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */,
 				A01E44511CF7602B00D20CFA /* DotSpinnerViewController.m in Sources */,
 				A01E446C1CF79CD200D20CFA /* AppUtil.m in Sources */,
+				A08D96CF1CF80D2800877619 /* JSON.m in Sources */,
 				A01E443E1CF75CDA00D20CFA /* IBDateFormatter.m in Sources */,
 				A01E44641CF7968200D20CFA /* UIImageView+Category.m in Sources */,
 				A08D96C71CF7C79200877619 /* IBEvent.m in Sources */,

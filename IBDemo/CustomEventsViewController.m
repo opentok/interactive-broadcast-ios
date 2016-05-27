@@ -17,6 +17,9 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *eventsView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
 
+@property (nonatomic) IBInstance *instance;
+@property (nonatomic) NSArray *openedEvents;
+
 @property (nonatomic) NSMutableDictionary *eventsData;
 @property (nonatomic) NSMutableDictionary *allEvents;
 @property (nonatomic) NSArray *dataArray;
@@ -32,17 +35,30 @@
     UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
     
+    
     [IBApi getEventsWithInstanceId:self.instance_id
-                                         backendURL:self.backend_base_url
-                                         completion:^(NSDictionary *data, NSError *error) {
-                                             
-                                             if (!error) {
-                                                 self.allEvents = [NSMutableDictionary dictionaryWithDictionary:data];
-                                                 // we filter out closed events
-                                                 self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
-                                                 [self.eventsView reloadData];
-                                             }
-                                         }];
+                        backendURL:self.backend_base_url
+                        completion:^(NSDictionary *data, NSError *error) {
+                            
+                            if (!error) {
+                                self.allEvents = [NSMutableDictionary dictionaryWithDictionary:data];
+                                // we filter out closed events
+                                self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
+                                [self.eventsView reloadData];
+                            }
+                        }];
+    
+//    __weak CustomEventsViewController *weakSelf = self;
+//    [IBApi getEventsWithInstanceId:self.instance_id
+//                        backendURL:self.backend_base_url
+//                        completion:^(IBInstance *instance, NSError *error) {
+//                            if (!error) {
+//                                
+//                                weakSelf.instance = instance;
+//                                weakSelf.openedEvents = [weakSelf.instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+//                                [weakSelf.eventsView reloadData];
+//                            }
+//                        }];
 }
 
 - (void)viewDidLayoutSubviews {

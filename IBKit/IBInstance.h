@@ -12,7 +12,7 @@
 @property (readonly, nonatomic) NSString *defaultEventImage;
 @property (readonly, nonatomic) BOOL isAnalyticsEnabled;
 @property (readonly, nonatomic) BOOL isGetInLineEnabled;
-@property (readonly, nonatomic) NSArray <IBEvent *> * events;
+@property (readonly, nonatomic) NSArray<IBEvent *> * events;
 @property (readonly, nonatomic) NSString *frontendURL;
 @property (readonly, nonatomic) NSString *instanceId;
 @property (readonly, nonatomic) NSString *signalingURL;

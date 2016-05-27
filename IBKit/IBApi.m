@@ -14,7 +14,7 @@
 
 + (void)getEventsWithInstanceId:(NSString *)instandId
                      backendURL:(NSString *)backendURL
-                     completion:(void (^)(NSDictionary *data, NSError *error))completion {
+                     completion:(void (^)(NSDictionary *, NSError *))completion {
     
     NSString *url = [NSString stringWithFormat:@"%@/get-instance-by-id", backendURL];
     NSDictionary *params = @{@"instance_id" : instandId};
@@ -24,15 +24,16 @@
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         
+        IBInstance *instances = [[IBInstance alloc] initWithJson:responseObject];
         completion(responseObject, nil);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
     }];
 }
 
-+ (void)getEventsWithAdminId:(NSString *)adminId
-                  backendURL:(NSString *)backendURL
-                  completion:(void (^)(NSDictionary *data, NSError *error))completion {
++ (void)getInstanceWithAdminId:(NSString *)adminId
+                    backendURL:(NSString *)backendURL
+                    completion:(void (^)(IBInstance *, NSError *))completion {
     
     
     NSString *url = [NSString stringWithFormat:@"%@/get-events-by-admin",backendURL];
@@ -45,7 +46,23 @@
         
         
         IBInstance *instances = [[IBInstance alloc] initWithJson:responseObject];
-        completion(responseObject, nil);
+        completion(instances, nil);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        completion(nil, error);
+    }];
+}
+
++ (void)getEventHashWithAdminId:(NSString *)adminId
+                     backendURL:(NSString *)backendURL
+                     completion:(void (^)(NSString *, NSError *))completion {
+    
+    NSString *url = [NSString stringWithFormat:@"%@/event/get-event-hash-json/%@", backendURL, adminId];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+        
+        completion(responseObject[@"admins_id"], nil);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
@@ -64,8 +81,8 @@
     __block NSDictionary *json;
 
     NSData * data =[NSURLConnection sendSynchronousRequest:request
-                          returningResponse:&response
-                                      error:&error];
+                                         returningResponse:&response
+                                                     error:&error];
      {
          if (error == nil)
          {

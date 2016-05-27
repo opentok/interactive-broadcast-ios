@@ -10,7 +10,11 @@
 
 @interface EventViewController : UIViewController
 
+- (instancetype)initWithInstance:(IBInstance *)instance
+                       indexPath:(NSIndexPath *)indexPath
+                            user:(NSDictionary *)user;
+
 - (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
                    connectionData:(NSMutableDictionary *)aConnectionData
-                             user:(NSMutableDictionary *)aUser NS_DESIGNATED_INITIALIZER;
+                             user:(NSMutableDictionary *)aUse;
 @end

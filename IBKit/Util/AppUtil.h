@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "IBEvent.h"
 
 @interface AppUtil : NSObject
 
-+ (NSString *)convertToStatusString:(NSDictionary *)eventData;
++ (NSString *)convertToStatusString:(IBEvent *)event;
 
 @end

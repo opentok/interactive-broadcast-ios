@@ -19,7 +19,7 @@
 @property (readonly, nonatomic) NSString *endImage;
 @property (readonly, nonatomic) NSString *eventName;
 @property (readonly, nonatomic) NSString *identifier;
-@property (readonly, nonatomic) NSString *status;
+@property (nonatomic) NSString *status;
 
 - (instancetype)initWithJson:(NSDictionary *)json;
 - (void)updateEventWithJson:(NSDictionary *)updatedJson;

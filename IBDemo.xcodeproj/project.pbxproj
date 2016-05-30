@@ -66,6 +66,9 @@
 		A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C91CF7D2E800877619 /* IBInstance.m */; };
 		A08D96CE1CF80D2800877619 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96CC1CF80D2800877619 /* JSON.h */; };
 		A08D96CF1CF80D2800877619 /* JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96CD1CF80D2800877619 /* JSON.m */; };
+		A08D96E01CFBFED100877619 /* IBInstance_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96DF1CFBFED100877619 /* IBInstance_Internal.h */; };
+		A08D96E31CFC0BED00877619 /* OpenTokManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96E11CFC0BED00877619 /* OpenTokManager.h */; };
+		A08D96E41CFC0BED00877619 /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96E21CFC0BED00877619 /* OpenTokManager.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -163,6 +166,9 @@
 		A08D96C91CF7D2E800877619 /* IBInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstance.m; sourceTree = "<group>"; };
 		A08D96CC1CF80D2800877619 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		A08D96CD1CF80D2800877619 /* JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSON.m; sourceTree = "<group>"; };
+		A08D96DF1CFBFED100877619 /* IBInstance_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance_Internal.h; sourceTree = "<group>"; };
+		A08D96E11CFC0BED00877619 /* OpenTokManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokManager.h; sourceTree = "<group>"; };
+		A08D96E21CFC0BED00877619 /* OpenTokManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokManager.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -374,10 +380,13 @@
 				A0156FD41CEE60A50009FBEF /* IBKit.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
+				A08D96DF1CFBFED100877619 /* IBInstance_Internal.h */,
 				A08D96C81CF7D2E800877619 /* IBInstance.h */,
 				A08D96C91CF7D2E800877619 /* IBInstance.m */,
 				A08D96C41CF7C79200877619 /* IBEvent.h */,
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
+				A08D96E11CFC0BED00877619 /* OpenTokManager.h */,
+				A08D96E21CFC0BED00877619 /* OpenTokManager.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -430,6 +439,7 @@
 				A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */,
 				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
+				A08D96E31CFC0BED00877619 /* OpenTokManager.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
@@ -437,6 +447,7 @@
 				A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
+				A08D96E01CFBFED100877619 /* IBInstance_Internal.h in Headers */,
 				A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */,
 				A01E446B1CF79CD200D20CFA /* AppUtil.h in Headers */,
 				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
@@ -637,6 +648,7 @@
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
+				A08D96E41CFC0BED00877619 /* OpenTokManager.m in Sources */,
 				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,
 				A01E44181CF75C1B00D20CFA /* EventView.m in Sources */,
 				A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */,

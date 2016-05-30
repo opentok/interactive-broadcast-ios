@@ -37,7 +37,7 @@
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
     }
     else{
-        [self.statusLabel setText:[AppUtil convertToStatusString:@{@"status": event.status}]];
+        [self.statusLabel setText:[AppUtil convertToStatusString:event]];
     }
     
     if (event.image) {

@@ -9,6 +9,7 @@
 #import <IBKit/IBKit.h>
 
 #import "EventViewController.h"
+#import "IBInstance_Internal.h"
 #import "IBDateFormatter.h"
 
 @interface CustomEventsViewController ()
@@ -18,11 +19,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *eventsViewLayout;
 
 @property (nonatomic) IBInstance *instance;
-@property (nonatomic) NSArray *openedEvents;
-
-@property (nonatomic) NSMutableDictionary *eventsData;
-@property (nonatomic) NSMutableDictionary *allEvents;
-@property (nonatomic) NSArray *dataArray;
+@property (nonatomic) NSArray<IBEvent *> *openedEvents;
 
 @end
 
@@ -36,29 +33,15 @@
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
     
     
-    [IBApi getEventsWithInstanceId:self.instance_id
-                        backendURL:self.backend_base_url
-                        completion:^(NSDictionary *data, NSError *error) {
+    [IBApi getInstanceWithInstanceId:self.instance_id
+                          completion:^(IBInstance *instance, NSError *error) {
                             
-                            if (!error) {
-                                self.allEvents = [NSMutableDictionary dictionaryWithDictionary:data];
-                                // we filter out closed events
-                                self.dataArray = [_allEvents[@"events"]  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status != %@)", @"C"]];
-                                [self.eventsView reloadData];
-                            }
-                        }];
-    
-//    __weak CustomEventsViewController *weakSelf = self;
-//    [IBApi getEventsWithInstanceId:self.instance_id
-//                        backendURL:self.backend_base_url
-//                        completion:^(IBInstance *instance, NSError *error) {
-//                            if (!error) {
-//                                
-//                                weakSelf.instance = instance;
-//                                weakSelf.openedEvents = [weakSelf.instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
-//                                [weakSelf.eventsView reloadData];
-//                            }
-//                        }];
+                              if (!error) {
+                                  self.instance = instance;
+                                  self.openedEvents = [self.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+                                  [self.eventsView reloadData];
+                              }
+                          }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -67,14 +50,14 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.dataArray count];
+    return [self.openedEvents count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CustomEventsCellIdentifier" forIndexPath:indexPath];
     
-    NSMutableDictionary *data = self.dataArray[indexPath.row];
+    IBEvent *event = self.openedEvents[indexPath.row];
     
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
     UILabel *statusLabel = (UILabel *)[cell viewWithTag:101];
@@ -82,20 +65,15 @@
     UIButton *eventButton = (UIButton *)[cell viewWithTag:103];
     
     
-    [titleLabel setText:data[@"event_name"]];
-    if([data[@"status"] isEqualToString:@"N"]){
-        [statusLabel setText: [self getFormattedDate:data[@"date_time_start"]]];
+    [titleLabel setText:event.eventName];
+    if([event.status isEqualToString:@"N"]){
+        [statusLabel setText: [self getFormattedDate:event.startTime]];
         
     }else{
-        [statusLabel setText: [self getEventStatus:data[@"status"]]];
-    }
-    NSURL *finalUrl;
-    if([[data[@"event_image"] class] isSubclassOfClass:[NSNull class]]){
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_allEvents[@"frontend_url"], _allEvents[@"default_event_image"]]];
-    }else{
-        finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",_allEvents[@"frontend_url"], data[@"event_image"]]];
+        [statusLabel setText: [self getEventStatus:event.status]];
     }
     
+    NSURL *finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.instance.defaultEventImage]];
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
     if(imageData){
         eventImageHolder.image = [UIImage imageWithData:imageData];
@@ -112,17 +90,15 @@
     return cell;
     
 }
--(void)onCellClick:(id)sender{
+-(void)onCellClick:(id)sender {
     UICollectionViewCell *clickedCell = (UICollectionViewCell *)[[sender superview] superview];
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView];
-    NSIndexPath *iPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
-    NSMutableDictionary*eventData = _dataArray[iPath.row];
-    _allEvents[@"backend_base_url"] = self.backend_base_url;
+    NSIndexPath *indexPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
     
     //we now show our event view.
-    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:eventData connectionData:_allEvents user:_user];
-    [detailEvent setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:detailEvent animated:YES completion:nil];
+    EventViewController *detailEventViewController = [[EventViewController alloc] initWithInstance:self.instance indexPath:indexPath user:self.user];
+    [detailEventViewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:detailEventViewController animated:YES completion:nil];
 }
 
 - (NSString*)getEventStatus:(NSString *)statusLabel

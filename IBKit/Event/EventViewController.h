@@ -13,8 +13,4 @@
 - (instancetype)initWithInstance:(IBInstance *)instance
                        indexPath:(NSIndexPath *)indexPath
                             user:(NSDictionary *)user;
-
-- (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
-                   connectionData:(NSMutableDictionary *)aConnectionData
-                             user:(NSMutableDictionary *)aUse;
 @end

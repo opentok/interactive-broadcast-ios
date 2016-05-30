@@ -108,11 +108,7 @@
         IBEvent *chagnedEvent = changedEvents[0];
         [chagnedEvent updateEventWithJson:event];
     }
-    
-//    NSArray *changedEvent = [self.openedEventsDataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: find]];
-//    if([changedEvent count] != 0){
-//        [self.openedEventsDataArray[[self.openedEventsDataArray indexOfObject: changedEvent[0]]] setValue:event[@"newStatus"] forKey:@"status"];
-//    }
+
     [self.eventsView.eventsCollectionView reloadData];
 }
 
@@ -138,14 +134,10 @@
     
     UICollectionViewCell *clickedCell = (UICollectionViewCell *)[[sender superview] superview];
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView.eventsCollectionView];
-    NSIndexPath *iPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
-    
-    
-#warning check point for refactor
-//    NSMutableDictionary*eventData = self.openedEvents[iPath.row];
-//    EventViewController *eventView = [[EventViewController alloc] initEventWithData:eventData connectionData:self.instance user:self.user];
-//    [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//    [self presentViewController:eventView animated:YES completion:nil];
+    NSIndexPath *indexPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
+    EventViewController *eventView = [[EventViewController alloc] initWithInstance:self.instance indexPath:indexPath user:self.user];
+    [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:eventView animated:YES completion:nil];
 }
 
 - (IBAction)goBack:(id)sender {

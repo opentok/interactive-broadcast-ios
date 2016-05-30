@@ -12,6 +12,6 @@
 @interface EventsViewController : UIViewController
 
 - (instancetype)initWithInstance:(IBInstance *)instance
-                            user:(NSDictionary *)user NS_DESIGNATED_INITIALIZER;
+                            user:(NSDictionary *)user;
 
 @end

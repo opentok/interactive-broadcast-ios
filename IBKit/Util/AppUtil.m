@@ -11,14 +11,19 @@
 
 @implementation AppUtil
 
-+ (NSString *)convertToStatusString:(NSDictionary *)eventData {
++ (NSString *)convertToStatusString:(IBEvent *)event {
     
-    NSString *status = eventData[@"status"];
+    NSString *status = event.status;
     if (!status) return nil;
     
     if([status isEqualToString:@"N"]){
         
-        return [IBDateFormatter convertToAppStandardFromDateString:eventData[@"date_time_start"]];
+        if(![event.startTime isEqual:[NSNull null]]){
+            return [IBDateFormatter convertToAppStandardFromDateString:event.startTime];
+        }else{
+            return @"Not Started";
+        }
+        
     }
     
     if([status isEqualToString:@"P"]){

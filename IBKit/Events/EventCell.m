@@ -7,8 +7,9 @@
 //
 
 #import "EventCell.h"
+#import "IBEvent.h"
+#import "AppUtil.h"
 #import "IBDateFormatter.h"
-
 #import "UIImageView+Category.h"
 
 @interface EventCell()
@@ -26,19 +27,21 @@
     self.layer.cornerRadius = 3.0;
 }
 
--(void)updateCell:(NSMutableDictionary*)data{
+- (void)updateCellWithInstance:(IBInstance *)instance
+                     indexPath:(NSIndexPath *)indexPath {
 
-    [self.titleLabel setText:data[@"event_name"]];
+    IBEvent *event = instance.events[indexPath.row];
+    [self.titleLabel setText:event.eventName];
     
-    if ([data[@"status"] isEqualToString:@"N"]) {
-        [self.statusLabel setText:[self getFormattedDate:data[@"date_time_start"] ]];
+    if ([event.status isEqualToString:@"N"]) {
+        [self.statusLabel setText:[self getFormattedDate:event.startTime]];
     }
     else{
-        [self.statusLabel setText: data[@"formated_status"] ];
+        [self.statusLabel setText:[AppUtil convertToStatusString:event]];
     }
     
-    if (!data[@"event_image"] && ![data[@"event_image"] isEqual:[NSNull class]]) {
-        [self.imageView loadImageWithUrl:[NSString stringWithFormat:@"%@%@",data[@"frontend_url"], data[@"event_image"]]];
+    if (event.image) {
+        [self.imageView loadImageWithUrl:[NSString stringWithFormat:@"%@%@", instance.frontendURL, event.image]];
     }
 }
 

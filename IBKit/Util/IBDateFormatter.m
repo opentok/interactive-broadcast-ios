@@ -18,7 +18,7 @@
 - (NSDateFormatter *)backendDateFormatter {
     if (!_backendDateFormatter) {
         _backendDateFormatter = [[NSDateFormatter alloc] init];
-        [_backendDateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss.0"];
+        [_backendDateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     }
     return _backendDateFormatter;
 }

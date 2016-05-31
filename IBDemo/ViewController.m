@@ -29,7 +29,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [IBInstance configBackendURL:backendBaseUrl];
     _requestData = @{
                      @(self.celebrityButton.hash): @{
                                 @"type":@"celebrity",
@@ -56,26 +56,26 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     if (sender != self.customEventsButton) {
         
         
-        [IBApi getEventsWithAdminId:@"dxJa"
-                         backendURL:backendBaseUrl
-                         completion:^(NSDictionary *data, NSError *error) {
+        [IBApi getInstanceWithAdminId:@"dxJa"
+                           completion:^(IBInstance *instance, NSError *error) {
                              
-                             if (!error) {
-                                 NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:data];
-                                 instance_data[@"backend_base_url"] = backendBaseUrl;
+                               if (!error) {
+                                   NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
+                                   instance_data[@"backend_base_url"] = backendBaseUrl;
                                  
-                                 UIViewController *viewcontroller;
-                                 if([instance_data[@"events"] count] != 1){
+                                   UIViewController *viewcontroller;
+                                   if(instance.events.count != 1){
                                      
-                                     viewcontroller = [[EventsViewController alloc] initEventWithData:instance_data user:self.requestData[@(sender.hash)]];
-                                 }
-                                 else {
-                                     viewcontroller = [[EventViewController alloc] initEventWithData:instance_data[@"events"][0] connectionData:instance_data user:self.requestData[@(sender.hash)]];
-                                 }
+                                       viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:self.requestData[@(sender.hash)]];
+                                   }
+                                   else {
+                                       
+                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:0 user:self.requestData[@(sender.hash)]];
+                                   }
                                  
-                                 [self presentViewController:viewcontroller animated:YES completion:nil];
-                             }
-                         }];
+                                   [self presentViewController:viewcontroller animated:YES completion:nil];
+                               }
+                           }];
     }
     else {
         
@@ -89,7 +89,6 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     
     if ([segue.identifier isEqualToString:@"EventSegueIdentifier"]) {
         vc.instance_id = instanceIdentifier;
-        vc.backend_base_url= backendBaseUrl;
         vc.user = self.requestData[@(sender.hash)];
     }
 }

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <IBKit/IBInstance.h>
 
 @interface EventsViewController : UIViewController
 
-- (instancetype)initEventWithData:(NSMutableDictionary *)aEventData
-                             user:(NSMutableDictionary *)aUser NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithInstance:(IBInstance *)instance
+                            user:(NSDictionary *)user;
 
 @end

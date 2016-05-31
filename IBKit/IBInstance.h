@@ -9,12 +9,21 @@
 #import "IBEvent.h"
 
 @interface IBInstance : NSObject
+
+@property (readonly, nonatomic) NSString *apiKey;
+@property (readonly, nonatomic) NSString *sessionIdHost;
+@property (readonly, nonatomic) NSString *tokenHost;
+@property (readonly, nonatomic) NSString *sessionIdProducer;
+@property (readonly, nonatomic) NSString *tokenProducer;
+
 @property (readonly, nonatomic) NSString *defaultEventImage;
 @property (readonly, nonatomic) BOOL isAnalyticsEnabled;
 @property (readonly, nonatomic) BOOL isGetInLineEnabled;
-@property (readonly, nonatomic) NSArray <IBEvent *> * events;
+@property (readonly, nonatomic) NSArray<IBEvent *> * events;
 @property (readonly, nonatomic) NSString *frontendURL;
 @property (readonly, nonatomic) NSString *instanceId;
 @property (readonly, nonatomic) NSString *signalingURL;
 - (instancetype)initWithJson:(NSDictionary *)json;
+
++ (void)configBackendURL:(NSString *)configBackendURL;
 @end

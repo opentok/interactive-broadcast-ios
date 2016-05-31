@@ -1,5 +1,5 @@
 //
-//  AppUtil.h
+//  JSON.h
 //  IBDemo
 //
 //  Created by Xi Huang on 5/26/16.
@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IBEvent.h"
 
-@interface AppUtil : NSObject
+@interface JSON : NSObject
 
-+ (NSString *)convertToStatusString:(IBEvent *)event;
++ (NSDictionary *)parseJSON:(NSString*)string;
+
++ (NSString *)stringify:(NSDictionary*)json;
 
 @end

@@ -19,23 +19,13 @@
             _adminId = [json[@"admins_id"] integerValue];
         }
         _celebrityURL = json[@"celebrity_url"];
+        _fanURL = json[@"fan_url"];
+        _hostURL = json[@"host_url"];
         
-        if (json[@"date_time_start"]) {
-            
-        }
-        
-        if (json[@"date_time_end"]) {
-            
-        }
-        
-        if (json[@"event_image"]) {
-            
-        }
-        
-        if (json[@"event_image_end"]) {
-            
-        }
-        
+        _startTime = json[@"date_time_start"];
+        _endTime = json[@"date_time_end"];
+        _image = json[@"event_image"];
+        _endImage = json[@"event_image_end"];
         _eventName = json[@"event_name"];
         _fanURL = json[@"fan_url"];
         _hostURL = json[@"host_url"];
@@ -43,6 +33,12 @@
         _status = json[@"status"];
     }
     return self;
+}
+
+- (void)updateEventWithJson:(NSDictionary *)updatedJson {
+    if (!updatedJson) return;
+    
+    _status = updatedJson[@"newStatus"];
 }
 
 @end

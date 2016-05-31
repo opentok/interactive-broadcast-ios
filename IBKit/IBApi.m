@@ -24,8 +24,15 @@
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         
-        IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
-        completion(instance, nil);
+        if([responseObject[@"success"] integerValue] == 1){
+            IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+            completion(instance, nil);
+        }else{
+            NSDictionary *errorDetail = @{NSLocalizedDescriptionKey: responseObject[@"error"]};
+            NSError *error = [NSError errorWithDomain:@"IBKit" code:-1 userInfo:errorDetail];
+            completion(nil,error);
+        }
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
     }];
@@ -43,9 +50,15 @@
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         
+        if([responseObject[@"success"] integerValue] == 1){
+            IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+            completion(instance, nil);
+        }else{
+            NSDictionary *errorDetail = @{NSLocalizedDescriptionKey: responseObject[@"error"]};
+            NSError *error = [NSError errorWithDomain:@"IBKit" code:-1 userInfo:errorDetail];
+            completion(nil,error);
+        }
         
-        IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
-        completion(instance, nil);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
@@ -60,7 +73,7 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         
-        completion(responseObject[@"admins_id"], nil);
+            completion(responseObject[@"admins_id"], nil);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         completion(nil, error);
@@ -78,19 +91,27 @@
         return;
     }
     
-    NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", userType];
-    NSString *eventURL = [event valueForKey:userTypeURL];
-    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@", [IBInstance sharedManager].backendURL, userType, eventURL];
+    [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+        if (!error) {
+            NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", userType];
+            NSString *eventURL = [event valueForKey:userTypeURL];
+            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBInstance sharedManager].backendURL, userType,adminIdHash,eventURL];
+            
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+                
+                    IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+                    completion(instance, nil);
+                
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                completion(nil, error);
+            }];
+        }else{
+            completion(nil, error);
+        }
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
-        
-        IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
-        completion(instance, nil);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        completion(nil, error);
     }];
 }
 
@@ -119,8 +140,9 @@
             manager.requestSerializer = [AFJSONRequestSerializer serializer];
             [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
                 
-                IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
-                completion(instance, nil);
+                    IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+                    completion(instance, nil);
+                
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 completion(nil, error);
             }];

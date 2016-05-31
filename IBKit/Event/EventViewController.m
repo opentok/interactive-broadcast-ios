@@ -36,19 +36,12 @@
 
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 
-//@property (nonatomic) NSMutableDictionary *user;
-//@property (nonatomic) NSMutableDictionary *eventData;
-//@property (nonatomic) NSMutableDictionary *connectionData;
-
-@property (nonatomic) NSString *apikey;
 @property (nonatomic) NSString *userName;
 @property (nonatomic) BOOL isCeleb;
 @property (nonatomic) BOOL isHost;
 @property (nonatomic) NSMutableDictionary *errors;
 
 @property (nonatomic) NSString *connectionQuality;
-
-@property (nonatomic) NSMutableDictionary *instanceData;
 
 @property (nonatomic) OTSession* session;
 @property (nonatomic) OTSession* producerSession;
@@ -190,12 +183,16 @@ static NSString* const kTextChatType = @"chatMessage";
     [IBApi createEventTokenWithUserType:self.user[@"type"]
                                   event:self.event
                              completion:^(IBInstance *instance, NSError *error) {
-                                      [SVProgressHUD dismiss];
-                                      self.instance = instance;
-                                      [self statusChanged];
-                                      self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, [AppUtil convertToStatusString:self.event]];
-                                      [self startSession];
-                                  }];
+                                 [SVProgressHUD dismiss];
+                                 
+                                 if (!error && instance.events.count == 1) {
+                                     self.instance = instance;
+                                     self.event = [self.instance.events lastObject];
+                                     [self statusChanged];
+                                     self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, [AppUtil convertToStatusString:self.event]];
+                                     [self startSession];
+                                 }
+                             }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -221,9 +218,6 @@ static NSString* const kTextChatType = @"chatMessage";
     _audio_bw = 0;
     _video_pl_ratio = -1;
     _audio_pl_ratio = -1;
-    
-//    NSNumber *api = self.connectionData[@"apiKey"];
-//    self.apikey = [NSString stringWithFormat:@"%@", api];
     
     _session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                        sessionId:self.instance.sessionIdHost
@@ -275,7 +269,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)connectFanSignaling{
     
     __weak EventViewController *weakSelf = self;
-    [SIOSocket socketWithHost:_instanceData[@"signaling_url"] response: ^(SIOSocket *socket)
+    [SIOSocket socketWithHost:_instance.signalingURL response: ^(SIOSocket *socket)
      {
          _signalingSocket = socket;
          _signalingSocket.onConnect = ^()
@@ -354,7 +348,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 #pragma mark - logging
 - (void)addLogging {
-    NSString *apiKey = self.apikey;
+    NSString *apiKey = _instance.apiKey;
     NSString *sessionId = _session.sessionId;
     NSInteger partner = [apiKey integerValue];
     NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.event.identifier];
@@ -964,9 +958,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
         }
         
-        
-        
-        
     }else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _producerStream = stream;
@@ -976,8 +967,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         }
         
     }
-    
-    
     
 }
 
@@ -1044,10 +1033,13 @@ didFailWithError:(OTError*)error
     NSLog(@"session did receiveSignalType: (%@)", type);
     
     if([type isEqualToString:@"startEvent"]){
-        self.event.status = @"P";
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.event.eventName, [AppUtil convertToStatusString:self.event]];
-        _shouldResendProducerSignal = YES;
-        [self statusChanged];
+        if([self.event.status isEqualToString:@"N"]){
+            self.event.status = @"P";
+            self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.event.eventName, [AppUtil convertToStatusString:self.event]];
+            _shouldResendProducerSignal = YES;
+            [self statusChanged];
+        }
+        
     }
     if([type isEqualToString:@"openChat"]){
         //self.chatBtn.hidden = NO;
@@ -1163,10 +1155,6 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"goLive"]){
         self.event.status = @"L";
         self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.event.eventName, [AppUtil convertToStatusString:self.event]];
-        if(!_isLive){
-            [self goLive];
-        }
-        [self statusChanged];
         self.eventView.eventImage.hidden = YES;
         
     }
@@ -1200,10 +1188,6 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"finishEvent"]){
         self.event.status = @"C";
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.event.eventName,  [AppUtil convertToStatusString:self.event]];
-        self.eventView.statusLabel.hidden = YES;
-        self.eventView.chatBtn.hidden = YES;
-        [self statusChanged];
     }
     
     if([type isEqualToString:@"disconnect"]){
@@ -1374,8 +1358,11 @@ didFailWithError:(OTError*)error
             self.eventView.getInLineBtn.hidden = NO;
         }
         _isLive = YES;
+        [self goLive];
     };
     if([self.event.status isEqualToString:@"C"]){
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)",  self.event.eventName,  [AppUtil convertToStatusString:self.event]];
+
         if(self.event.endImage){
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
         }
@@ -1383,20 +1370,26 @@ didFailWithError:(OTError*)error
         self.eventView.eventImage.hidden = NO;
         self.eventView.getInLineBtn.hidden = YES;
         self.eventView.leaveLineBtn.hidden = YES;
-        
+        self.eventView.statusLabel.hidden = YES;
+        self.eventView.chatBtn.hidden = YES;
+        self.eventView.internalHolder.hidden = YES;
+
         OTError *error = nil;
         
-        [_session disconnect:&error];
+        if(_session){
+            [_session disconnect:&error];
+        }
+        
+        if (error) {
+            NSLog(@"Disconnect error: (%@)", error);
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+        
         if(_isBackstage){
             [self disconnectBackstageSession];
         }
-        if (error) {
-            NSLog(@"error: (%@)", error);
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
         [self cleanupPublisher];
         self.eventView.closeEvenBtn.hidden = NO;
-        
     };
     
 };
@@ -1518,7 +1511,7 @@ didFailWithError:(OTError*)error
 
 - (IBAction)getInLineClick:(id)sender {
     self.userName = self.userName;
-    _producerSession = [[OTSession alloc] initWithApiKey:self.apikey
+    _producerSession = [[OTSession alloc] initWithApiKey:_instance.apiKey
                                                sessionId:self.instance.sessionIdProducer
                                                 delegate:self];
     [self inLineConnect];

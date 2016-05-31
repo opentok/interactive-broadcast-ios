@@ -18,7 +18,12 @@
     
     if([status isEqualToString:@"N"]){
         
-        return [IBDateFormatter convertToAppStandardFromDateString:event.startTime];
+        if(![event.startTime isEqual:[NSNull null]]){
+            return [IBDateFormatter convertToAppStandardFromDateString:event.startTime];
+        }else{
+            return @"Not Started";
+        }
+        
     }
     
     if([status isEqualToString:@"P"]){

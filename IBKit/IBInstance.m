@@ -50,6 +50,10 @@
             events = nil;
         }
         
+        if (json[@"event"]) {
+            _events = @[[[IBEvent alloc] initWithJson:json[@"event"]]];
+        }
+        
         _frontendURL = json[@"frontend_url"];
         _instanceId = json[@"instance_id"];
         _signalingURL = json[@"signaling_url"];

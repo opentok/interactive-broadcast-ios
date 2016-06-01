@@ -15,9 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIView *statusBar;
 
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
-@property (weak, nonatomic) IBOutlet UIView *HostViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *FanViewHolder;
-@property (weak, nonatomic) IBOutlet UIView *CelebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *hostViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *fanViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *celebrityViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *inLineHolder;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

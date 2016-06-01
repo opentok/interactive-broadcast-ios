@@ -127,7 +127,6 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
-    
 }
 
 -(void)onCellClick:(id)sender{

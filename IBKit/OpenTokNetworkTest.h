@@ -23,4 +23,9 @@
 @property (nonatomic) double audio_pl_ratio;
 @property (nonatomic) NSString *frameRate;
 @property (nonatomic) NSString *resolution;
+
+- (instancetype)initWithFrameRateAndResolution:(NSString*)framerate resolution:(NSString*)resolution;
+- (void)processStats:(id)stats;
+- (NSString*)getQuality;
+
 @end

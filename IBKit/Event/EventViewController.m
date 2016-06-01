@@ -167,19 +167,7 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 -(void)startSession{
-    _networkTest.prevVideoTimestamp = 0;
-    _networkTest.prevVideoBytes = 0;
-    _networkTest.prevAudioTimestamp = 0;
-    _networkTest.prevAudioBytes = 0;
-    _networkTest.prevVideoPacketsLost = 0;
-    _networkTest.prevVideoPacketsRcvd = 0;
-    _networkTest.prevAudioPacketsLost = 0;
-    _networkTest.prevAudioPacketsRcvd = 0;
-    _networkTest.video_bw = 0;
-    _networkTest.audio_bw = 0;
-    _networkTest.video_pl_ratio = -1;
-    _networkTest.audio_pl_ratio = -1;
-    
+ ///init test
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                        sessionId:self.instance.sessionIdHost
                                         delegate:self];
@@ -570,8 +558,8 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
     
-    _networkTest.frameRate = @"30";
-    _networkTest.resolution = @"640x480";
+    _networkTest = [[OpenTokNetworkTest alloc] initWithFrameRateAndResolution:@"30" resolution:@"640x480"];
+
     
     if(subscriber.session.connection.connectionId == _openTokManager.session.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
         
@@ -640,27 +628,6 @@ static NSString* const kTextChatType = @"chatMessage";
 
 //Network Test
 
--(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
-{
-    
-    NSDictionary* videoLimits = @{
-                                  @"1280x720-30": @[@(250),@(350),@(600),@(1000)],
-                                  @"1280x720-15": @[@(150),@(250),@(350),@(800)],
-                                  @"1280x720-7": @[@(120),@(150),@(250),@(600)],
-                                  //VGA
-                                  @"640x480-30": @[@(600),@(250),@(250),@(600),@(150),@(150),@(120)],
-                                  @"640x480-15": @[@(400),@(200),@(150),@(200),@(120),@(120),@(75)],
-                                  @"640x480-7": @[@(200),@(150),@(120),@(150),@(75),@(50),@(50)],
-                                  //QVGA
-                                  @"320x240-30": @[@(300),@(200),@(120),@(200),@(120),@(100)],
-                                  @"320x240-15": @[@(200),@(150),@(120),@(150),@(120),@(100)],
-                                  @"320x240-7": @[@(150),@(100),@(100),@(150),@(75),@(50)]
-                                  };
-    
-    NSString* key = [NSString stringWithFormat:@"%@-%@",resolution,framerate];
-    NSLog(@"%@",key);
-    return videoLimits[key];
-}
 -(void)startNetworkTest{
     if(_isBackstage || _isOnstage){
         if(_openTokManager.hostStream && _openTokManager.hostStream.hasVideo && _isLive){
@@ -697,95 +664,19 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         subscriber.delegate = nil;
         _networkTest.prevVideoTimestamp = stats.timestamp;
         _networkTest.prevVideoBytes = stats.videoBytesReceived;
-        [self processStats:stats];
-    }
-}
+        
+        [_networkTest processStats:stats];
+        [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
 
-- (void)processStats:(id)stats
-{
-    if ([stats isKindOfClass:[OTSubscriberKitVideoNetworkStats class]])
-    {
-        _networkTest.video_pl_ratio = -1;
-        OTSubscriberKitVideoNetworkStats *videoStats =
-        (OTSubscriberKitVideoNetworkStats *) stats;
-        if (_networkTest.prevVideoPacketsRcvd != 0) {
-            uint64_t pl = videoStats.videoPacketsLost - _networkTest.prevVideoPacketsLost;
-            uint64_t pr = videoStats.videoPacketsReceived - _networkTest.prevVideoPacketsRcvd;
-            uint64_t pt = pl + pr;
-            if (pt > 0)
-                _networkTest.video_pl_ratio = (double) pl / (double) pt;
-        }
-        _networkTest.prevVideoPacketsLost = videoStats.videoPacketsLost;
-        _networkTest.prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
+       // [self processStats:stats];
     }
-    //[self checkQualityAndSendSignal];
-    [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
 }
 
 - (void)checkQualityAndSendSignal
 {
     if(_openTokManager.publisher && _openTokManager.publisher.session){
         
-        NSArray *aVideoLimits = [self getVideoLimits:_networkTest.resolution framerate:_networkTest.frameRate];
-        if (!aVideoLimits) return;
-        
-        NSString *quality;
-        
-        if([_networkTest.resolution isEqualToString:@"1280x720"]){
-            if (_networkTest.video_bw < [aVideoLimits[0] longValue]) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_bw <= [aVideoLimits[1] longValue] && _networkTest.video_pl_ratio < 0.1 ) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio > 0.1 ) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[2] longValue] && _networkTest.video_pl_ratio < 0.1 ) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio > 0.02 && _networkTest.video_pl_ratio < 0.1 ) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio < 0.02 ) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Great";
-            }
-        }
-        
-        if([_networkTest.resolution isEqualToString:@"640x480"]){
-            if(_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Great";
-            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio <0.02) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio >0.02 && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[4] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Good";
-            } else if (_networkTest.video_pl_ratio > 0.1 && _networkTest.video_bw > [aVideoLimits[5] longValue]) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw >[aVideoLimits[6] longValue] && _networkTest.video_bw <= [aVideoLimits[4] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw < [aVideoLimits[6] longValue] || _networkTest.video_pl_ratio > 0.1) {
-                quality = @"Poor";
-            }
-        }
-        if([_networkTest.resolution isEqualToString:@"320x240"]){
-            if(_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Great";
-            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio <0.02) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio >0.02 && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Good";
-            } else if (_networkTest.video_bw > [aVideoLimits[4] longValue] && _networkTest.video_bw <= [aVideoLimits[1] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Good";
-            } else if (_networkTest.video_pl_ratio > 0.1 && _networkTest.video_bw >[aVideoLimits[4] longValue]) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw >[aVideoLimits[5] longValue] && _networkTest.video_bw <= [aVideoLimits[4] longValue] && _networkTest.video_pl_ratio < 0.1) {
-                quality = @"Poor";
-            } else if (_networkTest.video_bw < [aVideoLimits[5] longValue] || _networkTest.video_pl_ratio > 0.1) {
-                quality = @"Poor";
-            }
-        }
-        
-        self.connectionQuality = quality;
-        
+        NSString *quality = [_networkTest getQuality];
         
         NSDictionary *data = @{
                                @"type" : @"qualityUpdate",

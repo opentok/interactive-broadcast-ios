@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
+		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3303B8576609283931392 /* libPods-IBKitTests.a */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
@@ -130,6 +132,8 @@
 
 /* Begin PBXFileReference section */
 		01B3303B8576609283931392 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
+		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -424,6 +428,8 @@
 				A08D96C91CF7D2E800877619 /* IBInstance.m */,
 				A08D96C41CF7C79200877619 /* IBEvent.h */,
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
+				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
+				0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -478,6 +484,7 @@
 				A01E443D1CF75CDA00D20CFA /* IBDateFormatter.h in Headers */,
 				A022F60A1CF60D83008E8C70 /* EventsViewController.h in Headers */,
 				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
+				0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */,
 				A08D96ED1CFE36F400877619 /* OpenTokManager.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
@@ -776,6 +783,7 @@
 				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,
 				A01E44181CF75C1B00D20CFA /* EventView.m in Sources */,
 				A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */,
+				0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */,
 				A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */,
 				A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,

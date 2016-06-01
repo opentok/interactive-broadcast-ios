@@ -80,11 +80,11 @@
     }];
 }
 
-+ (void)createEventTokenWithUserType:(NSString *)userType
-                               event:(IBEvent *)event
-                          completion:(void (^)(IBInstance *, NSError *))completion {
++ (void)createEventTokenWithUser:(IBUser *)user
+                           event:(IBEvent *)event
+                      completion:(void (^)(IBInstance *, NSError *))completion {
     
-    if ([userType isEqualToString:@"fan"]) {
+    if (user.userRole == IBUserRoleFan) {
         [IBApi createFanEventTokenWithEvent:event completion:^(IBInstance *instance, NSError *error) {
             completion(instance, error);
         }];
@@ -93,9 +93,9 @@
     
     [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
         if (!error) {
-            NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", userType];
+            NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", [user userRoleName]];
             NSString *eventURL = [event valueForKey:userTypeURL];
-            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBInstance sharedManager].backendURL, userType,adminIdHash,eventURL];
+            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBInstance sharedManager].backendURL, [user userRoleName], adminIdHash,eventURL];
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.requestSerializer = [AFJSONRequestSerializer serializer];

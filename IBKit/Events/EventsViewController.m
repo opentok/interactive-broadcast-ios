@@ -19,9 +19,9 @@
 
 @interface EventsViewController ()
 
+@property (nonatomic) IBUser *user;
 @property (nonatomic) IBInstance *instance;
 @property (nonatomic) NSArray *openedEvents;
-@property (nonatomic) NSDictionary *user;
 
 @property (nonatomic) EventsView *eventsView;
 @property (nonatomic) SIOSocket *signalingSocket;
@@ -32,7 +32,7 @@
 @implementation EventsViewController
 
 - (instancetype)initWithInstance:(IBInstance *)instance
-                            user:(NSDictionary *)user {
+                            user:(IBUser *)user {
     
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         _instance = instance;

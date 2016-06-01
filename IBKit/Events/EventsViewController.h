@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <IBKit/IBInstance.h>
+#import <IBKit/IBUser.h>
 
 @interface EventsViewController : UIViewController
 
 - (instancetype)initWithInstance:(IBInstance *)instance
-                            user:(NSDictionary *)user;
+                            user:(IBUser *)user;
 
 @end

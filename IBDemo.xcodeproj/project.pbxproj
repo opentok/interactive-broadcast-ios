@@ -74,6 +74,8 @@
 		A08D96EC1CFE36F400877619 /* IBInstance_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96E91CFE36F400877619 /* IBInstance_Internal.h */; };
 		A08D96ED1CFE36F400877619 /* OpenTokManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96EA1CFE36F400877619 /* OpenTokManager.h */; };
 		A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96EB1CFE36F400877619 /* OpenTokManager.m */; };
+		A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A8A52D1CFF7F2F00A9EB4B /* IBUser.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -188,6 +190,8 @@
 		A08D96E91CFE36F400877619 /* IBInstance_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance_Internal.h; sourceTree = "<group>"; };
 		A08D96EA1CFE36F400877619 /* OpenTokManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokManager.h; sourceTree = "<group>"; };
 		A08D96EB1CFE36F400877619 /* OpenTokManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokManager.m; sourceTree = "<group>"; };
+		A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBUser.h; sourceTree = "<group>"; };
+		A0A8A52D1CFF7F2F00A9EB4B /* IBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBUser.m; sourceTree = "<group>"; };
 		A0C5261A1CEAD2D400706104 /* IBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5261E1CEAD2D400706104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0C526201CEAD2D400706104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 				A08D96C91CF7D2E800877619 /* IBInstance.m */,
 				A08D96C41CF7C79200877619 /* IBEvent.h */,
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
+				A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */,
+				A0A8A52D1CFF7F2F00A9EB4B /* IBUser.m */,
 				A08D96EA1CFE36F400877619 /* OpenTokManager.h */,
 				A08D96EB1CFE36F400877619 /* OpenTokManager.m */,
 				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
@@ -476,8 +482,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
+				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
 				A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */,
+				A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */,
 				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
 				A01E44191CF75C1B00D20CFA /* EventViewController.h in Headers */,
 				A01E44631CF7968200D20CFA /* UIImageView+Category.h in Headers */,
@@ -486,7 +494,6 @@
 				A01E44501CF7602B00D20CFA /* DotSpinnerViewController.h in Headers */,
 				0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */,
 				A08D96ED1CFE36F400877619 /* OpenTokManager.h in Headers */,
-				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
 				A08D96E71CFE36E800877619 /* JSON.h in Headers */,
@@ -780,6 +787,7 @@
 				A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
 				A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */,
+				A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */,
 				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,
 				A01E44181CF75C1B00D20CFA /* EventView.m in Sources */,
 				A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */,

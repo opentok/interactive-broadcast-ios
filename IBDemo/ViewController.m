@@ -31,24 +31,11 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     [super viewDidLoad];
     [IBInstance configBackendURL:backendBaseUrl];
     _requestData = @{
-                     @(self.celebrityButton.hash): @{
-                                @"type":@"celebrity",
-                                @"name":@"Celebrity"
-                             },
-                     @(self.hostButton.hash): @{
-                                @"type":@"host",
-                                @"name":@"Host"
-                             },
-                     @(self.fanButton.hash): @{
-                                @"type":@"fan",
-                                @"name":@"FanName"
-                             },
-                     @(self.customEventsButton.hash): @{
-                                @"type":@"fan",
-                                @"name":@"Fan"
-                             }
-        
-                     };
+                     @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
+                     @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
+                     @(self.fanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
+                     @(self.customEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCustom name:@"Fan"]
+                    };
 }
 
 - (IBAction)eventButtonPressed:(UIButton *)sender {

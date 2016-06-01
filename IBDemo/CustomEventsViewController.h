@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <IBKit/IBKit.h>
 
 @interface CustomEventsViewController : UIViewController
 
-@property (nonatomic) NSDictionary *user;
+@property (nonatomic) IBUser *user;
 @property (nonatomic) NSString *instance_id;
 
 @end

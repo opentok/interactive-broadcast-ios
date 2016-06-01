@@ -29,6 +29,7 @@
 #import "PerformSelectorWithDebounce.h"
 
 #import "OpenTokManager.h"
+#import "OpenTokNetworkTest.h"
 
 #import <Reachability/Reachability.h>
 
@@ -45,22 +46,6 @@
 @property (nonatomic) OTKAnalytics *logging;
 @property (nonatomic) SIOSocket *signalingSocket;
 @property (nonatomic) CGFloat chatYPosition;
-
-//Network Testing
-@property (nonatomic) double prevVideoTimestamp;
-@property (nonatomic) double prevVideoBytes;
-@property (nonatomic) double prevAudioTimestamp;
-@property (nonatomic) double prevAudioBytes;
-@property (nonatomic) uint64_t prevVideoPacketsLost;
-@property (nonatomic) uint64_t prevVideoPacketsRcvd;
-@property (nonatomic) uint64_t prevAudioPacketsLost;
-@property (nonatomic) uint64_t prevAudioPacketsRcvd;
-@property (nonatomic) long video_bw;
-@property (nonatomic) long audio_bw;
-@property (nonatomic) double video_pl_ratio;
-@property (nonatomic) double audio_pl_ratio;
-@property (nonatomic) NSString *frameRate;
-@property (nonatomic) NSString *resolution;
 
 @property (nonatomic) EventView *eventView;
 @property (nonatomic) BOOL isBackstage;
@@ -82,6 +67,8 @@
 
 // OpenTok
 @property (nonatomic) OpenTokManager *openTokManager;
+@property (nonatomic) OpenTokNetworkTest *networkTest;
+
 @end
 
 @implementation EventViewController
@@ -180,18 +167,18 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 -(void)startSession{
-    _prevVideoTimestamp = 0;
-    _prevVideoBytes = 0;
-    _prevAudioTimestamp = 0;
-    _prevAudioBytes = 0;
-    _prevVideoPacketsLost = 0;
-    _prevVideoPacketsRcvd = 0;
-    _prevAudioPacketsLost = 0;
-    _prevAudioPacketsRcvd = 0;
-    _video_bw = 0;
-    _audio_bw = 0;
-    _video_pl_ratio = -1;
-    _audio_pl_ratio = -1;
+    _networkTest.prevVideoTimestamp = 0;
+    _networkTest.prevVideoBytes = 0;
+    _networkTest.prevAudioTimestamp = 0;
+    _networkTest.prevAudioBytes = 0;
+    _networkTest.prevVideoPacketsLost = 0;
+    _networkTest.prevVideoPacketsRcvd = 0;
+    _networkTest.prevAudioPacketsLost = 0;
+    _networkTest.prevAudioPacketsRcvd = 0;
+    _networkTest.video_bw = 0;
+    _networkTest.audio_bw = 0;
+    _networkTest.video_pl_ratio = -1;
+    _networkTest.audio_pl_ratio = -1;
     
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                        sessionId:self.instance.sessionIdHost
@@ -583,8 +570,8 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
     
-    _frameRate = @"30";
-    _resolution = @"640x480";
+    _networkTest.frameRate = @"30";
+    _networkTest.resolution = @"640x480";
     
     if(subscriber.session.connection.connectionId == _openTokManager.session.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
         
@@ -697,19 +684,19 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     
     /// TODO : check how to update the framerate
     
-    if (_prevVideoTimestamp == 0)
+    if (_networkTest.prevVideoTimestamp == 0)
     {
-        _prevVideoTimestamp = stats.timestamp;
-        _prevVideoBytes = stats.videoBytesReceived;
+        _networkTest.prevVideoTimestamp = stats.timestamp;
+        _networkTest.prevVideoBytes = stats.videoBytesReceived;
     }
     
-    if (stats.timestamp - _prevVideoTimestamp >= 3000)
+    if (stats.timestamp - _networkTest.prevVideoTimestamp >= 3000)
     {
-        _video_bw = (8 * (stats.videoBytesReceived - _prevVideoBytes)) / ((stats.timestamp - _prevVideoTimestamp) / 1000ull);
+        _networkTest.video_bw = (8 * (stats.videoBytesReceived - _networkTest.prevVideoBytes)) / ((stats.timestamp - _networkTest.prevVideoTimestamp) / 1000ull);
         
         subscriber.delegate = nil;
-        _prevVideoTimestamp = stats.timestamp;
-        _prevVideoBytes = stats.videoBytesReceived;
+        _networkTest.prevVideoTimestamp = stats.timestamp;
+        _networkTest.prevVideoBytes = stats.videoBytesReceived;
         [self processStats:stats];
     }
 }
@@ -718,18 +705,18 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     if ([stats isKindOfClass:[OTSubscriberKitVideoNetworkStats class]])
     {
-        _video_pl_ratio = -1;
+        _networkTest.video_pl_ratio = -1;
         OTSubscriberKitVideoNetworkStats *videoStats =
         (OTSubscriberKitVideoNetworkStats *) stats;
-        if (_prevVideoPacketsRcvd != 0) {
-            uint64_t pl = videoStats.videoPacketsLost - _prevVideoPacketsLost;
-            uint64_t pr = videoStats.videoPacketsReceived - _prevVideoPacketsRcvd;
+        if (_networkTest.prevVideoPacketsRcvd != 0) {
+            uint64_t pl = videoStats.videoPacketsLost - _networkTest.prevVideoPacketsLost;
+            uint64_t pr = videoStats.videoPacketsReceived - _networkTest.prevVideoPacketsRcvd;
             uint64_t pt = pl + pr;
             if (pt > 0)
-                _video_pl_ratio = (double) pl / (double) pt;
+                _networkTest.video_pl_ratio = (double) pl / (double) pt;
         }
-        _prevVideoPacketsLost = videoStats.videoPacketsLost;
-        _prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
+        _networkTest.prevVideoPacketsLost = videoStats.videoPacketsLost;
+        _networkTest.prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
     }
     //[self checkQualityAndSendSignal];
     [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
@@ -739,60 +726,60 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     if(_openTokManager.publisher && _openTokManager.publisher.session){
         
-        NSArray *aVideoLimits = [self getVideoLimits:_resolution framerate:_frameRate];
+        NSArray *aVideoLimits = [self getVideoLimits:_networkTest.resolution framerate:_networkTest.frameRate];
         if (!aVideoLimits) return;
         
         NSString *quality;
         
-        if([_resolution isEqualToString:@"1280x720"]){
-            if (_video_bw < [aVideoLimits[0] longValue]) {
+        if([_networkTest.resolution isEqualToString:@"1280x720"]){
+            if (_networkTest.video_bw < [aVideoLimits[0] longValue]) {
                 quality = @"Poor";
-            } else if (_video_bw > [aVideoLimits[0] longValue] && _video_bw <= [aVideoLimits[1] longValue] && _video_pl_ratio < 0.1 ) {
+            } else if (_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_bw <= [aVideoLimits[1] longValue] && _networkTest.video_pl_ratio < 0.1 ) {
                 quality = @"Poor";
-            } else if (_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio > 0.1 ) {
+            } else if (_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio > 0.1 ) {
                 quality = @"Poor";
-            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[2] longValue] && _video_pl_ratio < 0.1 ) {
+            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[2] longValue] && _networkTest.video_pl_ratio < 0.1 ) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio > 0.02 && _video_pl_ratio < 0.1 ) {
+            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio > 0.02 && _networkTest.video_pl_ratio < 0.1 ) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio < 0.02 ) {
+            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio < 0.02 ) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[3] longValue] && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw > [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Great";
             }
         }
         
-        if([_resolution isEqualToString:@"640x480"]){
-            if(_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
+        if([_networkTest.resolution isEqualToString:@"640x480"]){
+            if(_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio <0.02) {
+            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio >0.02 && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio >0.02 && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[4] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw > [aVideoLimits[4] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (_video_pl_ratio > 0.1 && _video_bw > [aVideoLimits[5] longValue]) {
+            } else if (_networkTest.video_pl_ratio > 0.1 && _networkTest.video_bw > [aVideoLimits[5] longValue]) {
                 quality = @"Poor";
-            } else if (_video_bw >[aVideoLimits[6] longValue] && _video_bw <= [aVideoLimits[4] longValue] && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw >[aVideoLimits[6] longValue] && _networkTest.video_bw <= [aVideoLimits[4] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (_video_bw < [aVideoLimits[6] longValue] || _video_pl_ratio > 0.1) {
+            } else if (_networkTest.video_bw < [aVideoLimits[6] longValue] || _networkTest.video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }
-        if([_resolution isEqualToString:@"320x240"]){
-            if(_video_bw > [aVideoLimits[0] longValue] && _video_pl_ratio < 0.1) {
+        if([_networkTest.resolution isEqualToString:@"320x240"]){
+            if(_networkTest.video_bw > [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Great";
-            } else if (_video_bw > [aVideoLimits[1] longValue] && _video_bw <= [aVideoLimits[0] longValue] && _video_pl_ratio <0.02) {
+            } else if (_networkTest.video_bw > [aVideoLimits[1] longValue] && _networkTest.video_bw <= [aVideoLimits[0] longValue] && _networkTest.video_pl_ratio <0.02) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[2] longValue] && _video_bw <= [aVideoLimits[3] longValue] && _video_pl_ratio >0.02 && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw > [aVideoLimits[2] longValue] && _networkTest.video_bw <= [aVideoLimits[3] longValue] && _networkTest.video_pl_ratio >0.02 && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (_video_bw > [aVideoLimits[4] longValue] && _video_bw <= [aVideoLimits[1] longValue] && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw > [aVideoLimits[4] longValue] && _networkTest.video_bw <= [aVideoLimits[1] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Good";
-            } else if (_video_pl_ratio > 0.1 && _video_bw >[aVideoLimits[4] longValue]) {
+            } else if (_networkTest.video_pl_ratio > 0.1 && _networkTest.video_bw >[aVideoLimits[4] longValue]) {
                 quality = @"Poor";
-            } else if (_video_bw >[aVideoLimits[5] longValue] && _video_bw <= [aVideoLimits[4] longValue] && _video_pl_ratio < 0.1) {
+            } else if (_networkTest.video_bw >[aVideoLimits[5] longValue] && _networkTest.video_bw <= [aVideoLimits[4] longValue] && _networkTest.video_pl_ratio < 0.1) {
                 quality = @"Poor";
-            } else if (_video_bw < [aVideoLimits[5] longValue] || _video_pl_ratio > 0.1) {
+            } else if (_networkTest.video_bw < [aVideoLimits[5] longValue] || _networkTest.video_pl_ratio > 0.1) {
                 quality = @"Poor";
             }
         }

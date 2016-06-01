@@ -31,27 +31,23 @@
 }
 
 
-- (void)processStats:(id)stats
+- (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats
 {
-    if ([stats isKindOfClass:[OTSubscriberKitVideoNetworkStats class]])
-    {
-        _video_pl_ratio = -1;
-        OTSubscriberKitVideoNetworkStats *videoStats =
-        (OTSubscriberKitVideoNetworkStats *) stats;
-        if (_prevVideoPacketsRcvd != 0) {
-            uint64_t pl = videoStats.videoPacketsLost - _prevVideoPacketsLost;
-            uint64_t pr = videoStats.videoPacketsReceived - _prevVideoPacketsRcvd;
-            uint64_t pt = pl + pr;
-            if (pt > 0)
-                _video_pl_ratio = (double) pl / (double) pt;
-        }
-        _prevVideoPacketsLost = videoStats.videoPacketsLost;
-        _prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
+    _video_pl_ratio = -1;
+    OTSubscriberKitVideoNetworkStats *videoStats =
+    (OTSubscriberKitVideoNetworkStats *) stats;
+    if (_prevVideoPacketsRcvd != 0) {
+        uint64_t pl = videoStats.videoPacketsLost - _prevVideoPacketsLost;
+        uint64_t pr = videoStats.videoPacketsReceived - _prevVideoPacketsRcvd;
+        uint64_t pt = pl + pr;
+        if (pt > 0)
+            _video_pl_ratio = (double) pl / (double) pt;
     }
+    _prevVideoPacketsLost = videoStats.videoPacketsLost;
+    _prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
 }
 
--(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate
-{
+-(NSArray*)getVideoLimits:(NSString*)resolution framerate:(NSString*)framerate {
     
     NSDictionary* videoLimits = @{
                                   @"1280x720-30": @[@(250),@(350),@(600),@(1000)],
@@ -72,7 +68,7 @@
     return videoLimits[key];
 }
 
--(NSString*)getQuality{
+- (NSString*)getQuality{
    
     NSString *quality;
     NSArray *aVideoLimits = [self getVideoLimits:_resolution framerate:_frameRate];

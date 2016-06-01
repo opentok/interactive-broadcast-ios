@@ -84,4 +84,37 @@
     }];
 }
 
+#pragma mark - subscriber views
+- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers {
+    CGFloat c = 0;
+    CGFloat new_width = 1;
+    CGFloat new_height = self.internalHolder.bounds.size.height;
+    if(subscribers.count == 0){
+        self.eventImage.hidden = NO;
+    }
+    else{
+        self.eventImage.hidden = YES;
+        new_width = CGRectGetWidth([UIScreen mainScreen].bounds) / subscribers.count;
+    }
+    
+    NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
+    
+    for(NSString *viewName in viewNames){
+        
+        UIView *view = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];
+        if(subscribers[viewName]){
+            [view setHidden:NO];
+            OTSubscriber *temp = subscribers[viewName];
+            
+            [view setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
+            temp.view.frame = CGRectMake(0, 0, new_width,new_height);
+            c++;
+        }
+        else{
+            [view setHidden:YES];
+            [view setFrame:CGRectMake(0, 0, 5,new_height)];
+        }
+    }
+}
+
 @end

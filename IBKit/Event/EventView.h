@@ -46,4 +46,6 @@
 - (void)showVideoPreviewWithPublisher:(OTPublisher *)publisher;
 - (void)hideVideoPreview;
 
+#pragma mark - subscriber views
+- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers;
 @end

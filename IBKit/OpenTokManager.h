@@ -26,4 +26,6 @@
 @property (nonatomic) OTStream* producerStream;
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
+
+- (void)muteOnstageSession:(BOOL)mute;
 @end

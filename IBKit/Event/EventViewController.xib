@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -435,16 +435,16 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="CelebrityViewHolder" destination="dI5-P0-OBa" id="4DR-4A-d0q"/>
-                <outlet property="FanViewHolder" destination="1Vg-Tc-XbD" id="SvA-la-XMQ"/>
-                <outlet property="HostViewHolder" destination="o0K-yn-m3H" id="OTp-gW-aqg"/>
+                <outlet property="celebrityViewHolder" destination="dI5-P0-OBa" id="Fa4-Jm-dLg"/>
                 <outlet property="chatBar" destination="PzH-nh-WWa" id="Jtu-Tg-wyj"/>
                 <outlet property="chatBtn" destination="sgd-9K-em0" id="3Vy-pg-2ev"/>
                 <outlet property="closeChat" destination="fgA-0L-GnS" id="mEC-e2-Plw"/>
                 <outlet property="closeEvenBtn" destination="jgu-Fc-pWM" id="r12-ai-Eo4"/>
                 <outlet property="eventImage" destination="3OI-XM-flL" id="gGN-LW-2Fa"/>
                 <outlet property="eventName" destination="HMb-Rp-gdV" id="9Ie-dK-mXo"/>
+                <outlet property="fanViewHolder" destination="1Vg-Tc-XbD" id="RxQ-u0-UEI"/>
                 <outlet property="getInLineBtn" destination="0X6-Ae-NUS" id="F7t-JE-w1T"/>
+                <outlet property="hostViewHolder" destination="o0K-yn-m3H" id="Dpw-vq-kbf"/>
                 <outlet property="inLineHolder" destination="65j-ak-aqS" id="BoA-8h-qE6"/>
                 <outlet property="internalHolder" destination="fJu-a8-Zwd" id="5of-1y-reH"/>
                 <outlet property="leaveLineBtn" destination="tJ3-U1-PiD" id="bvm-16-PwH"/>

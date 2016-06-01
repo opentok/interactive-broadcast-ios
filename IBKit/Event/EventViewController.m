@@ -44,8 +44,6 @@
 @property (nonatomic) OTKTextChatComponent *textChat;
 @property (nonatomic) OTKAnalytics *logging;
 @property (nonatomic) SIOSocket *signalingSocket;
-
-@property (nonatomic) NSMutableDictionary* videoViews;
 @property (nonatomic) CGFloat chatYPosition;
 
 //Network Testing
@@ -95,9 +93,6 @@ static NSString* const kTextChatType = @"chatMessage";
                             user:(NSDictionary *)user {
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
-        _openTokManager = [[OpenTokManager alloc] init];
-
-        
         //Unsure of this 2 lines..
         OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
@@ -109,12 +104,8 @@ static NSString* const kTextChatType = @"chatMessage";
         _isCeleb = [user[@"type"] isEqualToString:@"celebrity"];
         _isHost = [user[@"type"] isEqualToString:@"host"];
         
-        _videoViews = [[NSMutableDictionary alloc] init];
-        _videoViews[@"fan"] = self.eventView.FanViewHolder;
-        _videoViews[@"celebrity"] = self.eventView.CelebrityViewHolder;
-        _videoViews[@"host"] = self.eventView.HostViewHolder;
-        
-         _openTokManager.subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
+        _openTokManager = [[OpenTokManager alloc] init];
+        _openTokManager.subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
         
         _isFan = !_isCeleb && !_isHost;
         
@@ -249,7 +240,7 @@ static NSString* const kTextChatType = @"chatMessage";
     _unreadCount = 0;
 }
 
--(void)connectFanSignaling{
+-(void)connectFanSignaling {
     
     __weak EventViewController *weakSelf = self;
     [SIOSocket socketWithHost:_instance.signalingURL response: ^(SIOSocket *socket)
@@ -360,23 +351,23 @@ static NSString* const kTextChatType = @"chatMessage";
         if(_isOnstage){
             [self publishTo:_openTokManager.session];
             self.eventView.statusLabel.text = @"\u2022 You are live";
-            [self.eventView.FanViewHolder addSubview:_openTokManager.publisher.view];
-            _openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.FanViewHolder.bounds.size.width, self.eventView.FanViewHolder.bounds.size.height);
+            [self.eventView.fanViewHolder addSubview:_openTokManager.publisher.view];
+            _openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.fanViewHolder.bounds.size.width, self.eventView.fanViewHolder.bounds.size.height);
             self.eventView.closeEvenBtn.hidden = YES;
             self.eventView.getInLineBtn.hidden = YES;
         }
     }else{
         if(self.isCeleb && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
-            [_videoViews[@"celebrity"] addSubview:_openTokManager.publisher.view];
-            (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.CelebrityViewHolder.bounds.size.width, self.eventView.CelebrityViewHolder.bounds.size.height);
+            [self.eventView.celebrityViewHolder addSubview:_openTokManager.publisher.view];
+            (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.celebrityViewHolder.bounds.size.width, self.eventView.celebrityViewHolder.bounds.size.height);
             self.eventView.closeEvenBtn.hidden = NO;
         }
         if(_isHost && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
-            [_videoViews[@"host"] addSubview:_openTokManager.publisher.view];
+            [self.eventView.hostViewHolder addSubview:_openTokManager.publisher.view];
             self.eventView.closeEvenBtn.hidden = NO;
-            (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.HostViewHolder.bounds.size.width, self.eventView.HostViewHolder.bounds.size.height);
+            (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.hostViewHolder.bounds.size.width, self.eventView.hostViewHolder.bounds.size.height);
         }
         if(_stopGoingLive){
             return [self forceDisconnect];
@@ -517,9 +508,6 @@ static NSString* const kTextChatType = @"chatMessage";
     [self cleanupPublisher];
 }
 
-
-
-
 //Subscribers
 - (void)doSubscribe:(OTStream*)stream
 {
@@ -612,8 +600,7 @@ static NSString* const kTextChatType = @"chatMessage";
         
         assert(_subscriber == subscriber);
         
-        holder = _videoViews[connectingTo];
-        
+        holder = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", connectingTo]];
         (_subscriber.view).frame = CGRectMake(0, 0, holder.bounds.size.width,holder.bounds.size.height);
         
         [holder addSubview:_subscriber.view];
@@ -641,19 +628,7 @@ static NSString* const kTextChatType = @"chatMessage";
                          reason:(OTSubscriberVideoEventReason)reason
 {
     NSString *feed = [self getStreamData:subscriber.stream.connection.data];
-    [self showAvatarFor:feed];
-}
-
-- (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
-                        reason:(OTSubscriberVideoEventReason)reason
-{
-    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
-    [self hideAvatarFor:feed];
-}
-
-- (void) showAvatarFor:(NSString*)feed
-{
-    UIView *feedView = _videoViews[feed];
+    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
     avatar.contentMode = UIViewContentModeScaleAspectFill;
@@ -661,15 +636,16 @@ static NSString* const kTextChatType = @"chatMessage";
     CGRect frame = feedView.frame;
     avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
     
-    [_videoViews[feed] addSubview:avatar];
+    [feedView addSubview:avatar];
 }
 
-- (void) hideAvatarFor:(NSString*)feed
+- (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
+                        reason:(OTSubscriberVideoEventReason)reason
 {
-    for(UIView* subview in [_videoViews[feed] subviews])
-    {
-        if([subview isKindOfClass:[UIImageView class]])
-        {
+    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
+    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
+    for(UIView* subview in [feedView subviews]) {
+        if([subview isKindOfClass:[UIImageView class]]) {
             return [subview removeFromSuperview];
         }
     }
@@ -908,8 +884,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 
 
 - (void)session:(OTSession*)mySession
-  streamCreated:(OTStream *)stream
-{
+  streamCreated:(OTStream *)stream {
+    
     NSLog(@"session streamCreated (%@)", stream.streamId);
     if(mySession.connection.connectionId != _openTokManager.producerSession.connection.connectionId){
         
@@ -941,16 +917,15 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
         }
         
-    }else{
+    }
+    else{
         if([stream.connection.data isEqualToString:@"usertype=producer"]){
             _openTokManager.producerStream = stream;
             if(_openTokManager.producerSession.connection){
                 _shouldResendProducerSignal = YES;
             }
         }
-        
     }
-    
 }
 
 - (void)session:(OTSession*)session
@@ -983,16 +958,7 @@ streamDestroyed:(OTStream *)stream
             [self cleanupSubscriber:type];
         }
     }
-    
 }
-
-
-- (void)  session:(OTSession *)session
-connectionCreated:(OTConnection *)connection
-{
-    NSLog(@"session connectionCreated (%@)", connection.connectionId);
-}
-
 
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error
@@ -1000,15 +966,14 @@ didFailWithError:(OTError*)error
     NSLog(@"didFailWithError: (%@)", error);
     [self.errors setObject:error forKey:@"sessionError"];
     [self sendWarningSignal];
-    
 }
 
 
 #pragma mark - session signal handler
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)string {
-    NSDictionary* messageData;
     
+    NSDictionary* messageData;
     if (string){
         messageData = [JSON parseJSON:string];
     }
@@ -1074,7 +1039,7 @@ didFailWithError:(OTError*)error
         [self doSubscribe:_openTokManager.producerStream];
         _inCallWithProducer = YES;
         _openTokManager.publisher.publishAudio = YES;
-        [self muteOnstageSession:YES];
+        [self.openTokManager muteOnstageSession:YES];
         [self.eventView showNotification:@"YOU ARE NOW IN CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
         [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
     }
@@ -1083,13 +1048,13 @@ didFailWithError:(OTError*)error
             if ([messageData[@"callWith"] isEqualToString: _openTokManager.publisher.stream.connection.connectionId ]) {
                 [self doSubscribe:_openTokManager.privateProducerStream];
                 _inCallWithProducer = YES;
-                [self muteOnstageSession:YES];
+                [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
                 if(_isFan && _isBackstage){
                     [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
                 }
             }else{
-                [self muteOnstageSession:YES];
+                [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
             }
         }
@@ -1102,13 +1067,13 @@ didFailWithError:(OTError*)error
                 OTError *error = nil;
                 [_openTokManager.session unsubscribe: _openTokManager.privateProducerSubscriber error:&error];
                 _inCallWithProducer = NO;
-                [self muteOnstageSession:NO];
+                [self.openTokManager muteOnstageSession:NO];
                 if(_isFan && _isBackstage){
                     [self.eventView hideVideoPreview];
                 }
             }else{
                 NSLog(@"I CAN HEAR AGAIN");
-                [self muteOnstageSession:NO];
+                [self.openTokManager muteOnstageSession:NO];
             }
             [self.eventView hideNotification];
         }
@@ -1122,7 +1087,7 @@ didFailWithError:(OTError*)error
             _inCallWithProducer = NO;
             self.eventView.getInLineBtn.hidden = NO;
             _openTokManager.publisher.publishAudio = NO;
-            [self muteOnstageSession:NO];
+            [self.openTokManager muteOnstageSession:NO];
             [self.eventView hideNotification];
             [self.eventView hideVideoPreview];
         }
@@ -1188,7 +1153,6 @@ didFailWithError:(OTError*)error
         
         [self.eventView showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
         [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:5.0];
-        
     }
     
     if([type isEqualToString:@"chatMessage"]){
@@ -1202,12 +1166,9 @@ didFailWithError:(OTError*)error
             msg.text = userInfo[@"message"][@"message"];
             _unreadCount ++;
             [_textChat addMessage:msg];
-            [self.eventView.chatBtn setTitle:[[NSNumber numberWithFloat:_unreadCount] stringValue] forState:UIControlStateNormal];
+            [self.eventView.chatBtn setTitle:[NSString stringWithFormat:@"%f", _unreadCount] forState:UIControlStateNormal];
             
         }
-        
-        
-        
     }
 }
 
@@ -1240,8 +1201,6 @@ didFailWithError:(OTError*)error
     } else {
         NSLog(@"signal sent of type Warning");
     }
-    
-    
 }
 
 - (void)sendNewUserSignal
@@ -1281,7 +1240,7 @@ didFailWithError:(OTError*)error
     
 }
 
-- (void)captureAndSendScreenshot{
+- (void)captureAndSendScreenshot {
 
     if (_openTokManager.publisher.view) {
         UIImage *screenshot = [_openTokManager.publisher.view captureViewImage];
@@ -1377,7 +1336,7 @@ didFailWithError:(OTError*)error
     
 };
 
--(void)goLive{
+-(void)goLive {
     NSLog(@"Event changed status to LIVE");
     _isLive = YES;
     if(_openTokManager.hostStream && !_openTokManager.subscribers[@"host"]){
@@ -1437,9 +1396,8 @@ didFailWithError:(OTError*)error
     return YES;
 }
 
-
 #pragma mark - Utils
-- (void) adjustChildrenWidth{
+- (void) adjustChildrenWidth {
     CGFloat c = 0;
     CGFloat new_width = 1;
     CGFloat new_height = self.eventView.internalHolder.bounds.size.height;
@@ -1454,19 +1412,20 @@ didFailWithError:(OTError*)error
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
     
     for(NSString *viewName in viewNames){
+        
+        UIView *view = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];
         if(_openTokManager.subscribers[viewName]){
-            [_videoViews[viewName] setHidden:NO];
+            [view setHidden:NO];
             OTSubscriber *temp = _openTokManager.subscribers[viewName];
             
-            [_videoViews[viewName] setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
+            [view setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
             temp.view.frame = CGRectMake(0, 0, new_width,new_height);
             c++;
-            
-        }else{
-            [_videoViews[viewName] setHidden:YES];
-            [_videoViews[viewName] setFrame:CGRectMake(0, 0, 5,new_height)];
         }
-        
+        else{
+            [view setHidden:YES];
+            [view setFrame:CGRectMake(0, 0, 5,new_height)];
+        }
     }
 }
 
@@ -1508,14 +1467,6 @@ didFailWithError:(OTError*)error
     [self disconnectBackstageSession];
     self.eventView.statusLabel.text = @"";
     self.eventView.getInLineBtn.hidden = NO;
-    
-}
-
--(void)muteOnstageSession:(BOOL)mute {
-    for(NSString *_subscriber in _openTokManager.subscribers){
-        OTSubscriber *sub = _openTokManager.subscribers[_subscriber];
-        sub.subscribeToAudio = !mute;
-    }
 }
 
 //UI

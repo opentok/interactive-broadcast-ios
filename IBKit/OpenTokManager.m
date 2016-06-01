@@ -11,4 +11,11 @@
 
 @implementation OpenTokManager
 
+- (void)muteOnstageSession:(BOOL)mute {
+    for(NSString *subscriber in self.subscribers){
+        OTSubscriber *sub = self.subscribers[subscriber];
+        sub.subscribeToAudio = !mute;
+    }
+}
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OpenTok/OpenTok.h>
 
 @interface OpenTokNetworkTest : NSObject
 @property (nonatomic) double prevVideoTimestamp;
@@ -24,8 +25,9 @@
 @property (nonatomic) NSString *frameRate;
 @property (nonatomic) NSString *resolution;
 
-- (instancetype)initWithFrameRateAndResolution:(NSString*)framerate resolution:(NSString*)resolution;
-- (void)processStats:(id)stats;
+- (instancetype)initWithFrameRateAndResolution:(NSString*)framerate
+                                    resolution:(NSString*)resolution;
+- (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats;
 - (NSString*)getQuality;
 
 @end

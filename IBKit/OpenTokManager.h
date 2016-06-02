@@ -27,5 +27,6 @@
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
 
+- (void)connectWithTokenHost:(NSString *)tokenHost;
 - (void)muteOnstageSession:(BOOL)mute;
 @end

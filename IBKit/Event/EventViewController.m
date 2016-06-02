@@ -38,9 +38,10 @@
 @property (nonatomic) NSString *userName;
 @property (nonatomic) BOOL isCeleb;
 @property (nonatomic) BOOL isHost;
+@property (nonatomic) BOOL isFan;
+@property (nonatomic) BOOL isBackstage;
+@property (nonatomic) BOOL isOnstage;
 @property (nonatomic) NSMutableDictionary *errors;
-
-@property (nonatomic) NSString *connectionQuality;
 
 @property (nonatomic) OTKTextChatComponent *textChat;
 @property (nonatomic) OTKAnalytics *logging;
@@ -48,12 +49,9 @@
 @property (nonatomic) CGFloat chatYPosition;
 
 @property (nonatomic) EventView *eventView;
-@property (nonatomic) BOOL isBackstage;
-@property (nonatomic) BOOL isOnstage;
 @property (nonatomic) BOOL shouldResendProducerSignal;
 @property (nonatomic) BOOL inCallWithProducer;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic) BOOL isFan;
 @property (nonatomic) BOOL stopGoingLive;
 @property (nonatomic) CGFloat unreadCount;
 
@@ -158,7 +156,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self performSelector:@selector(adjustChildrenWidth) withObject:nil afterDelay:1.0];
+    [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:) withObject:self.openTokManager.subscribers afterDelay:1.0];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -169,33 +167,31 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)startSession{
  ///init test
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
-                                       sessionId:self.instance.sessionIdHost
-                                        delegate:self];
+                                                      sessionId:self.instance.sessionIdHost
+                                                       delegate:self];
+    [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
     
     self.eventView.getInLineBtn.hidden = YES;
     [self statusChanged];
-    [self doConnect];
     
     if(_isFan){
         [self connectFanSignaling];
     }
-    
 }
+
 -(void)loadChat{
     OTSession *currentSession;
     
     if(_isBackstage){
         currentSession = _openTokManager.producerSession;
-    }else{
+    }
+    else{
         currentSession = _openTokManager.session;
     }
     
     _textChat = [[OTKTextChatComponent alloc] init];
-    
     _textChat.delegate = self;
-    
     [_textChat setMaxLength:1050];
-    
     [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
     
     _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
@@ -218,7 +214,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)connectFanSignaling {
     
     __weak EventViewController *weakSelf = self;
-    [SIOSocket socketWithHost:_instance.signalingURL response: ^(SIOSocket *socket)
+    [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket)
      {
          _signalingSocket = socket;
          _signalingSocket.onConnect = ^()
@@ -229,17 +225,6 @@ static NSString* const kTextChatType = @"chatMessage";
 }
 
 ///SESSION CONNECTIONS///
-
-- (void)doConnect
-{
-    OTError *error = nil;
-    [_openTokManager.session connectWithToken:self.instance.tokenHost error:&error];
-
-    if (error) {
-        NSLog(@"connect error");
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-    }
-}
 
 - (void)inLineConnect
 {
@@ -258,8 +243,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
 }
 
--(void)disconnectBackstage
-{
+-(void)disconnectBackstage {
     [self unpublishFrom:_openTokManager.producerSession];
     _isBackstage = NO;
     self.eventView.inLineHolder.hidden = YES;
@@ -267,7 +251,7 @@ static NSString* const kTextChatType = @"chatMessage";
     _shouldResendProducerSignal = YES;
 }
 
--(void)disconnectBackstageSession{
+-(void)disconnectBackstageSession {
     OTError *error = nil;
     if(_openTokManager.producerSession){
         [_openTokManager.producerSession disconnect:&error];
@@ -349,7 +333,7 @@ static NSString* const kTextChatType = @"chatMessage";
         }
     }
     
-    [self adjustChildrenWidth];
+    [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
 }
 
 -(void) publishTo:(OTSession *)session
@@ -452,8 +436,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     
-    
-    NSString *connectingTo =[self getStreamData:stream.connection.data];
+    NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
@@ -469,9 +452,9 @@ static NSString* const kTextChatType = @"chatMessage";
         _openTokManager.selfSubscriber = nil;
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
-        [_logging logEventAction:logtype variation:@"success"];    }
-    
-        [self cleanupPublisher];
+        [_logging logEventAction:logtype variation:@"success"];
+    }
+    [self cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher
@@ -487,8 +470,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)doSubscribe:(OTStream*)stream
 {
     
-    NSString *connectingTo =[self getStreamData:stream.connection.data];
-    
+    NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     if(stream.session.connection.connectionId != _openTokManager.producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
@@ -548,7 +530,7 @@ static NSString* const kTextChatType = @"chatMessage";
         _subscriber = nil;
     }
     
-    [self adjustChildrenWidth];
+    [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
 }
 
 
@@ -566,7 +548,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
         
         UIView *holder;
-        NSString *connectingTo =[self getStreamData:subscriber.stream.connection.data];
+        NSString *connectingTo = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
         NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
@@ -580,13 +562,12 @@ static NSString* const kTextChatType = @"chatMessage";
         
         [holder addSubview:_subscriber.view];
         self.eventView.eventImage.hidden = YES;
-        [self adjustChildrenWidth];
-        
+        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
+    
     if(_openTokManager.publisher && _openTokManager.publisher.stream.connection.connectionId == subscriber.stream.connection.connectionId){
         subscriber.subscribeToAudio = NO;
     }
-    
 }
 
 - (void)subscriber:(OTSubscriberKit*)subscriber
@@ -602,7 +583,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
                          reason:(OTSubscriberVideoEventReason)reason
 {
-    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
+    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
@@ -617,7 +598,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
                         reason:(OTSubscriberVideoEventReason)reason
 {
-    NSString *feed = [self getStreamData:subscriber.stream.connection.data];
+    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
     for(UIView* subview in [feedView subviews]) {
         if([subview isKindOfClass:[UIImageView class]]) {
@@ -667,8 +648,6 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         
         [_networkTest processStats:stats];
         [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
-
-       // [self processStats:stats];
     }
 }
 
@@ -676,8 +655,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 {
     if(_openTokManager.publisher && _openTokManager.publisher.session){
         
-        NSString *quality = [_networkTest getQuality];
-        
+        NSString *quality = [self.networkTest getQuality];
         NSDictionary *data = @{
                                @"type" : @"qualityUpdate",
                                @"data" :@{
@@ -812,7 +790,7 @@ streamDestroyed:(OTStream *)stream
     NSLog(@"session streamDestroyed (%@)", stream.streamId);
     NSLog(@"disconnectin from stream (%@)", stream.connection.data);
     
-    NSString *type = [self getStreamData:stream.connection.data];
+    NSString *type = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     if([type isEqualToString:@"producer"]){
         if(session.connection.connectionId == _openTokManager.producerSession.connection.connectionId){
             _openTokManager.producerStream = nil;
@@ -868,7 +846,6 @@ didFailWithError:(OTError*)error
         
     }
     if([type isEqualToString:@"openChat"]){
-        //self.chatBtn.hidden = NO;
         _openTokManager.producerConnection = connection;
     }
     if([type isEqualToString:@"closeChat"]){
@@ -1039,7 +1016,7 @@ didFailWithError:(OTError*)error
             _openTokManager.producerConnection = connection;
             NSDictionary *userInfo = [JSON parseJSON:string];
             OTKChatMessage *msg = [[OTKChatMessage alloc]init];
-            msg.senderAlias = [self getStreamData:connection.data];
+            msg.senderAlias = [connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
             msg.senderId = connection.connectionId;
             msg.text = userInfo[@"message"][@"message"];
             _unreadCount ++;
@@ -1084,16 +1061,11 @@ didFailWithError:(OTError*)error
 - (void)sendNewUserSignal
 {
     NSLog(@"sending new user signal");
-    
-    if(!self.connectionQuality){
-        self.connectionQuality = @"";
-    }
-    
     NSDictionary *data = @{
                            @"type" : @"newFan",
                            @"user" :@{
                                    @"username": self.userName,
-                                   @"quality":self.connectionQuality,
+                                   @"quality":@"",
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
                                    @"mobile":@(YES),
                                    @"os":@"iOS",
@@ -1272,43 +1244,6 @@ didFailWithError:(OTError*)error
         return NO;
     }
     return YES;
-}
-
-#pragma mark - Utils
-- (void) adjustChildrenWidth {
-    CGFloat c = 0;
-    CGFloat new_width = 1;
-    CGFloat new_height = self.eventView.internalHolder.bounds.size.height;
-    if(_openTokManager.subscribers.count == 0){
-        self.eventView.eventImage.hidden = NO;
-    }
-    else{
-        self.eventView.eventImage.hidden = YES;
-        new_width = CGRectGetWidth([UIScreen mainScreen].bounds) / _openTokManager.subscribers.count;
-    }
-    
-    NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
-    
-    for(NSString *viewName in viewNames){
-        
-        UIView *view = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];
-        if(_openTokManager.subscribers[viewName]){
-            [view setHidden:NO];
-            OTSubscriber *temp = _openTokManager.subscribers[viewName];
-            
-            [view setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
-            temp.view.frame = CGRectMake(0, 0, new_width,new_height);
-            c++;
-        }
-        else{
-            [view setHidden:YES];
-            [view setFrame:CGRectMake(0, 0, 5,new_height)];
-        }
-    }
-}
-
--(NSString*)getStreamData:(NSString*)data {
-    return [data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
 }
 
 #pragma mark - fan Actions

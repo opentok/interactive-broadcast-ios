@@ -24,6 +24,8 @@
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB121D00DEA00034A18B /* JSONTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB111D00DEA00034A18B /* JSONTest.m */; };
+		0BEFEB141D00ED310034A18B /* AppUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB131D00ED310034A18B /* AppUtilTests.m */; };
+		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
 		7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3303B8576609283931392 /* libPods-IBKitTests.a */; };
 		A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A61D00C0FA007905CC /* IBInstanceTests.m */; };
 		A00231A91D00C23B007905CC /* IBUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A81D00C23B007905CC /* IBUserTests.m */; };
@@ -143,6 +145,8 @@
 		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB111D00DEA00034A18B /* JSONTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONTest.m; sourceTree = "<group>"; };
+		0BEFEB131D00ED310034A18B /* AppUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtilTests.m; sourceTree = "<group>"; };
+		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
 		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 				A00231AE1D00C45D007905CC /* OpenTokNetworkTests.m */,
 				A00231B01D00C4A7007905CC /* OpenTokManager.m */,
 				A08D96D81CF8DCB200877619 /* Info.plist */,
+				0BEFEB131D00ED310034A18B /* AppUtilTests.m */,
+				0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */,
 			);
 			path = IBKitTests;
 			sourceTree = "<group>";
@@ -776,6 +782,8 @@
 				A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */,
 				A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */,
 				A00231A91D00C23B007905CC /* IBUserTests.m in Sources */,
+				0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */,
+				0BEFEB141D00ED310034A18B /* AppUtilTests.m in Sources */,
 				A00231AD1D00C446007905CC /* IBApiTests.m in Sources */,
 				0BEFEB121D00DEA00034A18B /* JSONTest.m in Sources */,
 				A00231B11D00C4A7007905CC /* OpenTokManager.m in Sources */,

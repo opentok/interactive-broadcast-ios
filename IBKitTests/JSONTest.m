@@ -10,15 +10,22 @@
 
 SPEC_BEGIN(JSONTest)
 
-context(@"parse a JSON", ^(){
+context(@"JSONTests", ^(){
     
-    describe(@"Returns a valid dictionary", ^(){
-        it(@"should return a valid username", ^(){
-            NSString *jsonString = @"{'username':'testName','id':5,'email':'test@test.com','isFan':true}";
-            NSDictionary* parsed = [JSON parseJSON:jsonString];
-            [[parsed[@"username"] should] equal:@"testName"];
+    describe(@"Returns a valid string", ^(){
+        it(@"should return a valid string", ^(){
+            NSDictionary *toStringify = @{@"name":@"testName"};
+            NSString *result = [JSON stringify:toStringify];
+            [[result should] equal:@"{\"name\":\"testName\"}"];
         });
+    });
+    describe(@"Returns a valid Dictionary", ^(){
+        it(@"should return a valid dictionary", ^(){
+            NSString *toParse = @"{\"name\":\"testName\", \"id\":\"5\"}";
+            NSDictionary *result = [JSON parseJSON:toParse];
+            [[result[@"name"] should] equal:@"testName"];
 
+        });
     });
 });
 

@@ -19,7 +19,6 @@
 @property (nonatomic) OTSubscriber* producerSubscriber;
 @property (nonatomic) OTSubscriber* privateProducerSubscriber;
 @property (nonatomic) OTSubscriber* selfSubscriber;
-@property (nonatomic) id<OTVideoCapture> cameraCapture;
 @property (nonatomic) OTStream* celebrityStream;
 @property (nonatomic) OTStream* hostStream;
 @property (nonatomic) OTStream* fanStream;

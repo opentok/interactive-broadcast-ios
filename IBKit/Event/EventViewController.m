@@ -33,12 +33,19 @@
 
 #import <Reachability/Reachability.h>
 
+typedef enum : NSUInteger {
+    IBEventStageNotLive = 0,
+    IBEventStageLive = 1 << 0,
+    IBEventStageBackstage = 1 << 1,
+    IBEventStageOnstage = 1 << 2
+} IBEventStage;
+
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 
 @property (nonatomic) NSString *userName;
-@property (nonatomic) BOOL isBackstage;
-@property (nonatomic) BOOL isOnstage;
 @property (nonatomic) NSMutableDictionary *errors;
+@property (nonatomic) NSUInteger eventStage;
+@property (nonatomic) BOOL inCallWithProducer;
 
 @property (nonatomic) OTKTextChatComponent *textChat;
 @property (nonatomic) OTKAnalytics *logging;
@@ -47,8 +54,6 @@
 
 @property (nonatomic) EventView *eventView;
 @property (nonatomic) BOOL shouldResendProducerSignal;
-@property (nonatomic) BOOL inCallWithProducer;
-@property (nonatomic) BOOL isLive;
 @property (nonatomic) BOOL stopGoingLive;
 @property (nonatomic) CGFloat unreadCount;
 
@@ -67,8 +72,6 @@
 @end
 
 @implementation EventViewController
-
-static NSString* const kTextChatType = @"chatMessage";
 
 - (instancetype)initWithInstance:(IBInstance *)instance
                        indexPath:(NSIndexPath *)indexPath
@@ -181,7 +184,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)loadChat{
     OTSession *currentSession;
     
-    if(_isBackstage){
+    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
         currentSession = _openTokManager.producerSession;
     }
     else{
@@ -223,8 +226,6 @@ static NSString* const kTextChatType = @"chatMessage";
      }];
 }
 
-///SESSION CONNECTIONS///
-
 - (void)inLineConnect
 {
     
@@ -244,7 +245,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 -(void)disconnectBackstage {
     [self unpublishFrom:_openTokManager.producerSession];
-    _isBackstage = NO;
+    self.eventStage &= ~IBEventStageBackstage;
     self.eventView.inLineHolder.hidden = YES;
     self.eventView.getInLineBtn.hidden = NO;
     _shouldResendProducerSignal = YES;
@@ -293,7 +294,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)doPublish{
     if(self.user.userRole == IBUserRoleFan){
         //FAN
-        if(_isBackstage){
+        if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [self sendNewUserSignal];
             [self publishTo:_openTokManager.producerSession];
             
@@ -303,7 +304,7 @@ static NSString* const kTextChatType = @"chatMessage";
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self.eventView stopLoader];
         }
-        if(_isOnstage){
+        if((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage) {
             [self publishTo:_openTokManager.session];
             self.eventView.statusLabel.text = @"\u2022 You are live";
             [self.eventView.fanViewHolder addSubview:_openTokManager.publisher.view];
@@ -400,7 +401,7 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)publisher:(OTPublisherKit *)publisher
     streamCreated:(OTStream *)stream
 {
-    if(_isBackstage){
+    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
         NSLog(@"stream Created PUBLISHER BACK");
         _openTokManager.selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         
@@ -417,8 +418,6 @@ static NSString* const kTextChatType = @"chatMessage";
         [self doSubscribe:stream];
     }
     [self performSelector:@selector(startNetworkTest) withObject:nil afterDelay:5.0];
-
-    
 }
 
 - (void)publisher:(OTPublisherKit*)publisher
@@ -530,10 +529,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
-    
     _networkTest = [[OpenTokNetworkTest alloc] initWithFrameRateAndResolution:@"30" resolution:@"640x480"];
-
-    
     if(subscriber.session.connection.connectionId == _openTokManager.session.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
@@ -597,39 +593,40 @@ static NSString* const kTextChatType = @"chatMessage";
     }
 }
 
-//Network Test
-
 -(void)startNetworkTest{
-    if(_isBackstage || _isOnstage){
-        if(_openTokManager.hostStream && _openTokManager.hostStream.hasVideo && _isLive){
+    if((self.eventStage & IBEventStageBackstage) ==  IBEventStageBackstage ||
+       (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage) {
+        
+        if(_openTokManager.hostStream &&
+           _openTokManager.hostStream.hasVideo &&
+           (self.eventStage & IBEventStageLive) == IBEventStageLive) {
+            
             OTSubscriber *test = _openTokManager.subscribers[@"host"];
             test.networkStatsDelegate = self;
-        }else if(_openTokManager.celebrityStream && _openTokManager.celebrityStream.hasVideo && _isLive){
+        }
+        else if(_openTokManager.celebrityStream &&
+                _openTokManager.celebrityStream.hasVideo &&
+                (self.eventStage & IBEventStageLive) == IBEventStageLive) {
+            
             OTSubscriber *test = _openTokManager.subscribers[@"celebrity"];
             test.networkStatsDelegate = self;
-        }else if(_openTokManager.selfSubscriber){
+        }
+        else if(_openTokManager.selfSubscriber) {
             _openTokManager.selfSubscriber.networkStatsDelegate = self;
         }
     }
 }
 
 -(void)subscriber:(OTSubscriberKit*)subscriber
-videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
-{
-    //    if(subscriber.stream && subscriber.stream.videoDimensions.width){
-    //        resolution = [NSString stringWithFormat:@"%.0fx%.0f",subscriber.stream.videoDimensions.width, subscriber.stream.videoDimensions.height];
-    //    }
-    
+videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
+
     /// TODO : check how to update the framerate
-    
-    if (_networkTest.prevVideoTimestamp == 0)
-    {
+    if (_networkTest.prevVideoTimestamp == 0) {
         _networkTest.prevVideoTimestamp = stats.timestamp;
         _networkTest.prevVideoBytes = stats.videoBytesReceived;
     }
     
-    if (stats.timestamp - _networkTest.prevVideoTimestamp >= 3000)
-    {
+    if (stats.timestamp - _networkTest.prevVideoTimestamp >= 3000) {
         _networkTest.video_bw = (8 * (stats.videoBytesReceived - _networkTest.prevVideoBytes)) / ((stats.timestamp - _networkTest.prevVideoTimestamp) / 1000ull);
         
         subscriber.delegate = nil;
@@ -684,7 +681,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         }
         if(session.sessionId == _openTokManager.producerSession.sessionId){
             NSLog(@"sessionDidConnect to Backstage");
-            _isBackstage = YES;
+            self.eventStage |= IBEventStageBackstage;
             self.eventView.closeEvenBtn.hidden = YES;
             self.eventView.leaveLineBtn.hidden = NO;
             self.eventView.getInLineBtn.hidden = YES;
@@ -700,7 +697,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }else{
                 [self loadChat];
                 [self addLogging];
-                _isOnstage = YES;
+                self.eventStage |= IBEventStageOnstage;
                 [self doPublish];
             }
             [self.eventView stopLoader];
@@ -715,7 +712,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
     [NSString stringWithFormat:@"Session disconnected: (%@)", session.sessionId];
     NSLog(@"sessionDidDisconnect (%@)", alertMessage);
     if(session == _openTokManager.producerSession){
-        _isBackstage = NO;
+        self.eventStage &= ~IBEventStageBackstage;
         self.eventView.inLineHolder.hidden = YES;
         self.eventView.getInLineBtn.hidden = NO;
         _shouldResendProducerSignal = YES;
@@ -757,8 +754,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
                 _openTokManager.fanStream = stream;
             }
             
-            
-            if(_isLive || self.user.userRole == IBUserRoleCelebrity || self.user.userRole == IBUserRoleHost){
+            if((self.eventStage & IBEventStageLive) == IBEventStageLive || self.user.userRole == IBUserRoleCelebrity || self.user.userRole == IBUserRoleHost){
                 [self doSubscribe:stream];
             }
         }
@@ -873,11 +869,9 @@ didFailWithError:(OTError*)error
         _shouldResendProducerSignal = YES;
     }
     if([type isEqualToString:@"resendNewFanSignal"]){
-        
         if(_shouldResendProducerSignal){
             [self sendNewUserSignal];
         }
-        
     }
     
     if([type isEqualToString:@"joinProducer"]){
@@ -889,13 +883,13 @@ didFailWithError:(OTError*)error
         [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
     }
     if([type isEqualToString:@"privateCall"]){
-        if(_isOnstage || _isBackstage){
+        if ((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage || (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
             if ([messageData[@"callWith"] isEqualToString: _openTokManager.publisher.stream.connection.connectionId ]) {
                 [self doSubscribe:_openTokManager.privateProducerStream];
                 _inCallWithProducer = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                if(self.user.userRole == IBUserRoleFan && _isBackstage){
+                if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
                 }
             }else{
@@ -907,13 +901,13 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"endPrivateCall"]){
-        if(_isBackstage || _isOnstage){
+        if ((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage || (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
             if(_inCallWithProducer){
                 OTError *error = nil;
                 [_openTokManager.session unsubscribe: _openTokManager.privateProducerSubscriber error:&error];
                 _inCallWithProducer = NO;
                 [self.openTokManager muteOnstageSession:NO];
-                if(self.user.userRole == IBUserRoleFan && _isBackstage){
+                if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView hideVideoPreview];
                 }
             }else{
@@ -925,7 +919,7 @@ didFailWithError:(OTError*)error
     }
     
     if([type isEqualToString:@"disconnectProducer"]){
-        if(!_isOnstage){
+        if((self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
             OTError *error = nil;
             [_openTokManager.producerSession unsubscribe: _openTokManager.producerSubscriber error:&error];
             _openTokManager.producerSubscriber = nil;
@@ -954,9 +948,8 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"joinHost"]){
         
         [self disconnectBackstage];
-        
-        _isOnstage = YES;
-        
+    
+        self.eventStage |= IBEventStageOnstage;
         self.eventView.statusLabel.text = @"\u2022 You are live";
         self.eventView.statusLabel.hidden = NO;
         self.eventView.leaveLineBtn.hidden = YES;
@@ -964,8 +957,8 @@ didFailWithError:(OTError*)error
         [self hideChatBox];
         [self.eventView hideNotification];
         self.eventView.chatBtn.hidden = YES;
-        
-        if(![self.event.status isEqualToString:@"L"] && !_isLive){
+
+        if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
             [self goLive];
         }
         [self.eventView hideVideoPreview];
@@ -989,7 +982,7 @@ didFailWithError:(OTError*)error
         self.eventView.chatBtn.hidden = YES;
         self.eventView.closeEvenBtn.hidden = NO;
         [self hideChatBox];
-        _isOnstage = NO;
+        self.eventStage &= ~ IBEventStageOnstage;
         
         if(_openTokManager.publisher){
             [self unpublishFrom:_openTokManager.session];
@@ -1136,10 +1129,14 @@ didFailWithError:(OTError*)error
         }else{
             self.eventView.eventImage.hidden = NO;
         }
-        if(self.user.userRole != IBUserRoleCelebrity && self.user.userRole != IBUserRoleHost && !_isBackstage && !_isOnstage){
+        if(self.user.userRole != IBUserRoleCelebrity &&
+           self.user.userRole != IBUserRoleHost &&
+           (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
+           (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
+            
             self.eventView.getInLineBtn.hidden = NO;
         }
-        _isLive = YES;
+        self.eventStage |= IBEventStageLive;
         [self goLive];
     };
     if([self.event.status isEqualToString:@"C"]){
@@ -1167,7 +1164,7 @@ didFailWithError:(OTError*)error
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
         
-        if(_isBackstage){
+        if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [self disconnectBackstageSession];
         }
         [self cleanupPublisher];
@@ -1178,7 +1175,7 @@ didFailWithError:(OTError*)error
 
 -(void)goLive {
     NSLog(@"Event changed status to LIVE");
-    _isLive = YES;
+    self.eventStage |= IBEventStageLive;
     if(_openTokManager.hostStream && !_openTokManager.subscribers[@"host"]){
         [self doSubscribe:_openTokManager.hostStream];
     }
@@ -1229,7 +1226,7 @@ didFailWithError:(OTError*)error
     NSDictionary *user_message = @{@"message": message.text};
     NSDictionary *userInfo = @{@"message": user_message};
     
-    [currentSession signalWithType:kTextChatType string:[JSON stringify:userInfo] connection: _openTokManager.producerConnection error:&error];
+    [currentSession signalWithType:@"chatMessage" string:[JSON stringify:userInfo] connection: _openTokManager.producerConnection error:&error];
     if (error) {
         return NO;
     }
@@ -1272,8 +1269,6 @@ didFailWithError:(OTError*)error
     self.eventView.getInLineBtn.hidden = NO;
 }
 
-//UI
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
@@ -1294,7 +1289,6 @@ didFailWithError:(OTError*)error
     [self.eventView hideVideoPreview];
 }
 
-//GO BACK
 - (IBAction)goBack:(id)sender {
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
@@ -1326,5 +1320,4 @@ didFailWithError:(OTError*)error
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscape;
 }
-
 @end

@@ -1055,7 +1055,7 @@ didFailWithError:(OTError*)error
                            @"type" : @"newFan",
                            @"user" :@{
                                    @"username": self.userName,
-                                   @"quality":[self.networkTest getQuality],
+                                   @"quality":@"",
                                    @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
                                    @"mobile":@(YES),
                                    @"os":@"iOS",

@@ -18,6 +18,9 @@
 + (instancetype)userWithIBUserRole:(IBUserRole)userRole
                               name:(NSString *)name {
     
+    if (!userRole || !name) return nil;
+    if (userRole == IBUserRoleUnknown) return  nil;
+    
     IBUser *user = [[IBUser alloc] init];
     user.userRole = userRole;
     user.name = name;
@@ -25,6 +28,7 @@
 }
 
 - (NSString *)userRoleName {
+    
     switch (self.userRole) {
         case IBUserRoleUnknown:
             return nil;

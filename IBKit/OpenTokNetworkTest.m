@@ -9,6 +9,11 @@
 #import "OpenTokNetworkTest.h"
 #import <OpenTok/OpenTok.h>
 
+@interface OpenTokNetworkTest()
+@property (nonatomic) NSString *frameRate;
+@property (nonatomic) NSString *resolution;
+@end
+
 @implementation OpenTokNetworkTest
 
 - (instancetype)initWithFrameRateAndResolution:(NSString*)framerate resolution:(NSString*)aResolution{

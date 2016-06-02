@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <IBKit/IBInstance.h>
+#import <IBKit/IBUser.h>
 
 @interface EventViewController : UIViewController
 
 - (instancetype)initWithInstance:(IBInstance *)instance
                        indexPath:(NSIndexPath *)indexPath
-                            user:(NSDictionary *)user;
+                            user:(IBUser *)user;
 @end

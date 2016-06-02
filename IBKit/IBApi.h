@@ -7,6 +7,7 @@
 //
 
 #import <IBKit/IBInstance.h>
+#import <IBKit/IBUser.h>
 
 @interface IBApi : NSObject;
 
@@ -16,9 +17,9 @@
 + (void)getInstanceWithAdminId:(NSString *)adminId
                     completion:(void (^)(IBInstance *, NSError *))completion;
 
-+ (void)createEventTokenWithUserType:(NSString *)userType
-                               event:(IBEvent *)event
-                          completion:(void (^)(IBInstance *, NSError *))completion;
++ (void)createEventTokenWithUser:(IBUser *)userType
+                           event:(IBEvent *)event
+                      completion:(void (^)(IBInstance *, NSError *))completion;
 
 + (void)createFanEventTokenWithEvent:(IBEvent *)event
                                completion:(void (^)(IBInstance *, NSError *))completion;

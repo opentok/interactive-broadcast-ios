@@ -36,9 +36,6 @@
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 
 @property (nonatomic) NSString *userName;
-@property (nonatomic) BOOL isCeleb;
-@property (nonatomic) BOOL isHost;
-@property (nonatomic) BOOL isFan;
 @property (nonatomic) BOOL isBackstage;
 @property (nonatomic) BOOL isOnstage;
 @property (nonatomic) NSMutableDictionary *errors;
@@ -59,7 +56,7 @@
 @property (nonatomic) Reachability *internetReachability;
 
 // Data
-@property (nonatomic) NSDictionary *user;
+@property (nonatomic) IBUser *user;
 @property (nonatomic) IBEvent *event;
 @property (nonatomic) IBInstance *instance;
 
@@ -75,7 +72,7 @@ static NSString* const kTextChatType = @"chatMessage";
 
 - (instancetype)initWithInstance:(IBInstance *)instance
                        indexPath:(NSIndexPath *)indexPath
-                            user:(NSDictionary *)user {
+                            user:(IBUser *)user {
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
         //Unsure of this 2 lines..
@@ -84,24 +81,23 @@ static NSString* const kTextChatType = @"chatMessage";
         
         _instance = instance;
         _event = _instance.events[indexPath.row];
-        _userName = user[@"name"] ? user[@"name"] : user[@"type"];
         _user = user;
-        _isCeleb = [user[@"type"] isEqualToString:@"celebrity"];
-        _isHost = [user[@"type"] isEqualToString:@"host"];
+        _userName = user.name ? user.name : [user userRoleName];
         
         _openTokManager = [[OpenTokManager alloc] init];
         _openTokManager.subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
         
-        _isFan = !_isCeleb && !_isHost;
-        
         //observers
         [_event addObserver:self
-                     forKeyPath:@"status"
-                        options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
-                        context:NULL];
+                 forKeyPath:@"status"
+                    options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                    context:NULL];
         
         _internetReachability = [Reachability reachabilityForInternetConnection];
         [_internetReachability startNotifier];
+        
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+
     }
     return self;
 }
@@ -139,19 +135,19 @@ static NSString* const kTextChatType = @"chatMessage";
 - (void)createEventToken{
     
     [SVProgressHUD show];
-    [IBApi createEventTokenWithUserType:self.user[@"type"]
-                                  event:self.event
-                             completion:^(IBInstance *instance, NSError *error) {
-                                 [SVProgressHUD dismiss];
+    [IBApi createEventTokenWithUser:self.user
+                              event:self.event
+                         completion:^(IBInstance *instance, NSError *error) {
+                             [SVProgressHUD dismiss];
                                  
-                                 if (!error && instance.events.count == 1) {
-                                     self.instance = instance;
-                                     self.event = [self.instance.events lastObject];
-                                     [self statusChanged];
-                                     self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, [AppUtil convertToStatusString:self.event]];
-                                     [self startSession];
-                                 }
-                             }];
+                             if (!error && instance.events.count == 1) {
+                                 self.instance = instance;
+                                 self.event = [self.instance.events lastObject];
+                                 [self statusChanged];
+                                 self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, [AppUtil convertToStatusString:self.event]];
+                                 [self startSession];
+                             }
+                         }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -164,8 +160,11 @@ static NSString* const kTextChatType = @"chatMessage";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)dealloc {
+    [_event removeObserver:self forKeyPath:@"status"];
+}
+
 -(void)startSession{
- ///init test
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
@@ -174,7 +173,7 @@ static NSString* const kTextChatType = @"chatMessage";
     self.eventView.getInLineBtn.hidden = YES;
     [self statusChanged];
     
-    if(_isFan){
+    if(self.user.userRole == IBUserRoleFan){
         [self connectFanSignaling];
     }
 }
@@ -202,7 +201,7 @@ static NSString* const kTextChatType = @"chatMessage";
     (_textChat.view).frame = r;
     [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
     
-    if(!_isFan){
+    if(self.user.userRole != IBUserRoleFan){
         self.eventView.chatBtn.hidden = NO;
     }
     
@@ -264,9 +263,7 @@ static NSString* const kTextChatType = @"chatMessage";
 -(void)forceDisconnect
 {
     [self cleanupPublisher];
-    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", _isCeleb ? @"celebrity" : @"host"];
-    
-    
+    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
     
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
     OTError *error = nil;
@@ -288,14 +285,13 @@ static NSString* const kTextChatType = @"chatMessage";
     
     _logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_openTokManager.session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
     
-    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
-    NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage",me];
+    NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage", [self.user userRoleName]];
     [_logging logEventAction:logtype variation:@"success"];
 }
 
 #pragma mark - publishers
 - (void)doPublish{
-    if(_isFan){
+    if(self.user.userRole == IBUserRoleFan){
         //FAN
         if(_isBackstage){
             [self sendNewUserSignal];
@@ -316,13 +312,13 @@ static NSString* const kTextChatType = @"chatMessage";
             self.eventView.getInLineBtn.hidden = YES;
         }
     }else{
-        if(self.isCeleb && !_stopGoingLive){
+        if(self.user.userRole == IBUserRoleCelebrity && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
             [self.eventView.celebrityViewHolder addSubview:_openTokManager.publisher.view];
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.celebrityViewHolder.bounds.size.width, self.eventView.celebrityViewHolder.bounds.size.height);
             self.eventView.closeEvenBtn.hidden = NO;
         }
-        if(_isHost && !_stopGoingLive){
+        if(self.user.userRole == IBUserRoleHost && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
             [self.eventView.hostViewHolder addSubview:_openTokManager.publisher.view];
             self.eventView.closeEvenBtn.hidden = NO;
@@ -341,9 +337,8 @@ static NSString* const kTextChatType = @"chatMessage";
     if(_openTokManager.publisher){
         NSLog(@"PUBLISHER EXISTED");
     }
-    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@",me,session_name];
+    NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
 
     [_logging logEventAction:logtype variation:@"attempt"];
     
@@ -375,9 +370,8 @@ static NSString* const kTextChatType = @"chatMessage";
     OTError *error = nil;
     [session unpublish:_openTokManager.publisher error:&error];
     
-    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@",me,session_name];
+    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", [self.user userRoleName], session_name];
     
     [_logging logEventAction:logtype variation:@"attempt"];
     
@@ -434,8 +428,7 @@ static NSString* const kTextChatType = @"chatMessage";
     
     if(!_openTokManager.publisher.stream && !stream.connection) return;
     
-    NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
-    
+    NSString *me = [self.user userRoleName];
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
@@ -476,11 +469,9 @@ static NSString* const kTextChatType = @"chatMessage";
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
         
-        NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
-        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
+        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [_logging logEventAction:logtype variation:@"attempt"];
 
-        
         OTError *error = nil;
         [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
         if (error)
@@ -551,8 +542,7 @@ static NSString* const kTextChatType = @"chatMessage";
         NSString *connectingTo = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
-        NSString *me = _isHost ? @"host" : _isCeleb ? @"celebrity" : @"fan";
-        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@",me,connectingTo];
+        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [_logging logEventAction:logtype variation:@"success"];
         
         assert(_subscriber == subscriber);
@@ -685,7 +675,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
 - (void)sessionDidConnect:(OTSession*)session
 {
     
-    if(_isFan){
+    if(self.user.userRole == IBUserRoleFan){
         if(session.sessionId == _openTokManager.session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.eventView.statusLabel).text = @"";
@@ -751,14 +741,14 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
         }else{
             if([stream.connection.data isEqualToString:@"usertype=host"]){
                 _openTokManager.hostStream = stream;
-                if(self.isHost){
+                if(self.user.userRole == IBUserRoleHost){
                     _stopGoingLive = YES;
                 }
             }
             
             if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
                 _openTokManager.celebrityStream = stream;
-                if(self.isCeleb){
+                if(self.user.userRole == IBUserRoleCelebrity){
                     _stopGoingLive = YES;
                 }
             }
@@ -768,7 +758,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats
             }
             
             
-            if(_isLive || _isCeleb || _isHost){
+            if(_isLive || self.user.userRole == IBUserRoleCelebrity || self.user.userRole == IBUserRoleHost){
                 [self doSubscribe:stream];
             }
         }
@@ -849,7 +839,7 @@ didFailWithError:(OTError*)error
         _openTokManager.producerConnection = connection;
     }
     if([type isEqualToString:@"closeChat"]){
-        if(_isFan){
+        if(self.user.userRole == IBUserRoleFan){
             [self hideChatBox];
             self.eventView.chatBtn.hidden = YES;
         }
@@ -863,7 +853,7 @@ didFailWithError:(OTError*)error
         [messageData[@"video"] isEqualToString:@"on"] ? [_openTokManager.publisher setPublishVideo: YES] : [_openTokManager.publisher setPublishVideo: NO];
     }
     if([type isEqualToString:@"newBackstageFan"]){
-        if(!_isFan){
+        if(self.user.userRole != IBUserRoleFan){
             [self.eventView showNotification:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
         }
@@ -905,7 +895,7 @@ didFailWithError:(OTError*)error
                 _inCallWithProducer = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                if(_isFan && _isBackstage){
+                if(self.user.userRole == IBUserRoleFan && _isBackstage){
                     [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
                 }
             }else{
@@ -923,7 +913,7 @@ didFailWithError:(OTError*)error
                 [_openTokManager.session unsubscribe: _openTokManager.privateProducerSubscriber error:&error];
                 _inCallWithProducer = NO;
                 [self.openTokManager muteOnstageSession:NO];
-                if(_isFan && _isBackstage){
+                if(self.user.userRole == IBUserRoleFan && _isBackstage){
                     [self.eventView hideVideoPreview];
                 }
             }else{
@@ -1120,7 +1110,7 @@ didFailWithError:(OTError*)error
 
 -(void) statusChanged{
     if([self.event.status isEqualToString:@"N"]){
-        if(!_isFan){
+        if(self.user.userRole != IBUserRoleFan){
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
@@ -1129,7 +1119,7 @@ didFailWithError:(OTError*)error
         }
     };
     if([self.event.status isEqualToString:@"P"]){
-        if(!_isFan){
+        if(self.user.userRole != IBUserRoleFan){
             self.eventView.eventImage.hidden = YES;
         }else{
             self.eventView.eventImage.hidden = NO;
@@ -1146,7 +1136,7 @@ didFailWithError:(OTError*)error
         }else{
             self.eventView.eventImage.hidden = NO;
         }
-        if(!_isCeleb && !_isHost && !_isBackstage && !_isOnstage){
+        if(self.user.userRole != IBUserRoleCelebrity && self.user.userRole != IBUserRoleHost && !_isBackstage && !_isOnstage){
             self.eventView.getInLineBtn.hidden = NO;
         }
         _isLive = YES;
@@ -1258,7 +1248,7 @@ didFailWithError:(OTError*)error
 - (IBAction)closeChat:(id)sender {
     [UIView animateWithDuration:0.5 animations:^() {
         [self hideChatBox];
-        if(!_isFan){
+        if(self.user.userRole != IBUserRoleFan){
             self.eventView.chatBtn.hidden = NO;
         }
     }];
@@ -1323,8 +1313,9 @@ didFailWithError:(OTError*)error
             });
         }
     });
-    
-    [self dismissViewControllerAnimated:NO completion:nil];
+
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - orientation

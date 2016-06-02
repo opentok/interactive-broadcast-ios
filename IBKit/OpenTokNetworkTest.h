@@ -10,6 +10,7 @@
 #import <OpenTok/OpenTok.h>
 
 @interface OpenTokNetworkTest : NSObject
+
 @property (nonatomic) double prevVideoTimestamp;
 @property (nonatomic) double prevVideoBytes;
 @property (nonatomic) double prevAudioTimestamp;
@@ -22,12 +23,9 @@
 @property (nonatomic) long audio_bw;
 @property (nonatomic) double video_pl_ratio;
 @property (nonatomic) double audio_pl_ratio;
-@property (nonatomic) NSString *frameRate;
-@property (nonatomic) NSString *resolution;
 
 - (instancetype)initWithFrameRateAndResolution:(NSString*)framerate
                                     resolution:(NSString*)resolution;
 - (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats;
 - (NSString*)getQuality;
-
 @end

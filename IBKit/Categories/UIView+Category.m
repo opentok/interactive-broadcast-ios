@@ -11,8 +11,7 @@
 @implementation UIView (Category)
 
 - (UIImage *)captureViewImage {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size,
-                                           NO, [UIScreen mainScreen].scale);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
     [self drawViewHierarchyInRect:self.bounds
                afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

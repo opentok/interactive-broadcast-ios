@@ -28,4 +28,13 @@
 
 - (void)connectWithTokenHost:(NSString *)tokenHost;
 - (void)muteOnstageSession:(BOOL)mute;
+
+#pragma mark - OpenTok Signaling
+- (NSError *)sendWarningSignal;
+
+#pragma mark - SIOSocket Signaling
+- (void)connectFanToSocketWithURL:(NSString *)url
+                        sessionId:(NSString *)sessionId;
+- (NSError *)sendNewUserSignalWithName:(NSString *)username;
+- (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString;
 @end

@@ -13,7 +13,7 @@ SPEC_BEGIN(IBUserTests)
 
 context(@"IBUserInitializationTests", ^(){
     
-    describe(@"A instance of IBUser", ^(){
+    describe(@"An instance of IBUser", ^(){
         
         it(@"should return a valid IBUser with userRole and name", ^(){
             
@@ -36,7 +36,7 @@ context(@"IBUserInitializationTests", ^(){
     });
     
     
-    describe(@"A instance of IBUser", ^(){
+    describe(@"An instance of IBUser", ^(){
         
         it(@"should return \"fan\" for Custom role ", ^(){
             

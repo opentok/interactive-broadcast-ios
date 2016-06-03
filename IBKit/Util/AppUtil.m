@@ -8,6 +8,8 @@
 
 #import "AppUtil.h"
 #import "IBDateFormatter.h"
+#import "IBEvent.h"
+
 
 @implementation AppUtil
 
@@ -18,7 +20,7 @@
     
     if([status isEqualToString:@"N"]){
         
-        if(![event.startTime isEqual:[NSNull null]]){
+        if(event.startTime && ![event.startTime isEqual:[NSNull null]]){
             return [IBDateFormatter convertToAppStandardFromDateString:event.startTime];
         }else{
             return @"Not Started";

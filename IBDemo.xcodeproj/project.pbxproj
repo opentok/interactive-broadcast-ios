@@ -30,6 +30,10 @@
 		A00231AD1D00C446007905CC /* IBApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AC1D00C446007905CC /* IBApiTests.m */; };
 		A00231AF1D00C45D007905CC /* OpenTokNetworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AE1D00C45D007905CC /* OpenTokNetworkTests.m */; };
 		A00231B11D00C4A7007905CC /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B01D00C4A7007905CC /* OpenTokManager.m */; };
+		A00231B31D010FEA007905CC /* IBEventsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B21D010FEA007905CC /* IBEventsViewControllerTests.m */; };
+		A00231B71D01102A007905CC /* IBEventViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B61D01102A007905CC /* IBEventViewControllerTests.m */; };
+		A00231BA1D011CF9007905CC /* OpenTokLoggingWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */; };
+		A00231BB1D011CF9007905CC /* OpenTokLoggingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
@@ -151,6 +155,10 @@
 		A00231AC1D00C446007905CC /* IBApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApiTests.m; sourceTree = "<group>"; };
 		A00231AE1D00C45D007905CC /* OpenTokNetworkTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTests.m; sourceTree = "<group>"; };
 		A00231B01D00C4A7007905CC /* OpenTokManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokManager.m; sourceTree = "<group>"; };
+		A00231B21D010FEA007905CC /* IBEventsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEventsViewControllerTests.m; sourceTree = "<group>"; };
+		A00231B61D01102A007905CC /* IBEventViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEventViewControllerTests.m; sourceTree = "<group>"; };
+		A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokLoggingWrapper.h; sourceTree = "<group>"; };
+		A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokLoggingWrapper.m; sourceTree = "<group>"; };
 		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
 		A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
 		A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
@@ -377,6 +385,8 @@
 				A00231AA1D00C42B007905CC /* IBEventTests.m */,
 				A00231A81D00C23B007905CC /* IBUserTests.m */,
 				A00231AC1D00C446007905CC /* IBApiTests.m */,
+				A00231B61D01102A007905CC /* IBEventViewControllerTests.m */,
+				A00231B21D010FEA007905CC /* IBEventsViewControllerTests.m */,
 				A00231AE1D00C45D007905CC /* OpenTokNetworkTests.m */,
 				A00231B01D00C4A7007905CC /* OpenTokManager.m */,
 				A08D96D81CF8DCB200877619 /* Info.plist */,
@@ -450,6 +460,8 @@
 				A08D96EB1CFE36F400877619 /* OpenTokManager.m */,
 				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
 				0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */,
+				A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */,
+				A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -499,6 +511,7 @@
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
+				A00231BA1D011CF9007905CC /* OpenTokLoggingWrapper.h in Headers */,
 				A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */,
 				A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */,
 				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
@@ -773,8 +786,10 @@
 				A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */,
 				A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */,
 				A00231A91D00C23B007905CC /* IBUserTests.m in Sources */,
+				A00231B31D010FEA007905CC /* IBEventsViewControllerTests.m in Sources */,
 				A00231AD1D00C446007905CC /* IBApiTests.m in Sources */,
 				A00231B11D00C4A7007905CC /* OpenTokManager.m in Sources */,
+				A00231B71D01102A007905CC /* IBEventViewControllerTests.m in Sources */,
 				A00231AF1D00C45D007905CC /* OpenTokNetworkTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -806,6 +821,7 @@
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
+				A00231BB1D011CF9007905CC /* OpenTokLoggingWrapper.m in Sources */,
 				A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */,
 				A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */,
 				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,

@@ -34,6 +34,8 @@
 - (instancetype)initWithInstance:(IBInstance *)instance
                             user:(IBUser *)user {
     
+    if (!instance || !user) return nil;
+    
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         _instance = instance;
         _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];

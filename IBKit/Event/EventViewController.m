@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Andrea Phillips. All rights reserved.
 //
 
-#import "SIOSocket.h"
-
 #import "OTKTextChatComponent.h"
 #import "IBApi.h"
 
@@ -15,8 +13,6 @@
 
 #import "SVProgressHUD.h"
 #import "DotSpinnerViewController.h"
-
-#import "OTKAnalytics.h"
 
 #import "EventView.h"
 #import "IBInstance_Internal.h"
@@ -30,6 +26,8 @@
 
 #import "OpenTokManager.h"
 #import "OpenTokNetworkTest.h"
+
+#import "OpenTokLoggingWrapper.h"
 
 #import <Reachability/Reachability.h>
 
@@ -48,8 +46,6 @@ typedef enum : NSUInteger {
 @property (nonatomic) BOOL inCallWithProducer;
 
 @property (nonatomic) OTKTextChatComponent *textChat;
-@property (nonatomic) OTKAnalytics *logging;
-@property (nonatomic) SIOSocket *signalingSocket;
 @property (nonatomic) CGFloat chatYPosition;
 
 @property (nonatomic) EventView *eventView;
@@ -76,9 +72,11 @@ typedef enum : NSUInteger {
 - (instancetype)initWithInstance:(IBInstance *)instance
                        indexPath:(NSIndexPath *)indexPath
                             user:(IBUser *)user {
+    
+    if (!instance || !indexPath || !user) return nil;
+    
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
-        //Unsure of this 2 lines..
         OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
         
@@ -88,13 +86,12 @@ typedef enum : NSUInteger {
         _userName = user.name ? user.name : [user userRoleName];
         
         _openTokManager = [[OpenTokManager alloc] init];
-        _openTokManager.subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
         
-        //observers
-        [_event addObserver:self
-                 forKeyPath:@"status"
-                    options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
-                    context:NULL];
+        // start necessary services
+        [self addObserver:self
+               forKeyPath:@"event.status"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
         
         _internetReachability = [Reachability reachabilityForInternetConnection];
         [_internetReachability startNotifier];
@@ -161,10 +158,7 @@ typedef enum : NSUInteger {
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)dealloc {
-    [_event removeObserver:self forKeyPath:@"status"];
+    [self removeObserver:self forKeyPath:@"event.status"];
 }
 
 -(void)startSession{
@@ -177,7 +171,7 @@ typedef enum : NSUInteger {
     [self statusChanged];
     
     if(self.user.userRole == IBUserRoleFan){
-        [self connectFanSignaling];
+        [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
     }
 }
 
@@ -213,19 +207,6 @@ typedef enum : NSUInteger {
     _unreadCount = 0;
 }
 
--(void)connectFanSignaling {
-    
-    __weak EventViewController *weakSelf = self;
-    [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket)
-     {
-         _signalingSocket = socket;
-         _signalingSocket.onConnect = ^()
-         {
-             [weakSelf.signalingSocket emit:@"joinRoom" args:@[weakSelf.instance.sessionIdProducer]];
-         };
-     }];
-}
-
 - (void)inLineConnect
 {
     
@@ -233,12 +214,12 @@ typedef enum : NSUInteger {
     [self.eventView showLoader];
     
     self.eventView.getInLineBtn.hidden = YES;
-    [_logging logEventAction:@"fan_connects_backstage" variation:@"attempt"];
+    [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"attempt"];
     [_openTokManager.producerSession connectWithToken:self.instance.tokenProducer error:&error];
     
     if (error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [_logging logEventAction:@"fan_connects_backstage" variation:@"failed"];
+        [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"failed"];
     }
     
 }
@@ -257,7 +238,7 @@ typedef enum : NSUInteger {
         [_openTokManager.producerSession disconnect:&error];
     }
     if(error){
-        [_logging logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
     }
 }
 
@@ -277,25 +258,12 @@ typedef enum : NSUInteger {
     }
 }
 
-#pragma mark - logging
-- (void)addLogging {
-    NSString *apiKey = _instance.apiKey;
-    NSString *sessionId = _openTokManager.session.sessionId;
-    NSInteger partner = [apiKey integerValue];
-    NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],self.event.identifier];
-    
-    _logging = [[OTKAnalytics alloc] initWithSessionId:sessionId connectionId:_openTokManager.session.connection.connectionId partnerId:partner clientVersion:@"ib-ios-1.0.1" source:sourceId];
-    
-    NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage", [self.user userRoleName]];
-    [_logging logEventAction:logtype variation:@"success"];
-}
-
 #pragma mark - publishers
 - (void)doPublish{
     if(self.user.userRole == IBUserRoleFan){
         //FAN
         if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-            [self sendNewUserSignal];
+            [self.openTokManager sendNewUserSignalWithName:self.userName];
             [self publishTo:_openTokManager.producerSession];
             
             //[self showVideoPreview];
@@ -341,7 +309,7 @@ typedef enum : NSUInteger {
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
 
-    [_logging logEventAction:logtype variation:@"attempt"];
+    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
     
     
     if(!_openTokManager.publisher){
@@ -357,11 +325,11 @@ typedef enum : NSUInteger {
         [self sendWarningSignal];
         
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [_logging logEventAction:logtype variation:@"fail"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
 
 
     }else{
-        [_logging logEventAction:logtype variation:@"success"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
     }
     
 }
@@ -374,11 +342,11 @@ typedef enum : NSUInteger {
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", [self.user userRoleName], session_name];
     
-    [_logging logEventAction:logtype variation:@"attempt"];
+    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
     
     if (error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [_logging logEventAction:logtype variation:@"fail"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
     }
 }
 
@@ -435,7 +403,7 @@ typedef enum : NSUInteger {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
-        [_logging logEventAction:logtype variation:@"success"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
         
         [self cleanupSubscriber:connectingTo];
     }
@@ -444,7 +412,7 @@ typedef enum : NSUInteger {
         _openTokManager.selfSubscriber = nil;
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
-        [_logging logEventAction:logtype variation:@"success"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
     }
     [self cleanupPublisher];
 }
@@ -469,14 +437,14 @@ typedef enum : NSUInteger {
         _openTokManager.subscribers[connectingTo] = subs;
         
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
-        [_logging logEventAction:logtype variation:@"attempt"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
 
         OTError *error = nil;
         [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
         if (error)
         {
             [self.errors setObject:error forKey:connectingTo];
-            [_logging logEventAction:logtype variation:@"fail"];
+            [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
             [self sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
@@ -539,7 +507,7 @@ typedef enum : NSUInteger {
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
-        [_logging logEventAction:logtype variation:@"success"];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
         
         assert(_subscriber == subscriber);
         
@@ -664,20 +632,27 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
         [self startNetworkTest];
     }
 }
-///end network test //
-
 
 # pragma mark - OTSession delegate callbacks
-
-- (void)sessionDidConnect:(OTSession*)session
-{
+- (void)sessionDidConnect:(OTSession*)session {
+    
+    if (session == self.openTokManager.session) {
+        
+        NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"], self.event.identifier];
+        [OpenTokLoggingWrapper loggerWithApiKey:self.instance.apiKey
+                                      sessionId:session.sessionId
+                                   connectionId:session.connection.connectionId
+                                       sourceId:sourceId];
+        
+        NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage", [self.user userRoleName]];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+    }
     
     if(self.user.userRole == IBUserRoleFan){
         if(session.sessionId == _openTokManager.session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.eventView.statusLabel).text = @"";
             self.eventView.closeEvenBtn.hidden = NO;
-            [self addLogging];
         }
         if(session.sessionId == _openTokManager.producerSession.sessionId){
             NSLog(@"sessionDidConnect to Backstage");
@@ -687,7 +662,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
             self.eventView.getInLineBtn.hidden = YES;
             [self doPublish];
             [self loadChat];
-            [_logging logEventAction:@"fan_connects_backstage" variation:@"success"];
+            [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"success"];
         }
     }else{
         [self.eventView showLoader];
@@ -696,13 +671,11 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
                 [self forceDisconnect];
             }else{
                 [self loadChat];
-                [self addLogging];
                 self.eventStage |= IBEventStageOnstage;
                 [self doPublish];
             }
             [self.eventView stopLoader];
         });
-        
     }
 }
 
@@ -870,7 +843,7 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"resendNewFanSignal"]){
         if(_shouldResendProducerSignal){
-            [self sendNewUserSignal];
+            [self.openTokManager sendNewUserSignalWithName:self.userName];
         }
     }
     
@@ -1030,47 +1003,13 @@ didFailWithError:(OTError*)error
                            };
     
     OTError* error = nil;
-    
-    NSString *parsedString = [JSON stringify:data];
-    [_openTokManager.producerSession signalWithType:@"warning" string:parsedString connection:_openTokManager.publisher.stream.connection error:&error];
+    [_openTokManager.producerSession signalWithType:@"warning" string:[JSON stringify:data] connection:_openTokManager.publisher.stream.connection error:&error];
     
     if (error) {
         NSLog(@"signal error %@", error);
     } else {
         NSLog(@"signal sent of type Warning");
     }
-}
-
-- (void)sendNewUserSignal
-{
-    NSLog(@"sending new user signal");
-    NSDictionary *data = @{
-                           @"type" : @"newFan",
-                           @"user" :@{
-                                   @"username": self.userName,
-                                   @"quality":@"",
-                                   @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@(YES),
-                                   @"os":@"iOS",
-                                   @"device":[[UIDevice currentDevice] model]
-                                   },
-                           @"chat" : @{
-                                   @"chatting" : @"false",
-                                   @"messages" : @"[]"
-                                   }
-                           };
-    
-    OTError* error = nil;
-    
-    NSString *parsedString = [JSON stringify:data];
-    [_openTokManager.producerSession signalWithType:@"newFan" string:parsedString connection:nil error:&error];
-    
-    if (error) {
-        NSLog(@"signal error %@", error);
-    } else {
-        NSLog(@"signal sent of type newFan");
-    }
-    
 }
 
 - (void)captureAndSendScreenshot {
@@ -1080,13 +1019,8 @@ didFailWithError:(OTError*)error
         
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
-        NSString *formated = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
-        
-        [_signalingSocket emit:@"mySnapshot" args:@[@{
-                                                       @"connectionId": _openTokManager.publisher.session.connection.connectionId,
-                                                       @"sessionId" : _openTokManager.producerSession.sessionId,
-                                                       @"snapshot": formated
-                                                       }]];
+        NSString *formattedString = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
+        [self.openTokManager sendScreenShotSignalWithFormattedString:formattedString];
     }
 }
 
@@ -1096,7 +1030,7 @@ didFailWithError:(OTError*)error
                         change:(NSDictionary *)change
                        context:(void *)context {
     
-    if ([keyPath isEqual:@"status"]) {
+    if ([keyPath isEqual:@"status"] && [change[@"old"] boolValue] != [change[@"new"] boolValue]) {
         [self statusChanged];
     }
 }
@@ -1252,7 +1186,6 @@ didFailWithError:(OTError*)error
 }
 
 - (IBAction)getInLineClick:(id)sender {
-    self.userName = self.userName;
     _openTokManager.producerSession = [[OTSession alloc] initWithApiKey:_instance.apiKey
                                                sessionId:self.instance.sessionIdProducer
                                                 delegate:self];

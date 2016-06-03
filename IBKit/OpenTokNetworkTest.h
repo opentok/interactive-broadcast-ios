@@ -24,7 +24,7 @@
 @property (nonatomic) double video_pl_ratio;
 @property (nonatomic) double audio_pl_ratio;
 
-- (instancetype)initWithFrameRateAndResolution:(NSString*)framerate
+- (instancetype)initWithFrameRateAndResolution:(NSString*)frameRate
                                     resolution:(NSString*)resolution;
 - (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats;
 - (NSString*)getQuality;

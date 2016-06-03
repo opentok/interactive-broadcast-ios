@@ -14,32 +14,32 @@ SPEC_BEGIN(AppUtilTests)
 
 context(@"UtilTests", ^(){
     
-    describe(@"Converts a status to string", ^(){
-        it(@"returns Live is the status is L", ^(){
+    describe(@"A IBEvent status", ^(){
+        it(@"should return Live if the event status is L", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"status": @"L"}];
             [[[AppUtil convertToStatusString:event] should] equal:@"Live"];
         });
         
-        it(@"returns Not Started if event status is P", ^(){
+        it(@"should return Not Started if event status is P", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"status": @"P"}];
             [[[AppUtil convertToStatusString:event] should] equal:@"Not Started"];
         });
         
-        it(@"should returns Closed if the event status is C", ^(){
+        it(@"should return Closed if the event status is C", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"status": @"C"}];
             [[[AppUtil convertToStatusString:event] should] equal:@"Closed"];
         });
         
-        it(@"should return Not Started if the event status is N", ^(){
+        it(@"should return Not Started if the event status is N and there is no startTime", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"status": @"N"}];
             [[[AppUtil convertToStatusString:event] should] equal:@"Not Started"];
         });
         
-        it(@"returns a correctly formatted date if there is a correctly formatted startTime", ^(){
+        it(@"should return a correctly formatted date if there is a correctly formatted startTime", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"status": @"N", @"date_time_start":@"2016-02-14 11:11:11"}];
             [[[AppUtil convertToStatusString:event] should] equal:@"14 Feb 2016 11:11:11"];
         });
-        it(@"returns nil if event status is not present", ^(){
+        it(@"should return nil if event status is not present", ^(){
             IBEvent *event = [[IBEvent alloc] initWithJson:@{@"date_time_start":@"2016-02-14 11:11:11"}];
             [[[AppUtil convertToStatusString:event] should] beNil];
         });

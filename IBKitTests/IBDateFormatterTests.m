@@ -11,21 +11,23 @@
 
 SPEC_BEGIN(IBDateFormatterTests)
 
-context(@"Date Formatter", ^(){
+context(@"IBDateFormatterTests", ^(){
     
-    describe(@"Converts a correct format", ^(){
-        it(@"should return a formatted date with a string with format YYYY-MM-dd HH:mm:ss ", ^(){
+    describe(@"A date string", ^(){
+        it(@"should return nill if its not correctly formatted", ^(){
+            NSString *date = @"2016-02-14 11:11:11.0";
+            NSString *formattedDate = [IBDateFormatter convertToAppStandardFromDateString:date];
+            [[formattedDate should] beNil];
+        });
+        
+        it(@"should return a formatted date with the format YYYY-MM-dd HH:mm:ss ", ^(){
             NSString *date = @"2016-02-14 11:11:11";
             NSString *formattedDate = [IBDateFormatter convertToAppStandardFromDateString:date];
             [[formattedDate should] equal:@"14 Feb 2016 11:11:11"];
             [[formattedDate shouldNot] beNil];
         });
         
-        it(@"returns nill if the format YYYY-MM-dd HH:mm:ss does not match the passed string", ^(){
-            NSString *date = @"2016-02-14 11:11:11.0";
-            NSString *formattedDate = [IBDateFormatter convertToAppStandardFromDateString:date];
-            [[formattedDate should] beNil];
-        });
+
         
     });
     

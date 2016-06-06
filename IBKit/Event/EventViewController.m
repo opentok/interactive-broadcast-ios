@@ -1030,7 +1030,7 @@ didFailWithError:(OTError*)error
                         change:(NSDictionary *)change
                        context:(void *)context {
     
-    if ([keyPath isEqual:@"status"] && [change[@"old"] boolValue] != [change[@"new"] boolValue]) {
+    if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
     }
 }

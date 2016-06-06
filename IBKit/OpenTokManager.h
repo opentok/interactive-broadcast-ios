@@ -25,6 +25,8 @@
 @property (nonatomic) OTStream* producerStream;
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
+@property (nonatomic) NSMutableDictionary *errors;
+
 
 - (void)connectWithTokenHost:(NSString *)tokenHost;
 - (void)muteOnstageSession:(BOOL)mute;

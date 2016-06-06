@@ -49,9 +49,26 @@
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
         return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
     }
+
     
-#warning - need to revisit here
-    return nil;
+    NSDictionary *data = @{
+                           @"type" : @"warning",
+                           @"data" :@{
+                                   @"connected": @(YES),
+                                   @"subscribing":@(_errors.count == 0 ? NO : YES),
+                                   @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
+                                   },
+                           };
+    
+    OTError* error = nil;
+    [_producerSession signalWithType:@"warning" string:[JSON stringify:data] connection:_publisher.stream.connection error:&error];
+    
+    if (error) {
+        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendWarningSignal: unable to send warning signal"}];
+    } else {
+        return nil;
+    }
+    
 }
 
 #pragma mark - SIOSocket Signaling

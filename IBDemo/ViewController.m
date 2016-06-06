@@ -57,7 +57,8 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                    }
                                    else {
                                        
-                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:0 user:self.requestData[@(sender.hash)]];
+                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
+
                                    }
                                  
                                    [self presentViewController:viewcontroller animated:YES completion:nil];

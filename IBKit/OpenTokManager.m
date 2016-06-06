@@ -65,9 +65,9 @@
     
     if (error) {
         return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendWarningSignal: unable to send warning signal"}];
-    } else {
-        return nil;
     }
+    return nil;
+    
     
 }
 

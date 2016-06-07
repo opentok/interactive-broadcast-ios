@@ -69,6 +69,22 @@
     return nil;
 }
 
+#pragma publisher
+-(void)cleanupPublisher{
+    if(_publisher){
+        
+        if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
+            NSLog(@"cleanup publisher from onstage");
+        }else{
+            NSLog(@"cleanup publisher from backstage");
+        }
+        
+        [_publisher.view removeFromSuperview];
+        _publisher = nil;
+    }
+}
+
+
 #pragma mark - OpenTok Signaling
 - (NSError *)sendWarningSignal {
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {

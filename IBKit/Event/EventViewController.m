@@ -233,7 +233,7 @@ typedef enum : NSUInteger {
 
 -(void)forceDisconnect
 {
-    [self cleanupPublisher];
+    [_openTokManager cleanupPublisher];
     NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
     
@@ -333,20 +333,6 @@ typedef enum : NSUInteger {
     }
 }
 
--(void)cleanupPublisher{
-    if(_openTokManager.publisher){
-        
-        if(_openTokManager.publisher.stream.connection.connectionId == _openTokManager.session.connection.connectionId){
-            NSLog(@"cleanup publisher from onstage");
-        }else{
-            NSLog(@"cleanup publisher from backstage");
-        }
-        
-        [_openTokManager.publisher.view removeFromSuperview];
-        _openTokManager.publisher = nil;
-    }
-}
-
 # pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit *)publisher
@@ -398,14 +384,14 @@ typedef enum : NSUInteger {
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
     }
-    [self cleanupPublisher];
+    [_openTokManager cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher
  didFailWithError:(OTError*) error
 {
     NSLog(@"publisher didFailWithError %@", error);
-    [self cleanupPublisher];
+    [_openTokManager cleanupPublisher];
 }
 
 //Subscribers
@@ -645,7 +631,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
         self.eventStage &= ~IBEventStageBackstage;
         
         _shouldResendProducerSignal = YES;
-        [self cleanupPublisher];
+        [_openTokManager cleanupPublisher];
         [self.eventView hideNotification];
         [self.eventView fanLeaveLine];
     }else{
@@ -1018,7 +1004,7 @@ didFailWithError:(OTError*)error
                 [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
             }
         }
-        [self cleanupPublisher];
+        [_openTokManager cleanupPublisher];
     };
     
 };

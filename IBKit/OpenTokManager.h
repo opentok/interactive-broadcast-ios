@@ -41,6 +41,9 @@
 #pragma subscribers
 - (void)cleanupSubscriber:(NSString*)type;
 
+#pragma publisher
+-(void)cleanupPublisher;
+
 #pragma mark - SIOSocket Signaling
 - (void)connectFanToSocketWithURL:(NSString *)url
                         sessionId:(NSString *)sessionId;

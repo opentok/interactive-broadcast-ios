@@ -117,4 +117,53 @@
     }
 }
 
+#pragma chat Bar
+
+- (void)userIsChatting{
+    self.chatBtn.hidden = YES;
+    self.chatBar.hidden = NO;
+}
+
+- (void)hideChatBar{
+    self.chatBar.hidden = YES;
+}
+
+
+#pragma fan status changes
+
+- (void) fanIsInline{
+    _closeEvenBtn.hidden = YES;
+    _leaveLineBtn.hidden = NO;
+    _getInLineBtn.hidden = YES;
+}
+- (void)fanIsOnStage{
+    _statusLabel.text = @"\u2022 You are live";
+    _statusLabel.hidden = NO;
+    _leaveLineBtn.hidden = YES;
+    _getInLineBtn.hidden = YES;
+    [self hideNotification];
+    _chatBtn.hidden = YES;
+    [self hideVideoPreview];
+}
+- (void)fanLeaveLine{
+    _leaveLineBtn.hidden = YES;
+    _chatBtn.hidden = YES;
+    _closeEvenBtn.hidden = NO;
+    _statusLabel.text = @"";
+    _getInLineBtn.hidden = NO;
+    _inLineHolder.hidden = YES;
+}
+
+#pragma status changes
+
+- (void)eventIsClosed{
+    _eventImage.hidden = NO;
+    _getInLineBtn.hidden = YES;
+    _leaveLineBtn.hidden = YES;
+    _statusLabel.hidden = YES;
+    _chatBtn.hidden = YES;
+    _internalHolder.hidden = YES;
+    _closeEvenBtn.hidden = NO;
+}
+
 @end

@@ -48,4 +48,19 @@
 
 #pragma mark - subscriber views
 - (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers;
+
+#pragma status changes
+- (void)eventIsClosed;
+
+#pragma fan status changes
+- (void) fanIsInline;
+- (void)fanIsOnStage;
+- (void)fanLeaveLine;
+
+#pragma chat bar
+- (void)userIsChatting;
+- (void)hideChatBar;
+
+
+
 @end

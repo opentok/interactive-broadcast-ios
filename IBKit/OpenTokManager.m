@@ -10,6 +10,8 @@
 #import "JSON.h"
 #import "SIOSocket.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "OpenTokLoggingWrapper.h"
+
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
@@ -43,6 +45,47 @@
 - (void)dealloc {
     [self.socket close];
 }
+
+#pragma subscriber
+- (void)cleanupSubscriber:(NSString*)type
+{
+    OTSubscriber *_subscriber = _subscribers[type];
+    if(_subscriber){
+        NSLog(@"SUBSCRIBER CLEANING UP");
+        [_subscriber.view removeFromSuperview];
+        [_subscribers removeObjectForKey:type];
+        _subscriber = nil;
+    }
+    
+}
+
+#pragma session
+-(NSError*)disconnectBackstageSession {
+    OTError *error = nil;
+    if(_producerSession){
+        [_producerSession disconnect:&error];
+    }
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+    }
+    return error;
+}
+
+#pragma publisher
+-(void)cleanupPublisher{
+    if(_publisher){
+        
+        if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
+            NSLog(@"cleanup publisher from onstage");
+        }else{
+            NSLog(@"cleanup publisher from backstage");
+        }
+        
+        [_publisher.view removeFromSuperview];
+        _publisher = nil;
+    }
+}
+
 
 #pragma mark - OpenTok Signaling
 - (NSError *)sendWarningSignal {
@@ -139,6 +182,28 @@
                                                @"snapshot": formattedString
                                             }
                                         ]];
+    
+    return nil;
+}
+
+- (NSError*)updateQualitySignal:(NSString*)quality
+{
+    NSDictionary *data = @{
+                           @"type" : @"qualityUpdate",
+                           @"data" :@{
+                                   @"connectionId":_publisher.session.connection.connectionId,
+                                   @"quality" : quality,
+                                   },
+                           };
+    
+    OTError* error = nil;
+    NSString *parsedString = [JSON stringify:data];
+    [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
+    
+    if (error) {
+        NSLog(@"signal didFailWithError %@", error);
+        return error;
+    }
     
     return nil;
 }

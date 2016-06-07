@@ -41,7 +41,6 @@ typedef enum : NSUInteger {
 @interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate,OTSubscriberKitNetworkStatsDelegate>
 
 @property (nonatomic) NSString *userName;
-@property (nonatomic) NSMutableDictionary *errors;
 @property (nonatomic) NSUInteger eventStage;
 @property (nonatomic) BOOL inCallWithProducer;
 
@@ -322,7 +321,7 @@ typedef enum : NSUInteger {
     if (error)
     {
         NSLog(@"%@", error);
-        [self sendWarningSignal];
+        [_openTokManager sendWarningSignal];
         
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
@@ -421,8 +420,6 @@ typedef enum : NSUInteger {
  didFailWithError:(OTError*) error
 {
     NSLog(@"publisher didFailWithError %@", error);
-    [self.errors setObject:error forKey:@"publisherError"];
-    [self sendWarningSignal];
     [self cleanupPublisher];
 }
 
@@ -443,9 +440,13 @@ typedef enum : NSUInteger {
         [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
         if (error)
         {
-            [self.errors setObject:error forKey:connectingTo];
+            [_openTokManager.errors setObject:error forKey:connectingTo];
             [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
-            [self sendWarningSignal];
+            
+            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            
+            [_openTokManager sendWarningSignal];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
@@ -458,7 +459,10 @@ typedef enum : NSUInteger {
         [_openTokManager.producerSession subscribe: _openTokManager.producerSubscriber error:&error];
         if (error)
         {
-            [self.errors setObject:error forKey:@"producer_backstage"];
+            [_openTokManager.errors setObject:error forKey:@"producer_backstage"];
+            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -470,7 +474,9 @@ typedef enum : NSUInteger {
         [_openTokManager.session subscribe: _openTokManager.privateProducerSubscriber error:&error];
         if (error)
         {
-            [self.errors setObject:error forKey:@"producer_onstage"];
+            [_openTokManager.errors setObject:error forKey:@"producer_onstage"];
+            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
             NSLog(@"subscriber didFailWithError %@", error);
         }
         
@@ -530,8 +536,10 @@ typedef enum : NSUInteger {
     NSLog(@"subscriber %@ didFailWithError %@",
           subscriber.stream.streamId,
           error);
-    [self.errors setObject:error forKey:@"subscriberError"];
-    [self sendWarningSignal];
+    [_openTokManager.errors setObject:error forKey:@"subscriberError"];
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+    [_openTokManager sendWarningSignal];
 }
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
@@ -778,9 +786,9 @@ streamDestroyed:(OTStream *)stream
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error
 {
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
     NSLog(@"didFailWithError: (%@)", error);
-    [self.errors setObject:error forKey:@"sessionError"];
-    [self sendWarningSignal];
 }
 
 
@@ -980,35 +988,6 @@ didFailWithError:(OTError*)error
             [self.eventView.chatBtn setTitle:[NSString stringWithFormat:@"%f", _unreadCount] forState:UIControlStateNormal];
             
         }
-    }
-}
-
-- (void)sendWarningSignal
-{
-    
-    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
-    [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-    
-    if(!_openTokManager.producerSession.connection) return;
-    
-    BOOL subscribing =  self.errors.count == 0 ? NO : YES;
-    
-    NSDictionary *data = @{
-                           @"type" : @"warning",
-                           @"data" :@{
-                                   @"connected": @(YES),
-                                   @"subscribing":@(subscribing),
-                                   @"connectionId": _openTokManager.publisher && _openTokManager.publisher.stream ? _openTokManager.publisher.stream.connection.connectionId : @"",
-                                   },
-                           };
-    
-    OTError* error = nil;
-    [_openTokManager.producerSession signalWithType:@"warning" string:[JSON stringify:data] connection:_openTokManager.publisher.stream.connection error:&error];
-    
-    if (error) {
-        NSLog(@"signal error %@", error);
-    } else {
-        NSLog(@"signal sent of type Warning");
     }
 }
 

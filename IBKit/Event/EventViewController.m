@@ -167,6 +167,7 @@ typedef enum : NSUInteger {
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
     
+
     self.eventView.getInLineBtn.hidden = YES;
     [self statusChanged];
     
@@ -267,16 +268,14 @@ typedef enum : NSUInteger {
             _openTokManager.publisher.publishAudio = NO;
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self.eventView stopLoader];
+            [self.eventView fanIsInline];
         }
         if((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage) {
             [self publishTo:_openTokManager.session];
             [self.eventView.fanViewHolder addSubview:_openTokManager.publisher.view];
             _openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.fanViewHolder.bounds.size.width, self.eventView.fanViewHolder.bounds.size.height);
-            self.eventView.statusLabel.text = @"\u2022 You are live";
+            [self.eventView fanIsOnStage];
         }
-        self.eventView.getInLineBtn.hidden = YES;
-        self.eventView.closeEvenBtn.hidden = YES;
-
     }else{
         if(self.user.userRole == IBUserRoleCelebrity && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
@@ -891,7 +890,6 @@ didFailWithError:(OTError*)error
             _inCallWithProducer = NO;
             _openTokManager.publisher.publishAudio = NO;
             [self.openTokManager muteOnstageSession:NO];
-            
             self.eventView.getInLineBtn.hidden = NO;
             [self.eventView hideNotification];
             [self.eventView hideVideoPreview];
@@ -900,7 +898,6 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"disconnectBackstage"]){
         _openTokManager.publisher.publishAudio = NO;
-        
         self.eventView.leaveLineBtn.hidden = NO;
         self.eventView.statusLabel.text = @"IN LINE";
         [self.eventView hideNotification];
@@ -908,16 +905,13 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"goLive"]){
         self.event.status = @"L";
-        
     }
     if([type isEqualToString:@"joinHost"]){
-        
-        [self disconnectBackstage];
     
+        [self disconnectBackstage];
         self.eventStage |= IBEventStageOnstage;
         [self hideChatBox];
         [self.eventView fanIsOnStage];
-
         if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
             [self goLive];
         }
@@ -1003,7 +997,6 @@ didFailWithError:(OTError*)error
 
     if (_openTokManager.publisher.view) {
         UIImage *screenshot = [_openTokManager.publisher.view captureViewImage];
-        
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formattedString = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];

@@ -143,6 +143,7 @@
     _getInLineBtn.hidden = YES;
     [self hideNotification];
     _chatBtn.hidden = YES;
+    _closeEvenBtn.hidden = YES;
     [self hideVideoPreview];
 }
 - (void)fanLeaveLine{

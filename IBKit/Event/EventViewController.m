@@ -26,7 +26,6 @@
 
 #import "OpenTokManager.h"
 #import "OpenTokNetworkTest.h"
-
 #import "OpenTokLoggingWrapper.h"
 
 #import <Reachability/Reachability.h>
@@ -893,9 +892,7 @@ didFailWithError:(OTError*)error
         if(_openTokManager.publisher){
             [self unpublishFrom:_openTokManager.session];
         }
-        if([_openTokManager disconnectBackstageSession] != nil){
-            [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-        }
+        [_openTokManager disconnectBackstageSession];
         
         [self.eventView showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
         [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:5.0];
@@ -1000,9 +997,7 @@ didFailWithError:(OTError*)error
         }
         
         if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-            if([_openTokManager disconnectBackstageSession] != nil){
-                [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-            }
+            [_openTokManager disconnectBackstageSession];
         }
         [_openTokManager cleanupPublisher];
     };
@@ -1098,9 +1093,7 @@ didFailWithError:(OTError*)error
 
     [self.eventView fanLeaveLine];
     [self disconnectBackstage];
-    if([_openTokManager disconnectBackstageSession] != nil){
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-    }
+    [_openTokManager disconnectBackstageSession];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -1128,9 +1121,7 @@ didFailWithError:(OTError*)error
         
         OTError *error = nil;
         if(_openTokManager.producerSession){
-            if([_openTokManager disconnectBackstageSession] != nil){
-                [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-            }
+            [_openTokManager disconnectBackstageSession];
         }
         if(_openTokManager.session){
             [_openTokManager.session disconnect:&error];

@@ -10,6 +10,8 @@
 #import "JSON.h"
 #import "SIOSocket.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "OpenTokLoggingWrapper.h"
+
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
@@ -64,9 +66,9 @@
         [_producerSession disconnect:&error];
     }
     if(error){
-        return error;
+        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
     }
-    return nil;
+    return error;
 }
 
 #pragma publisher

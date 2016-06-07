@@ -44,6 +44,31 @@
     [self.socket close];
 }
 
+#pragma subscriber
+- (void)cleanupSubscriber:(NSString*)type
+{
+    OTSubscriber *_subscriber = _subscribers[type];
+    if(_subscriber){
+        NSLog(@"SUBSCRIBER CLEANING UP");
+        [_subscriber.view removeFromSuperview];
+        [_subscribers removeObjectForKey:type];
+        _subscriber = nil;
+    }
+    
+}
+
+#pragma session
+-(NSError*)disconnectBackstageSession {
+    OTError *error = nil;
+    if(_producerSession){
+        [_producerSession disconnect:&error];
+    }
+    if(error){
+        return error;
+    }
+    return nil;
+}
+
 #pragma mark - OpenTok Signaling
 - (NSError *)sendWarningSignal {
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
@@ -139,6 +164,28 @@
                                                @"snapshot": formattedString
                                             }
                                         ]];
+    
+    return nil;
+}
+
+- (NSError*)updateQualitySignal:(NSString*)quality
+{
+    NSDictionary *data = @{
+                           @"type" : @"qualityUpdate",
+                           @"data" :@{
+                                   @"connectionId":_publisher.session.connection.connectionId,
+                                   @"quality" : quality,
+                                   },
+                           };
+    
+    OTError* error = nil;
+    NSString *parsedString = [JSON stringify:data];
+    [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
+    
+    if (error) {
+        NSLog(@"signal didFailWithError %@", error);
+        return error;
+    }
     
     return nil;
 }

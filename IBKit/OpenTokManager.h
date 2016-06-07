@@ -33,6 +33,13 @@
 
 #pragma mark - OpenTok Signaling
 - (NSError *)sendWarningSignal;
+- (NSError*)updateQualitySignal:(NSString*)quality;
+
+#pragma sessions
+-(NSError*)disconnectBackstageSession;
+
+#pragma subscribers
+- (void)cleanupSubscriber:(NSString*)type;
 
 #pragma mark - SIOSocket Signaling
 - (void)connectFanToSocketWithURL:(NSString *)url

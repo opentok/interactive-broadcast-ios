@@ -28,4 +28,5 @@
                                     resolution:(NSString*)resolution;
 - (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats;
 - (NSString*)getQuality;
+
 @end

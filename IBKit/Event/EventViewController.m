@@ -231,16 +231,6 @@ typedef enum : NSUInteger {
     _shouldResendProducerSignal = YES;
 }
 
--(void)disconnectBackstageSession {
-    OTError *error = nil;
-    if(_openTokManager.producerSession){
-        [_openTokManager.producerSession disconnect:&error];
-    }
-    if(error){
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-    }
-}
-
 -(void)forceDisconnect
 {
     [self cleanupPublisher];
@@ -398,7 +388,8 @@ typedef enum : NSUInteger {
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
         
-        [self cleanupSubscriber:connectingTo];
+        [_openTokManager cleanupSubscriber:connectingTo];
+        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
     if(_openTokManager.selfSubscriber){
         [_openTokManager.producerSession unsubscribe:_openTokManager.selfSubscriber error:nil];
@@ -476,22 +467,6 @@ typedef enum : NSUInteger {
         
     }
 }
-
-
-- (void)cleanupSubscriber:(NSString*)type
-{
-    OTSubscriber *_subscriber = _openTokManager.subscribers[type];
-    if(_subscriber){
-        NSLog(@"SUBSCRIBER CLEANING UP");
-        [_subscriber.view removeFromSuperview];
-        [_openTokManager.subscribers removeObjectForKey:type];
-        _subscriber = nil;
-    }
-    
-    [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
-}
-
-
 
 # pragma mark - OTSubscriber delegate callbacks
 
@@ -610,27 +585,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
 
 - (void)checkQualityAndSendSignal
 {
-    if(_openTokManager.publisher && _openTokManager.publisher.session){
-        
-        NSString *quality = [self.networkTest getQuality];
-        NSDictionary *data = @{
-                               @"type" : @"qualityUpdate",
-                               @"data" :@{
-                                       @"connectionId": _openTokManager.publisher.session.connection.connectionId,
-                                       @"quality" : quality,
-                                       },
-                               };
-        
-        OTError* error = nil;
-        NSString *parsedString = [JSON stringify:data];
-        [_openTokManager.producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_openTokManager.producerSubscriber.stream.connection error:&error];
-        
-        if (error) {
-            NSLog(@"signal didFailWithError %@", error);
-        } else {
-            NSLog(@"quality update sent  %@",quality);
-        }
-        
+    if(_openTokManager.publisher && _openTokManager.publisher.session)
+    {
+        [_openTokManager updateQualitySignal:[_networkTest getQuality]];
         [self startNetworkTest];
     }
 }
@@ -769,7 +726,8 @@ streamDestroyed:(OTStream *)stream
             if([type isEqualToString:@"fan"]){
                 _openTokManager.fanStream = nil;
             }
-            [self cleanupSubscriber:type];
+            [_openTokManager cleanupSubscriber:type];
+            [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
         }
     }
 }
@@ -949,7 +907,9 @@ didFailWithError:(OTError*)error
         if(_openTokManager.publisher){
             [self unpublishFrom:_openTokManager.session];
         }
-        [self disconnectBackstageSession];
+        if([_openTokManager disconnectBackstageSession] != nil){
+            [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+        }
         
         [self.eventView showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
         [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:5.0];
@@ -1054,7 +1014,9 @@ didFailWithError:(OTError*)error
         }
         
         if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-            [self disconnectBackstageSession];
+            if([_openTokManager disconnectBackstageSession] != nil){
+                [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+            }
         }
         [self cleanupPublisher];
     };
@@ -1150,8 +1112,9 @@ didFailWithError:(OTError*)error
 
     [self.eventView fanLeaveLine];
     [self disconnectBackstage];
-    [self disconnectBackstageSession];
-
+    if([_openTokManager disconnectBackstageSession] != nil){
+        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -1179,7 +1142,9 @@ didFailWithError:(OTError*)error
         
         OTError *error = nil;
         if(_openTokManager.producerSession){
-            [self disconnectBackstageSession];
+            if([_openTokManager disconnectBackstageSession] != nil){
+                [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+            }
         }
         if(_openTokManager.session){
             [_openTokManager.session disconnect:&error];

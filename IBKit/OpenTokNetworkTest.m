@@ -51,7 +51,21 @@
     
     return self;
 }
-
+- (void)setStats:(OTSubscriberKitVideoNetworkStats*)stats{
+    
+    if (self.prevVideoTimestamp == 0) {
+        self.prevVideoTimestamp = stats.timestamp;
+        self.prevVideoBytes = stats.videoBytesReceived;
+    }
+    
+    if (stats.timestamp - self.prevVideoTimestamp >= 3000) {
+        self.video_bw = (8 * (stats.videoBytesReceived - self.prevVideoBytes)) / ((stats.timestamp - self.prevVideoTimestamp) / 1000ull);
+        self.prevVideoTimestamp = stats.timestamp;
+        self.prevVideoBytes = stats.videoBytesReceived;
+        
+        [self processStats:stats];
+    }
+}
 
 - (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats
 {

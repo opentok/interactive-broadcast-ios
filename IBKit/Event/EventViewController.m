@@ -486,22 +486,11 @@ typedef enum : NSUInteger {
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
     
-    /// TODO : check how to update the framerate
-    if (_networkTest.prevVideoTimestamp == 0) {
-        _networkTest.prevVideoTimestamp = stats.timestamp;
-        _networkTest.prevVideoBytes = stats.videoBytesReceived;
-    }
-    
     if (stats.timestamp - _networkTest.prevVideoTimestamp >= 3000) {
-        _networkTest.video_bw = (8 * (stats.videoBytesReceived - _networkTest.prevVideoBytes)) / ((stats.timestamp - _networkTest.prevVideoTimestamp) / 1000ull);
-        
         subscriber.delegate = nil;
-        _networkTest.prevVideoTimestamp = stats.timestamp;
-        _networkTest.prevVideoBytes = stats.videoBytesReceived;
-        
-        [_networkTest processStats:stats];
         [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
     }
+    [_networkTest setStats:stats];
 }
 
 - (void)checkQualityAndSendSignal

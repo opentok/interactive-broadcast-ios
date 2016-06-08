@@ -81,6 +81,33 @@
     return error;
 }
 
+- (NSError*) subscribeToOnstageWithType:(NSString*)type{
+    OTError *error = nil;
+    [self.session subscribe: self.subscribers[type] error:&error];
+    if(error){
+        [self.errors setObject:error forKey:type];
+        [self sendWarningSignal];
+    }
+    return error;
+}
+
+- (NSError*) backstageSubscribeToProducer{
+    OTError *error = nil;
+    [self.producerSession subscribe: self.producerSubscriber error:&error];
+    if(error){
+        [self.errors setObject:error forKey:@"producer_backstage"];
+    }
+    return error;
+
+}
+- (NSError*) onstageSubscribeToProducer{
+    OTError *error = nil;
+    [self.session subscribe: self.privateProducerSubscriber error:&error];
+    if(error){
+        [self.errors setObject:error forKey:@"producer_onstage"];
+    }
+    return error;
+}
 - (void)cleanupSubscriber:(NSString*)type
 {
     OTSubscriber *_subscriber = _subscribers[type];
@@ -92,6 +119,7 @@
     }
     
 }
+
 
 #pragma session
 

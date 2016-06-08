@@ -376,52 +376,33 @@ typedef enum : NSUInteger {
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
-        
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
 
-        OTError *error = nil;
-        [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
-        if (error)
+        if([_openTokManager subscribeToOnstageWithType:connectingTo] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:connectingTo];
             [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
-            
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            
-            [_openTokManager sendWarningSignal];
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
         
     }
     if(stream.session.connection.connectionId == _openTokManager.producerSession.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
         _openTokManager.producerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        
-        OTError *error = nil;
-        [_openTokManager.producerSession subscribe: _openTokManager.producerSubscriber error:&error];
-        if (error)
+        if ([_openTokManager backstageSubscribeToProducer] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:@"producer_backstage"];
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         
     }
     if(stream.session.connection.connectionId == _openTokManager.session.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
         _openTokManager.privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        
-        OTError *error = nil;
-        [_openTokManager.session subscribe: _openTokManager.privateProducerSubscriber error:&error];
-        if (error)
+        if ([_openTokManager onstageSubscribeToProducer] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:@"producer_onstage"];
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         
     }

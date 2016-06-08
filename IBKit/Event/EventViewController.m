@@ -353,11 +353,7 @@ typedef enum : NSUInteger {
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
     if(_openTokManager.selfSubscriber){
-        [_openTokManager.producerSession unsubscribe:_openTokManager.selfSubscriber error:nil];
-        _openTokManager.selfSubscriber = nil;
-        
-        NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [_openTokManager unsubscribeSelfFromProducerSession];
     }
     [_openTokManager cleanupPublisher];
 }
@@ -374,7 +370,9 @@ typedef enum : NSUInteger {
 {
     
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
+    
     if(stream.session.connection.connectionId != _openTokManager.producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
+        
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
@@ -463,9 +461,8 @@ typedef enum : NSUInteger {
 - (void)subscriber:(OTSubscriberKit*)subscriber
   didFailWithError:(OTError*)error
 {
-    NSLog(@"subscriber %@ didFailWithError %@",
-          subscriber.stream.streamId,
-          error);
+    NSLog(@"subscriber %@ didFailWithError %@",subscriber.stream.streamId,error);
+    
     [_openTokManager.errors setObject:error forKey:@"subscriberError"];
     [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
@@ -794,10 +791,8 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"endPrivateCall"]){
         if ((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage || (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
             if(_inCallWithProducer){
-                OTError *error = nil;
-                [_openTokManager.session unsubscribe: _openTokManager.privateProducerSubscriber error:&error];
+                [_openTokManager unsubscribeFromPrivateProducerCall];
                 _inCallWithProducer = NO;
-                [self.openTokManager muteOnstageSession:NO];
                 if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView hideVideoPreview];
                 }
@@ -811,12 +806,8 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"disconnectProducer"]){
         if((self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            OTError *error = nil;
-            [_openTokManager.producerSession unsubscribe: _openTokManager.producerSubscriber error:&error];
-            _openTokManager.producerSubscriber = nil;
+            [_openTokManager unsubscribeOnstageProducerCall];
             _inCallWithProducer = NO;
-            _openTokManager.publisher.publishAudio = NO;
-            [self.openTokManager muteOnstageSession:NO];
             self.eventView.getInLineBtn.hidden = NO;
             [self.eventView hideNotification];
             [self.eventView hideVideoPreview];

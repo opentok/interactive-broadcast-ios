@@ -42,6 +42,9 @@
 
 #pragma subscribers
 - (void)cleanupSubscriber:(NSString*)type;
+- (NSError*) unsubscribeSelfFromProducerSession;
+- (NSError*) unsubscribeFromPrivateProducerCall;
+- (NSError*) unsubscribeOnstageProducerCall;
 
 #pragma publisher
 -(void)cleanupPublisher;

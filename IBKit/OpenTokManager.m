@@ -47,6 +47,40 @@
 }
 
 #pragma subscriber
+- (NSError*) unsubscribeSelfFromProducerSession{
+    OTError *error = nil;
+    [self.producerSession unsubscribe:self.selfSubscriber error:&error];
+    self.selfSubscriber = nil;
+    
+    [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"success"];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"fail"];
+    }
+    return error;
+}
+
+- (NSError*) unsubscribeFromPrivateProducerCall{
+    OTError *error = nil;
+    [self.session unsubscribe: self.privateProducerSubscriber error:&error];
+    [self muteOnstageSession:NO];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_private_call" variation:@"fail"];
+    }
+    return error;
+}
+
+- (NSError*) unsubscribeOnstageProducerCall{
+    OTError *error = nil;
+    [self.producerSession unsubscribe: self.producerSubscriber error:&error];
+    self.producerSubscriber = nil;
+    self.publisher.publishAudio = NO;
+    [self muteOnstageSession:NO];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
+    }
+    return error;
+}
+
 - (void)cleanupSubscriber:(NSString*)type
 {
     OTSubscriber *_subscriber = _subscribers[type];

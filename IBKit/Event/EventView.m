@@ -52,6 +52,12 @@
 - (void)hideNotification {
     self.notificationBar.hidden = YES;
 }
+- (void)showError:(NSString *)text
+        useColor:(UIColor *)nColor {
+    [self showNotification:text useColor:nColor];
+    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+    
+}
 
 #pragma mark - loader
 - (void)showLoader {

@@ -47,6 +47,67 @@
 }
 
 #pragma subscriber
+- (NSError*) unsubscribeSelfFromProducerSession{
+    OTError *error = nil;
+    [self.producerSession unsubscribe:self.selfSubscriber error:&error];
+    self.selfSubscriber = nil;
+    
+    [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"success"];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"fail"];
+    }
+    return error;
+}
+
+- (NSError*) unsubscribeFromPrivateProducerCall{
+    OTError *error = nil;
+    [self.session unsubscribe: self.privateProducerSubscriber error:&error];
+    [self muteOnstageSession:NO];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_private_call" variation:@"fail"];
+    }
+    return error;
+}
+
+- (NSError*) unsubscribeOnstageProducerCall{
+    OTError *error = nil;
+    [self.producerSession unsubscribe: self.producerSubscriber error:&error];
+    self.producerSubscriber = nil;
+    self.publisher.publishAudio = NO;
+    [self muteOnstageSession:NO];
+    if(error){
+        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
+    }
+    return error;
+}
+
+- (NSError*) subscribeToOnstageWithType:(NSString*)type{
+    OTError *error = nil;
+    [self.session subscribe: self.subscribers[type] error:&error];
+    if(error){
+        [self.errors setObject:error forKey:type];
+        [self sendWarningSignal];
+    }
+    return error;
+}
+
+- (NSError*) backstageSubscribeToProducer{
+    OTError *error = nil;
+    [self.producerSession subscribe: self.producerSubscriber error:&error];
+    if(error){
+        [self.errors setObject:error forKey:@"producer_backstage"];
+    }
+    return error;
+
+}
+- (NSError*) onstageSubscribeToProducer{
+    OTError *error = nil;
+    [self.session subscribe: self.privateProducerSubscriber error:&error];
+    if(error){
+        [self.errors setObject:error forKey:@"producer_onstage"];
+    }
+    return error;
+}
 - (void)cleanupSubscriber:(NSString*)type
 {
     OTSubscriber *_subscriber = _subscribers[type];
@@ -58,6 +119,7 @@
     }
     
 }
+
 
 #pragma session
 

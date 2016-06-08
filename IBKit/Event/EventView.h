@@ -36,6 +36,8 @@
 #pragma mark - notification bar
 - (void)showNotification:(NSString *)text
                 useColor:(UIColor *)nColor;
+- (void)showError:(NSString *)text
+         useColor:(UIColor *)nColor;
 - (void)hideNotification;
 
 #pragma mark - loader

@@ -364,8 +364,7 @@ typedef enum : NSUInteger {
         if([_openTokManager subscribeToOnstageWithType:connectingTo] != nil)
         {
             [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
-            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
-            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
         }
         subs = nil;
         
@@ -374,8 +373,7 @@ typedef enum : NSUInteger {
         _openTokManager.producerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         if ([_openTokManager backstageSubscribeToProducer] != nil)
         {
-            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
-            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
         }
         
     }
@@ -383,8 +381,7 @@ typedef enum : NSUInteger {
         _openTokManager.privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         if ([_openTokManager onstageSubscribeToProducer] != nil)
         {
-            [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
-            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
         }
         
     }
@@ -700,8 +697,7 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"newBackstageFan"]){
         if(self.user.userRole != IBUserRoleFan){
-            [self.eventView showNotification:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
-            [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
+            [self.eventView showError:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
         }
     }
     if([type isEqualToString:@"joinBackstage"]){

@@ -335,11 +335,7 @@ typedef enum : NSUInteger {
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
     if(_openTokManager.selfSubscriber){
-        [_openTokManager.producerSession unsubscribe:_openTokManager.selfSubscriber error:nil];
-        _openTokManager.selfSubscriber = nil;
-        
-        NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_backstage",me];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [_openTokManager unsubscribeSelfFromProducerSession];
     }
     [_openTokManager cleanupPublisher];
 }
@@ -356,56 +352,39 @@ typedef enum : NSUInteger {
 {
     
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
+    
     if(stream.session.connection.connectionId != _openTokManager.producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
+        
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
-        
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
-        
-        OTError *error = nil;
-        [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
-        if (error)
+
+        if([_openTokManager subscribeToOnstageWithType:connectingTo] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:connectingTo];
             [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
-            
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            
-            [_openTokManager sendWarningSignal];
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         subs = nil;
         
     }
     if(stream.session.connection.connectionId == _openTokManager.producerSession.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
         _openTokManager.producerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        
-        OTError *error = nil;
-        [_openTokManager.producerSession subscribe: _openTokManager.producerSubscriber error:&error];
-        if (error)
+        if ([_openTokManager backstageSubscribeToProducer] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:@"producer_backstage"];
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         
     }
     if(stream.session.connection.connectionId == _openTokManager.session.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
         _openTokManager.privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        
-        OTError *error = nil;
-        [_openTokManager.session subscribe: _openTokManager.privateProducerSubscriber error:&error];
-        if (error)
+        if ([_openTokManager onstageSubscribeToProducer] != nil)
         {
-            [_openTokManager.errors setObject:error forKey:@"producer_onstage"];
             [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
             [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-            NSLog(@"subscriber didFailWithError %@", error);
         }
         
     }
@@ -445,9 +424,8 @@ typedef enum : NSUInteger {
 - (void)subscriber:(OTSubscriberKit*)subscriber
   didFailWithError:(OTError*)error
 {
-    NSLog(@"subscriber %@ didFailWithError %@",
-          subscriber.stream.streamId,
-          error);
+    NSLog(@"subscriber %@ didFailWithError %@",subscriber.stream.streamId,error);
+    
     [_openTokManager.errors setObject:error forKey:@"subscriberError"];
     [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [self.eventView performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
@@ -776,10 +754,8 @@ didFailWithError:(OTError*)error
     if([type isEqualToString:@"endPrivateCall"]){
         if ((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage || (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
             if(_inCallWithProducer){
-                OTError *error = nil;
-                [_openTokManager.session unsubscribe: _openTokManager.privateProducerSubscriber error:&error];
+                [_openTokManager unsubscribeFromPrivateProducerCall];
                 _inCallWithProducer = NO;
-                [self.openTokManager muteOnstageSession:NO];
                 if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView hideVideoPreview];
                 }
@@ -793,12 +769,8 @@ didFailWithError:(OTError*)error
     
     if([type isEqualToString:@"disconnectProducer"]){
         if((self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            OTError *error = nil;
-            [_openTokManager.producerSession unsubscribe: _openTokManager.producerSubscriber error:&error];
-            _openTokManager.producerSubscriber = nil;
+            [_openTokManager unsubscribeOnstageProducerCall];
             _inCallWithProducer = NO;
-            _openTokManager.publisher.publishAudio = NO;
-            [self.openTokManager muteOnstageSession:NO];
             self.eventView.getInLineBtn.hidden = NO;
             [self.eventView hideNotification];
             [self.eventView hideVideoPreview];

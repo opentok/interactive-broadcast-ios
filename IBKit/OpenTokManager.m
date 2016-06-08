@@ -60,16 +60,46 @@
 }
 
 #pragma session
--(NSError*)disconnectBackstageSession {
+
+-(NSError*)connectBackstageSessionWithToken:(NSString*)token{
+    OTError *error = nil;
+    
+    [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"attempt"];
+    [_producerSession connectWithToken:token error:&error];
+    
+    if (error) {
+        [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"failed"];
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+    }
+    return error;
+}
+
+-(NSError*)disconnectBackstageSession{
     OTError *error = nil;
     if(_producerSession){
         [_producerSession disconnect:&error];
     }
     if(error){
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
     }
     return error;
 }
+
+-(NSError*)disconnectOnstageSession{
+    OTError *error = nil;
+    if(_session){
+        [_session disconnect:&error];
+    }
+    if(error){
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
+    }
+    return error;
+}
+
+
+
 
 #pragma publisher
 -(void)cleanupPublisher{

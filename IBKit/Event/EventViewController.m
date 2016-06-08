@@ -206,25 +206,7 @@ typedef enum : NSUInteger {
     _unreadCount = 0;
 }
 
-- (void)inLineConnect
-{
-    
-    OTError *error = nil;
-    
-    [self.eventView showLoader];
-    self.eventView.getInLineBtn.hidden = YES;
-    
-    [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"attempt"];
-    [_openTokManager.producerSession connectWithToken:self.instance.tokenProducer error:&error];
-    
-    if (error) {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"failed"];
-    }
-    
-}
-
--(void)disconnectBackstage {
+-(void)unpublishBackstage {
     [self unpublishFrom:_openTokManager.producerSession];
     self.eventStage &= ~IBEventStageBackstage;
     _shouldResendProducerSignal = YES;
@@ -235,15 +217,9 @@ typedef enum : NSUInteger {
     [_openTokManager cleanupPublisher];
     NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
-    
-    OTError *error = nil;
-    
-    [_openTokManager.session disconnect:&error];
     self.eventView.videoHolder.hidden = YES;
-    if (error) {
-        NSLog(@"%@", error);
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-    }
+
+    [_openTokManager disconnectOnstageSession];
 }
 
 #pragma mark - publishers
@@ -859,7 +835,7 @@ didFailWithError:(OTError*)error
     }
     if([type isEqualToString:@"joinHost"]){
     
-        [self disconnectBackstage];
+        [self unpublishBackstage];
         self.eventStage |= IBEventStageOnstage;
         [self hideChatBox];
         [self.eventView fanIsOnStage];
@@ -892,6 +868,7 @@ didFailWithError:(OTError*)error
         if(_openTokManager.publisher){
             [self unpublishFrom:_openTokManager.session];
         }
+        
         [_openTokManager disconnectBackstageSession];
         
         [self.eventView showNotification:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
@@ -985,16 +962,8 @@ didFailWithError:(OTError*)error
         }
         
         [self.eventView eventIsClosed];
-        OTError *error = nil;
         
-        if(_openTokManager.session){
-            [_openTokManager.session disconnect:&error];
-        }
-        
-        if (error) {
-            NSLog(@"Disconnect error: (%@)", error);
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
+        [_openTokManager disconnectOnstageSession];
         
         if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [_openTokManager disconnectBackstageSession];
@@ -1086,13 +1055,13 @@ didFailWithError:(OTError*)error
     _openTokManager.producerSession = [[OTSession alloc] initWithApiKey:_instance.apiKey
                                                sessionId:self.instance.sessionIdProducer
                                                 delegate:self];
-    [self inLineConnect];
+    [self.eventView showLoader];
+    [_openTokManager connectBackstageSessionWithToken:self.instance.tokenProducer];
 }
 
 - (IBAction)leaveLine:(id)sender {
-
     [self.eventView fanLeaveLine];
-    [self disconnectBackstage];
+    [self unpublishBackstage];
     [_openTokManager disconnectBackstageSession];
 }
 
@@ -1119,19 +1088,8 @@ didFailWithError:(OTError*)error
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         
-        OTError *error = nil;
-        if(_openTokManager.producerSession){
-            [_openTokManager disconnectBackstageSession];
-        }
-        if(_openTokManager.session){
-            [_openTokManager.session disconnect:&error];
-        }
-        
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            });
-        }
+        [_openTokManager disconnectBackstageSession];
+        [_openTokManager disconnectOnstageSession];
     });
 
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];

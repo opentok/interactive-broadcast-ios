@@ -36,7 +36,9 @@
 - (NSError*)updateQualitySignal:(NSString*)quality;
 
 #pragma sessions
+-(NSError*)connectBackstageSessionWithToken:(NSString*)token;
 -(NSError*)disconnectBackstageSession;
+-(NSError*)disconnectOnstageSession;
 
 #pragma subscribers
 - (void)cleanupSubscriber:(NSString*)type;

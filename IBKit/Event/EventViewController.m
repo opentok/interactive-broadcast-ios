@@ -207,7 +207,7 @@ typedef enum : NSUInteger {
 }
 
 -(void)unpublishBackstage {
-    [self unpublishFrom:_openTokManager.producerSession];
+    [_openTokManager unpublishFrom:_openTokManager.producerSession withUserRole:[self.user userRoleName]];
     self.eventStage &= ~IBEventStageBackstage;
     _shouldResendProducerSignal = YES;
 }
@@ -292,22 +292,6 @@ typedef enum : NSUInteger {
     
 }
 
--(void)unpublishFrom:(OTSession *)session
-{
-    OTError *error = nil;
-    [session unpublish:_openTokManager.publisher error:&error];
-    
-    NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", [self.user userRoleName], session_name];
-    
-    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
-    
-    if (error) {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
-    }
-}
-
 # pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit *)publisher
@@ -316,7 +300,6 @@ typedef enum : NSUInteger {
     if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
         NSLog(@"stream Created PUBLISHER BACK");
         _openTokManager.selfSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-        
         _openTokManager.selfSubscriber.subscribeToAudio = NO;
         
         OTError *error = nil;
@@ -335,20 +318,19 @@ typedef enum : NSUInteger {
 - (void)publisher:(OTPublisherKit*)publisher
   streamDestroyed:(OTStream *)stream
 {
-    NSLog(@"stream DESTROYED PUBLISHER");
     
     if(!_openTokManager.publisher.stream && !stream.connection) return;
     
     NSString *me = [self.user userRoleName];
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
+    
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
-        
         [_openTokManager cleanupSubscriber:connectingTo];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
@@ -381,7 +363,7 @@ typedef enum : NSUInteger {
         
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
-
+        
         OTError *error = nil;
         [_openTokManager.session subscribe: _openTokManager.subscribers[connectingTo] error:&error];
         if (error)
@@ -525,7 +507,7 @@ typedef enum : NSUInteger {
 
 -(void)subscriber:(OTSubscriberKit*)subscriber
 videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
-
+    
     /// TODO : check how to update the framerate
     if (_networkTest.prevVideoTimestamp == 0) {
         _networkTest.prevVideoTimestamp = stats.timestamp;
@@ -834,7 +816,7 @@ didFailWithError:(OTError*)error
         self.event.status = @"L";
     }
     if([type isEqualToString:@"joinHost"]){
-    
+        
         [self unpublishBackstage];
         self.eventStage |= IBEventStageOnstage;
         [self hideChatBox];
@@ -865,8 +847,9 @@ didFailWithError:(OTError*)error
         
         self.eventStage &= ~ IBEventStageOnstage;
         
-        if(_openTokManager.publisher){
-            [self unpublishFrom:_openTokManager.session];
+        if(_openTokManager.publisher)
+        {
+            [_openTokManager unpublishFrom:_openTokManager.session withUserRole:[self.user userRoleName]];
         }
         
         [_openTokManager disconnectBackstageSession];
@@ -893,7 +876,7 @@ didFailWithError:(OTError*)error
 }
 
 - (void)captureAndSendScreenshot {
-
+    
     if (_openTokManager.publisher.view) {
         UIImage *screenshot = [_openTokManager.publisher.view captureViewImage];
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
@@ -938,7 +921,7 @@ didFailWithError:(OTError*)error
         
     };
     if([self.event.status isEqualToString:@"L"]){
-
+        
         if (_openTokManager.subscribers.count > 0) {
             self.eventView.eventImage.hidden = YES;
         }else{
@@ -956,7 +939,7 @@ didFailWithError:(OTError*)error
         [self goLive];
     };
     if([self.event.status isEqualToString:@"C"]){
-
+        
         if(self.event.endImage){
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
         }
@@ -1053,8 +1036,8 @@ didFailWithError:(OTError*)error
 
 - (IBAction)getInLineClick:(id)sender {
     _openTokManager.producerSession = [[OTSession alloc] initWithApiKey:_instance.apiKey
-                                               sessionId:self.instance.sessionIdProducer
-                                                delegate:self];
+                                                              sessionId:self.instance.sessionIdProducer
+                                                               delegate:self];
     [self.eventView showLoader];
     [_openTokManager connectBackstageSessionWithToken:self.instance.tokenProducer];
 }
@@ -1085,13 +1068,13 @@ didFailWithError:(OTError*)error
 }
 
 - (IBAction)goBack:(id)sender {
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         
         [_openTokManager disconnectBackstageSession];
         [_openTokManager disconnectOnstageSession];
     });
-
+    
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }

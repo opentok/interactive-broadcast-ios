@@ -45,6 +45,8 @@
 
 #pragma publisher
 -(void)cleanupPublisher;
+-(void)unpublishFrom:(OTSession *)session
+        withUserRole:(NSString*)userRole;
 
 #pragma mark - SIOSocket Signaling
 - (void)connectFanToSocketWithURL:(NSString *)url

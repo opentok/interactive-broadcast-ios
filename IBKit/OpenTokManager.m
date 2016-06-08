@@ -102,6 +102,24 @@
 
 
 #pragma publisher
+
+-(void)unpublishFrom:(OTSession *)session
+        withUserRole:(NSString*)userRole
+{
+    OTError *error = nil;
+    [session unpublish:self.publisher error:&error];
+    
+    NSString *session_name = self.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
+    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", userRole, session_name];
+    
+    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
+    
+    if (error) {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
+    }
+}
+
 -(void)cleanupPublisher{
     if(_publisher){
         

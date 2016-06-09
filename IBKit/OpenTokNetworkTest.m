@@ -63,24 +63,17 @@
         self.prevVideoTimestamp = stats.timestamp;
         self.prevVideoBytes = stats.videoBytesReceived;
         
-        [self processStats:stats];
+        _video_pl_ratio = -1;
+        if (_prevVideoPacketsRcvd != 0) {
+            uint64_t pl = stats.videoPacketsLost - _prevVideoPacketsLost;
+            uint64_t pr = stats.videoPacketsReceived - _prevVideoPacketsRcvd;
+            uint64_t pt = pl + pr;
+            if (pt > 0)
+                _video_pl_ratio = (double) pl / (double) pt;
+        }
+        _prevVideoPacketsLost = stats.videoPacketsLost;
+        _prevVideoPacketsRcvd = stats.videoPacketsReceived;
     }
-}
-
-- (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats
-{
-    _video_pl_ratio = -1;
-    OTSubscriberKitVideoNetworkStats *videoStats =
-    (OTSubscriberKitVideoNetworkStats *) stats;
-    if (_prevVideoPacketsRcvd != 0) {
-        uint64_t pl = videoStats.videoPacketsLost - _prevVideoPacketsLost;
-        uint64_t pr = videoStats.videoPacketsReceived - _prevVideoPacketsRcvd;
-        uint64_t pt = pl + pr;
-        if (pt > 0)
-            _video_pl_ratio = (double) pl / (double) pt;
-    }
-    _prevVideoPacketsLost = videoStats.videoPacketsLost;
-    _prevVideoPacketsRcvd = videoStats.videoPacketsReceived;
 }
 
 - (NSString*)getQuality{

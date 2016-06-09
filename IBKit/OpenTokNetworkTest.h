@@ -26,7 +26,6 @@
 
 - (instancetype)initWithFrameRateAndResolution:(NSString*)frameRate
                                     resolution:(NSString*)resolution;
-- (void)processStats:(OTSubscriberKitVideoNetworkStats *)stats;
 - (void)setStats:(OTSubscriberKitVideoNetworkStats*)stats;
 - (NSString*)getQuality;
 

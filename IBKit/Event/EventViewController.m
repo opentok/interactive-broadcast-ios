@@ -413,7 +413,7 @@ typedef enum : NSUInteger {
 {
     NSLog(@"subscriber %@ didFailWithError %@",subscriber.stream.streamId,error);
     
-    [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [_openTokManager.errors setObject:error forKey:@"subscriberError"];
     [_openTokManager sendWarningSignal];
 }
@@ -632,7 +632,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error
 {
-    [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     NSLog(@"didFailWithError: (%@)", error);
 }
 

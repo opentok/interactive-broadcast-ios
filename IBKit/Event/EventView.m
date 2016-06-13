@@ -49,7 +49,6 @@
     self.notificationLabel.text = text;
     self.notificationBar.backgroundColor = nColor;
     self.notificationBar.hidden = NO;
-    [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
 }
 
 - (void)hideNotification {

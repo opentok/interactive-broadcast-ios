@@ -37,9 +37,13 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
                      @(self.fanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
+<<<<<<< ca37b706006dd6cb1559eed442ae9338243641f5
                      @(self.fanCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"Fan"],
                      @(self.celebrityCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
+=======
+                     @(self.customEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"Fan"]
+>>>>>>> precense check
                     };
 }
 

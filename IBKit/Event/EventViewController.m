@@ -107,6 +107,7 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startSession) name:@"canJoinShow" object:nil];
     
     if (self.internetReachability.currentReachabilityStatus != NotReachable) {
         [self createEventToken];
@@ -141,7 +142,10 @@ typedef enum : NSUInteger {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
                                  [self statusChanged];
-                                 [self startSession];
+                                 //[self startSession];
+                                 [self checkPresence];
+                             }else{
+                                 NSLog(@"createEventTokenError");
                              }
                          }];
 }
@@ -156,8 +160,11 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeObserver:self forKeyPath:@"event.status"];
 }
+- (void)checkPresence{
+    [self.openTokManager connectToPresenceSocket:self.instance.frontendURL sessionId:self.instance.sessionIdHost];
+}
 
--(void)startSession{
+- (void)startSession{
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];

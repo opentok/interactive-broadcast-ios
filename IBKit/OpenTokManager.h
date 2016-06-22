@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "OTDefaultAudioDevice.h"
 #import <OpenTok/OpenTok.h>
+#import "SIOSocket.h"
+
 
 
 @interface OpenTokManager : NSObject
@@ -26,6 +28,9 @@
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
 @property (nonatomic) NSMutableDictionary *errors;
+@property (nonatomic) SIOSocket *precenseSocket;
+
+
 
 
 - (void)connectWithTokenHost:(NSString *)tokenHost;
@@ -57,6 +62,10 @@
 #pragma mark - SIOSocket Signaling
 - (void)connectFanToSocketWithURL:(NSString *)url
                         sessionId:(NSString *)sessionId;
+
+- (void)connectToPresenceSocket:(NSString *)url
+                      sessionId:(NSString *)sessionId;
+
 - (NSError *)sendNewUserSignalWithName:(NSString *)username;
 - (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString;
 @end

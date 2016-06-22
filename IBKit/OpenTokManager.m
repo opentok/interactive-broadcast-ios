@@ -8,13 +8,13 @@
 
 #import "OpenTokManager.h"
 #import "JSON.h"
-#import "SIOSocket.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "OpenTokLoggingWrapper.h"
 
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
+
 @end
 
 @implementation OpenTokManager
@@ -234,6 +234,23 @@
         weakSelf.socket.onConnect = ^(){
             
             [weakSelf.socket emit:@"joinRoom" args:@[sessionId]];
+        };
+    }];
+}
+
+- (void)connectToPresenceSocket:(NSString *)url
+                        sessionId:(NSString *)sessionId {
+    
+    __weak OpenTokManager *weakSelf = self;
+    [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
+        weakSelf.precenseSocket = socket;
+        [weakSelf.precenseSocket on:@"ableToJoin" callback:^(id data) {
+            NSLog(@"Received new message !!");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"canJoinShow" object:nil];
+        }];
+        weakSelf.precenseSocket.onConnect = ^(){
+            NSLog(@"connecting Precense");
+            [weakSelf.precenseSocket emit:@"joinInteractive" args:@[sessionId]];
         };
     }];
 }

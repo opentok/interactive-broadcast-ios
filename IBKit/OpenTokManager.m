@@ -231,30 +231,22 @@
     __weak OpenTokManager *weakSelf = self;
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
         weakSelf.socket = socket;
-        weakSelf.socket.onConnect = ^(){
-            
-            [weakSelf.socket emit:@"joinRoom" args:@[sessionId]];
-        };
-    }];
-}
-
-- (void)connectToPresenceSocket:(NSString *)url
-                        sessionId:(NSString *)sessionId {
-    
-    __weak OpenTokManager *weakSelf = self;
-    [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
-        weakSelf.precenseSocket = socket;
-        [weakSelf.precenseSocket on:@"ableToJoin" callback:^(id data) {
-            NSLog(@"Received new message !!");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"canJoinShow" object:nil];
+        [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
+            NSLog(@"ABLE TO JOIN");
+            if(self.canJoinShow != YES){
+                self.canJoinShow = YES;
+            }
+            NSLog(@"Should trigger");
         }];
-        weakSelf.precenseSocket.onConnect = ^(){
-            NSLog(@"connecting Precense");
-            [weakSelf.precenseSocket emit:@"joinInteractive" args:@[sessionId]];
+        weakSelf.socket.onConnect = ^(){
+            [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
+            //[weakSelf.socket emit:@"joinRoom" args:@[sessionId]];
         };
     }];
 }
-
+- (void) emitJoinRoom:(NSString *)sessionId{
+    [self.socket emit:@"joinRoom" args:@[sessionId]];
+}
 - (NSError *)sendNewUserSignalWithName:(NSString *)username {
     
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {

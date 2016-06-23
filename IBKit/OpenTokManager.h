@@ -28,9 +28,7 @@
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
 @property (nonatomic) NSMutableDictionary *errors;
-@property (nonatomic) SIOSocket *precenseSocket;
-
-
+@property (nonatomic) BOOL canJoinShow;
 
 
 - (void)connectWithTokenHost:(NSString *)tokenHost;
@@ -63,9 +61,7 @@
 - (void)connectFanToSocketWithURL:(NSString *)url
                         sessionId:(NSString *)sessionId;
 
-- (void)connectToPresenceSocket:(NSString *)url
-                      sessionId:(NSString *)sessionId;
-
 - (NSError *)sendNewUserSignalWithName:(NSString *)username;
 - (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString;
+- (void)emitJoinRoom:(NSString *)sessionId;
 @end

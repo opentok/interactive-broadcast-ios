@@ -85,8 +85,15 @@ typedef enum : NSUInteger {
         _openTokManager = [[OpenTokManager alloc] init];
         
         // start necessary services
-        [self addObserver:self
+        __weak EventViewController *weakSelf = self;
+
+        [self addObserver:weakSelf
                forKeyPath:@"event.status"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.canJoinShow"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
@@ -107,7 +114,6 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startSession) name:@"canJoinShow" object:nil];
     
     if (self.internetReachability.currentReachabilityStatus != NotReachable) {
         [self createEventToken];
@@ -141,8 +147,6 @@ typedef enum : NSUInteger {
                              if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
-                                 [self statusChanged];
-                                 //[self startSession];
                                  [self checkPresence];
                              }else{
                                  NSLog(@"createEventTokenError");
@@ -159,9 +163,10 @@ typedef enum : NSUInteger {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeObserver:self forKeyPath:@"event.status"];
+    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
 }
 - (void)checkPresence{
-    [self.openTokManager connectToPresenceSocket:self.instance.frontendURL sessionId:self.instance.sessionIdHost];
+    [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
 }
 
 - (void)startSession{
@@ -175,7 +180,9 @@ typedef enum : NSUInteger {
     [self statusChanged];
     
     if(self.user.userRole == IBUserRoleFan) {
-        [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
+        //already Connected ...
+        //[self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
+        [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
 }
 
@@ -831,6 +838,10 @@ didFailWithError:(OTError*)error
     
     if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
+    }
+    if ([keyPath isEqual:@"openTokManager.canJoinShow"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        [self statusChanged];
+        [self startSession];
     }
 }
 

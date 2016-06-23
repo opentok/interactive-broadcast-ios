@@ -160,10 +160,14 @@ typedef enum : NSUInteger {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self removeObserver:self forKeyPath:@"event.status"];
+        [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    });
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self removeObserver:self forKeyPath:@"event.status"];
-    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    [super viewWillDisappear:animated];
 }
 - (void)checkPresence{
     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
@@ -840,8 +844,10 @@ didFailWithError:(OTError*)error
         [self statusChanged];
     }
     if ([keyPath isEqual:@"openTokManager.canJoinShow"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
-        [self statusChanged];
-        [self startSession];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self statusChanged];
+            [self startSession];
+        });
     }
 }
 
@@ -1022,7 +1028,6 @@ didFailWithError:(OTError*)error
 - (IBAction)goBack:(id)sender {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        
         [_openTokManager disconnectBackstageSession];
         [_openTokManager disconnectOnstageSession];
     });

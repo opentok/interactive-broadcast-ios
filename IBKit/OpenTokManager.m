@@ -232,15 +232,13 @@
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
         weakSelf.socket = socket;
         [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
-            NSLog(@"ABLE TO JOIN");
-            if(self.canJoinShow != YES){
-                self.canJoinShow = YES;
+            self.canJoinShow = [data[0] boolValue];
+            if(!self.canJoinShow){
+                [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
             }
-            NSLog(@"Should trigger");
         }];
         weakSelf.socket.onConnect = ^(){
             [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
-            //[weakSelf.socket emit:@"joinRoom" args:@[sessionId]];
         };
     }];
 }

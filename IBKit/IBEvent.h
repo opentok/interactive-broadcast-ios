@@ -20,6 +20,7 @@
 @property (readonly, nonatomic) NSString *eventName;
 @property (readonly, nonatomic) NSString *identifier;
 @property (nonatomic) NSString *status;
+@property (readonly, nonatomic) NSString *displayStatus;
 
 - (instancetype)initWithJson:(NSDictionary *)json;
 - (void)updateEventWithJson:(NSDictionary *)updatedJson;

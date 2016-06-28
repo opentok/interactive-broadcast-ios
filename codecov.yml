@@ -6,7 +6,8 @@ coverage:
   - IBKitTests/*
   - IBDemo/*
   - Pods/*
-  - IBKit/ThirdParties/*       
+  - IBKit/ThirdParties/*    
+  - IBKit/Categories/*   
  
 comment:
   layout: "header, diff, changes, sunburst, uncovered"

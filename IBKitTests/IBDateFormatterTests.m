@@ -26,9 +26,6 @@ context(@"IBDateFormatterTests", ^(){
             [[formattedDate should] equal:@"14 Feb 2016 11:11:11"];
             [[formattedDate shouldNot] beNil];
         });
-        
-
-        
     });
     
 });

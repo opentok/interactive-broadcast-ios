@@ -10,7 +10,6 @@
 
 typedef enum : NSUInteger {
     IBUserRoleUnknown,
-    IBUserRoleCustom,
     IBUserRoleFan,
     IBUserRoleHost,
     IBUserRoleCelebrity

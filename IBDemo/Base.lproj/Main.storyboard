@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -10,6 +10,7 @@
             <string>Montserrat-Bold</string>
         </mutableArray>
         <mutableArray key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
         </mutableArray>
     </customFonts>
@@ -26,27 +27,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7V-Xv-Egs">
-                                <rect key="frame" x="307" y="129" width="410" height="30"/>
-                                <color key="backgroundColor" red="0.26274509800000001" green="0.60784313729999995" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="410" id="46K-sK-S0h"/>
-                                    <constraint firstAttribute="height" constant="30" id="yfq-NV-Bcy"/>
-                                </constraints>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="CUSTOM EVENTS">
-                                    <color key="titleColor" red="0.94434022630000003" green="0.94434022630000003" blue="0.94434022630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g7k-lP-K7A"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ClB-cd-5rv">
                                 <rect key="frame" x="0.0" y="20" width="1024" height="77"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Fb-Pc-PVG">
                                         <rect key="frame" x="447" y="37" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.14901960784313725" green="0.56862745098039214" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="Q9H-d5-OMu"/>
                                         </constraints>
@@ -62,7 +48,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgG-aS-bjC">
-                                        <rect key="frame" x="456" y="8" width="112.5" height="21"/>
+                                        <rect key="frame" x="456" y="8" width="113" height="21"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -72,7 +58,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhQ-c6-Fn2">
                                         <rect key="frame" x="309" y="37" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.14901960780000001" green="0.56862745100000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="G8n-c5-eLY"/>
                                         </constraints>
@@ -89,7 +75,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Ad-ce1">
                                         <rect key="frame" x="585" y="37" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.14901960780000001" green="0.56862745100000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="rB4-oB-qgY"/>
                                         </constraints>
@@ -118,23 +104,103 @@
                                     <constraint firstItem="6Fb-Pc-PVG" firstAttribute="leading" secondItem="HhQ-c6-Fn2" secondAttribute="trailing" constant="8" id="sX5-Hg-DBV"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7r4-I8-e5F">
+                                <rect key="frame" x="0.0" y="118" width="1024" height="77"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkU-4L-TVU">
+                                        <rect key="frame" x="447" y="37" width="130" height="30"/>
+                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="mNW-R1-CSB"/>
+                                        </constraints>
+                                        <state key="normal" title="HOST">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="447" y="36" width="130" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3uM-vF-xZl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdN-fW-VJy">
+                                        <rect key="frame" x="309" y="37" width="130" height="30"/>
+                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="qhs-C4-HbX"/>
+                                        </constraints>
+                                        <state key="normal" title="CELEBRITY">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="309" y="36" width="130" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eAF-05-H8M"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Q7-Nl-UOx">
+                                        <rect key="frame" x="585" y="37" width="130" height="30"/>
+                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="O6g-yz-HEk"/>
+                                        </constraints>
+                                        <state key="normal" title="FAN">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="585" y="36" width="130" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="97o-jg-guR"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CUSTOM VIEW OF EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5j-nv-jsP">
+                                        <rect key="frame" x="396" y="8" width="232" height="21"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="443" y="8" width="138" height="20"/>
+                                        </variation>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.334443306" blue="0.41137160379999999" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="2Q7-Nl-UOx" firstAttribute="centerY" secondItem="nkU-4L-TVU" secondAttribute="centerY" id="9uA-13-HRV"/>
+                                    <constraint firstItem="nkU-4L-TVU" firstAttribute="leading" secondItem="EdN-fW-VJy" secondAttribute="trailing" constant="8" id="OKv-6J-KeR"/>
+                                    <constraint firstAttribute="height" constant="77" id="R1b-hb-OFJ"/>
+                                    <constraint firstItem="nkU-4L-TVU" firstAttribute="top" secondItem="F5j-nv-jsP" secondAttribute="bottom" constant="8" id="UmH-aB-qqc"/>
+                                    <constraint firstItem="nkU-4L-TVU" firstAttribute="centerY" secondItem="EdN-fW-VJy" secondAttribute="centerY" id="bO0-4L-M6w"/>
+                                    <constraint firstItem="F5j-nv-jsP" firstAttribute="top" secondItem="7r4-I8-e5F" secondAttribute="top" constant="8" id="is8-0U-Mgi"/>
+                                    <constraint firstItem="F5j-nv-jsP" firstAttribute="centerX" secondItem="nkU-4L-TVU" secondAttribute="centerX" id="lsP-x0-AaG"/>
+                                    <constraint firstItem="F5j-nv-jsP" firstAttribute="centerX" secondItem="7r4-I8-e5F" secondAttribute="centerX" id="mvN-WU-5un"/>
+                                    <constraint firstItem="2Q7-Nl-UOx" firstAttribute="leading" secondItem="nkU-4L-TVU" secondAttribute="trailing" constant="8" id="tZK-Ld-3T9"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ClB-cd-5rv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Lt-Ym-Uhu"/>
+                            <constraint firstItem="7r4-I8-e5F" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="bottom" constant="21" id="B2m-n0-boB"/>
+                            <constraint firstItem="7r4-I8-e5F" firstAttribute="trailing" secondItem="ClB-cd-5rv" secondAttribute="trailing" id="Bo6-Na-SGt"/>
+                            <constraint firstItem="7r4-I8-e5F" firstAttribute="leading" secondItem="ClB-cd-5rv" secondAttribute="leading" id="Imb-wg-PMC"/>
                             <constraint firstItem="ClB-cd-5rv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Pbs-JH-n6z"/>
                             <constraint firstAttribute="trailing" secondItem="ClB-cd-5rv" secondAttribute="trailing" id="QtE-Ve-VKd"/>
-                            <constraint firstItem="d7V-Xv-Egs" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="bottom" constant="32" id="Wvg-8u-5y5"/>
-                            <constraint firstItem="d7V-Xv-Egs" firstAttribute="centerX" secondItem="ClB-cd-5rv" secondAttribute="centerX" id="iFj-Ee-02Q"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
                         <outlet property="celebrityButton" destination="HhQ-c6-Fn2" id="wRG-hy-jdp"/>
-                        <outlet property="customEventsButton" destination="d7V-Xv-Egs" id="tP4-Q6-zcm"/>
+                        <outlet property="celebrityCustomEventsButton" destination="EdN-fW-VJy" id="vG6-a7-WTx"/>
                         <outlet property="fanButton" destination="ec7-Ad-ce1" id="S5x-Fe-hqN"/>
+                        <outlet property="fanCustomEventsButton" destination="2Q7-Nl-UOx" id="JMJ-SC-A8B"/>
                         <outlet property="hostButton" destination="6Fb-Pc-PVG" id="2zO-p3-a3m"/>
+                        <outlet property="hostCustomEventsButton" destination="nkU-4L-TVU" id="pLQ-h4-jSG"/>
                         <segue destination="aCu-6J-jgv" kind="presentation" identifier="EventSegueIdentifier" id="ll0-oH-An9"/>
                     </connections>
                 </viewController>

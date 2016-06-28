@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIView *videoHolder;
 @property (weak, nonatomic) IBOutlet UIView *statusBar;
 
-@property (weak, nonatomic) IBOutlet UIView *internalHolder;
 @property (weak, nonatomic) IBOutlet UIView *hostViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *fanViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *celebrityViewHolder;
@@ -62,7 +61,5 @@
 #pragma chat bar
 - (void)userIsChatting;
 - (void)hideChatBar;
-
-
 
 @end

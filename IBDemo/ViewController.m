@@ -20,7 +20,10 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 @property (weak, nonatomic) IBOutlet UIButton *celebrityButton;
 @property (weak, nonatomic) IBOutlet UIButton *hostButton;
 @property (weak, nonatomic) IBOutlet UIButton *fanButton;
-@property (weak, nonatomic) IBOutlet UIButton *customEventsButton;
+@property (weak, nonatomic) IBOutlet UIButton *fanCustomEventsButton;
+@property (weak, nonatomic) IBOutlet UIButton *celebrityCustomEventsButton;
+@property (weak, nonatomic) IBOutlet UIButton *hostCustomEventsButton;
+
 
 @property (nonatomic) NSDictionary *requestData;
 @end
@@ -34,16 +37,18 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
                      @(self.fanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
-                     @(self.customEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCustom name:@"Fan"]
+                     @(self.fanCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"Fan"],
+                     @(self.celebrityCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
+                     @(self.hostCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
                     };
 }
 
 - (IBAction)eventButtonPressed:(UIButton *)sender {
     
-    if (sender != self.customEventsButton) {
+    if((sender != self.fanCustomEventsButton ) && (sender != self.hostCustomEventsButton) && (sender != self.celebrityCustomEventsButton)) {
         
         
-        [IBApi getInstanceWithAdminId:@"dxJa"
+        [IBApi getInstanceWithAdminId:@"APO0"
                            completion:^(IBInstance *instance, NSError *error) {
                              
                                if (!error) {

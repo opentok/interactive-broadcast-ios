@@ -33,7 +33,6 @@
         case IBUserRoleUnknown:
             return nil;
             
-        case IBUserRoleCustom:
         case IBUserRoleFan:
             return @"fan";
             

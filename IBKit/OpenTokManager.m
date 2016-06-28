@@ -35,6 +35,7 @@
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }
 }
+
 - (void)muteOnstageSession:(BOOL)mute {
     for(NSString *subscriber in self.subscribers){
         OTSubscriber *sub = self.subscribers[subscriber];
@@ -108,8 +109,8 @@
     }
     return error;
 }
-- (void)cleanupSubscriber:(NSString*)type
-{
+- (void)cleanupSubscriber:(NSString*)type {
+    
     OTSubscriber *_subscriber = _subscribers[type];
     if(_subscriber){
         NSLog(@"SUBSCRIBER CLEANING UP");
@@ -117,7 +118,6 @@
         [_subscribers removeObjectForKey:type];
         _subscriber = nil;
     }
-    
 }
 
 
@@ -144,6 +144,8 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+    }else{
+        _producerSession = nil;
     }
     return error;
 }
@@ -156,15 +158,13 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
+    }else{
+        _session = nil;
     }
     return error;
 }
 
-
-
-
 #pragma publisher
-
 -(void)unpublishFrom:(OTSession *)session
         withUserRole:(NSString*)userRole
 {

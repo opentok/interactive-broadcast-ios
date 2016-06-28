@@ -14,6 +14,8 @@
 @interface EventView()
 @property (nonatomic) DGActivityIndicatorView *activityIndicatorView;
 
+@property (weak, nonatomic) IBOutlet UIView *internalHolder;
+
 @property (weak, nonatomic) IBOutlet UIView *notificationBar;
 @property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 @end
@@ -52,11 +54,11 @@
 - (void)hideNotification {
     self.notificationBar.hidden = YES;
 }
+
 - (void)showError:(NSString *)text
         useColor:(UIColor *)nColor {
     [self showNotification:text useColor:nColor];
     [self performSelector:@selector(hideNotification) withObject:nil afterDelay:10.0];
-    
 }
 
 #pragma mark - loader

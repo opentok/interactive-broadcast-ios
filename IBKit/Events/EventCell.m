@@ -8,7 +8,6 @@
 
 #import "EventCell.h"
 #import "IBEvent.h"
-#import "AppUtil.h"
 #import "IBDateFormatter.h"
 #import "UIImageView+Category.h"
 
@@ -37,7 +36,7 @@
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
     }
     else{
-        [self.statusLabel setText:[AppUtil convertToStatusString:event]];
+        [self.statusLabel setText:event.displayStatus];
     }
     
     if (event.image) {

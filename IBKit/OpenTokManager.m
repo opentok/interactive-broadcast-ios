@@ -232,7 +232,7 @@
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
         weakSelf.socket = socket;
         [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
-            self.canJoinShow = [data[0] boolValue];
+            self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
             if(!self.canJoinShow){
                 [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
             }

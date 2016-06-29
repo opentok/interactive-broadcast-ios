@@ -144,12 +144,14 @@ typedef enum : NSUInteger {
                          completion:^(IBInstance *instance, NSError *error) {
                              [SVProgressHUD dismiss];
                                  
-                             if (!error && instance.events.count == 1) {
+                             if (!error && instance.events.count == 1)
+                             {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
                                  [self checkPresence];
                              }
-                             else{
+                             else
+                             {
                                  NSLog(@"createEventTokenError");
                              }
                          }];

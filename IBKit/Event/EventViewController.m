@@ -29,6 +29,8 @@
 
 #import <Reachability/Reachability.h>
 
+#import <MediaPlayer/MediaPlayer.h>
+
 typedef enum : NSUInteger {
     IBEventStageNotLive = 0,
     IBEventStageLive = 1 << 0,
@@ -62,6 +64,9 @@ typedef enum : NSUInteger {
 @property (nonatomic) OpenTokManager *openTokManager;
 @property (nonatomic) OpenTokNetworkTest *networkTest;
 
+@property (nonatomic) AVPlayer *player;
+@property (nonatomic) AVPlayerLayer *playerLayer;
+
 @end
 
 @implementation EventViewController
@@ -94,6 +99,20 @@ typedef enum : NSUInteger {
         
         [self addObserver:weakSelf
                forKeyPath:@"openTokManager.canJoinShow"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.waitingOnBroadcast"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.startBroadcast"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.broadcastEnded"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
@@ -148,6 +167,7 @@ typedef enum : NSUInteger {
                              {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
+                                 [self statusChanged];
                                  [self checkPresence];
                              }
                              else
@@ -166,17 +186,51 @@ typedef enum : NSUInteger {
 
 - (void)viewWillDisappear:(BOOL)animated {
     
-    [self removeObserver:self forKeyPath:@"event.status"];
-    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self removeObserver:self forKeyPath:@"event.status"];
+        [self removeObserver:self forKeyPath:@"player.status"];
+        [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+        [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
+        [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
+        [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
+    });
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.openTokManager closeSocket];
     [super viewWillDisappear:animated];
 
 }
 - (void)checkPresence{
+    [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdHost];
+}
 
-    [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
+- (void)startBroadcastEvent{
+    
+    self.eventView.getInLineBtn.hidden = YES;
+    
+    NSURL *streamURL = [NSURL URLWithString:self.openTokManager.broadcastUrl];
+    self.player = [AVPlayer playerWithURL:streamURL];
+    
+    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    [self.eventView.layer addSublayer: _playerLayer];
+    
+    [_playerLayer setFrame:_eventView.videoHolder.frame];
+    [_playerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill ];
+    self.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+    
+    [self addObserver:self forKeyPath:@"player.status" options:0 context:nil];
 
+}
+
+- (void) closeBroadcastEvent{
+    [_playerLayer removeFromSuperlayer];
+    self.event.status = @"C";
+}
+
+- (void)playerItemDidReachEnd:(NSNotification *)notification {
+    AVPlayerItem *p = [notification object];
+    [p seekToTime:kCMTimeZero];
+    NSLog(@"Broadcast Stopped");
 }
 
 - (void)startSession{
@@ -190,8 +244,6 @@ typedef enum : NSUInteger {
     [self statusChanged];
     
     if(self.user.userRole == IBUserRoleFan) {
-        //already Connected ...
-        //[self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
 }
@@ -846,12 +898,41 @@ didFailWithError:(OTError*)error
                         change:(NSDictionary *)change
                        context:(void *)context {
     
+    NSLog(keyPath);
+    
     if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
     }
+    if ([keyPath isEqual:@"player.status"]) {
+        if(_player.status == AVPlayerStatusReadyToPlay){
+            [_player play];
+        }
+    }
+    if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
+            _eventView.getInLineBtn.hidden = YES;
+        });
+    }
+    if ([keyPath isEqual:@"openTokManager.startBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        if(_openTokManager.startBroadcast){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.event.status = @"L";
+                [_eventView hideNotification];
+                [self startBroadcastEvent];
+            });
+            
+        }
+    }
+    if ([keyPath isEqual:@"openTokManager.broadcastEnded"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        if(_openTokManager.broadcastEnded){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSelector:@selector(closeBroadcastEvent) withObject:nil afterDelay:15.0];
+            });
+        }
+    }
     if ([keyPath isEqual:@"openTokManager.canJoinShow"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self statusChanged];
             [self startSession];
         });
     }

@@ -29,9 +29,12 @@
 @property (nonatomic) OTConnection* producerConnection;
 @property (nonatomic) NSMutableDictionary *errors;
 @property (nonatomic) BOOL canJoinShow;
+@property (nonatomic) BOOL waitingOnBroadcast;
+@property (nonatomic) BOOL startBroadcast;
+@property (nonatomic) BOOL broadcastEnded;
+@property (nonatomic) NSString* broadcastUrl;
 
 
-- (void)connectWithTokenHost:(NSString *)tokenHost;
 - (void)muteOnstageSession:(BOOL)mute;
 
 #pragma mark - OpenTok Signaling
@@ -58,6 +61,8 @@
         withUserRole:(NSString*)userRole;
 
 #pragma mark - SIOSocket Signaling
+- (void)connectWithTokenHost:(NSString *)tokenHost;
+- (void)closeSocket;
 - (void)connectFanToSocketWithURL:(NSString *)url
                         sessionId:(NSString *)sessionId;
 

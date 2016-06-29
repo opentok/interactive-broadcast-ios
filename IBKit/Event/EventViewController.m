@@ -148,29 +148,33 @@ typedef enum : NSUInteger {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
                                  [self checkPresence];
-                             }else{
+                             }
+                             else{
                                  NSLog(@"createEventTokenError");
                              }
                          }];
 }
 
 - (void)viewDidLayoutSubviews {
+    
     [super viewDidLayoutSubviews];
     [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:) withObject:self.openTokManager.subscribers afterDelay:1.0];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self removeObserver:self forKeyPath:@"event.status"];
-        [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
-    });
+    [self removeObserver:self forKeyPath:@"event.status"];
+    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+
 }
 - (void)checkPresence{
+
     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
+
 }
 
 - (void)startSession{

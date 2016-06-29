@@ -259,13 +259,16 @@
                         self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
                         if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
                             self.startBroadcast = YES;
-                        }else{
+                        }
+                        else
+                        {
                             self.waitingOnBroadcast = YES;
                         }
-                    }else{
-                        [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
                     }
-                    
+                }
+                else
+                {
+                    [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
                 }
                 
             }

@@ -185,20 +185,22 @@ typedef enum : NSUInteger {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self removeObserver:self forKeyPath:@"event.status"];
-        [self removeObserver:self forKeyPath:@"player.status"];
-        [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
-        [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
-        [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
-        [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
-    });
 
+    [self removeObserver:self forKeyPath:@"event.status"];
+    
+    [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
+    [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
+    [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
+    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    
+    if(_openTokManager.startBroadcast){
+        [self removeObserver:self forKeyPath:@"player.status"];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.openTokManager closeSocket];
     [super viewWillDisappear:animated];
-
+    
 }
 - (void)checkPresence{
     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdHost];

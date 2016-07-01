@@ -36,6 +36,10 @@
     }
 }
 
+- (void)closeSocket{
+    [self.socket close];
+}
+
 - (void)muteOnstageSession:(BOOL)mute {
     for(NSString *subscriber in self.subscribers){
         OTSubscriber *sub = self.subscribers[subscriber];
@@ -74,6 +78,7 @@
     OTError *error = nil;
     [self.producerSession unsubscribe: self.producerSubscriber error:&error];
     self.producerSubscriber = nil;
+    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
         [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
@@ -143,8 +148,7 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-    }
-    else{
+    }else{
         _producerSession = nil;
     }
     return error;
@@ -158,8 +162,7 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
-    }
-    else{
+    }else{
         _session = nil;
     }
     return error;
@@ -188,8 +191,7 @@
         
         if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
             NSLog(@"cleanup publisher from onstage");
-        }
-        else{
+        }else{
             NSLog(@"cleanup publisher from backstage");
         }
         
@@ -233,23 +235,52 @@
     __weak OpenTokManager *weakSelf = self;
     
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
+        
         weakSelf.socket = socket;
-    
-        [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
-            self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
-            if(!self.canJoinShow){
-                [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
+        
+        [weakSelf.socket on:@"eventGoLive" callback:^(id data) {
+            if(self.broadcastUrl && !self.startBroadcast){
+                self.startBroadcast = YES;
             }
         }];
         
+        [weakSelf.socket on:@"eventEnded" callback:^(id data) {
+            self.broadcastEnded = YES;
+        }];
+        
+        [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
+            self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
+
+            if(!_canJoinShow){
+                [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
+
+                if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
+                    if(data[0][@"broadcastData"][@"broadcastUrl"]){
+                        self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
+                        if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
+                            self.startBroadcast = YES;
+                        }
+                        else
+                        {
+                            self.waitingOnBroadcast = YES;
+                        }
+                    }
+                }
+                else
+                {
+                    [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
+                }
+                
+            }
+        }];
+        weakSelf.socket.onDisconnect = ^(){
+            NSLog(@"SOCKET DISCONNECTED");
+        };
         weakSelf.socket.onConnect = ^(){
             [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
         };
-    
     }];
-
 }
-
 - (void) emitJoinRoom:(NSString *)sessionId{
     [self.socket emit:@"joinRoom" args:@[sessionId]];
 }

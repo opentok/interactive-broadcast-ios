@@ -144,7 +144,8 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
-    }else{
+    }
+    else{
         _producerSession = nil;
     }
     return error;
@@ -158,7 +159,8 @@
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
-    }else{
+    }
+    else{
         _session = nil;
     }
     return error;
@@ -187,7 +189,8 @@
         
         if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
             NSLog(@"cleanup publisher from onstage");
-        }else{
+        }
+        else{
             NSLog(@"cleanup publisher from backstage");
         }
         
@@ -229,19 +232,25 @@
                         sessionId:(NSString *)sessionId {
     
     __weak OpenTokManager *weakSelf = self;
+    
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
         weakSelf.socket = socket;
+    
         [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
             self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
             if(!self.canJoinShow){
                 [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
             }
         }];
+        
         weakSelf.socket.onConnect = ^(){
             [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
         };
+    
     }];
+
 }
+
 - (void) emitJoinRoom:(NSString *)sessionId{
     [self.socket emit:@"joinRoom" args:@[sessionId]];
 }

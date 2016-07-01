@@ -86,7 +86,7 @@ typedef enum : NSUInteger {
         
         // start necessary services
         __weak EventViewController *weakSelf = self;
-
+        
         [self addObserver:weakSelf
                forKeyPath:@"event.status"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
@@ -101,7 +101,7 @@ typedef enum : NSUInteger {
         [_internetReachability startNotifier];
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-
+        
     }
     return self;
 }
@@ -143,7 +143,7 @@ typedef enum : NSUInteger {
                               event:self.event
                          completion:^(IBInstance *instance, NSError *error) {
                              [SVProgressHUD dismiss];
-                                 
+                             
                              if (!error && instance.events.count == 1)
                              {
                                  self.instance = instance;
@@ -161,7 +161,7 @@ typedef enum : NSUInteger {
     
     [super viewDidLayoutSubviews];
     [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:) withObject:self.openTokManager.subscribers afterDelay:1.0];
-
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -171,12 +171,12 @@ typedef enum : NSUInteger {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
-
+    
 }
 - (void)checkPresence{
-
+    
     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
-
+    
 }
 
 - (void)startSession{
@@ -185,13 +185,11 @@ typedef enum : NSUInteger {
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
     
-
+    
     self.eventView.getInLineBtn.hidden = YES;
     [self statusChanged];
     
     if(self.user.userRole == IBUserRoleFan) {
-        //already Connected ...
-        //[self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
 }
@@ -240,14 +238,14 @@ typedef enum : NSUInteger {
     NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
     self.eventView.videoHolder.hidden = YES;
-
+    
     [_openTokManager disconnectOnstageSession];
 }
 
 #pragma mark - publishers
 - (void)doPublish{
     if(self.user.userRole == IBUserRoleFan){
-
+        
         if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [self.openTokManager sendNewUserSignalWithName:self.userName];
             [self publishTo:_openTokManager.producerSession];
@@ -378,7 +376,7 @@ typedef enum : NSUInteger {
         _openTokManager.subscribers[connectingTo] = subs;
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
-
+        
         if([_openTokManager subscribeToOnstageWithType:connectingTo]) {
             [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
@@ -894,8 +892,8 @@ didFailWithError:(OTError*)error
         }
         
         if (self.user.userRole == IBUserRoleFan &&
-           (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
-           (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
+            (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
+            (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
             
             self.eventView.getInLineBtn.hidden = NO;
         }

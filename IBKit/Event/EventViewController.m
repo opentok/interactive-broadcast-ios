@@ -778,6 +778,7 @@ didFailWithError:(OTError*)error
         self.eventView.statusLabel.hidden = YES;
         self.eventView.chatBtn.hidden = YES;
         self.eventView.closeEvenBtn.hidden = NO;
+        self.eventView.getInLineBtn.hidden = NO;
         [self hideChatBox];
         
         self.eventStage &= ~ IBEventStageOnstage;

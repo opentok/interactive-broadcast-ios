@@ -74,7 +74,6 @@
     OTError *error = nil;
     [self.producerSession unsubscribe: self.producerSubscriber error:&error];
     self.producerSubscriber = nil;
-    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
         [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];

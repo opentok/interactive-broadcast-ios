@@ -29,7 +29,7 @@
 
 #import <Reachability/Reachability.h>
 
-#import <MediaPlayer/MediaPlayer.h>
+#import "IBAVPlayer.h"
 
 typedef enum : NSUInteger {
     IBEventStageNotLive = 0,
@@ -63,9 +63,7 @@ typedef enum : NSUInteger {
 // OpenTok
 @property (nonatomic) OpenTokManager *openTokManager;
 @property (nonatomic) OpenTokNetworkTest *networkTest;
-
-@property (nonatomic) AVPlayer *player;
-@property (nonatomic) AVPlayerLayer *playerLayer;
+@property (nonatomic) IBAVPlayer *ibPlayer;
 
 @end
 
@@ -194,7 +192,7 @@ typedef enum : NSUInteger {
     [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
     
     if(_openTokManager.startBroadcast){
-        [self removeObserver:self forKeyPath:@"player.status"];
+        [self removeObserver:self forKeyPath:@"ibPlayer.player.status"];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -209,23 +207,19 @@ typedef enum : NSUInteger {
 - (void)startBroadcastEvent{
     
     self.eventView.getInLineBtn.hidden = YES;
-    
-    NSURL *streamURL = [NSURL URLWithString:self.openTokManager.broadcastUrl];
-    self.player = [AVPlayer playerWithURL:streamURL];
-    
-    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-    [self.eventView.layer addSublayer: _playerLayer];
-    
-    [_playerLayer setFrame:_eventView.videoHolder.frame];
-    [_playerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill ];
-    self.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-    
-    [self addObserver:self forKeyPath:@"player.status" options:0 context:nil];
+    self.ibPlayer = [[IBAVPlayer alloc] init];
+    [self.ibPlayer createPlayerWithUrl:self.openTokManager.broadcastUrl];
+
+    [self.eventView.layer addSublayer: [self.ibPlayer getPlayerLayer]];
+    [self.ibPlayer.playerLayer setFrame:_eventView.videoHolder.frame];
+
+        
+    [self addObserver:self forKeyPath:@"ibPlayer.player.status" options:0 context:nil];
 
 }
 
 - (void) closeBroadcastEvent{
-    [_playerLayer removeFromSuperlayer];
+    [self.ibPlayer.playerLayer removeFromSuperlayer];
     self.event.status = @"C";
 }
 
@@ -905,9 +899,9 @@ didFailWithError:(OTError*)error
     if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
     }
-    if ([keyPath isEqual:@"player.status"]) {
-        if(_player.status == AVPlayerStatusReadyToPlay){
-            [_player play];
+    if ([keyPath isEqual:@"ibPlayer.player.status"]) {
+        if(_ibPlayer.player.status == AVPlayerStatusReadyToPlay){
+            [_ibPlayer.player play];
         }
     }
     if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {

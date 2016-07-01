@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */; };
+		0B595F821D25BC06002779B7 /* IBAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B595F801D25BC06002779B7 /* IBAVPlayer.m */; };
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
@@ -141,6 +143,8 @@
 
 /* Begin PBXFileReference section */
 		01B3303B8576609283931392 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBAVPlayer.h; sourceTree = "<group>"; };
+		0B595F801D25BC06002779B7 /* IBAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBAVPlayer.m; sourceTree = "<group>"; };
 		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
 				A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */,
 				A0A8A52D1CFF7F2F00A9EB4B /* IBUser.m */,
+				0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */,
+				0B595F801D25BC06002779B7 /* IBAVPlayer.m */,
 				A08D96EA1CFE36F400877619 /* OpenTokManager.h */,
 				A08D96EB1CFE36F400877619 /* OpenTokManager.m */,
 				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
@@ -507,6 +513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
+				0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
 				A00231BA1D011CF9007905CC /* OpenTokLoggingWrapper.h in Headers */,
@@ -830,6 +837,7 @@
 				A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */,
 				A01E441A1CF75C1B00D20CFA /* EventViewController.m in Sources */,
 				A0C5267E1CEAD35A00706104 /* IBApi.m in Sources */,
+				0B595F821D25BC06002779B7 /* IBAVPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -78,7 +78,7 @@
     OTError *error = nil;
     [self.producerSession unsubscribe: self.producerSubscriber error:&error];
     self.producerSubscriber = nil;
-    self.publisher.publishAudio = NO;
+//    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
         [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
@@ -252,9 +252,9 @@
             self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
 
             if(!_canJoinShow){
-                [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
-
                 if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
+                    [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
+
                     if(data[0][@"broadcastData"][@"broadcastUrl"]){
                         self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
                         if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){

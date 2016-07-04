@@ -38,7 +38,7 @@
     
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         _instance = instance;
-        _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+        _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@ && SELF.status != %@", @"N", @"C"]];
         _user = user;
         
         _internetReachability = [Reachability reachabilityForInternetConnection];

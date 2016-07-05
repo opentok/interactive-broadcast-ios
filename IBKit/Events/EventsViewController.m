@@ -38,7 +38,7 @@
     
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         _instance = instance;
-        _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@ && SELF.status != %@", @"N", @"C"]];
+        _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
         _user = user;
         
         _internetReachability = [Reachability reachabilityForInternetConnection];
@@ -84,17 +84,22 @@
 - (void)connectToSignalServer {
     
     __weak EventsViewController *weakSelf = self;
+    
     [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket) {
         weakSelf.signalingSocket = socket;
+    
+        [weakSelf.signalingSocket on:@"changeStatus" callback: ^(SIOParameterArray *args){
+                                NSLog(@"event changed");
+                                NSMutableDictionary *eventChanged = [args firstObject];
+                                [self updateEventStatus:eventChanged];
+                            }];
+        
+        weakSelf.signalingSocket.onDisconnect = ^() {
+            NSLog(@"DISCONNECTED");
+        };
         weakSelf.signalingSocket.onConnect = ^() {
             NSLog(@"Connected to signaling server");
         };
-        
-        [weakSelf.signalingSocket on:@"change-event-status"
-                          callback: ^(SIOParameterArray *args) {
-                              NSDictionary *eventChanged = [args firstObject];
-                              [self updateEventStatus:eventChanged];
-                          }];
     }];
 }
 
@@ -103,12 +108,14 @@
     self.eventsView.eventsViewFlowLayout.itemSize = CGSizeMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 30) /3, 200);
 }
 
--(void)updateEventStatus:(NSDictionary *)event{
+-(void)updateEventStatus:(NSMutableDictionary *)event{
     NSString *criteria = [NSString stringWithFormat:@"id == %@", event[@"id"]];
     NSArray *changedEvents = [self.openedEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:criteria]];
     if ([changedEvents count] != 0) {
-        IBEvent *chagnedEvent = changedEvents[0];
-        [chagnedEvent updateEventWithJson:event];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            IBEvent *chagnedEvent = changedEvents[0];
+            [chagnedEvent updateEventWithJson:event];
+        });
     }
 
     [self.eventsView.eventsCollectionView reloadData];

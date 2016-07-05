@@ -626,6 +626,7 @@
 					};
 					A0C526381CEAD2E000706104 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 246HEUPQZ9;
 					};
 				};
 			};
@@ -954,7 +955,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fbf6e3e1-0f06-4833-b07a-d61523d04240";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -994,7 +995,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "fbf6e3e1-0f06-4833-b07a-d61523d04240";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1005,14 +1006,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AgilityFeat Inc (246HEUPQZ9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = IBDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokbox.IBDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.ib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fbf6e3e1-0f06-4833-b07a-d61523d04240";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1020,14 +1021,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AgilityFeat Inc (246HEUPQZ9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = IBDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokbox.IBDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agilityfeat.ib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fbf6e3e1-0f06-4833-b07a-d61523d04240";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1035,6 +1036,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1058,6 +1060,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

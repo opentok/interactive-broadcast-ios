@@ -38,7 +38,7 @@
                             
                               if (!error) {
                                   self.instance = instance;
-                                  self.openedEvents = [self.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@ && SELF.status != %@", @"C", @"N"]];
+                                  self.openedEvents = [self.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
                                   [self.eventsView reloadData];
                               }
                           }];

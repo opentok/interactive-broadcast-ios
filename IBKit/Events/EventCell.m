@@ -38,6 +38,8 @@
         self.eventButton.enabled = NO;
     }
     else{
+        [self.eventButton setTitle:@"Join Event" forState: UIControlStateNormal];
+        self.eventButton.enabled = YES;
         [self.statusLabel setText:event.displayStatus];
     }
     

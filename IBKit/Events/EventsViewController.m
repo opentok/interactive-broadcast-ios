@@ -109,16 +109,16 @@
 }
 
 -(void)updateEventStatus:(NSMutableDictionary *)event{
-    NSString *criteria = [NSString stringWithFormat:@"id == %@", event[@"id"]];
+    NSString *criteria = [NSString stringWithFormat:@"identifier == %@", event[@"id"]];
     NSArray *changedEvents = [self.openedEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:criteria]];
     if ([changedEvents count] != 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             IBEvent *chagnedEvent = changedEvents[0];
             [chagnedEvent updateEventWithJson:event];
+            [self.eventsView.eventsCollectionView reloadData];
         });
     }
 
-    [self.eventsView.eventsCollectionView reloadData];
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

@@ -615,6 +615,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
         [_openTokManager cleanupPublisher];
         [self.eventView hideNotification];
         [self.eventView fanLeaveLine];
+        _openTokManager.producerSession = nil;
+
     }
     else {
         self.eventView.getInLineBtn.hidden = YES;
@@ -826,15 +828,17 @@ didFailWithError:(OTError*)error
         self.event.status = @"L";
     }
     else if([type isEqualToString:@"joinHost"]){
-        
-        [self unpublishBackstage];
-        self.eventStage |= IBEventStageOnstage;
-        [self hideChatBox];
-        [self.eventView fanIsOnStage];
-        if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
-            [self goLive];
+        if(self.eventStage != IBEventStageOnstage){
+            self.eventStage |= IBEventStageOnstage;
+            [self unpublishBackstage];
+            [self hideChatBox];
+            [self.eventView fanIsOnStage];
+            if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
+                [self goLive];
+            }
+            [DotSpinnerViewController show];
         }
-        [DotSpinnerViewController show];
+        
     }
     else if ([type isEqualToString:@"joinHostNow"]) {
         

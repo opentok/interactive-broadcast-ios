@@ -1,0 +1,1 @@
+../../../OTTextChatKit/ios/TextChatAccPackKit/OTTextChatKit/OTTextChatUICustomizator/OTTextChatUICustomizator_Private.h

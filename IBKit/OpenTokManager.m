@@ -9,12 +9,16 @@
 #import "OpenTokManager.h"
 #import "JSON.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "OpenTokLoggingWrapper.h"
-
+#import <OTKAnalytics/OTKAnalytics.h>
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
 
+@property (nonatomic) BOOL canJoinShow;
+@property (nonatomic) BOOL waitingOnBroadcast;
+@property (nonatomic) BOOL startBroadcast;
+@property (nonatomic) BOOL broadcastEnded;
+@property (nonatomic) NSString* broadcastUrl;
 @end
 
 @implementation OpenTokManager
@@ -57,9 +61,9 @@
     [self.producerSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
-    [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"success"];
+    [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"success" completion:nil];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"fail"];
+        [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -69,7 +73,7 @@
     [self.session unsubscribe: self.privateProducerSubscriber error:&error];
     [self muteOnstageSession:NO];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_private_call" variation:@"fail"];
+        [OTKLogger logEventAction:@"unsubscribe_private_call" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -81,7 +85,7 @@
 //    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
+        [OTKLogger logEventAction:@"unsubscribe_onstage_call" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -130,11 +134,11 @@
 -(NSError*)connectBackstageSessionWithToken:(NSString*)token{
     OTError *error = nil;
     
-    [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"attempt"];
+    [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"attempt" completion:nil];
     [_producerSession connectWithToken:token error:&error];
     
     if (error) {
-        [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"failed" completion:nil];
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }
     return error;
@@ -147,7 +151,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_disconnects_backstage" variation:@"failed" completion:nil];
     }else{
         _producerSession = nil;
     }
@@ -161,7 +165,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_disconnects_onstage" variation:@"failed" completion:nil];
     }else{
         _session = nil;
     }
@@ -178,11 +182,11 @@
     NSString *session_name = self.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", userRole, session_name];
     
-    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
+    [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
     
     if (error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
+        [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
     }
 }
 

@@ -164,7 +164,6 @@ typedef enum : NSUInteger {
                              if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
-                                 [self statusChanged];
                                  [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
                                                                       sessionId:self.instance.sessionIdHost];
                              }
@@ -211,10 +210,7 @@ typedef enum : NSUInteger {
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
-    
-
     self.eventView.getInLineBtn.hidden = YES;
-    [self statusChanged];
     
     if(self.user.userRole == IBUserRoleFan) {
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
@@ -704,7 +700,6 @@ didFailWithError:(OTError*)error
         if ([self.event.status isEqualToString:@"N"]){
             self.event.status = @"P";
             _shouldResendProducerSignal = YES;
-            [self statusChanged];
         }
     }
     else if([type isEqualToString:@"openChat"]){
@@ -1080,11 +1075,8 @@ didFailWithError:(OTError*)error
 
 - (IBAction)goBack:(id)sender {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        [_openTokManager disconnectBackstageSession];
-        [_openTokManager disconnectOnstageSession];
-    });
-    
+    [_openTokManager disconnectBackstageSession];
+    [_openTokManager disconnectOnstageSession];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }

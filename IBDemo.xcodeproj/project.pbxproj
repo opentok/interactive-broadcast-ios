@@ -26,15 +26,14 @@
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
-		7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3303B8576609283931392 /* libPods-IBKitTests.a */; };
+		415C177FEDAA60FD907434DA /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4DBBDF4165F4E6BB0C06D05 /* libPods-IBKitTests.a */; };
+		7B8FE0039E0442D4C9FF8BD7 /* libPods-IBKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49629D03A23D5BE95E9F7498 /* libPods-IBKit.a */; };
 		A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A61D00C0FA007905CC /* IBInstanceTests.m */; };
 		A00231A91D00C23B007905CC /* IBUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A81D00C23B007905CC /* IBUserTests.m */; };
 		A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AA1D00C42B007905CC /* IBEventTests.m */; };
 		A00231AD1D00C446007905CC /* IBApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AC1D00C446007905CC /* IBApiTests.m */; };
 		A00231AF1D00C45D007905CC /* OpenTokNetworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AE1D00C45D007905CC /* OpenTokNetworkTests.m */; };
 		A00231B11D00C4A7007905CC /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B01D00C4A7007905CC /* OpenTokManager.m */; };
-		A00231BA1D011CF9007905CC /* OpenTokLoggingWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */; };
-		A00231BB1D011CF9007905CC /* OpenTokLoggingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
@@ -52,8 +51,6 @@
 		A01E44521CF7602B00D20CFA /* DotSpinnerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01E44431CF7602B00D20CFA /* DotSpinnerViewController.xib */; };
 		A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */; };
 		A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */; };
-		A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E44471CF7602B00D20CFA /* OTKAnalytics.h */; };
-		A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E44481CF7602B00D20CFA /* OTKAnalytics.m */; };
 		A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E444A1CF7602B00D20CFA /* OTKTextChatComponent.h */; };
 		A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E444B1CF7602B00D20CFA /* OTKTextChatComponent.m */; };
 		A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A01E444C1CF7602B00D20CFA /* OTKTextChatTableViewCell.h */; };
@@ -107,7 +104,6 @@
 		A0C526D91CEAD36800706104 /* SpotlightAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */; };
 		A0C526DB1CEAD3D500706104 /* CustomEventsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */; };
 		A0C526DE1CEAD40100706104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C526DC1CEAD40100706104 /* Main.storyboard */; };
-		F421D602C2B961CC1C2A7B5F /* libPods-IBKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F6606C998415DDE219BB0A /* libPods-IBKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,15 +138,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01B3303B8576609283931392 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBAVPlayer.h; sourceTree = "<group>"; };
 		0B595F801D25BC06002779B7 /* IBAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBAVPlayer.m; sourceTree = "<group>"; };
 		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
-		13F6606C998415DDE219BB0A /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
+		1B3F6F993B2282DC9C79C989 /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		20C3B6C2FB1D9DD5826E3675 /* Pods-IBKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		232AE0A4F1F907C8E58EE557 /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
+		49629D03A23D5BE95E9F7498 /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A002319C1CFFF442007905CC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A00231A61D00C0FA007905CC /* IBInstanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstanceTests.m; sourceTree = "<group>"; };
 		A00231A81D00C23B007905CC /* IBUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBUserTests.m; sourceTree = "<group>"; };
@@ -160,8 +156,6 @@
 		A00231B01D00C4A7007905CC /* OpenTokManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokManager.m; sourceTree = "<group>"; };
 		A00231B21D010FEA007905CC /* IBEventsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEventsViewControllerTests.m; sourceTree = "<group>"; };
 		A00231B61D01102A007905CC /* IBEventViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEventViewControllerTests.m; sourceTree = "<group>"; };
-		A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokLoggingWrapper.h; sourceTree = "<group>"; };
-		A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokLoggingWrapper.m; sourceTree = "<group>"; };
 		A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformSelectorWithDebounce.h; sourceTree = "<group>"; };
 		A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformSelectorWithDebounce.m; sourceTree = "<group>"; };
 		A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
@@ -179,8 +173,6 @@
 		A01E44431CF7602B00D20CFA /* DotSpinnerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DotSpinnerViewController.xib; sourceTree = "<group>"; };
 		A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
 		A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
-		A01E44471CF7602B00D20CFA /* OTKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKAnalytics.h; sourceTree = "<group>"; };
-		A01E44481CF7602B00D20CFA /* OTKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKAnalytics.m; sourceTree = "<group>"; };
 		A01E444A1CF7602B00D20CFA /* OTKTextChatComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatComponent.h; sourceTree = "<group>"; };
 		A01E444B1CF7602B00D20CFA /* OTKTextChatComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKTextChatComponent.m; sourceTree = "<group>"; };
 		A01E444C1CF7602B00D20CFA /* OTKTextChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKTextChatTableViewCell.h; sourceTree = "<group>"; };
@@ -239,8 +231,8 @@
 		A0C526B81CEAD36800706104 /* SpotlightAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SpotlightAssets.xcassets; sourceTree = "<group>"; };
 		A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomEventsCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
+		CD76DC1D6983854F87A8DBFB /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
+		D4DBBDF4165F4E6BB0C06D05 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,7 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A08D96D91CF8DCB200877619 /* IBKit.framework in Frameworks */,
-				7C841B9C573CD1E83B81F3A2 /* libPods-IBKitTests.a in Frameworks */,
+				415C177FEDAA60FD907434DA /* libPods-IBKitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,20 +257,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F421D602C2B961CC1C2A7B5F /* libPods-IBKit.a in Frameworks */,
+				7B8FE0039E0442D4C9FF8BD7 /* libPods-IBKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		57899C55768908A26D0C90AD /* Frameworks */ = {
+		3C32A89FC470CEF4C332BF00 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13F6606C998415DDE219BB0A /* libPods-IBKit.a */,
-				01B3303B8576609283931392 /* libPods-IBKitTests.a */,
+				232AE0A4F1F907C8E58EE557 /* Pods-IBKit.debug.xcconfig */,
+				CD76DC1D6983854F87A8DBFB /* Pods-IBKit.release.xcconfig */,
+				20C3B6C2FB1D9DD5826E3675 /* Pods-IBKitTests.debug.xcconfig */,
+				1B3F6F993B2282DC9C79C989 /* Pods-IBKitTests.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		A0156FCF1CEE60A50009FBEF /* Categories */ = {
@@ -344,8 +338,6 @@
 			children = (
 				A01E44451CF7602B00D20CFA /* OTDefaultAudioDevice.h */,
 				A01E44461CF7602B00D20CFA /* OTDefaultAudioDevice.m */,
-				A01E44471CF7602B00D20CFA /* OTKAnalytics.h */,
-				A01E44481CF7602B00D20CFA /* OTKAnalytics.m */,
 			);
 			path = OpenTok;
 			sourceTree = "<group>";
@@ -403,8 +395,8 @@
 				A0C5263A1CEAD2E000706104 /* IBKit */,
 				A08D96D51CF8DCB200877619 /* IBKitTests */,
 				A0C5261B1CEAD2D400706104 /* Products */,
-				BA26CEB99AF510213EF94875 /* Pods */,
-				57899C55768908A26D0C90AD /* Frameworks */,
+				3C32A89FC470CEF4C332BF00 /* Pods */,
+				F0580A7B5EE44575528C8311 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -464,8 +456,6 @@
 				A08D96EB1CFE36F400877619 /* OpenTokManager.m */,
 				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
 				0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */,
-				A00231B81D011CF9007905CC /* OpenTokLoggingWrapper.h */,
-				A00231B91D011CF9007905CC /* OpenTokLoggingWrapper.m */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -494,15 +484,13 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		BA26CEB99AF510213EF94875 /* Pods */ = {
+		F0580A7B5EE44575528C8311 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */,
-				954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */,
-				C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */,
-				3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */,
+				49629D03A23D5BE95E9F7498 /* libPods-IBKit.a */,
+				D4DBBDF4165F4E6BB0C06D05 /* libPods-IBKitTests.a */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,7 +504,6 @@
 				0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
-				A00231BA1D011CF9007905CC /* OpenTokLoggingWrapper.h in Headers */,
 				A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */,
 				A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */,
 				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
@@ -534,7 +521,6 @@
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
 				A08D96EC1CFE36F400877619 /* IBInstance_Internal.h in Headers */,
-				A01E44551CF7602B00D20CFA /* OTKAnalytics.h in Headers */,
 				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
 				A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */,
 				A01E445B1CF7602B00D20CFA /* OTKTextChatView.h in Headers */,
@@ -549,12 +535,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A08D96DE1CF8DCB200877619 /* Build configuration list for PBXNativeTarget "IBKitTests" */;
 			buildPhases = (
-				51FF9BDB78187ED885D11ABA /* 📦 Check Pods Manifest.lock */,
+				51FF9BDB78187ED885D11ABA /* [CP] Check Pods Manifest.lock */,
 				A08D96D01CF8DCB200877619 /* Sources */,
 				A08D96D11CF8DCB200877619 /* Frameworks */,
 				A08D96D21CF8DCB200877619 /* Resources */,
-				4EF9E5A82736204DC385B015 /* 📦 Embed Pods Frameworks */,
-				C45E87CD51EFF18C4A1C0FE9 /* 📦 Copy Pods Resources */,
+				4EF9E5A82736204DC385B015 /* [CP] Embed Pods Frameworks */,
+				C45E87CD51EFF18C4A1C0FE9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -589,12 +575,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0C526421CEAD2E000706104 /* Build configuration list for PBXNativeTarget "IBKit" */;
 			buildPhases = (
-				CA111D6649F81513F982DB0D /* 📦 Check Pods Manifest.lock */,
+				CA111D6649F81513F982DB0D /* [CP] Check Pods Manifest.lock */,
 				A0C526341CEAD2E000706104 /* Sources */,
 				A0C526351CEAD2E000706104 /* Frameworks */,
 				A0C526361CEAD2E000706104 /* Headers */,
 				A0C526371CEAD2E000706104 /* Resources */,
-				3758352D26F9CE54974CFD80 /* 📦 Copy Pods Resources */,
+				3758352D26F9CE54974CFD80 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -693,14 +679,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3758352D26F9CE54974CFD80 /* 📦 Copy Pods Resources */ = {
+		3758352D26F9CE54974CFD80 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,14 +694,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKit/Pods-IBKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4EF9E5A82736204DC385B015 /* 📦 Embed Pods Frameworks */ = {
+		4EF9E5A82736204DC385B015 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,14 +709,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		51FF9BDB78187ED885D11ABA /* 📦 Check Pods Manifest.lock */ = {
+		51FF9BDB78187ED885D11ABA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,14 +737,14 @@
 			shellPath = /bin/sh;
 			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nWORKSPACE_NAME=\"IBDemo.xcworkspace\"\nFRAMEWORK_NAME=\"IBKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
 		};
-		C45E87CD51EFF18C4A1C0FE9 /* 📦 Copy Pods Resources */ = {
+		C45E87CD51EFF18C4A1C0FE9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -766,14 +752,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA111D6649F81513F982DB0D /* 📦 Check Pods Manifest.lock */ = {
+		CA111D6649F81513F982DB0D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -825,14 +811,12 @@
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
 				A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
-				A00231BB1D011CF9007905CC /* OpenTokLoggingWrapper.m in Sources */,
 				A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */,
 				A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */,
 				A01E445A1CF7602B00D20CFA /* OTKTextChatTableViewCell.m in Sources */,
 				A01E44181CF75C1B00D20CFA /* EventView.m in Sources */,
 				A01E44581CF7602B00D20CFA /* OTKTextChatComponent.m in Sources */,
 				0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */,
-				A01E44561CF7602B00D20CFA /* OTKAnalytics.m in Sources */,
 				A01E445C1CF7602B00D20CFA /* OTKTextChatView.m in Sources */,
 				A0156FD81CEE60A50009FBEF /* UIColor+AppAdditions.m in Sources */,
 				A01E44541CF7602B00D20CFA /* OTDefaultAudioDevice.m in Sources */,
@@ -879,7 +863,7 @@
 /* Begin XCBuildConfiguration section */
 		A08D96DC1CF8DCB200877619 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0DF3D713B542BB9337BA9AC /* Pods-IBKitTests.debug.xcconfig */;
+			baseConfigurationReference = 20C3B6C2FB1D9DD5826E3675 /* Pods-IBKitTests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = IBKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -890,7 +874,7 @@
 		};
 		A08D96DD1CF8DCB200877619 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BFB98BB2DA4E0ADB2BDEBE7 /* Pods-IBKitTests.release.xcconfig */;
+			baseConfigurationReference = 1B3F6F993B2282DC9C79C989 /* Pods-IBKitTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = IBKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1029,7 +1013,7 @@
 		};
 		A0C526431CEAD2E000706104 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF0F8F05AE03AE1671671AAE /* Pods-IBKit.debug.xcconfig */;
+			baseConfigurationReference = 232AE0A4F1F907C8E58EE557 /* Pods-IBKit.debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1052,7 +1036,7 @@
 		};
 		A0C526441CEAD2E000706104 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 954D0F4676E66E23ABE1D911 /* Pods-IBKit.release.xcconfig */;
+			baseConfigurationReference = CD76DC1D6983854F87A8DBFB /* Pods-IBKit.release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

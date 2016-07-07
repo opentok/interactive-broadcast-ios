@@ -11,8 +11,6 @@
 #import <OpenTok/OpenTok.h>
 #import "SIOSocket.h"
 
-
-
 @interface OpenTokManager : NSObject
 @property (nonatomic) OTSession* session;
 @property (nonatomic) OTSession* producerSession;
@@ -28,12 +26,11 @@
 @property (nonatomic) OTStream* privateProducerStream;
 @property (nonatomic) OTConnection* producerConnection;
 @property (nonatomic) NSMutableDictionary *errors;
-@property (nonatomic) BOOL canJoinShow;
-@property (nonatomic) BOOL waitingOnBroadcast;
-@property (nonatomic) BOOL startBroadcast;
-@property (nonatomic) BOOL broadcastEnded;
-@property (nonatomic) NSString* broadcastUrl;
-
+@property (readonly, nonatomic) BOOL canJoinShow;
+@property (readonly, nonatomic) BOOL waitingOnBroadcast;
+@property (readonly, nonatomic) BOOL startBroadcast;
+@property (readonly, nonatomic) BOOL broadcastEnded;
+@property (readonly, nonatomic) NSString* broadcastUrl;
 
 - (void)muteOnstageSession:(BOOL)mute;
 
@@ -48,12 +45,12 @@
 
 #pragma subscribers
 - (void)cleanupSubscriber:(NSString*)type;
-- (NSError*) subscribeToOnstageWithType:(NSString*)type;
-- (NSError*) backstageSubscribeToProducer;
-- (NSError*) onstageSubscribeToProducer;
-- (NSError*) unsubscribeSelfFromProducerSession;
-- (NSError*) unsubscribeFromPrivateProducerCall;
-- (NSError*) unsubscribeOnstageProducerCall;
+- (NSError*)subscribeToOnstageWithType:(NSString*)type;
+- (NSError*)backstageSubscribeToProducer;
+- (NSError*)onstageSubscribeToProducer;
+- (NSError*)unsubscribeSelfFromProducerSession;
+- (NSError*)unsubscribeFromPrivateProducerCall;
+- (NSError*)unsubscribeOnstageProducerCall;
 
 #pragma publisher
 -(void)cleanupPublisher;
@@ -62,9 +59,9 @@
 
 #pragma mark - SIOSocket Signaling
 - (void)connectWithTokenHost:(NSString *)tokenHost;
-- (void)closeSocket;
 - (void)connectFanToSocketWithURL:(NSString *)url
                         sessionId:(NSString *)sessionId;
+- (void)closeSocket;
 
 - (NSError *)sendNewUserSignalWithName:(NSString *)username;
 - (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString;

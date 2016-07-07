@@ -1,0 +1,1 @@
+../../../OTTextChatKit/ios/TextChatAccPackKit/OTTextChatKit/Helpers/UIViewController+Helper.h

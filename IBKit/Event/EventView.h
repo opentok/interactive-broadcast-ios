@@ -54,11 +54,12 @@
 - (void)eventIsClosed;
 
 #pragma fan status changes
-- (void) fanIsInline;
+- (void)fanIsInline;
 - (void)fanIsOnStage;
 - (void)fanLeaveLine;
 
 #pragma chat bar
+- (void)loadTextChat;
 - (void)userIsChatting;
 - (void)hideChatBar;
 

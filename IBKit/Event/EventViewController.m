@@ -18,6 +18,7 @@
 #import "IBInstance_Internal.h"
 #import "IBDateFormatter.h"
 #import "JSON.h"
+#import "OTDefaultAudioDevice.h"
 #import "UIColor+AppAdditions.h"
 #import "UIView+Category.h"
 #import "UIImageView+Category.h"
@@ -89,7 +90,7 @@ typedef enum : NSUInteger {
         
         // start necessary services
         __weak EventViewController *weakSelf = self;
-        
+
         [self addObserver:weakSelf
                forKeyPath:@"event.status"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
@@ -118,7 +119,7 @@ typedef enum : NSUInteger {
         [_internetReachability startNotifier];
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-        
+
     }
     return self;
 }
@@ -153,20 +154,25 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)createEventToken{
+- (void)createEventToken {
     
     [SVProgressHUD show];
     [IBApi createEventTokenWithUser:self.user
                               event:self.event
                          completion:^(IBInstance *instance, NSError *error) {
                              [SVProgressHUD dismiss];
-                             
+                                 
                              if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
                                  [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
                                                                       sessionId:self.instance.sessionIdHost];
-                                 [self statusChanged];
+                                 dispatch_async(dispatch_get_main_queue(), ^(){
+                                     [self statusChanged];
+                                 });
+                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
+                                                        sessionId:self.instance.sessionIdProducer
+                                                            token:self.instance.tokenProducer];
                              }
                              else {
                                  NSLog(@"createEventTokenError");
@@ -230,37 +236,37 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)loadChat {
-    OTSession *currentSession;
-    
-    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-        currentSession = _openTokManager.producerSession;
-    }
-    else{
-        currentSession = _openTokManager.session;
-    }
-    
-    _textChat = [[OTKTextChatComponent alloc] init];
-    _textChat.delegate = self;
-    [_textChat setMaxLength:1050];
-    [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
-    
-    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
-    
-    CGRect r = self.view.bounds;
-    r.origin.y += _chatYPosition;
-    r.size.height -= _chatYPosition;
-    (_textChat.view).frame = r;
-    [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
-    
-    if(self.user.userRole != IBUserRoleFan){
-        self.eventView.chatBtn.hidden = NO;
-    }
-    
-    self.textChat.view.hidden = YES;
-    [_eventView hideChatBar];
-    _unreadCount = 0;
-}
+//- (void)loadChat {
+//    OTSession *currentSession;
+//    
+//    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
+//        currentSession = _openTokManager.producerSession;
+//    }
+//    else{
+//        currentSession = _openTokManager.session;
+//    }
+//    
+//    _textChat = [[OTKTextChatComponent alloc] init];
+//    _textChat.delegate = self;
+//    [_textChat setMaxLength:1050];
+//    [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
+//    
+//    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
+//    
+//    CGRect r = self.view.bounds;
+//    r.origin.y += _chatYPosition;
+//    r.size.height -= _chatYPosition;
+//    (_textChat.view).frame = r;
+//    [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
+//    
+//    if(self.user.userRole != IBUserRoleFan){
+//        self.eventView.chatBtn.hidden = NO;
+//    }
+//    
+//    self.textChat.view.hidden = YES;
+//    [_eventView hideChatBar];
+//    _unreadCount = 0;
+//}
 
 -(void)unpublishBackstage {
     [_openTokManager unpublishFrom:_openTokManager.producerSession withUserRole:[self.user userRoleName]];
@@ -274,14 +280,14 @@ typedef enum : NSUInteger {
     NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
     self.eventView.videoHolder.hidden = YES;
-    
+
     [_openTokManager disconnectOnstageSession];
 }
 
 #pragma mark - publishers
 - (void)doPublish{
     if(self.user.userRole == IBUserRoleFan){
-        
+
         if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [self.openTokManager sendNewUserSignalWithName:self.userName];
             [self publishTo:_openTokManager.producerSession];
@@ -320,6 +326,7 @@ typedef enum : NSUInteger {
 }
 
 -(void) publishTo:(OTSession *)session {
+    
     
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
@@ -409,7 +416,7 @@ typedef enum : NSUInteger {
         _openTokManager.subscribers[connectingTo] = subs;
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
         [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
-        
+
         if([_openTokManager subscribeToOnstageWithType:connectingTo]) {
             [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
@@ -571,7 +578,7 @@ typedef enum : NSUInteger {
             self.eventStage |= IBEventStageBackstage;
             [self.eventView fanIsInline];
             [self doPublish];
-            [self loadChat];
+            [self.eventView loadTextChat];
             [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"success" completion:nil];
         }
     }
@@ -582,7 +589,7 @@ typedef enum : NSUInteger {
                 [self forceDisconnect];
             }
             else{
-                [self loadChat];
+                [self.eventView loadTextChat];
                 self.eventStage |= IBEventStageOnstage;
                 [self doPublish];
             }
@@ -602,7 +609,7 @@ typedef enum : NSUInteger {
         [self.eventView hideNotification];
         [self.eventView fanLeaveLine];
         _openTokManager.producerSession = nil;
-        
+
     }
     else {
         self.eventView.getInLineBtn.hidden = YES;
@@ -888,11 +895,8 @@ didFailWithError:(OTError*)error
     }
     
     if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
-        // FIXME: UI layout modifications trigger an exception
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
-            _eventView.getInLineBtn.hidden = YES;
-        });
+        [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
+        _eventView.getInLineBtn.hidden = YES;
     }
     
     if ([keyPath isEqual:@"openTokManager.startBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
@@ -916,70 +920,66 @@ didFailWithError:(OTError*)error
 
 -(void)statusChanged {
     
-    // FIXME: UI layout modifications exception
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.displayStatus];
-        
-        if ([self.event.status isEqualToString:@"N"]) {
-            
-            if (self.user.userRole != IBUserRoleFan) {
-                self.eventView.eventImage.hidden = YES;
-            }
-            else {
-                self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-                self.eventView.getInLineBtn.hidden = YES;
-            }
-        }
-        else if([self.event.status isEqualToString:@"P"]) {
-            
-            if (self.user.userRole != IBUserRoleFan) {
-                self.eventView.eventImage.hidden = YES;
-            }
-            else {
-                self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-                if(_openTokManager.session){
-                    self.eventView.getInLineBtn.hidden = NO;
-                }
-            }
-        }
-        else if ([self.event.status isEqualToString:@"L"]) {
-            
-            if (_openTokManager.subscribers.count > 0) {
-                self.eventView.eventImage.hidden = YES;
-            }
-            else{
-                self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            }
-            
-            if (self.user.userRole == IBUserRoleFan &&
-                (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
-                (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-                if(_openTokManager.session){
-                    self.eventView.getInLineBtn.hidden = NO;
-                }
-            }
-            self.eventStage |= IBEventStageLive;
-            [self goLive];
-        }
-        else if ([self.event.status isEqualToString:@"C"]) {
-            
-            if (self.event.endImage) {
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
-            }
-            [self.eventView eventIsClosed];
-            
-            [_openTokManager disconnectOnstageSession];
-            
-            if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
-                [_openTokManager disconnectBackstageSession];
-            }
-            [_openTokManager cleanupPublisher];
-        }
-    });
+    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.displayStatus];
     
+    if ([self.event.status isEqualToString:@"N"]) {
+        
+        if (self.user.userRole != IBUserRoleFan) {
+            self.eventView.eventImage.hidden = YES;
+        }
+        else {
+            self.eventView.eventImage.hidden = NO;
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+            self.eventView.getInLineBtn.hidden = YES;
+        }
+    }
+    else if([self.event.status isEqualToString:@"P"]) {
+        
+        if (self.user.userRole != IBUserRoleFan) {
+            self.eventView.eventImage.hidden = YES;
+        }
+        else {
+            self.eventView.eventImage.hidden = NO;
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+            if(_openTokManager.session){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
+        }
+    }
+    else if ([self.event.status isEqualToString:@"L"]) {
+        
+        if (_openTokManager.subscribers.count > 0) {
+            self.eventView.eventImage.hidden = YES;
+        }
+        else{
+            self.eventView.eventImage.hidden = NO;
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+        }
+        
+        if (self.user.userRole == IBUserRoleFan &&
+            (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
+            (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
+            if(_openTokManager.session){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
+        }
+        self.eventStage |= IBEventStageLive;
+        [self goLive];
+    }
+    else if ([self.event.status isEqualToString:@"C"]) {
+        
+        if (self.event.endImage) {
+            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
+        }
+        [self.eventView eventIsClosed];
+        
+        [_openTokManager disconnectOnstageSession];
+        
+        if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
+            [_openTokManager disconnectBackstageSession];
+        }
+        [_openTokManager cleanupPublisher];
+    }
 }
 
 -(void)goLive {

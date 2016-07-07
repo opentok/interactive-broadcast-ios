@@ -166,6 +166,7 @@ typedef enum : NSUInteger {
                                  self.event = [self.instance.events lastObject];
                                  [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
                                                                       sessionId:self.instance.sessionIdHost];
+                                 [self statusChanged];
                              }
                              else {
                                  NSLog(@"createEventTokenError");
@@ -194,10 +195,22 @@ typedef enum : NSUInteger {
 
 - (void)startBroadcastEvent {
     
-    self.eventView.getInLineBtn.hidden = YES;
+    [SVProgressHUD show];
     self.ibPlayer = [[IBAVPlayer alloc] initWithURL:self.openTokManager.broadcastUrl];
-    [self.eventView.layer addSublayer: self.ibPlayer.playerLayer];
-    [self.ibPlayer.playerLayer setFrame:_eventView.videoHolder.frame];
+    [self.ibPlayer playBroadcastEvent:^(AVPlayerStatus status, NSError *error) {
+        if (!error) {
+            if (status == AVPlayerStatusReadyToPlay) {
+                [self.ibPlayer.player play];
+                self.eventView.getInLineBtn.hidden = YES;
+                [self.eventView.layer addSublayer:self.ibPlayer.playerLayer];
+                [self.ibPlayer.playerLayer setFrame:_eventView.videoHolder.frame];
+                [SVProgressHUD dismiss];
+            }
+        }
+        else {
+            [SVProgressHUD showErrorWithStatus:@"Something went wrong, please try again later."];
+        }
+    }];
 }
 
 - (void)closeBroadcastEvent{
@@ -210,7 +223,7 @@ typedef enum : NSUInteger {
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
-    self.eventView.getInLineBtn.hidden = YES;
+    self.eventView.getInLineBtn.hidden = NO;
     
     if(self.user.userRole == IBUserRoleFan) {
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
@@ -307,7 +320,6 @@ typedef enum : NSUInteger {
 }
 
 -(void) publishTo:(OTSession *)session {
-    
     
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
@@ -922,7 +934,9 @@ didFailWithError:(OTError*)error
         else {
             self.eventView.eventImage.hidden = NO;
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            self.eventView.getInLineBtn.hidden = NO;
+            if(_openTokManager.session){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
         }
     }
     else if ([self.event.status isEqualToString:@"L"]) {
@@ -938,8 +952,9 @@ didFailWithError:(OTError*)error
         if (self.user.userRole == IBUserRoleFan &&
            (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
            (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            
-            self.eventView.getInLineBtn.hidden = NO;
+            if(_openTokManager.session){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
         }
         self.eventStage |= IBEventStageLive;
         [self goLive];

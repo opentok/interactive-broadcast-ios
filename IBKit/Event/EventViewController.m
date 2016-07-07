@@ -161,15 +161,14 @@ typedef enum : NSUInteger {
                          completion:^(IBInstance *instance, NSError *error) {
                              [SVProgressHUD dismiss];
                                  
-                             if (!error && instance.events.count == 1)
-                             {
+                             if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
                                  [self statusChanged];
-                                 [self checkPresence];
+                                 [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
+                                                                      sessionId:self.instance.sessionIdHost];
                              }
-                             else
-                             {
+                             else {
                                  NSLog(@"createEventTokenError");
                              }
                          }];
@@ -179,7 +178,6 @@ typedef enum : NSUInteger {
     
     [super viewDidLayoutSubviews];
     [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:) withObject:self.openTokManager.subscribers afterDelay:1.0];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -191,34 +189,21 @@ typedef enum : NSUInteger {
     [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
     [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
     
-    if(_openTokManager.startBroadcast){
-        [self removeObserver:self forKeyPath:@"ibPlayer.player.status"];
-    }
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.openTokManager closeSocket];
     [super viewWillDisappear:animated];
     
 }
-- (void)checkPresence{
-    [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdHost];
-}
 
-- (void)startBroadcastEvent{
+- (void)startBroadcastEvent {
     
     self.eventView.getInLineBtn.hidden = YES;
-    self.ibPlayer = [[IBAVPlayer alloc] init];
-    [self.ibPlayer createPlayerWithUrl:self.openTokManager.broadcastUrl];
-
-    [self.eventView.layer addSublayer: [self.ibPlayer getPlayerLayer]];
+    self.ibPlayer = [[IBAVPlayer alloc] initWithURL:self.openTokManager.broadcastUrl];
+    [self.eventView.layer addSublayer: self.ibPlayer.playerLayer];
     [self.ibPlayer.playerLayer setFrame:_eventView.videoHolder.frame];
-
-        
-    [self addObserver:self forKeyPath:@"ibPlayer.player.status" options:0 context:nil];
-
 }
 
-- (void) closeBroadcastEvent{
+- (void)closeBroadcastEvent{
     [self.ibPlayer.playerLayer removeFromSuperlayer];
     self.event.status = @"C";
 }
@@ -837,8 +822,6 @@ didFailWithError:(OTError*)error
         [DotSpinnerViewController show];
     }
     else if ([type isEqualToString:@"joinHostNow"]) {
-        
-        // TODO: remove spinner
         [DotSpinnerViewController dismiss];
         [self doPublish];
     }
@@ -894,43 +877,31 @@ didFailWithError:(OTError*)error
                         change:(NSDictionary *)change
                        context:(void *)context {
     
-    NSLog(keyPath);
-    
     if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
     }
-    if ([keyPath isEqual:@"ibPlayer.player.status"]) {
-        if(_ibPlayer.player.status == AVPlayerStatusReadyToPlay){
-            [_ibPlayer.player play];
-        }
-    }
+    
     if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
-            _eventView.getInLineBtn.hidden = YES;
-        });
+        [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
+        _eventView.getInLineBtn.hidden = YES;
     }
+    
     if ([keyPath isEqual:@"openTokManager.startBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
         if(_openTokManager.startBroadcast){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.event.status = @"L";
-                [_eventView hideNotification];
-                [self startBroadcastEvent];
-            });
-            
+            self.event.status = @"L";
+            [_eventView hideNotification];
+            [self startBroadcastEvent];
         }
     }
+    
     if ([keyPath isEqual:@"openTokManager.broadcastEnded"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
         if(_openTokManager.broadcastEnded){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSelector:@selector(closeBroadcastEvent) withObject:nil afterDelay:15.0];
-            });
+            [self performSelector:@selector(closeBroadcastEvent) withObject:nil afterDelay:15.0];
         }
     }
+    
     if ([keyPath isEqual:@"openTokManager.canJoinShow"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self startSession];
-        });
+        [self startSession];
     }
 }
 

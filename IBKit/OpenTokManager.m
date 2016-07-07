@@ -254,20 +254,18 @@
             if(!_canJoinShow){
                 [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
 
-                if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
+                if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]) {
                     if(data[0][@"broadcastData"][@"broadcastUrl"]){
                         self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
                         if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
                             self.startBroadcast = YES;
                         }
-                        else
-                        {
+                        else {
                             self.waitingOnBroadcast = YES;
                         }
                     }
                 }
-                else
-                {
+                else {
                     [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
                 }
                 
@@ -281,9 +279,11 @@
         };
     }];
 }
+
 - (void) emitJoinRoom:(NSString *)sessionId{
     [self.socket emit:@"joinRoom" args:@[sessionId]];
 }
+
 - (NSError *)sendNewUserSignalWithName:(NSString *)username {
     
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {

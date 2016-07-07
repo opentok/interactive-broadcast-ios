@@ -11,10 +11,9 @@
 
 @interface IBAVPlayer : NSObject
 
-@property (nonatomic) AVPlayer *player;
-@property (nonatomic) AVPlayerLayer *playerLayer;
+@property (readonly, nonatomic) AVPlayer *player;
+@property (readonly, nonatomic) AVPlayerLayer *playerLayer;
 
-- (void)createPlayerWithUrl:(NSString*)url;
-- (AVPlayerLayer*)getPlayerLayer;
+- (instancetype)initWithURL:(NSString *)url;
 
 @end

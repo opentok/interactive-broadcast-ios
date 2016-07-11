@@ -9,7 +9,7 @@
 #import "EventView.h"
 #import "UIColor+AppAdditions.h"
 
-#import <OTTextChatKit/OTTextChatKit.h>
+//#import <OTTextChatKit/OTTextChatKit.h>
 #import <DGActivityIndicatorView/DGActivityIndicatorView.h>
 
 @interface EventView()
@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIView *notificationBar;
 @property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
 
-@property (nonatomic) OTTextChatView *textChatView;
+//@property (nonatomic) OTTextChatView *textChatView;
 @end
 
 @implementation EventView
@@ -128,21 +128,21 @@
 
 #pragma chat Bar
 
-- (void)loadTextChat {
-    _textChatView = [OTTextChatView textChatView];
-    [_textChatView setMaximumTextMessageLength:1050];
-    [_textChatView setAlias:@"You"];
-    
-    
-    CGFloat newY = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
-    
-    CGRect r = self.bounds;
-    r.origin.y += newY;
-    r.size.height -= newY;
-    _textChatView.frame = r;
-    [self insertSubview:_textChatView belowSubview:self.chatBar];
-    self.chatBar.hidden = YES;
-}
+//- (void)loadTextChat {
+//    _textChatView = [OTTextChatView textChatView];
+//    [_textChatView setMaximumTextMessageLength:1050];
+//    [_textChatView setAlias:@"You"];
+//    
+//    
+//    CGFloat newY = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
+//    
+//    CGRect r = self.bounds;
+//    r.origin.y += newY;
+//    r.size.height -= newY;
+//    _textChatView.frame = r;
+//    [self insertSubview:_textChatView belowSubview:self.chatBar];
+//    self.chatBar.hidden = YES;
+//}
 
 - (void)userIsChatting{
     self.chatBtn.hidden = YES;

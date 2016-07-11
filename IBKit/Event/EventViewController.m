@@ -28,7 +28,7 @@
 #import "OpenTokNetworkTest.h"
 #import <OTKAnalytics/OTKAnalytics.h>
 #import <Reachability/Reachability.h>
-#import <OTTextChatKit/OTTextChatKit.h>
+//#import <OTTextChatKit/OTTextChatKit.h>
 
 #import "IBAVPlayer.h"
 
@@ -170,9 +170,9 @@ typedef enum : NSUInteger {
                                  dispatch_async(dispatch_get_main_queue(), ^(){
                                      [self statusChanged];
                                  });
-                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
-                                                        sessionId:self.instance.sessionIdProducer
-                                                            token:self.instance.tokenProducer];
+//                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
+//                                                        sessionId:self.instance.sessionIdProducer
+//                                                            token:self.instance.tokenProducer];
                              }
                              else {
                                  NSLog(@"createEventTokenError");
@@ -229,44 +229,44 @@ typedef enum : NSUInteger {
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
-    self.eventView.getInLineBtn.hidden = NO;
     
     if(self.user.userRole == IBUserRoleFan) {
+        self.eventView.getInLineBtn.hidden = NO;
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
 }
 
-//- (void)loadChat {
-//    OTSession *currentSession;
-//    
-//    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-//        currentSession = _openTokManager.producerSession;
-//    }
-//    else{
-//        currentSession = _openTokManager.session;
-//    }
-//    
-//    _textChat = [[OTKTextChatComponent alloc] init];
-//    _textChat.delegate = self;
-//    [_textChat setMaxLength:1050];
-//    [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
-//    
-//    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
-//    
-//    CGRect r = self.view.bounds;
-//    r.origin.y += _chatYPosition;
-//    r.size.height -= _chatYPosition;
-//    (_textChat.view).frame = r;
-//    [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
-//    
-//    if(self.user.userRole != IBUserRoleFan){
-//        self.eventView.chatBtn.hidden = NO;
-//    }
-//    
-//    self.textChat.view.hidden = YES;
-//    [_eventView hideChatBar];
-//    _unreadCount = 0;
-//}
+- (void)loadChat {
+    OTSession *currentSession;
+    
+    if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
+        currentSession = _openTokManager.producerSession;
+    }
+    else{
+        currentSession = _openTokManager.session;
+    }
+    
+    _textChat = [[OTKTextChatComponent alloc] init];
+    _textChat.delegate = self;
+    [_textChat setMaxLength:1050];
+    [_textChat setSenderId:currentSession.connection.connectionId alias:@"You"];
+    
+    _chatYPosition = self.eventView.statusBar.layer.frame.size.height + self.eventView.chatBar.layer.frame.size.height;
+    
+    CGRect r = self.view.bounds;
+    r.origin.y += _chatYPosition;
+    r.size.height -= _chatYPosition;
+    (_textChat.view).frame = r;
+    [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
+    
+    if(self.user.userRole != IBUserRoleFan){
+        self.eventView.chatBtn.hidden = NO;
+    }
+    
+    self.textChat.view.hidden = YES;
+    [_eventView hideChatBar];
+    _unreadCount = 0;
+}
 
 -(void)unpublishBackstage {
     [_openTokManager unpublishFrom:_openTokManager.producerSession withUserRole:[self.user userRoleName]];
@@ -578,7 +578,8 @@ typedef enum : NSUInteger {
             self.eventStage |= IBEventStageBackstage;
             [self.eventView fanIsInline];
             [self doPublish];
-            [self.eventView loadTextChat];
+//            [self.eventView loadTextChat];
+            [self loadChat];
             [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"success" completion:nil];
         }
     }
@@ -589,7 +590,8 @@ typedef enum : NSUInteger {
                 [self forceDisconnect];
             }
             else{
-                [self.eventView loadTextChat];
+//                [self.eventView loadTextChat];
+                [self loadChat];
                 self.eventStage |= IBEventStageOnstage;
                 [self doPublish];
             }
@@ -895,8 +897,10 @@ didFailWithError:(OTError*)error
     }
     
     if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
-        [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
-        _eventView.getInLineBtn.hidden = YES;
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
+            _eventView.getInLineBtn.hidden = YES;
+        });
     }
     
     if ([keyPath isEqual:@"openTokManager.startBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
@@ -919,7 +923,8 @@ didFailWithError:(OTError*)error
 }
 
 -(void)statusChanged {
-    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+
     self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.displayStatus];
     
     if ([self.event.status isEqualToString:@"N"]) {
@@ -937,11 +942,12 @@ didFailWithError:(OTError*)error
         
         if (self.user.userRole != IBUserRoleFan) {
             self.eventView.eventImage.hidden = YES;
+            self.eventView.getInLineBtn.hidden = YES;
         }
         else {
             self.eventView.eventImage.hidden = NO;
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            if(_openTokManager.session){
+            if(_openTokManager.canJoinShow){
                 self.eventView.getInLineBtn.hidden = NO;
             }
         }
@@ -980,6 +986,7 @@ didFailWithError:(OTError*)error
         }
         [_openTokManager cleanupPublisher];
     }
+    });
 }
 
 -(void)goLive {
@@ -1032,7 +1039,12 @@ didFailWithError:(OTError*)error
 - (BOOL)onMessageReadyToSend:(OTKChatMessage *)message {
     OTError *error = nil;
     OTSession *currentSession;
-    currentSession = _openTokManager.producerSession;
+
+    if(self.user.userRole != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
+        currentSession = _openTokManager.session;
+    }else{
+        currentSession = _openTokManager.producerSession;
+    }
     
     NSDictionary *user_message = @{@"message": message.text};
     NSDictionary *userInfo = @{@"message": user_message};

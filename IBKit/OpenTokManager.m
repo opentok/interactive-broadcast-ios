@@ -7,6 +7,7 @@
 //
 
 #import "OpenTokManager.h"
+#import "SIOSocket.h"
 #import "JSON.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <OTKAnalytics/OTKAnalytics.h>

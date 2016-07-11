@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OTDefaultAudioDevice.h"
 #import <OpenTok/OpenTok.h>
-#import "SIOSocket.h"
 
 @interface OpenTokManager : NSObject
 @property (nonatomic) OTSession* session;

@@ -19,21 +19,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>OTAcceleratorPackUtil.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>OTTextChatKit-OTTextChatKitBundle.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>OTTextChatKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-IBKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +47,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>117A2263C09A1FB9046F537373CA624B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>12AC35F9C569FA2A4543EFEDD802D2C9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>349EBEEFD58169450EFA14D845B15BA7</key>
+		<key>491875D7FB125078D9EE7ABB02028687</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,27 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6E283560A293A147742E0A9F4EE2A608</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>78E03309FA4B9CC1C2A38B7DA2E61F34</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>801A98128EBBC1977F07F10E73B26AF0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>928353533005A4198EBDA5B700D37B64</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>98C7D242933C4AF8F3C641E4707B5674</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,12 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C16F5C9523BC759472B1613644095CB1</key>
+		<key>C9FF50DE4DC6870C1421CC56160E9AC8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C1B22E1DD55FEDADB96F11E112EA103E</key>
+		<key>EF0EBAAC5C34E19990489F7BC347FDBF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -11,20 +11,37 @@
 @interface IBAVPlayer()
 @property (nonatomic) AVPlayer *player;
 @property (nonatomic) AVPlayerLayer *playerLayer;
+@property (nonatomic) IBAVPlayerStatusBlock block;
 @end
 
 @implementation IBAVPlayer
 
 - (instancetype)initWithURL:(NSString *)url {
     if (self = [super init]) {
-        _player = [AVPlayer playerWithURL:[NSURL URLWithString:url]];
-        _player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+    
+        AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:url]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
+        
+        _player = [AVPlayer playerWithPlayerItem:playerItem];
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         [_playerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-        
         [self addObserver:self forKeyPath:@"player.status" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];
     }
     return self;
+}
+
+- (void)playBroadcastEvent:(IBAVPlayerStatusBlock)block {
+
+    _block = block;
+    NSError *error;
+    if (self.player.status == AVPlayerStatusReadyToPlay) {
+        [self.player play];
+    }
+    else if (self.player.status == AVPlayerStatusFailed){
+        error = self.player.error;
+    }
+    
+    self.block(self.player.status, error);
 }
 
 - (void)dealloc {
@@ -32,12 +49,13 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    
-    if ([keyPath isEqual:@"player.status"]) {
-        if(self.player.status == AVPlayerStatusReadyToPlay){
-            [self.player play];
-        }
+    if ([keyPath isEqual:@"player.status"] && ![change[@"old"] isEqual:change[@"new"]]) {
+        [self playBroadcastEvent:_block];
     }
+}
+
+-(void)itemDidFinishPlaying:(NSNotification *)notification {
+    [self.playerLayer removeFromSuperlayer];
 }
 
 @end

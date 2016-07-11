@@ -69,7 +69,8 @@
     if([event.status isEqualToString:@"N"]){
         [statusLabel setText: [self getFormattedDate:event.startTime]];
         
-    }else{
+    }
+    else{
         [statusLabel setText: [self getEventStatus:event.status]];
     }
     

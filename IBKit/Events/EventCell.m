@@ -34,8 +34,12 @@
     
     if ([event.status isEqualToString:@"N"]) {
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
+        [self.eventButton setTitle:@"Not Started" forState: UIControlStateNormal];
+        self.eventButton.enabled = NO;
     }
     else{
+        [self.eventButton setTitle:@"Join Event" forState: UIControlStateNormal];
+        self.eventButton.enabled = YES;
         [self.statusLabel setText:event.displayStatus];
     }
     

@@ -18,6 +18,7 @@
 #import "IBInstance_Internal.h"
 #import "IBDateFormatter.h"
 #import "JSON.h"
+#import "OTDefaultAudioDevice.h"
 #import "UIColor+AppAdditions.h"
 #import "UIView+Category.h"
 #import "UIImageView+Category.h"
@@ -25,9 +26,11 @@
 
 #import "OpenTokManager.h"
 #import "OpenTokNetworkTest.h"
-#import "OpenTokLoggingWrapper.h"
-
+#import <OTKAnalytics/OTKAnalytics.h>
 #import <Reachability/Reachability.h>
+//#import <OTTextChatKit/OTTextChatKit.h>
+
+#import "IBAVPlayer.h"
 
 typedef enum : NSUInteger {
     IBEventStageNotLive = 0,
@@ -61,6 +64,7 @@ typedef enum : NSUInteger {
 // OpenTok
 @property (nonatomic) OpenTokManager *openTokManager;
 @property (nonatomic) OpenTokNetworkTest *networkTest;
+@property (nonatomic) IBAVPlayer *ibPlayer;
 
 @end
 
@@ -85,8 +89,29 @@ typedef enum : NSUInteger {
         _openTokManager = [[OpenTokManager alloc] init];
         
         // start necessary services
-        [self addObserver:self
+        __weak EventViewController *weakSelf = self;
+
+        [self addObserver:weakSelf
                forKeyPath:@"event.status"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.canJoinShow"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.waitingOnBroadcast"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.startBroadcast"
+                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                  context:NULL];
+        
+        [self addObserver:weakSelf
+               forKeyPath:@"openTokManager.broadcastEnded"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
@@ -129,7 +154,7 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)createEventToken{
+- (void)createEventToken {
     
     [SVProgressHUD show];
     [IBApi createEventTokenWithUser:self.user
@@ -140,39 +165,78 @@ typedef enum : NSUInteger {
                              if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
-                                 [self statusChanged];
-                                 [self startSession];
+                                 [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
+                                                                      sessionId:self.instance.sessionIdHost];
+                                 dispatch_async(dispatch_get_main_queue(), ^(){
+                                     [self statusChanged];
+                                 });
+//                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
+//                                                        sessionId:self.instance.sessionIdProducer
+//                                                            token:self.instance.tokenProducer];
+                             }
+                             else {
+                                 NSLog(@"createEventTokenError");
                              }
                          }];
 }
 
 - (void)viewDidLayoutSubviews {
+    
     [super viewDidLayoutSubviews];
     [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:) withObject:self.openTokManager.subscribers afterDelay:1.0];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeObserver:self forKeyPath:@"event.status"];
+    [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
+    [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
+    [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
+    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.openTokManager closeSocket];
 }
 
--(void)startSession{
+- (void)startBroadcastEvent {
+    
+    [SVProgressHUD show];
+    self.ibPlayer = [[IBAVPlayer alloc] initWithURL:self.openTokManager.broadcastUrl];
+    [self.ibPlayer playBroadcastEvent:^(AVPlayerStatus status, NSError *error) {
+        if (!error) {
+            if (status == AVPlayerStatusReadyToPlay) {
+                [self.ibPlayer.player play];
+                self.eventView.getInLineBtn.hidden = YES;
+                [self.eventView.layer addSublayer:self.ibPlayer.playerLayer];
+                [self.ibPlayer.playerLayer setFrame:_eventView.videoHolder.frame];
+                [SVProgressHUD dismiss];
+            }
+        }
+        else {
+            [SVProgressHUD showErrorWithStatus:@"Something went wrong, please try again later."];
+        }
+    }];
+}
+
+- (void)closeBroadcastEvent{
+    [self.ibPlayer.playerLayer removeFromSuperlayer];
+    self.event.status = @"C";
+}
+
+- (void)startSession{
     _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
     
-
-    self.eventView.getInLineBtn.hidden = YES;
-    [self statusChanged];
-    
     if(self.user.userRole == IBUserRoleFan) {
-        [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL sessionId:self.instance.sessionIdProducer];
+        self.eventView.getInLineBtn.hidden = NO;
+        [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
 }
 
-- (void)loadChat{
+- (void)loadChat {
     OTSession *currentSession;
     
     if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
@@ -266,7 +330,7 @@ typedef enum : NSUInteger {
     
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
-    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
+    [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
     
     if(!_openTokManager.publisher){
         _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self name:self.userName];
@@ -280,10 +344,10 @@ typedef enum : NSUInteger {
         [_openTokManager sendWarningSignal];
         
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
+        [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
     }
     else{
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
     }
 }
 
@@ -324,7 +388,7 @@ typedef enum : NSUInteger {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
         NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
         [_openTokManager cleanupSubscriber:connectingTo];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
@@ -341,9 +405,7 @@ typedef enum : NSUInteger {
     [_openTokManager cleanupPublisher];
 }
 
-//Subscribers
-- (void)doSubscribe:(OTStream*)stream
-{
+- (void)doSubscribe:(OTStream*)stream {
     
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     
@@ -353,10 +415,10 @@ typedef enum : NSUInteger {
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
+        [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
 
         if([_openTokManager subscribeToOnstageWithType:connectingTo]) {
-            [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
+            [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
         }
         subs = nil;
@@ -391,7 +453,7 @@ typedef enum : NSUInteger {
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
         NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
         
         assert(_subscriber == subscriber);
         
@@ -413,7 +475,7 @@ typedef enum : NSUInteger {
 {
     NSLog(@"subscriber %@ didFailWithError %@",subscriber.stream.streamId,error);
     
-    [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [_openTokManager.errors setObject:error forKey:@"subscriberError"];
     [_openTokManager sendWarningSignal];
 }
@@ -469,8 +531,7 @@ typedef enum : NSUInteger {
     }
 }
 
--(void)subscriber:(OTSubscriberKit*)subscriber
-videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
+-(void)subscriber:(OTSubscriberKit*)subscriber videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
     
     if (stats.timestamp - _networkTest.prevVideoTimestamp >= 3000) {
         subscriber.delegate = nil;
@@ -490,16 +551,20 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
 # pragma mark - OTSession delegate callbacks
 - (void)sessionDidConnect:(OTSession*)session {
     
+    [OTKLogger setSessionId:session.sessionId
+               connectionId:session.connection.connectionId
+                  partnerId:@([self.instance.apiKey integerValue])];
+    
     if (session == self.openTokManager.session) {
         
         NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"], self.event.identifier];
-        [OpenTokLoggingWrapper loggerWithApiKey:self.instance.apiKey
-                                      sessionId:session.sessionId
-                                   connectionId:session.connection.connectionId
-                                       sourceId:sourceId];
+        [OTKLogger analyticsWithClientVersion:@"mlb-v1.1.0"
+                                       source:sourceId
+                                  componentId:@"IBKit.framework"
+                                         guid:[[NSUUID UUID] UUIDString]];
         
         NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage", [self.user userRoleName]];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"success"];
+        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
     }
     
     if (self.user.userRole == IBUserRoleFan) {
@@ -513,8 +578,9 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
             self.eventStage |= IBEventStageBackstage;
             [self.eventView fanIsInline];
             [self doPublish];
+//            [self.eventView loadTextChat];
             [self loadChat];
-            [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"success"];
+            [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"success" completion:nil];
         }
     }
     else {
@@ -524,6 +590,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
                 [self forceDisconnect];
             }
             else{
+//                [self.eventView loadTextChat];
                 [self loadChat];
                 self.eventStage |= IBEventStageOnstage;
                 [self doPublish];
@@ -543,6 +610,8 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
         [_openTokManager cleanupPublisher];
         [self.eventView hideNotification];
         [self.eventView fanLeaveLine];
+        _openTokManager.producerSession = nil;
+
     }
     else {
         self.eventView.getInLineBtn.hidden = YES;
@@ -632,7 +701,7 @@ videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats*)stats {
 - (void) session:(OTSession*)session
 didFailWithError:(OTError*)error
 {
-    [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+    [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     NSLog(@"didFailWithError: (%@)", error);
 }
 
@@ -652,7 +721,6 @@ didFailWithError:(OTError*)error
         if ([self.event.status isEqualToString:@"N"]){
             self.event.status = @"P";
             _shouldResendProducerSignal = YES;
-            [self statusChanged];
         }
     }
     else if([type isEqualToString:@"openChat"]){
@@ -754,19 +822,19 @@ didFailWithError:(OTError*)error
         self.event.status = @"L";
     }
     else if([type isEqualToString:@"joinHost"]){
-        
-        [self unpublishBackstage];
-        self.eventStage |= IBEventStageOnstage;
-        [self hideChatBox];
-        [self.eventView fanIsOnStage];
-        if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
-            [self goLive];
+        if(self.eventStage != IBEventStageOnstage){
+            self.eventStage |= IBEventStageOnstage;
+            [self unpublishBackstage];
+            [self hideChatBox];
+            [self.eventView fanIsOnStage];
+            if(![self.event.status isEqualToString:@"L"] && (self.eventStage & IBEventStageLive) != IBEventStageLive){
+                [self goLive];
+            }
+            [DotSpinnerViewController show];
         }
-        [DotSpinnerViewController show];
+        
     }
     else if ([type isEqualToString:@"joinHostNow"]) {
-        
-        // TODO: remove spinner
         [DotSpinnerViewController dismiss];
         [self doPublish];
     }
@@ -779,6 +847,7 @@ didFailWithError:(OTError*)error
         self.eventView.chatBtn.hidden = YES;
         self.eventView.closeEvenBtn.hidden = NO;
         self.eventView.getInLineBtn.hidden = NO;
+        
         [self hideChatBox];
         
         self.eventStage &= ~ IBEventStageOnstage;
@@ -826,10 +895,36 @@ didFailWithError:(OTError*)error
     if ([keyPath isEqual:@"event.status"] && ![change[@"old"] isEqualToString:change[@"new"]]) {
         [self statusChanged];
     }
+    
+    if ([keyPath isEqual:@"openTokManager.waitingOnBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [_eventView showNotification:@"Waiting on Show To Begin" useColor:[UIColor SLBlueColor]];
+            _eventView.getInLineBtn.hidden = YES;
+        });
+    }
+    
+    if ([keyPath isEqual:@"openTokManager.startBroadcast"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        if(_openTokManager.startBroadcast){
+            self.event.status = @"L";
+            [_eventView hideNotification];
+            [self startBroadcastEvent];
+        }
+    }
+    
+    if ([keyPath isEqual:@"openTokManager.broadcastEnded"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        if(_openTokManager.broadcastEnded){
+            [self performSelector:@selector(closeBroadcastEvent) withObject:nil afterDelay:15.0];
+        }
+    }
+    
+    if ([keyPath isEqual:@"openTokManager.canJoinShow"] && ![change[@"old"] isEqualToValue:change[@"new"]]) {
+        [self startSession];
+    }
 }
 
 -(void)statusChanged {
-    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+
     self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.displayStatus];
     
     if ([self.event.status isEqualToString:@"N"]) {
@@ -847,11 +942,14 @@ didFailWithError:(OTError*)error
         
         if (self.user.userRole != IBUserRoleFan) {
             self.eventView.eventImage.hidden = YES;
+            self.eventView.getInLineBtn.hidden = YES;
         }
         else {
             self.eventView.eventImage.hidden = NO;
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            self.eventView.getInLineBtn.hidden = NO;
+            if(_openTokManager.canJoinShow){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
         }
     }
     else if ([self.event.status isEqualToString:@"L"]) {
@@ -865,10 +963,11 @@ didFailWithError:(OTError*)error
         }
         
         if (self.user.userRole == IBUserRoleFan &&
-           (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
-           (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            
-            self.eventView.getInLineBtn.hidden = NO;
+            (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
+            (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
+            if(_openTokManager.session){
+                self.eventView.getInLineBtn.hidden = NO;
+            }
         }
         self.eventStage |= IBEventStageLive;
         [self goLive];
@@ -887,6 +986,7 @@ didFailWithError:(OTError*)error
         }
         [_openTokManager cleanupPublisher];
     }
+    });
 }
 
 -(void)goLive {
@@ -939,7 +1039,12 @@ didFailWithError:(OTError*)error
 - (BOOL)onMessageReadyToSend:(OTKChatMessage *)message {
     OTError *error = nil;
     OTSession *currentSession;
-    currentSession = _openTokManager.producerSession;
+
+    if(self.user.userRole != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
+        currentSession = _openTokManager.session;
+    }else{
+        currentSession = _openTokManager.producerSession;
+    }
     
     NSDictionary *user_message = @{@"message": message.text};
     NSDictionary *userInfo = @{@"message": user_message};
@@ -1004,12 +1109,8 @@ didFailWithError:(OTError*)error
 
 - (IBAction)goBack:(id)sender {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        
-        [_openTokManager disconnectBackstageSession];
-        [_openTokManager disconnectOnstageSession];
-    });
-    
+    [_openTokManager disconnectBackstageSession];
+    [_openTokManager disconnectOnstageSession];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }

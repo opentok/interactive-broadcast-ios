@@ -16,7 +16,8 @@ PODS:
     - AFNetworking/NSURLSession
   - DGActivityIndicatorView (2.0)
   - Kiwi (2.4.0)
-  - OpenTok (2.8.1)
+  - OpenTok (2.8.3)
+  - OTKAnalytics (1.0.2)
   - Reachability (3.2)
   - SIOSocket (0.2.0)
   - SVProgressHUD (2.0.3)
@@ -25,7 +26,8 @@ DEPENDENCIES:
   - AFNetworking
   - DGActivityIndicatorView (~> 2.0)
   - Kiwi
-  - OpenTok (~> 2.8.1)
+  - OpenTok (~> 2.8.3)
+  - OTKAnalytics
   - Reachability
   - SIOSocket (~> 0.2.0)
   - SVProgressHUD
@@ -34,11 +36,12 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  OpenTok: f73eef8701e460543de2577dbb051d84de002fa2
+  OpenTok: ad14a09847ba5d6485820f5946484b749de944d7
+  OTKAnalytics: 222f6f73a846e1c0dd2b4d65ca0da09fd16ffcbb
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
-PODFILE CHECKSUM: ddae4efe71c7b9386be66af9a5245402cfbfcf68
+PODFILE CHECKSUM: 39489af03cd18d2bda826a182bd5125cb6278c26
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1

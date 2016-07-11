@@ -2,7 +2,7 @@ language: objective-c
 osx_image: xcode7.3
 
 script:
-  - xcodebuild clean test -workspace "IBDemo.xcworkspace" -scheme "IBKitTests" -sdk "iphonesimulator9.3" -destination "OS=9.0,name=iPhone 6 Plus" -configuration Debug ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+  - xcodebuild clean test -workspace "IBDemo.xcworkspace" -scheme "IBKitTests" -sdk "iphonesimulator9.3" -destination "OS=9.0,name=iPhone 6 Plus" -configuration Debug ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c && exit ${PIPESTATUS[0]}
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t eaccc325-4da4-4e5b-9e54-e56302f36dc1

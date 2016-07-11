@@ -84,17 +84,22 @@
 - (void)connectToSignalServer {
     
     __weak EventsViewController *weakSelf = self;
+    
     [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket) {
         weakSelf.signalingSocket = socket;
+    
+        [weakSelf.signalingSocket on:@"changeStatus" callback: ^(SIOParameterArray *args){
+                                NSLog(@"event changed");
+                                NSMutableDictionary *eventChanged = [args firstObject];
+                                [self updateEventStatus:eventChanged];
+                            }];
+        
+        weakSelf.signalingSocket.onDisconnect = ^() {
+            NSLog(@"DISCONNECTED");
+        };
         weakSelf.signalingSocket.onConnect = ^() {
             NSLog(@"Connected to signaling server");
         };
-        
-        [weakSelf.signalingSocket on:@"change-event-status"
-                          callback: ^(SIOParameterArray *args) {
-                              NSDictionary *eventChanged = [args firstObject];
-                              [self updateEventStatus:eventChanged];
-                          }];
     }];
 }
 
@@ -103,15 +108,14 @@
     self.eventsView.eventsViewFlowLayout.itemSize = CGSizeMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 30) /3, 200);
 }
 
--(void)updateEventStatus:(NSDictionary *)event{
-    NSString *criteria = [NSString stringWithFormat:@"id == %@", event[@"id"]];
+-(void)updateEventStatus:(NSMutableDictionary *)event{
+    NSString *criteria = [NSString stringWithFormat:@"identifier == %@", event[@"id"]];
     NSArray *changedEvents = [self.openedEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:criteria]];
     if ([changedEvents count] != 0) {
         IBEvent *chagnedEvent = changedEvents[0];
         [chagnedEvent updateEventWithJson:event];
+        [self.eventsView.eventsCollectionView reloadData];
     }
-
-    [self.eventsView.eventsCollectionView reloadData];
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

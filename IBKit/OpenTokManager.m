@@ -7,14 +7,19 @@
 //
 
 #import "OpenTokManager.h"
-#import "JSON.h"
 #import "SIOSocket.h"
+#import "JSON.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "OpenTokLoggingWrapper.h"
-
+#import <OTKAnalytics/OTKAnalytics.h>
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
+
+@property (nonatomic) BOOL canJoinShow;
+@property (nonatomic) BOOL waitingOnBroadcast;
+@property (nonatomic) BOOL startBroadcast;
+@property (nonatomic) BOOL broadcastEnded;
+@property (nonatomic) NSString* broadcastUrl;
 @end
 
 @implementation OpenTokManager
@@ -36,6 +41,10 @@
     }
 }
 
+- (void)closeSocket{
+    [self.socket close];
+}
+
 - (void)muteOnstageSession:(BOOL)mute {
     for(NSString *subscriber in self.subscribers){
         OTSubscriber *sub = self.subscribers[subscriber];
@@ -53,9 +62,9 @@
     [self.producerSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
-    [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"success"];
+    [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"success" completion:nil];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"fan_unpublishes_backstage" variation:@"fail"];
+        [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -65,7 +74,7 @@
     [self.session unsubscribe: self.privateProducerSubscriber error:&error];
     [self muteOnstageSession:NO];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_private_call" variation:@"fail"];
+        [OTKLogger logEventAction:@"unsubscribe_private_call" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -74,9 +83,10 @@
     OTError *error = nil;
     [self.producerSession unsubscribe: self.producerSubscriber error:&error];
     self.producerSubscriber = nil;
+//    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
-        [OpenTokLoggingWrapper logEventAction:@"unsubscribe_onstage_call" variation:@"fail"];
+        [OTKLogger logEventAction:@"unsubscribe_onstage_call" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -125,11 +135,11 @@
 -(NSError*)connectBackstageSessionWithToken:(NSString*)token{
     OTError *error = nil;
     
-    [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"attempt"];
+    [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"attempt" completion:nil];
     [_producerSession connectWithToken:token error:&error];
     
     if (error) {
-        [OpenTokLoggingWrapper logEventAction:@"fan_connects_backstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"failed" completion:nil];
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }
     return error;
@@ -142,7 +152,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_backstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_disconnects_backstage" variation:@"failed" completion:nil];
     }else{
         _producerSession = nil;
     }
@@ -156,7 +166,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:@"fan_disconnects_onstage" variation:@"failed"];
+        [OTKLogger logEventAction:@"fan_disconnects_onstage" variation:@"failed" completion:nil];
     }else{
         _session = nil;
     }
@@ -173,11 +183,11 @@
     NSString *session_name = self.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", userRole, session_name];
     
-    [OpenTokLoggingWrapper logEventAction:logtype variation:@"attempt"];
+    [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
     
     if (error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OpenTokLoggingWrapper logEventAction:logtype variation:@"fail"];
+        [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
     }
 }
 
@@ -228,15 +238,57 @@
                         sessionId:(NSString *)sessionId {
     
     __weak OpenTokManager *weakSelf = self;
+    
     [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
+        
         weakSelf.socket = socket;
+        
+        [weakSelf.socket on:@"eventGoLive" callback:^(id data) {
+            if(self.broadcastUrl && !self.startBroadcast){
+                self.startBroadcast = YES;
+            }
+        }];
+        
+        [weakSelf.socket on:@"eventEnded" callback:^(id data) {
+            self.broadcastEnded = YES;
+        }];
+        
+        [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
+            self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
+
+            if(!_canJoinShow){
+                if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
+                    [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
+
+                    if(data[0][@"broadcastData"][@"broadcastUrl"]){
+                        self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
+                        if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
+                            self.startBroadcast = YES;
+                        }
+                        else
+                        {
+                            self.waitingOnBroadcast = YES;
+                        }
+                    }
+                }
+                else
+                {
+                    [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
+                }
+                
+            }
+        }];
+        weakSelf.socket.onDisconnect = ^(){
+            NSLog(@"SOCKET DISCONNECTED");
+        };
         weakSelf.socket.onConnect = ^(){
-            
-            [weakSelf.socket emit:@"joinRoom" args:@[sessionId]];
+            [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
         };
     }];
 }
-
+- (void) emitJoinRoom:(NSString *)sessionId{
+    [self.socket emit:@"joinRoom" args:@[sessionId]];
+}
 - (NSError *)sendNewUserSignalWithName:(NSString *)username {
     
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {

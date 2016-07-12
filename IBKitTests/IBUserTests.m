@@ -17,8 +17,8 @@ context(@"IBUserInitializationTests", ^(){
         
         it(@"should return a valid IBUser with userRole and name", ^(){
             
-            IBUser *user = [IBUser userWithIBUserRole:IBUserRoleCustom name:@"custom"];
-            [[user.name should] equal:@"custom"];
+            IBUser *user = [IBUser userWithIBUserRole:IBUserRoleFan name:@"fan"];
+            [[user.name should] equal:@"fan"];
             [[user shouldNot] beNil];
         });
         
@@ -37,12 +37,6 @@ context(@"IBUserInitializationTests", ^(){
     
     
     describe(@"An instance of IBUser", ^(){
-        
-        it(@"should return \"fan\" for Custom role ", ^(){
-            
-            IBUser *user = [IBUser userWithIBUserRole:IBUserRoleCustom name:@"custom"];
-            [[[user userRoleName] should] equal:@"fan"];
-        });
         
         it(@"should return \"fan\" for Fan role ", ^(){
             

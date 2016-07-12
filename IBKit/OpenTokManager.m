@@ -280,6 +280,9 @@
         }];
         weakSelf.socket.onDisconnect = ^(){
             NSLog(@"SOCKET DISCONNECTED");
+            if(self.startBroadcast){
+              [SVProgressHUD showErrorWithStatus:@"Internet connection is down. Attempting to reconnect"];
+            }
         };
         weakSelf.socket.onConnect = ^(){
             [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];

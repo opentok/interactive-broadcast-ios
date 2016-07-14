@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "OTKAnalytics"
-  s.version          = "1.0.2"
+  s.version          = "1.0.0"
   s.summary          = "Vertical Solutions Logging."
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Eg: Get the number of the sent messages, using the Text-chat component on Androi
   s.homepage         = "https://tokbox.com/"
   s.license          = {:type => "Commercial", :text => "https://tokbox.com/support/tos"}
   s.author           = { "Lucas Huang" => "lucas@tokbox.com" }
-  s.source           = { :http => "https://www.dropbox.com/s/mjq7upf0wbrc2qq/SolutionsLogging.zip?dl=0"}
+  s.source           = { :http => "https://www.dropbox.com/s/ubyh6kfmp4zjg89/SolutionsLogging.zip?dl=0"}
   s.vendored_frameworks = "OTKAnalytics.framework"
   s.social_media_url = 'https://twitter.com/tokbox/'
 

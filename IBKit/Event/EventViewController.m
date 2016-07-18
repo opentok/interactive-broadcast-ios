@@ -328,8 +328,8 @@ typedef enum : NSUInteger {
 -(void) publishTo:(OTSession *)session {
     
     
-    NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@_publishes_%@", [self.user userRoleName], session_name];
+    NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
+    NSString *logtype = [NSString stringWithFormat:@"%@Publishes%@", [self.user userRoleName], session_name];
     [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
     
     if(!_openTokManager.publisher){
@@ -387,7 +387,7 @@ typedef enum : NSUInteger {
     {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
-        NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_onstage",me];
+        NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",me];
         [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
         [_openTokManager cleanupSubscriber:connectingTo];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
@@ -414,7 +414,7 @@ typedef enum : NSUInteger {
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
-        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
+        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [self.user userRoleName],[connectingTo capitalizedString]];
         [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
 
         if([_openTokManager subscribeToOnstageWithType:connectingTo]) {
@@ -452,7 +452,7 @@ typedef enum : NSUInteger {
         NSString *connectingTo = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
-        NSString *logtype = [NSString stringWithFormat:@"%@_subscribes_%@", [self.user userRoleName],connectingTo];
+        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [self.user userRoleName],[connectingTo capitalizedString]];
         [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
         
         assert(_subscriber == subscriber);
@@ -563,7 +563,7 @@ typedef enum : NSUInteger {
                                   componentId:@"IBKit.framework"
                                          guid:[[NSUUID UUID] UUIDString]];
         
-        NSString *logtype = [NSString stringWithFormat:@"%@_connects_onstage", [self.user userRoleName]];
+        NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [self.user userRoleName]];
         [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
     }
     
@@ -580,7 +580,7 @@ typedef enum : NSUInteger {
             [self doPublish];
 //            [self.eventView loadTextChat];
             [self loadChat];
-            [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"success" completion:nil];
+            [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"success" completion:nil];
         }
     }
     else {

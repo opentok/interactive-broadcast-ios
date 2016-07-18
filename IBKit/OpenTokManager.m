@@ -62,9 +62,9 @@
     [self.producerSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
-    [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"success" completion:nil];
+    [OTKLogger logEventAction:@"fanUnpublishesBackstage" variation:@"success" completion:nil];
     if(error){
-        [OTKLogger logEventAction:@"fan_unpublishes_backstage" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:@"fanUnpublishesBackstage" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -74,7 +74,7 @@
     [self.session unsubscribe: self.privateProducerSubscriber error:&error];
     [self muteOnstageSession:NO];
     if(error){
-        [OTKLogger logEventAction:@"unsubscribe_private_call" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:@"unsubscribePrivateCall" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -86,7 +86,7 @@
 //    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
-        [OTKLogger logEventAction:@"unsubscribe_onstage_call" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:@"unsubscribeOnstageCall" variation:@"fail" completion:nil];
     }
     return error;
 }
@@ -135,11 +135,11 @@
 -(NSError*)connectBackstageSessionWithToken:(NSString*)token{
     OTError *error = nil;
     
-    [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"attempt" completion:nil];
+    [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"attempt" completion:nil];
     [_producerSession connectWithToken:token error:&error];
     
     if (error) {
-        [OTKLogger logEventAction:@"fan_connects_backstage" variation:@"failed" completion:nil];
+        [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"failed" completion:nil];
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }
     return error;
@@ -152,7 +152,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:@"fan_disconnects_backstage" variation:@"failed" completion:nil];
+        [OTKLogger logEventAction:@"fanDisconnectsBackstage" variation:@"failed" completion:nil];
     }else{
         _producerSession = nil;
     }
@@ -166,7 +166,7 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:@"fan_disconnects_onstage" variation:@"failed" completion:nil];
+        [OTKLogger logEventAction:@"fanDisconnectsBackstage" variation:@"failed" completion:nil];
     }else{
         _session = nil;
     }
@@ -180,8 +180,8 @@
     OTError *error = nil;
     [session unpublish:self.publisher error:&error];
     
-    NSString *session_name = self.session.sessionId == session.sessionId ? @"onstage" : @"backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@_unpublishes_%@", userRole, session_name];
+    NSString *session_name = self.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
+    NSString *logtype = [NSString stringWithFormat:@"%@Unpublishes%@", userRole, session_name];
     
     [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
     

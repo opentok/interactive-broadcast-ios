@@ -12,7 +12,7 @@
 
 static NSString * const instanceIdentifier = @"AAAA1";
 static NSString * const backendBaseUrl = @"https://tokbox-ib-staging-tesla.herokuapp.com";
-static NSString * const demoBackend = @"https://chatshow-tesla-prod.herokuapp.com";
+static NSString * const demoBackend = @"https://tokbox-ib-demos-tesla.herokuapp.com";
 static NSString * const MLBBackend = @"https://spotlight-tesla-mlb.herokuapp.com";
 static NSString * const mlbpass = @"spotlight-mlb-210216";
 

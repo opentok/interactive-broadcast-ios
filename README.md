@@ -35,7 +35,7 @@ View the [Complete code example](#complete-code-example).
 
 ### Create an Xcode project
 
-In Xcode, configure a new iOS **Single View Application** project. 
+In Xcode, configure a new iOS **Single View Application** project.
 
 1. Specify your **Product Name** and the storage location for your project.
 2. From the **Project Navigator** view, click **Build Settings** and configure the following:
@@ -76,8 +76,8 @@ Now you are ready to add the Interactive Broadcast Solution user detail to your 
                                     @"type":@"fan",
                                     @"name":@""
                                 }];
-    self.IBController = [[MainIBViewController alloc] initWithData:instance_id 
-                                                                          backend_base_url:backend_url 
+    self.IBController = [[MainIBViewController alloc] initWithData:instance_id
+                                                                          backend_base_url:backend_url
                                                                                       user:user];
     [self presentViewController:self.IBController animated:NO completion:nil];
 }
@@ -86,15 +86,15 @@ Now you are ready to add the Interactive Broadcast Solution user detail to your 
 
 4. In the method you just added, the `user` dictionary stores the User Type and Username. It is used to initialize the `IBController` object, which is also initialized with the Instance ID and Backend Base Url:
 
-   - The Instance ID is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Instance ID for multiple events. 
+   - The Instance ID is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Instance ID for multiple events.
    - The Backend Base URL is the endpoint to the web service hosting the events, and should be provided by TokBox.
-   - Specify one of the following values for the User Type: `fan`, `celebrity`, or `host`. There should only be one celebrity and host per event. 
+   - Specify one of the following values for the User Type: `fan`, `celebrity`, or `host`. There should only be one celebrity and host per event.
    - The Username will be displayed in chats with the producer and when Fans get in line. This field is optional.
 
 
 ### Handle events
 
-The Interactive Broadcast Solution Kit provides you with these fully functional controllers that communicate with the backend web service and handle events: **EventViewController** and **EventsViewController**. 
+The Interactive Broadcast Solution Kit provides you with these fully functional controllers that communicate with the backend web service and handle events: **EventViewController** and **EventsViewController**.
 
 If you would like to create your own custom event handling implementation, create your event handling class and perform the following steps:
 
@@ -116,7 +116,7 @@ If you would like to create your own custom event handling implementation, creat
 3. Pass the event information to the event view controller:
 
    ```objc
-    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:instanceData[@"events"][0] 
+    EventViewController *detailEvent = [[EventViewController alloc] initEventWithData:instanceData[@"events"][0]
                                                                        connectionData:instanceData
                                                                                  user:user
                                                                              isSingle:YES];
@@ -127,16 +127,10 @@ If you would like to create your own custom event handling implementation, creat
 
 ## Complete code example
 
-You have completed the task of setting up a fully working example that uses the OpenTok Interactive Broadcast Solution! You can add processing for events and errors, and begin using your program. 
+You have completed the task of setting up a fully working example that uses the OpenTok Interactive Broadcast Solution! You can add processing for events and errors, and begin using your program.
 
 
+## Additional information
 
-
-
-
-
-
-
-
-
-
+For information on how to set up archiving on an Interactive Broadcast (IB) instance, click <a href="./ARCHIVING.md">here</a>.
+ 

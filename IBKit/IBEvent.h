@@ -10,6 +10,7 @@
 
 @interface IBEvent : NSObject
 @property (readonly, nonatomic) NSUInteger adminId;
+@property (readonly, nonatomic) NSString *adminName;
 @property (readonly, nonatomic) NSString *celebrityURL;
 @property (readonly, nonatomic) NSString *fanURL;
 @property (readonly, nonatomic) NSString *hostURL;

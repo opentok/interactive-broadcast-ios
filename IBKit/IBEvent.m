@@ -52,6 +52,7 @@
         
         if (json[@"admins_id"]) {
             _adminId = [json[@"admins_id"] integerValue];
+            _adminName = json[@"admins_name"];
         }
         _celebrityURL = json[@"celebrity_url"];
         _fanURL = json[@"fan_url"];

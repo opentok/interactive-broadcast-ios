@@ -26,6 +26,7 @@
 
 #import "OpenTokManager.h"
 #import "OpenTokNetworkTest.h"
+#import "IBConstants.h"
 #import <OTKAnalytics/OTKAnalytics.h>
 #import <Reachability/Reachability.h>
 //#import <OTTextChatKit/OTTextChatKit.h>
@@ -329,8 +330,8 @@ typedef enum : NSUInteger {
     
     
     NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@Publishes%@", [self.user userRoleName], session_name];
-    [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
+    NSString *logtype = [NSString stringWithFormat:@"%@Publishes%@", [[self.user userRoleName] capitalizedString], session_name];
+    [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
     if(!_openTokManager.publisher){
         _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self name:self.userName];
@@ -344,10 +345,10 @@ typedef enum : NSUInteger {
         [_openTokManager sendWarningSignal];
         
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
     }
     else{
-        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
+        [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
     }
 }
 
@@ -387,8 +388,8 @@ typedef enum : NSUInteger {
     {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
         
-        NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",me];
-        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
+        NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",[me capitalizedString]];
+        [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         [_openTokManager cleanupSubscriber:connectingTo];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
@@ -414,11 +415,11 @@ typedef enum : NSUInteger {
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         subs.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
         _openTokManager.subscribers[connectingTo] = subs;
-        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [self.user userRoleName],[connectingTo capitalizedString]];
-        [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
+        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [[self.user userRoleName] capitalizedString],[connectingTo capitalizedString]];
+        [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
 
         if([_openTokManager subscribeToOnstageWithType:connectingTo]) {
-            [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
+            [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
         }
         subs = nil;
@@ -432,9 +433,15 @@ typedef enum : NSUInteger {
         
     }
     if(stream.session.connection.connectionId == _openTokManager.session.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
+        NSString *logtype = [NSString stringWithFormat:@"%@SubscribesProducer", [[self.user userRoleName] capitalizedString]];
+        [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
         _openTokManager.privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
         if ([_openTokManager onstageSubscribeToProducer]) {
+            [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
+        }
+        else {
+            [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         }
     }
 }
@@ -452,8 +459,8 @@ typedef enum : NSUInteger {
         NSString *connectingTo = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
         OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
         
-        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [self.user userRoleName],[connectingTo capitalizedString]];
-        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
+        NSString *logtype = [NSString stringWithFormat:@"%@Subscribes%@", [[self.user userRoleName] capitalizedString],[connectingTo capitalizedString]];
+        [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         
         assert(_subscriber == subscriber);
         
@@ -557,14 +564,14 @@ typedef enum : NSUInteger {
     
     if (session == self.openTokManager.session) {
         
-        NSString* sourceId = [NSString stringWithFormat:@"%@-event-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"], self.event.identifier];
-        [OTKLogger analyticsWithClientVersion:@"mlb-v1.1.0"
+        NSString* sourceId = [NSString stringWithFormat:@"%@-%@-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],self.event.adminName,self.event.identifier];
+        [OTKLogger analyticsWithClientVersion:KLogClientVersion
                                        source:sourceId
-                                  componentId:@"IBKit.framework"
+                                  componentId:kLogComponentIdentifier
                                          guid:[[NSUUID UUID] UUIDString]];
         
-        NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [self.user userRoleName]];
-        [OTKLogger logEventAction:logtype variation:@"success" completion:nil];
+        NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [[self.user userRoleName] capitalizedString]];
+        [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
     }
     
     if (self.user.userRole == IBUserRoleFan) {
@@ -580,7 +587,7 @@ typedef enum : NSUInteger {
             [self doPublish];
 //            [self.eventView loadTextChat];
             [self loadChat];
-            [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"success" completion:nil];
+            [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationSuccess completion:nil];
         }
     }
     else {
@@ -1042,7 +1049,8 @@ didFailWithError:(OTError*)error
 
     if(self.user.userRole != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
         currentSession = _openTokManager.session;
-    }else{
+    }
+    else {
         currentSession = _openTokManager.producerSession;
     }
     

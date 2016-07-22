@@ -11,6 +11,7 @@
 #import "JSON.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <OTKAnalytics/OTKAnalytics.h>
+#import "IBConstants.h"
 
 @interface OpenTokManager()
 @property (nonatomic) SIOSocket *socket;
@@ -62,9 +63,9 @@
     [self.producerSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
-    [OTKLogger logEventAction:@"fanUnpublishesBackstage" variation:@"success" completion:nil];
+    [OTKLogger logEventAction:KLogVariationFanUnpublishesBackstage variation:KLogVariationSuccess completion:nil];
     if(error){
-        [OTKLogger logEventAction:@"fanUnpublishesBackstage" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:KLogVariationFanUnpublishesBackstage variation:KLogVariationFailure completion:nil];
     }
     return error;
 }
@@ -74,7 +75,7 @@
     [self.session unsubscribe: self.privateProducerSubscriber error:&error];
     [self muteOnstageSession:NO];
     if(error){
-        [OTKLogger logEventAction:@"unsubscribePrivateCall" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:KLogVariationUnsubscribePrivateCall variation:KLogVariationFailure completion:nil];
     }
     return error;
 }
@@ -86,7 +87,7 @@
 //    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
-        [OTKLogger logEventAction:@"unsubscribeOnstageCall" variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:KLogVariationUnsubscribeOnstageCall variation:KLogVariationFailure completion:nil];
     }
     return error;
 }
@@ -104,8 +105,13 @@
 - (NSError*) backstageSubscribeToProducer{
     OTError *error = nil;
     [self.producerSession subscribe: self.producerSubscriber error:&error];
+    [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationAttempt completion:nil];
     if(error){
         [self.errors setObject:error forKey:@"producer_backstage"];
+        [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationFailure completion:nil];
+    }
+    else{
+        [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationSuccess completion:nil];
     }
     return error;
 
@@ -119,7 +125,6 @@
     return error;
 }
 - (void)cleanupSubscriber:(NSString*)type {
-    
     OTSubscriber *_subscriber = _subscribers[type];
     if(_subscriber){
         NSLog(@"SUBSCRIBER CLEANING UP");
@@ -135,11 +140,11 @@
 -(NSError*)connectBackstageSessionWithToken:(NSString*)token{
     OTError *error = nil;
     
-    [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"attempt" completion:nil];
+    [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationAttempt completion:nil];
     [_producerSession connectWithToken:token error:&error];
     
     if (error) {
-        [OTKLogger logEventAction:@"fanConnectsBackstage" variation:@"failed" completion:nil];
+        [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationFailure completion:nil];
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }
     return error;
@@ -152,8 +157,9 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:@"fanDisconnectsBackstage" variation:@"failed" completion:nil];
-    }else{
+        [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
+    }
+    else{
         _producerSession = nil;
     }
     return error;
@@ -166,8 +172,9 @@
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:@"fanDisconnectsBackstage" variation:@"failed" completion:nil];
-    }else{
+        [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
+    }
+    else{
         _session = nil;
     }
     return error;
@@ -181,13 +188,13 @@
     [session unpublish:self.publisher error:&error];
     
     NSString *session_name = self.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@Unpublishes%@", userRole, session_name];
+    NSString *logtype = [NSString stringWithFormat:@"%@Unpublishes%@", [userRole capitalizedString], session_name];
     
-    [OTKLogger logEventAction:logtype variation:@"attempt" completion:nil];
+    [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
     if (error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:logtype variation:@"fail" completion:nil];
+        [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
     }
 }
 
@@ -196,7 +203,8 @@
         
         if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
             NSLog(@"cleanup publisher from onstage");
-        }else{
+        }
+        else{
             NSLog(@"cleanup publisher from backstage");
         }
         
@@ -265,14 +273,12 @@
                         if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
                             self.startBroadcast = YES;
                         }
-                        else
-                        {
+                        else{
                             self.waitingOnBroadcast = YES;
                         }
                     }
                 }
-                else
-                {
+                else{
                     [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
                 }
                 

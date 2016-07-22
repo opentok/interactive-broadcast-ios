@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */; };
 		0B595F821D25BC06002779B7 /* IBAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B595F801D25BC06002779B7 /* IBAVPlayer.m */; };
+		0BBF96341D4171F7006DCDE9 /* IBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF96321D4171F7006DCDE9 /* IBConstants.h */; };
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
@@ -140,6 +141,7 @@
 /* Begin PBXFileReference section */
 		0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBAVPlayer.h; sourceTree = "<group>"; };
 		0B595F801D25BC06002779B7 /* IBAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBAVPlayer.m; sourceTree = "<group>"; };
+		0BBF96321D4171F7006DCDE9 /* IBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBConstants.h; sourceTree = "<group>"; };
 		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				A08D96EB1CFE36F400877619 /* OpenTokManager.m */,
 				0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */,
 				0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */,
+				0BBF96321D4171F7006DCDE9 /* IBConstants.h */,
 				A01E44111CF75BE000D20CFA /* Event */,
 				A022F5FC1CF60D2D008E8C70 /* Events */,
 				A0156FCF1CEE60A50009FBEF /* Categories */,
@@ -523,6 +526,7 @@
 				A08D96EC1CFE36F400877619 /* IBInstance_Internal.h in Headers */,
 				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
 				A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */,
+				0BBF96341D4171F7006DCDE9 /* IBConstants.h in Headers */,
 				A01E445B1CF7602B00D20CFA /* OTKTextChatView.h in Headers */,
 				A022F6051CF60D83008E8C70 /* EventCell.h in Headers */,
 			);

@@ -115,42 +115,59 @@
     }];
 }
 
++ (void)createFanEventTokenWithAdmin:(IBEvent *)event
+                            adminId:(NSString *)adminHash
+                         completion:(void (^)(IBInstance *, NSError *))completion {
+    
+    NSLocale *currentLocale = [NSLocale currentLocale];
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSString *eventURL = [event valueForKey:@"fanURL"];
+    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@", [IBInstance sharedManager].backendURL, @"fan"];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+
+    parameters[@"fan_url"] = eventURL;
+    parameters[@"user_id"]= [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    parameters[@"os"]= @"IOS";
+    parameters[@"is_mobile"]= @"true";
+    parameters[@"country"]= countryCode;
+    
+    if(adminHash){
+        parameters[@"admins_id"]= adminHash;
+    }
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+        
+        IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+        completion(instance, nil);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        completion(nil, error);
+    }];
+}
+
 + (void)createFanEventTokenWithEvent:(IBEvent *)event
                           completion:(void (^)(IBInstance *, NSError *))completion {
     
-    NSString *userType = @"fanURL";
-    NSString *eventURL = [event valueForKey:userType];
-    [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+    if (event.adminId) {
         
-        if (!error) {
-            NSLocale *currentLocale = [NSLocale currentLocale];
-            NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+        // new backend instance
+        [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
             
-            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@", [IBInstance sharedManager].backendURL, @"fan"];
-            NSDictionary *parameters = @{
-                                         @"fan_url":eventURL,
-                                         @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                         @"os": @"IOS",
-                                         @"is_mobile": @"true",
-                                         @"country": countryCode,
-                                         @"admins_id":adminIdHash
-                                         };
-            
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            manager.requestSerializer = [AFJSONRequestSerializer serializer];
-            [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
-                
-                    IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
-                    completion(instance, nil);
-                
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            if (!error) {
+                [self createFanEventTokenWithAdmin:event adminId:adminIdHash completion:completion];
+            }
+            else {
                 completion(nil, error);
-            }];
-        }
-        else {
-            completion(nil, error);
-        }
-    }];
+            }
+        }];
+    }
+    else {
+        
+        // MLB: old backend
+        [self createFanEventTokenWithAdmin:event adminId:nil completion:completion];
+    }
 }
 
 @end

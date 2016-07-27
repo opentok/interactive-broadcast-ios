@@ -20,6 +20,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 @property (weak, nonatomic) IBOutlet UIButton *celebrityButton;
 @property (weak, nonatomic) IBOutlet UIButton *hostButton;
 @property (weak, nonatomic) IBOutlet UIButton *fanButton;
+@property (weak, nonatomic) IBOutlet UIButton *mlbFanButton;
 @property (weak, nonatomic) IBOutlet UIButton *fanCustomEventsButton;
 @property (weak, nonatomic) IBOutlet UIButton *celebrityCustomEventsButton;
 @property (weak, nonatomic) IBOutlet UIButton *hostCustomEventsButton;
@@ -37,15 +38,39 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
                      @(self.fanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
+                     @(self.mlbFanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
                      @(self.fanCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"Fan"],
                      @(self.celebrityCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
-
                     };
+}
+- (IBAction)mlbEventButtonPressed:(UIButton *)sender {
+    [IBInstance configBackendURL:MLBBackend];
+    [IBApi getInstanceWithInstanceId:mlbpass
+                          completion:^(IBInstance *instance, NSError *error) {
+                              if (!error) {
+                                  NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
+                                  instance_data[@"backend_base_url"] = MLBBackend;
+                                  
+                                  UIViewController *viewcontroller;
+                                  if(instance.events.count != 1){
+                                      
+                                      viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:self.requestData[@(sender.hash)]];
+                                  }
+                                  else {
+                                      
+                                      viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
+                                      
+                                  }
+                                  
+                                  [self presentViewController:viewcontroller animated:YES completion:nil];
+                              }
+                          }];
+
 }
 
 - (IBAction)eventButtonPressed:(UIButton *)sender {
-    
+
     if((sender != self.fanCustomEventsButton ) && (sender != self.hostCustomEventsButton) && (sender != self.celebrityCustomEventsButton)) {
         
         

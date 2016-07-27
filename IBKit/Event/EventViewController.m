@@ -166,11 +166,23 @@ typedef enum : NSUInteger {
                              if (!error && instance.events.count == 1) {
                                  self.instance = instance;
                                  self.event = [self.instance.events lastObject];
-                                 [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
-                                                                      sessionId:self.instance.sessionIdHost];
-                                 dispatch_async(dispatch_get_main_queue(), ^(){
-                                     [self statusChanged];
-                                 });
+                                 
+                                 // new backend
+                                 // this is going to connect to the signaling server for HLS feed
+                                 if (self.event.adminName) {
+                                     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
+                                                                          sessionId:self.instance.sessionIdHost];
+                                     dispatch_async(dispatch_get_main_queue(), ^(){
+                                         [self statusChanged];
+                                     });
+                                 }
+                                 // old backend
+                                 else {
+                                     [self startSession];
+                                     dispatch_async(dispatch_get_main_queue(), ^(){
+                                         [self statusChanged];
+                                     });
+                                 }
 //                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
 //                                                        sessionId:self.instance.sessionIdProducer
 //                                                            token:self.instance.tokenProducer];
@@ -378,7 +390,7 @@ typedef enum : NSUInteger {
   streamDestroyed:(OTStream *)stream
 {
     
-    if(!_openTokManager.publisher.stream && !stream.connection) return;
+    if(!_openTokManager.publisher.stream || !stream.connection) return;
     
     NSString *me = [self.user userRoleName];
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];

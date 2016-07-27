@@ -181,15 +181,57 @@
                                     <constraint firstItem="2Q7-Nl-UOx" firstAttribute="leading" secondItem="nkU-4L-TVU" secondAttribute="trailing" constant="8" id="tZK-Ld-3T9"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tI-Yq-abC">
+                                <rect key="frame" x="0.0" y="209" width="1024" height="77"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-te-rzw">
+                                        <rect key="frame" x="456" y="8" width="113" height="21"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="443" y="8" width="138" height="20"/>
+                                        </variation>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1g-X1-CY6">
+                                        <rect key="frame" x="447" y="39" width="130" height="30"/>
+                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="0if-yU-NEK"/>
+                                        </constraints>
+                                        <state key="normal" title="FAN">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="585" y="36" width="130" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="mlbEventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Amd-qU-qrv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.334443306" blue="0.41137160379999999" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="2b9-te-rzw" firstAttribute="top" secondItem="4tI-Yq-abC" secondAttribute="top" constant="8" id="9sb-vb-ZNR"/>
+                                    <constraint firstItem="w1g-X1-CY6" firstAttribute="centerX" secondItem="2b9-te-rzw" secondAttribute="centerX" id="EGQ-iA-GqV"/>
+                                    <constraint firstItem="w1g-X1-CY6" firstAttribute="bottom" secondItem="4tI-Yq-abC" secondAttribute="bottomMargin" id="Iik-v8-exq"/>
+                                    <constraint firstItem="2b9-te-rzw" firstAttribute="centerX" secondItem="4tI-Yq-abC" secondAttribute="centerX" id="Ofz-Sc-CPf"/>
+                                    <constraint firstAttribute="height" constant="77" id="V39-GD-uxG"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ClB-cd-5rv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Lt-Ym-Uhu"/>
                             <constraint firstItem="7r4-I8-e5F" firstAttribute="top" secondItem="ClB-cd-5rv" secondAttribute="bottom" constant="21" id="B2m-n0-boB"/>
                             <constraint firstItem="7r4-I8-e5F" firstAttribute="trailing" secondItem="ClB-cd-5rv" secondAttribute="trailing" id="Bo6-Na-SGt"/>
+                            <constraint firstItem="4tI-Yq-abC" firstAttribute="leading" secondItem="7r4-I8-e5F" secondAttribute="leading" id="Hp0-9r-0Mf"/>
                             <constraint firstItem="7r4-I8-e5F" firstAttribute="leading" secondItem="ClB-cd-5rv" secondAttribute="leading" id="Imb-wg-PMC"/>
                             <constraint firstItem="ClB-cd-5rv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Pbs-JH-n6z"/>
                             <constraint firstAttribute="trailing" secondItem="ClB-cd-5rv" secondAttribute="trailing" id="QtE-Ve-VKd"/>
+                            <constraint firstItem="4tI-Yq-abC" firstAttribute="trailing" secondItem="7r4-I8-e5F" secondAttribute="trailing" id="Uic-w3-edg"/>
+                            <constraint firstItem="4tI-Yq-abC" firstAttribute="top" secondItem="7r4-I8-e5F" secondAttribute="bottom" constant="14" id="a7g-vJ-IaI"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -197,10 +239,11 @@
                     <connections>
                         <outlet property="celebrityButton" destination="HhQ-c6-Fn2" id="wRG-hy-jdp"/>
                         <outlet property="celebrityCustomEventsButton" destination="EdN-fW-VJy" id="vG6-a7-WTx"/>
-                        <outlet property="fanButton" destination="ec7-Ad-ce1" id="S5x-Fe-hqN"/>
+                        <outlet property="fanButton" destination="ec7-Ad-ce1" id="ggy-yu-X6B"/>
                         <outlet property="fanCustomEventsButton" destination="2Q7-Nl-UOx" id="JMJ-SC-A8B"/>
                         <outlet property="hostButton" destination="6Fb-Pc-PVG" id="2zO-p3-a3m"/>
                         <outlet property="hostCustomEventsButton" destination="nkU-4L-TVU" id="pLQ-h4-jSG"/>
+                        <outlet property="mlbFanButton" destination="w1g-X1-CY6" id="pY6-vn-sxT"/>
                         <segue destination="aCu-6J-jgv" kind="presentation" identifier="EventSegueIdentifier" id="ll0-oH-An9"/>
                     </connections>
                 </viewController>

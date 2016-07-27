@@ -22,6 +22,6 @@
                       completion:(void (^)(IBInstance *, NSError *))completion;
 
 + (void)createFanEventTokenWithEvent:(IBEvent *)event
-                               completion:(void (^)(IBInstance *, NSError *))completion;
+                          completion:(void (^)(IBInstance *, NSError *))completion;
 
 @end

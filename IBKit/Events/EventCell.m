@@ -35,7 +35,7 @@
     IBEvent *event = instance.events[indexPath.row];
     [self.titleLabel setText:event.eventName];
     
-    if ([event.status isEqualToString:@"N"]) {
+    if ([event.descriptiveStatus isEqualToString:@"N"]) {
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
         [self.eventButton setTitle:@"Not Started" forState: UIControlStateNormal];
         self.eventButton.enabled = NO;

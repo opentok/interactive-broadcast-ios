@@ -38,6 +38,7 @@
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
+		10F1A01D0ED238F1A82078C7 /* libPods-IBDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E3F37EC5310D29988BA8C1 /* libPods-IBDemo.a */; };
 		568DED24704319212DCDEF6A /* libPods-IBKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5032E4061C36B2F48305E846 /* libPods-IBKitTests.a */; };
 		A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A61D00C0FA007905CC /* IBInstanceTests.m */; };
 		A00231A91D00C23B007905CC /* IBUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A81D00C23B007905CC /* IBUserTests.m */; };
@@ -152,12 +153,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		016003662F2EDAC4E7191123 /* Pods-IBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBDemo/Pods-IBDemo.release.xcconfig"; sourceTree = "<group>"; };
 		0B595F7F1D25BC06002779B7 /* IBAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBAVPlayer.h; sourceTree = "<group>"; };
 		0B595F801D25BC06002779B7 /* IBAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBAVPlayer.m; sourceTree = "<group>"; };
 		0BBF96321D4171F7006DCDE9 /* IBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBConstants.h; sourceTree = "<group>"; };
 		0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokNetworkTest.h; sourceTree = "<group>"; };
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
+		39CBAF477A8CB264BF8F656C /* Pods-IBDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBDemo/Pods-IBDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		5032E4061C36B2F48305E846 /* libPods-IBKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		826B73F04DC1659697CC0C82 /* Pods-IBKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8A12BCCC21F41A9F7A95FFEF /* libPods-IBKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +251,7 @@
 		A0C526DA1CEAD3D500706104 /* CustomEventsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomEventsCell.xib; sourceTree = "<group>"; };
 		A0C526DD1CEAD40100706104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF3D9779AA77B1DBBD9A3DCA /* Pods-IBKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		C0E3F37EC5310D29988BA8C1 /* libPods-IBDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IBDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22DFFB2619257D119DE2C89 /* Pods-IBKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.debug.xcconfig"; sourceTree = "<group>"; };
 		F97D76CE67A56E424A153467 /* Pods-IBKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBKit/Pods-IBKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -267,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C526401CEAD2E000706104 /* IBKit.framework in Frameworks */,
+				10F1A01D0ED238F1A82078C7 /* libPods-IBDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +293,8 @@
 				F97D76CE67A56E424A153467 /* Pods-IBKit.release.xcconfig */,
 				826B73F04DC1659697CC0C82 /* Pods-IBKitTests.debug.xcconfig */,
 				BF3D9779AA77B1DBBD9A3DCA /* Pods-IBKitTests.release.xcconfig */,
+				39CBAF477A8CB264BF8F656C /* Pods-IBDemo.debug.xcconfig */,
+				016003662F2EDAC4E7191123 /* Pods-IBDemo.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -509,6 +516,7 @@
 			children = (
 				8A12BCCC21F41A9F7A95FFEF /* libPods-IBKit.a */,
 				5032E4061C36B2F48305E846 /* libPods-IBKitTests.a */,
+				C0E3F37EC5310D29988BA8C1 /* libPods-IBDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -579,10 +587,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0C526311CEAD2D400706104 /* Build configuration list for PBXNativeTarget "IBDemo" */;
 			buildPhases = (
+				12D0852E6F8E6EB22DB6AE32 /* [CP] Check Pods Manifest.lock */,
 				A0C526161CEAD2D400706104 /* Sources */,
 				A0C526171CEAD2D400706104 /* Frameworks */,
 				A0C526181CEAD2D400706104 /* Resources */,
 				A0C526451CEAD2E000706104 /* Embed Frameworks */,
+				A0B75F031D497E92005FF686 /* ShellScript */,
+				8456AE9E475DE11FB73C0EF5 /* [CP] Embed Pods Frameworks */,
+				483BA44E7E17E48808E54DA8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -706,6 +718,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		12D0852E6F8E6EB22DB6AE32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		1425636C8D4D645481544C5D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,6 +746,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKit/Pods-IBKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		483BA44E7E17E48808E54DA8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBDemo/Pods-IBDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		537B164770B01A038F6711BC /* [CP] Embed Pods Frameworks */ = {
@@ -749,6 +791,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBKitTests/Pods-IBKitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8456AE9E475DE11FB73C0EF5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBDemo/Pods-IBDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		95997B25EEA1C29B4EF40592 /* [CP] Check Pods Manifest.lock */ = {
@@ -791,6 +848,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nWORKSPACE_NAME=\"IBDemo.xcworkspace\"\nFRAMEWORK_NAME=\"IBKit\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -workspace \"${WORKSPACE_NAME}\" -scheme \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\" -derivedDataPath \"${SRCROOT}/build\"\n# xcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Build/Products/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 8\n# Copy the Swift module mappings for the simulator into the\n# framework.  The device mappings already exist from step 6.\n#cp -r \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+		};
+		A0B75F031D497E92005FF686 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" e148233c6cae706cd80ae2cf63c263a294276a4f 56ce09a5320df7b642be150fe0d6525e000dd2fff12201c6ea4e72c3453b5f30";
 		};
 		A3964B917CF7021E256F97A4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1037,6 +1107,7 @@
 		};
 		A0C526321CEAD2D400706104 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39CBAF477A8CB264BF8F656C /* Pods-IBDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AgilityFeat Inc (246HEUPQZ9)";
@@ -1052,6 +1123,7 @@
 		};
 		A0C526331CEAD2D400706104 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 016003662F2EDAC4E7191123 /* Pods-IBDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AgilityFeat Inc (246HEUPQZ9)";

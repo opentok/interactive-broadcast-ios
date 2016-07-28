@@ -32,8 +32,6 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
-    
-    
     [IBApi getInstanceWithInstanceId:self.instance_id
                           completion:^(IBInstance *instance, NSError *error) {
                             

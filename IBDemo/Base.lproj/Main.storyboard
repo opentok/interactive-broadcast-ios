@@ -47,8 +47,8 @@
                                             <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ka-B7-YS2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgG-aS-bjC">
-                                        <rect key="frame" x="456" y="8" width="113" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Predefined UI Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgG-aS-bjC">
+                                        <rect key="frame" x="421.5" y="8" width="181" height="21"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -158,8 +158,8 @@
                                             <action selector="eventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="97o-jg-guR"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CUSTOM VIEW OF EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5j-nv-jsP">
-                                        <rect key="frame" x="396" y="8" width="232" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom UI Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5j-nv-jsP">
+                                        <rect key="frame" x="435.5" y="8" width="153" height="21"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -184,18 +184,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tI-Yq-abC">
                                 <rect key="frame" x="0.0" y="209" width="1024" height="77"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-te-rzw">
-                                        <rect key="frame" x="456" y="8" width="113" height="21"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="443" y="8" width="138" height="20"/>
-                                        </variation>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1g-X1-CY6">
                                         <rect key="frame" x="447" y="39" width="130" height="30"/>
-                                        <color key="backgroundColor" red="0.19215686269999999" green="0.59999999999999998" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.12941176469999999" green="0.67450980390000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="0if-yU-NEK"/>
                                         </constraints>
@@ -210,14 +201,23 @@
                                             <action selector="mlbEventButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Amd-qU-qrv"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MLB Edward Jones Chatting Cage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-te-rzw">
+                                        <rect key="frame" x="366" y="10" width="292" height="21"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="443" y="8" width="138" height="20"/>
+                                        </variation>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.334443306" blue="0.41137160379999999" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="2b9-te-rzw" firstAttribute="top" secondItem="4tI-Yq-abC" secondAttribute="top" constant="8" id="9sb-vb-ZNR"/>
                                     <constraint firstItem="w1g-X1-CY6" firstAttribute="centerX" secondItem="2b9-te-rzw" secondAttribute="centerX" id="EGQ-iA-GqV"/>
                                     <constraint firstItem="w1g-X1-CY6" firstAttribute="bottom" secondItem="4tI-Yq-abC" secondAttribute="bottomMargin" id="Iik-v8-exq"/>
                                     <constraint firstItem="2b9-te-rzw" firstAttribute="centerX" secondItem="4tI-Yq-abC" secondAttribute="centerX" id="Ofz-Sc-CPf"/>
                                     <constraint firstAttribute="height" constant="77" id="V39-GD-uxG"/>
+                                    <constraint firstItem="w1g-X1-CY6" firstAttribute="top" secondItem="2b9-te-rzw" secondAttribute="bottom" constant="8" id="iDH-xL-5zE"/>
                                 </constraints>
                             </view>
                         </subviews>

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "CustomEventsViewController.h"
 #import <IBKit/IBKit.h>
+#import <Crashlytics/Crashlytics.h>
 
 static NSString * const instanceIdentifier = @"AAAA1";
 static NSString * const backendBaseUrl = @"https://tokbox-ib-staging-tesla.herokuapp.com";
@@ -33,6 +34,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [IBApi configureBackendURL:backendBaseUrl];
     _requestData = @{
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
@@ -44,7 +46,12 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                      @(self.hostCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
                     };
 }
+
 - (IBAction)mlbEventButtonPressed:(UIButton *)sender {
+    
+    // test crash report
+//    [[Crashlytics sharedInstance] crash];
+    
     [IBApi configureBackendURL:MLBBackend];
     [IBApi getInstanceWithInstanceId:mlbpass
                           completion:^(IBInstance *instance, NSError *error) {

@@ -8,8 +8,11 @@
 
 #import "EventCell.h"
 #import "IBEvent.h"
+#import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 #import "UIImageView+Category.h"
+
+#import "IBInstance_Internal.h"
 
 @interface EventCell()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -40,7 +43,7 @@
     else{
         [self.eventButton setTitle:@"Join Event" forState: UIControlStateNormal];
         self.eventButton.enabled = YES;
-        [self.statusLabel setText:event.displayStatus];
+        [self.statusLabel setText:event.descriptiveStatus];
     }
     
     if (event.image) {
@@ -48,10 +51,10 @@
     }
 }
 
-- (NSString*)getFormattedDate:(NSString *)dateString
+- (NSString*)getFormattedDate:(NSDate *)date
 {
-    if(dateString != (id)[NSNull null]){
-        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
+    if (date) {
+        return [IBDateFormatter convertToAppStandardFromDate:date];
     }
     return @"Not Started";
 }

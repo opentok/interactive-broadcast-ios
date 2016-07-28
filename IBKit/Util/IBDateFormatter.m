@@ -40,10 +40,28 @@
     return sharedMyManager;
 }
 
-+ (NSString *)convertToAppStandardFromDateString:(NSString *)dateString {
++ (NSDate *)convertFromBackendDateString:(NSString *)dateString {
+    
+    if (!dateString) return nil;
     
     IBDateFormatter *dateFormatter = [IBDateFormatter sharedManager];
-    NSDate *date = [dateFormatter.backendDateFormatter dateFromString:dateString];
+    return [dateFormatter.backendDateFormatter dateFromString:dateString];
+}
+
++ (NSString *)convertToAppStandardFromDate:(NSDate *)date {
+    
+    if (!date) return nil;
+    
+    IBDateFormatter *dateFormatter = [IBDateFormatter sharedManager];
+    return [dateFormatter.appDateFormatter stringFromDate:date];
+}
+
++ (NSString *)convertToAppStandardFromDateString:(NSString *)dateString {
+    
+    NSDate *date = [IBDateFormatter convertFromBackendDateString:dateString];
+    if (!date) return nil;
+    
+    IBDateFormatter *dateFormatter = [IBDateFormatter sharedManager];
     return [dateFormatter.appDateFormatter stringFromDate:date];
 }
 

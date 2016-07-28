@@ -1,8 +1,6 @@
 //
 //  EventInstance.h
-//  IBDemo
 //
-//  Created by Xi Huang on 5/26/16.
 //  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
@@ -10,20 +8,39 @@
 
 @interface IBInstance : NSObject
 
+/**
+ *  An OpenTok API key.
+ */
 @property (readonly, nonatomic) NSString *apiKey;
+
+/**
+ *  An OpenTok session identifier for host.
+ */
 @property (readonly, nonatomic) NSString *sessionIdHost;
+
+/**
+ *  An OpenTok token for host.
+ */
 @property (readonly, nonatomic) NSString *tokenHost;
+
+/**
+ *  An OpenTok session identifier for producer.
+ */
 @property (readonly, nonatomic) NSString *sessionIdProducer;
+
+/**
+ *  An OpenTok token for producer.
+ */
 @property (readonly, nonatomic) NSString *tokenProducer;
 
-@property (readonly, nonatomic) NSString *defaultEventImage;
-@property (readonly, nonatomic) BOOL isAnalyticsEnabled;
-@property (readonly, nonatomic) BOOL isGetInLineEnabled;
+/**
+ *  All interactive broadcast events associated with the instance
+ */
 @property (readonly, nonatomic) NSArray<IBEvent *> * events;
-@property (readonly, nonatomic) NSString *frontendURL;
-@property (readonly, nonatomic) NSString *instanceId;
-@property (readonly, nonatomic) NSString *signalingURL;
-- (instancetype)initWithJson:(NSDictionary *)json;
 
-+ (void)configBackendURL:(NSString *)configBackendURL;
+/**
+ *  An identifier of the instance
+ */
+@property (readonly, nonatomic) NSString *instanceId;
+
 @end

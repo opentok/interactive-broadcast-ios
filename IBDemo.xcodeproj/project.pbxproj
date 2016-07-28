@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		A06CE42A1D489AB600E9EBEC /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A06CE42D1D489AB600E9EBEC /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				A06CE42E1D489ABB00E9EBEC /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
 		A0A754CE1CEB909600D6D516 /* BuildFatFramework */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = A0A754D11CEB909600D6D516 /* Build configuration list for PBXAggregateTarget "BuildFatFramework" */;
@@ -70,6 +81,8 @@
 		A022F60B1CF60D83008E8C70 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A022F6031CF60D83008E8C70 /* EventsViewController.m */; };
 		A022F60C1CF60D83008E8C70 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A022F6041CF60D83008E8C70 /* EventsViewController.xib */; };
 		A067F3651D0A904F0015CD22 /* JSONTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A067F3641D0A904F0015CD22 /* JSONTest.m */; };
+		A06CE4321D4933B700E9EBEC /* IBApi_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A06CE4311D4933B700E9EBEC /* IBApi_Internal.h */; };
+		A06CE4341D4934D000E9EBEC /* IBEvent_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */; };
 		A08D96C61CF7C79200877619 /* IBEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C41CF7C79200877619 /* IBEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A08D96C71CF7C79200877619 /* IBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C51CF7C79200877619 /* IBEvent.m */; };
 		A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C81CF7D2E800877619 /* IBInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -193,6 +206,8 @@
 		A022F6031CF60D83008E8C70 /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		A022F6041CF60D83008E8C70 /* EventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
 		A067F3641D0A904F0015CD22 /* JSONTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONTest.m; sourceTree = "<group>"; };
+		A06CE4311D4933B700E9EBEC /* IBApi_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBApi_Internal.h; sourceTree = "<group>"; };
+		A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBEvent_Internal.h; sourceTree = "<group>"; };
 		A08D96C41CF7C79200877619 /* IBEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBEvent.h; sourceTree = "<group>"; };
 		A08D96C51CF7C79200877619 /* IBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEvent.m; sourceTree = "<group>"; };
 		A08D96C81CF7D2E800877619 /* IBInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance.h; sourceTree = "<group>"; };
@@ -443,11 +458,13 @@
 			isa = PBXGroup;
 			children = (
 				A0156FD41CEE60A50009FBEF /* IBKit.h */,
+				A06CE4311D4933B700E9EBEC /* IBApi_Internal.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
 				A08D96E91CFE36F400877619 /* IBInstance_Internal.h */,
 				A08D96C81CF7D2E800877619 /* IBInstance.h */,
 				A08D96C91CF7D2E800877619 /* IBInstance.m */,
+				A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */,
 				A08D96C41CF7C79200877619 /* IBEvent.h */,
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
 				A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */,
@@ -504,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0156FD91CEE60A50009FBEF /* IBKit.h in Headers */,
+				A06CE4341D4934D000E9EBEC /* IBEvent_Internal.h in Headers */,
 				0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
@@ -520,6 +538,7 @@
 				A01E445F1CF7837D00D20CFA /* UIView+Category.h in Headers */,
 				A022F6081CF60D83008E8C70 /* EventsView.h in Headers */,
 				A08D96E71CFE36E800877619 /* JSON.h in Headers */,
+				A06CE4321D4933B700E9EBEC /* IBApi_Internal.h in Headers */,
 				A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
@@ -604,6 +623,9 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Tokbox, Inc.";
 				TargetAttributes = {
+					A06CE42A1D489AB600E9EBEC = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					A08D96D31CF8DCB200877619 = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -636,6 +658,7 @@
 				A0C526381CEAD2E000706104 /* IBKit */,
 				A0A754CE1CEB909600D6D516 /* BuildFatFramework */,
 				A08D96D31CF8DCB200877619 /* IBKitTests */,
+				A06CE42A1D489AB600E9EBEC /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -742,6 +765,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		A06CE42E1D489ABB00E9EBEC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Tokbox\";\ncompanyID=\"com.Tokbox\";\ncompanyURL=\"https://tokbox.com/\";\noutputPath=\"${PROJECT_DIR}/docs\";\n# End constants\n/usr/local/bin/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--output \"${outputPath}\" \\\n--keep-intermediate-files \\\n--exit-threshold 2 \\\n\"${PROJECT_DIR}/IBKit/IBKit.h\" \\\n\"${PROJECT_DIR}/IBKit/IBApi.h\" \\\n\"${PROJECT_DIR}/IBKit/IBInstance.h\" \\\n\"${PROJECT_DIR}/IBKit/IBEvent.h\" \\\n\"${PROJECT_DIR}/IBKit/Event/EventViewController.h\" \\\n\"${PROJECT_DIR}/IBKit/Events/EventsViewController.h\" \\";
 		};
 		A0A754D21CEB909900D6D516 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -865,6 +901,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A06CE42B1D489AB600E9EBEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A06CE42C1D489AB600E9EBEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A08D96DC1CF8DCB200877619 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 826B73F04DC1659697CC0C82 /* Pods-IBKitTests.debug.xcconfig */;
@@ -1066,6 +1116,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A06CE42D1D489AB600E9EBEC /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A06CE42B1D489AB600E9EBEC /* Debug */,
+				A06CE42C1D489AB600E9EBEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A08D96DE1CF8DCB200877619 /* Build configuration list for PBXNativeTarget "IBKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

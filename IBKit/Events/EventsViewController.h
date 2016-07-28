@@ -1,9 +1,7 @@
 //
 //  EventsViewController.h
 //  
-//
-//  Created by Andrea Phillips on 16/11/2015.
-//
+//  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,6 +10,15 @@
 
 @interface EventsViewController : UIViewController
 
+
+/**
+ *  Initialize an interactive braodcast event view controller with a given instance and a user.
+ *
+ *  @param instance     An instance for the view controller to connect.
+ *  @param user         A user role for the view controller to connect.
+ *
+ *  @return A new interactive braodcast event view controller.
+ */
 - (instancetype)initWithInstance:(IBInstance *)instance
                             user:(IBUser *)user;
 

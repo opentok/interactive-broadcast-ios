@@ -7,15 +7,16 @@
 //
 
 #import "IBEvent.h"
+#import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
 @interface IBEvent()
-@property (nonatomic) NSString *displayStatus;
+@property (nonatomic) NSString *descriptiveStatus;
 @end
 
 @implementation IBEvent
 
-- (NSString *)displayStatus {
+- (NSString *)descriptiveStatus {
     if (!_status) return nil;
     
     if ([_status isEqualToString:@"N"]) {
@@ -23,7 +24,7 @@
         if (!_startTime) return nil;
         
         if (_startTime && ![_startTime isEqual:[NSNull null]]) {
-            return [IBDateFormatter convertToAppStandardFromDateString:_startTime];
+            return [IBDateFormatter convertToAppStandardFromDate:_startTime];
         }
         else{
             return @"Not Started";
@@ -58,10 +59,22 @@
         _fanURL = json[@"fan_url"];
         _hostURL = json[@"host_url"];
         
-        _startTime = json[@"date_time_start"];
-        _endTime = json[@"date_time_end"];
-        _image = json[@"event_image"];
-        _endImage = json[@"event_image_end"];
+        if (json[@"date_time_start"] != [NSNull null]) {
+            _startTime = [IBDateFormatter convertFromBackendDateString:json[@"date_time_start"]];
+        }
+        
+        if (json[@"date_time_end"] != [NSNull null]) {
+            _endTime = [IBDateFormatter convertFromBackendDateString:json[@"date_time_end"]];
+        }
+        
+        if (json[@"event_image"] != [NSNull null]) {
+            _image = json[@"event_image"];
+        }
+        
+        if (json[@"event_image_end"] != [NSNull null]) {
+            _endTime = json[@"event_image_end"];
+        }
+        
         _eventName = json[@"event_name"];
         _fanURL = json[@"fan_url"];
         _hostURL = json[@"host_url"];

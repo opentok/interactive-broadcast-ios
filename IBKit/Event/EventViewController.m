@@ -8,6 +8,7 @@
 
 #import "OTKTextChatComponent.h"
 #import "IBApi.h"
+#import "IBEvent_Internal.h"
 
 #import "EventViewController.h"
 
@@ -72,10 +73,10 @@ typedef enum : NSUInteger {
 @implementation EventViewController
 
 - (instancetype)initWithInstance:(IBInstance *)instance
-                       indexPath:(NSIndexPath *)indexPath
+                  eventIndexPath:(NSIndexPath *)eventIndexPath
                             user:(IBUser *)user {
     
-    if (!instance || !indexPath || !user) return nil;
+    if (!instance || !eventIndexPath || !user) return nil;
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
@@ -83,7 +84,7 @@ typedef enum : NSUInteger {
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
         
         _instance = instance;
-        _event = _instance.events[indexPath.row];
+        _event = _instance.events[eventIndexPath.row];
         _user = user;
         _userName = user.name ? user.name : [user userRoleName];
         
@@ -243,7 +244,7 @@ typedef enum : NSUInteger {
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
     
-    if(self.user.userRole == IBUserRoleFan) {
+    if(self.user.role == IBUserRoleFan) {
         self.eventView.getInLineBtn.hidden = NO;
         [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
     }
@@ -272,7 +273,7 @@ typedef enum : NSUInteger {
     (_textChat.view).frame = r;
     [self.eventView insertSubview:_textChat.view belowSubview:self.eventView.chatBar];
     
-    if(self.user.userRole != IBUserRoleFan){
+    if(self.user.role != IBUserRoleFan){
         self.eventView.chatBtn.hidden = NO;
     }
     
@@ -290,7 +291,7 @@ typedef enum : NSUInteger {
 -(void)forceDisconnect
 {
     [_openTokManager cleanupPublisher];
-    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.userRole == IBUserRoleFan ? @"celebrity" : @"host"];
+    NSString *text = [NSString stringWithFormat: @"There already is a %@ using this session. If this is you please close all applications or browser sessions and try again.", self.user.role == IBUserRoleFan ? @"celebrity" : @"host"];
     [self.eventView showNotification:text useColor:[UIColor SLBlueColor]];
     self.eventView.videoHolder.hidden = YES;
 
@@ -299,7 +300,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - publishers
 - (void)doPublish{
-    if(self.user.userRole == IBUserRoleFan){
+    if(self.user.role == IBUserRoleFan){
 
         if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
             [self.openTokManager sendNewUserSignalWithName:self.userName];
@@ -318,13 +319,13 @@ typedef enum : NSUInteger {
         }
     }
     else {
-        if(self.user.userRole == IBUserRoleCelebrity && !_stopGoingLive){
+        if(self.user.role == IBUserRoleCelebrity && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
             [self.eventView.celebrityViewHolder addSubview:_openTokManager.publisher.view];
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.celebrityViewHolder.bounds.size.width, self.eventView.celebrityViewHolder.bounds.size.height);
         }
         
-        if(self.user.userRole == IBUserRoleHost && !_stopGoingLive){
+        if(self.user.role == IBUserRoleHost && !_stopGoingLive){
             [self publishTo:_openTokManager.session];
             [self.eventView.hostViewHolder addSubview:_openTokManager.publisher.view];
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.hostViewHolder.bounds.size.width, self.eventView.hostViewHolder.bounds.size.height);
@@ -586,7 +587,7 @@ typedef enum : NSUInteger {
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
     }
     
-    if (self.user.userRole == IBUserRoleFan) {
+    if (self.user.role == IBUserRoleFan) {
         if(session.sessionId == _openTokManager.session.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.eventView.statusLabel).text = @"";
@@ -652,14 +653,14 @@ typedef enum : NSUInteger {
             
             if([stream.connection.data isEqualToString:@"usertype=host"]){
                 _openTokManager.hostStream = stream;
-                if(self.user.userRole == IBUserRoleHost){
+                if(self.user.role == IBUserRoleHost){
                     _stopGoingLive = YES;
                 }
             }
             
             if([stream.connection.data isEqualToString:@"usertype=celebrity"]){
                 _openTokManager.celebrityStream = stream;
-                if(self.user.userRole == IBUserRoleCelebrity){
+                if(self.user.role == IBUserRoleCelebrity){
                     _stopGoingLive = YES;
                 }
             }
@@ -668,7 +669,7 @@ typedef enum : NSUInteger {
                 _openTokManager.fanStream = stream;
             }
             
-            if((self.eventStage & IBEventStageLive) == IBEventStageLive || self.user.userRole == IBUserRoleCelebrity || self.user.userRole == IBUserRoleHost){
+            if((self.eventStage & IBEventStageLive) == IBEventStageLive || self.user.role == IBUserRoleCelebrity || self.user.role == IBUserRoleHost){
                 [self doSubscribe:stream];
             }
         }
@@ -746,7 +747,7 @@ didFailWithError:(OTError*)error
         _openTokManager.producerConnection = connection;
     }
     else if([type isEqualToString:@"closeChat"]){
-        if(self.user.userRole == IBUserRoleFan){
+        if(self.user.role == IBUserRoleFan){
             [self hideChatBox];
         }
     }
@@ -757,7 +758,7 @@ didFailWithError:(OTError*)error
         [messageData[@"video"] isEqualToString:@"on"] ? [_openTokManager.publisher setPublishVideo: YES] : [_openTokManager.publisher setPublishVideo: NO];
     }
     else if([type isEqualToString:@"newBackstageFan"]){
-        if(self.user.userRole != IBUserRoleFan){
+        if(self.user.role != IBUserRoleFan){
             [self.eventView showError:@"A new FAN has been moved to backstage" useColor:[UIColor SLBlueColor]];
         }
     }
@@ -795,7 +796,7 @@ didFailWithError:(OTError*)error
                 _inCallWithProducer = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
+                if(self.user.role == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView showVideoPreviewWithPublisher:_openTokManager.publisher];
                 }
             }
@@ -810,7 +811,7 @@ didFailWithError:(OTError*)error
             if(_inCallWithProducer){
                 [_openTokManager unsubscribeFromPrivateProducerCall];
                 _inCallWithProducer = NO;
-                if(self.user.userRole == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
+                if(self.user.role == IBUserRoleFan && (self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
                     [self.eventView hideVideoPreview];
                 }
             }
@@ -944,11 +945,11 @@ didFailWithError:(OTError*)error
 -(void)statusChanged {
     dispatch_async(dispatch_get_main_queue(), ^(){
 
-    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.displayStatus];
+    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.descriptiveStatus];
     
     if ([self.event.status isEqualToString:@"N"]) {
         
-        if (self.user.userRole != IBUserRoleFan) {
+        if (self.user.role != IBUserRoleFan) {
             self.eventView.eventImage.hidden = YES;
         }
         else {
@@ -959,7 +960,7 @@ didFailWithError:(OTError*)error
     }
     else if([self.event.status isEqualToString:@"P"]) {
         
-        if (self.user.userRole != IBUserRoleFan) {
+        if (self.user.role != IBUserRoleFan) {
             self.eventView.eventImage.hidden = YES;
             self.eventView.getInLineBtn.hidden = YES;
         }
@@ -981,7 +982,7 @@ didFailWithError:(OTError*)error
             [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
         }
         
-        if (self.user.userRole == IBUserRoleFan &&
+        if (self.user.role == IBUserRoleFan &&
             (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
             (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
             if(_openTokManager.session){
@@ -1059,7 +1060,7 @@ didFailWithError:(OTError*)error
     OTError *error = nil;
     OTSession *currentSession;
 
-    if(self.user.userRole != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
+    if(self.user.role != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
         currentSession = _openTokManager.session;
     }
     else {
@@ -1088,7 +1089,7 @@ didFailWithError:(OTError*)error
 - (IBAction)closeChat:(id)sender {
     [UIView animateWithDuration:0.5 animations:^() {
         [self hideChatBox];
-        if(self.user.userRole != IBUserRoleFan){
+        if(self.user.role != IBUserRoleFan){
             self.eventView.chatBtn.hidden = NO;
         }
     }];

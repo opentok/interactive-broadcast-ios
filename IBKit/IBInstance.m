@@ -9,35 +9,24 @@
 #import "IBInstance.h"
 #import "IBInstance_Internal.h"
 
+#import "IBEvent_Internal.h"
+
 @implementation IBInstance
-
-+ (void)configBackendURL:(NSString *)configBackendURL {
-    [IBInstance sharedManager].backendURL = configBackendURL;
-}
-
-+ (instancetype)sharedManager {
-    static IBInstance *sharedMyManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedMyManager = [[IBInstance alloc] init];
-    });
-    return sharedMyManager;
-}
 
 - (instancetype)initWithJson:(NSDictionary *)json {
     if (!json) return nil;
     
     if (self = [super init]) {
         
-        _defaultEventImage = json[@"default_event_image"];
-        
-        if (json[@"enable_analytics"]) {
-            _isAnalyticsEnabled = [json[@"enable_analytics"] boolValue];
-        }
-        
-        if (json[@"enable_getinline"]) {
-            _isGetInLineEnabled = [json[@"enable_getinline"] boolValue];
-        }
+        _defaultEventImagePath = json[@"default_event_image"];
+//        
+//        if (json[@"enable_analytics"]) {
+//            _isAnalyticsEnabled = [json[@"enable_analytics"] boolValue];
+//        }
+//        
+//        if (json[@"enable_getinline"]) {
+//            _isGetInLineEnabled = [json[@"enable_getinline"] boolValue];
+//        }
         
         if (json[@"events"]) {
             NSArray *eventsJson = json[@"events"];

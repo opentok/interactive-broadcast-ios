@@ -16,10 +16,6 @@ context(@"IBInstanceURLTest", ^(){
     
     describe(@"A standalone IBInstance", ^(){
         
-        [IBInstance configBackendURL:@"https://tokbox-ib-staging-tesla.herokuapp.com"];
-        it(@"should return a valid URL", ^(){
-            [[[[IBInstance sharedManager] backendURL] should] equal:@"https://tokbox-ib-staging-tesla.herokuapp.com"];
-        });
     });
 });
 

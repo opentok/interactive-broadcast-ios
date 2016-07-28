@@ -10,6 +10,7 @@
 
 #import "EventViewController.h"
 #import "IBInstance_Internal.h"
+#import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
 @interface CustomEventsViewController ()
@@ -74,7 +75,7 @@
         [statusLabel setText: [self getEventStatus:event.status]];
     }
     
-    NSURL *finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.instance.defaultEventImage]];
+    NSURL *finalUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.instance.defaultEventImagePath]];
     NSData *imageData = [NSData dataWithContentsOfURL:finalUrl];
     if(imageData){
         eventImageHolder.image = [UIImage imageWithData:imageData];
@@ -97,7 +98,7 @@
     NSIndexPath *indexPath = [_eventsView indexPathForItemAtPoint:buttonPosition];
     
     //we now show our event view.
-    EventViewController *detailEventViewController = [[EventViewController alloc] initWithInstance:self.instance indexPath:indexPath user:self.user];
+    EventViewController *detailEventViewController = [[EventViewController alloc] initWithInstance:self.instance eventIndexPath:indexPath user:self.user];
     [detailEventViewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:detailEventViewController animated:YES completion:nil];
 }
@@ -120,10 +121,10 @@
     return status;
 }
 
-- (NSString*)getFormattedDate:(NSString *)dateString
+- (NSString*)getFormattedDate:(NSDate *)date
 {
-    if(dateString != (id)[NSNull null]){
-        return [IBDateFormatter convertToAppStandardFromDateString:dateString];
+    if(date){
+        return [IBDateFormatter convertToAppStandardFromDate:date];
     }
     return @"Not Started";
 }

@@ -8,6 +8,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import "IBEvent.h"
+#import "IBEvent_Internal.h"
 
 SPEC_BEGIN(IBEventTests)
 

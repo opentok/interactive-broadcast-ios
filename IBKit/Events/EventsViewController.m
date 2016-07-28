@@ -13,6 +13,8 @@
 #import "EventCell.h"
 
 #import "IBInstance.h"
+#import "IBInstance_Internal.h"
+#import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
 #import <Reachability/Reachability.h>
@@ -140,7 +142,7 @@
     UICollectionViewCell *clickedCell = (UICollectionViewCell *)[[sender superview] superview];
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView.eventsCollectionView];
     NSIndexPath *indexPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
-    EventViewController *eventView = [[EventViewController alloc] initWithInstance:self.instance indexPath:indexPath user:self.user];
+    EventViewController *eventView = [[EventViewController alloc] initWithInstance:self.instance eventIndexPath:indexPath user:self.user];
     [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];
 }

@@ -1,9 +1,7 @@
 //
 //  EventViewController.h
-//  IB-ios
 //
-//  Created by Andrea Phillips on 30/09/2015.
-//  Copyright (c) 2015 Andrea Phillips. All rights reserved.
+//  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,7 +10,16 @@
 
 @interface EventViewController : UIViewController
 
+/**
+ *  Initialize an interactive braodcast event view controller with a given instance, an eventIndexPath and a user.
+ *
+ *  @param instance             An instance for the view controller to connect.
+ *  @param eventIndexPath       An index path that locates an evnet in the instance.
+ *  @param user                 A user role for the view controller connect.
+ *
+ *  @return A new interactive braodcast event view controller.
+ */
 - (instancetype)initWithInstance:(IBInstance *)instance
-                       indexPath:(NSIndexPath *)indexPath
+                  eventIndexPath:(NSIndexPath *)eventIndexPath
                             user:(IBUser *)user;
 @end

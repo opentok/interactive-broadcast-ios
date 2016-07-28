@@ -6,17 +6,36 @@
 //  Copyright © 2015 Andrea Phillips. All rights reserved.
 //
 
-#import "IBApi.h"
 #import <UIKit/UIKit.h>
+
+#import "IBApi.h"
+#import "IBApi_Internal.h"
 #import <AFNetworking/AFNetworking.h>
 #import "IBInstance_Internal.h"
 
 @implementation IBApi
 
++ (instancetype)sharedManager {
+    static IBApi *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[IBApi alloc] init];
+    });
+    return sharedMyManager;
+}
+
++ (NSString *)getBackendURL {
+    return [IBApi sharedManager].backendURL;
+}
+
++ (void)configureBackendURL:(NSString *)backendURL {
+    [IBApi sharedManager].backendURL = backendURL;
+}
+
 + (void)getInstanceWithInstanceId:(NSString *)instandId
                        completion:(void (^)(IBInstance *, NSError *))completion {
 
-    NSString *url = [NSString stringWithFormat:@"%@/get-instance-by-id", [IBInstance sharedManager].backendURL];
+    NSString *url = [NSString stringWithFormat:@"%@/get-instance-by-id", [IBApi getBackendURL]];
     NSDictionary *params = @{@"instance_id" : instandId};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -42,7 +61,7 @@
                     completion:(void (^)(IBInstance *, NSError *))completion {
     
     
-    NSString *url = [NSString stringWithFormat:@"%@/get-events-by-admin", [IBInstance sharedManager].backendURL];
+    NSString *url = [NSString stringWithFormat:@"%@/get-events-by-admin", [IBApi getBackendURL]];
     NSDictionary *params = @{@"id" : adminId};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -68,7 +87,7 @@
 + (void)getEventHashWithAdminId:(NSString *)adminId
                      completion:(void (^)(NSString *, NSError *))completion {
     
-    NSString *url = [NSString stringWithFormat:@"%@/event/get-event-hash-json/%@", [IBInstance sharedManager].backendURL, adminId];
+    NSString *url = [NSString stringWithFormat:@"%@/event/get-event-hash-json/%@", [IBApi getBackendURL], adminId];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
@@ -84,7 +103,7 @@
                            event:(IBEvent *)event
                       completion:(void (^)(IBInstance *, NSError *))completion {
     
-    if (user.userRole == IBUserRoleFan) {
+    if (user.role == IBUserRoleFan) {
         [IBApi createFanEventTokenWithEvent:event completion:^(IBInstance *instance, NSError *error) {
             completion(instance, error);
         }];
@@ -95,7 +114,7 @@
         if (!error) {
             NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", [user userRoleName]];
             NSString *eventURL = [event valueForKey:userTypeURL];
-            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBInstance sharedManager].backendURL, [user userRoleName], adminIdHash,eventURL];
+            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBApi getBackendURL], [user userRoleName], adminIdHash,eventURL];
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -122,7 +141,7 @@
     NSLocale *currentLocale = [NSLocale currentLocale];
     NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
     NSString *eventURL = [event valueForKey:@"fanURL"];
-    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@", [IBInstance sharedManager].backendURL, @"fan"];
+    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@", [IBApi getBackendURL], @"fan"];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
 
     parameters[@"fan_url"] = eventURL;

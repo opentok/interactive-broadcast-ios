@@ -9,7 +9,7 @@
 #import "IBUser.h"
 
 @interface IBUser()
-@property (nonatomic) IBUserRole userRole;
+@property (nonatomic) IBUserRole role;
 @property (nonatomic) NSString *name;
 @end
 
@@ -22,14 +22,14 @@
     if (userRole == IBUserRoleUnknown) return  nil;
     
     IBUser *user = [[IBUser alloc] init];
-    user.userRole = userRole;
+    user.role = userRole;
     user.name = name;
     return user;
 }
 
 - (NSString *)userRoleName {
     
-    switch (self.userRole) {
+    switch (self.role) {
         case IBUserRoleUnknown:
             return nil;
             

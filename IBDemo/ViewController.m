@@ -33,7 +33,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [IBInstance configBackendURL:backendBaseUrl];
+    [IBApi configureBackendURL:backendBaseUrl];
     _requestData = @{
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
@@ -45,7 +45,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                     };
 }
 - (IBAction)mlbEventButtonPressed:(UIButton *)sender {
-    [IBInstance configBackendURL:MLBBackend];
+    [IBApi configureBackendURL:MLBBackend];
     [IBApi getInstanceWithInstanceId:mlbpass
                           completion:^(IBInstance *instance, NSError *error) {
                               if (!error) {
@@ -59,7 +59,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                   }
                                   else {
                                       
-                                      viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
+                                      viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
                                       
                                   }
                                   
@@ -88,7 +88,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                    }
                                    else {
                                        
-                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance indexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
+                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
 
                                    }
                                  

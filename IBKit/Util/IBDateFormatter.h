@@ -10,6 +10,10 @@
 
 @interface IBDateFormatter : NSObject
 
++ (NSDate *)convertFromBackendDateString:(NSString *)dateString;
+
++ (NSString *)convertToAppStandardFromDate:(NSDate *)date;
+
 + (NSString *)convertToAppStandardFromDateString:(NSString *)dateString;
 
 @end

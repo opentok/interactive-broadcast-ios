@@ -72,7 +72,7 @@
         }
         
         if (json[@"event_image_end"] != [NSNull null]) {
-            _endTime = json[@"event_image_end"];
+            _endImage = json[@"event_image_end"];
         }
         
         _eventName = json[@"event_name"];

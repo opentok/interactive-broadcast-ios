@@ -13,5 +13,5 @@ if [ "$task" == "-d" ]; then
         
         xcodebuild -workspace "${WORKSPACE_NAME}" -scheme "BuildFatFramework"
         xcodebuild -workspace "${WORKSPACE_NAME}" -scheme "Documentation"
-        zip -r IBKit-Deliverable.zip IBKit.framework docs/ README.md OTAnnotationKitBundle.bundle 
+        zip -r IBKit.zip IBKit.framework docs/ README.md OTAnnotationKitBundle.bundle 
 fi

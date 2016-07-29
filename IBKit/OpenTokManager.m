@@ -34,7 +34,7 @@
 
 - (void)connectWithTokenHost:(NSString *)tokenHost {
     OTError *error = nil;
-    [self.session connectWithToken:tokenHost error:&error];
+    [_liveSession connectWithToken:tokenHost error:&error];
     
     if (error) {
         NSLog(@"connectWithTokenHost error: %@", error);
@@ -74,7 +74,7 @@
 
 - (NSError*) unsubscribeFromPrivateProducerCall{
     OTError *error = nil;
-    [self.session unsubscribe: self.privateProducerSubscriber error:&error];
+    [_liveSession unsubscribe: self.privateProducerSubscriber error:&error];
     [self muteOnstageSession:NO];
     if(error){
         [OTKLogger logEventAction:KLogVariationUnsubscribePrivateCall variation:KLogVariationFailure completion:nil];
@@ -96,10 +96,10 @@
 
 - (NSError*) subscribeToOnstageWithType:(NSString*)type{
     OTError *error = nil;
-    [self.session subscribe: self.subscribers[type] error:&error];
+    [_liveSession subscribe: self.subscribers[type] error:&error];
     if(error){
         [self.errors setObject:error forKey:type];
-        [self sendWarningSignal];
+        [self signalWarningUpdate];
     }
     return error;
 }
@@ -120,7 +120,7 @@
 }
 - (NSError*) onstageSubscribeToProducer{
     OTError *error = nil;
-    [self.session subscribe: self.privateProducerSubscriber error:&error];
+    [_liveSession subscribe: self.privateProducerSubscriber error:&error];
     if(error){
         [self.errors setObject:error forKey:@"producer_onstage"];
     }
@@ -169,15 +169,15 @@
 
 -(NSError*)disconnectOnstageSession{
     OTError *error = nil;
-    if(_session){
-        [_session disconnect:&error];
+    if(_liveSession){
+        [_liveSession disconnect:&error];
     }
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
     }
     else{
-        _session = nil;
+        _liveSession = nil;
     }
     return error;
 }
@@ -189,7 +189,7 @@
     OTError *error = nil;
     [session unpublish:self.publisher error:&error];
     
-    NSString *session_name = self.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
+    NSString *session_name = _liveSession.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@Unpublishes%@", [userRole capitalizedString], session_name];
     
     [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
@@ -203,7 +203,7 @@
 -(void)cleanupPublisher{
     if(_publisher){
         
-        if(_publisher.stream.connection.connectionId == _session.connection.connectionId){
+        if(_publisher.stream.connection.connectionId == _liveSession.connection.connectionId){
             NSLog(@"cleanup publisher from onstage");
         }
         else{
@@ -217,7 +217,7 @@
 
 
 #pragma mark - OpenTok Signaling
-- (NSError *)sendWarningSignal {
+- (NSError *)signalWarningUpdate {
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
         return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
     }
@@ -241,6 +241,28 @@
     return nil;
     
     
+}
+
+- (NSError*)signalQualityUpdate:(NSString*)quality
+{
+    NSDictionary *data = @{
+                           @"type" : @"qualityUpdate",
+                           @"data" :@{
+                                   @"connectionId":_publisher.session.connection.connectionId,
+                                   @"quality" : quality,
+                                   },
+                           };
+    
+    OTError* error = nil;
+    NSString *parsedString = [JSON stringify:data];
+    [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
+    
+    if (error) {
+        NSLog(@"signal didFailWithError %@", error);
+        return error;
+    }
+    
+    return nil;
 }
 
 #pragma mark - SIOSocket Signaling
@@ -300,7 +322,7 @@
 - (void) emitJoinRoom:(NSString *)sessionId{
     [self.socket emit:@"joinRoom" args:@[sessionId]];
 }
-- (NSError *)sendNewUserSignalWithName:(NSString *)username {
+- (NSError *)signalNewUserName:(NSString *)username {
     
     if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
         return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
@@ -337,7 +359,7 @@
     return error;
 }
 
-- (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString {
+- (NSError *)signalScreenShotWithFormattedString:(NSString *)formattedString {
     
     if (!self.publisher.session.connection) {
         return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendScreenShotWithFormattedString: pubisher has not published"}];
@@ -354,28 +376,6 @@
                                                @"snapshot": formattedString
                                             }
                                         ]];
-    
-    return nil;
-}
-
-- (NSError*)updateQualitySignal:(NSString*)quality
-{
-    NSDictionary *data = @{
-                           @"type" : @"qualityUpdate",
-                           @"data" :@{
-                                   @"connectionId":_publisher.session.connection.connectionId,
-                                   @"quality" : quality,
-                                   },
-                           };
-    
-    OTError* error = nil;
-    NSString *parsedString = [JSON stringify:data];
-    [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
-    
-    if (error) {
-        NSLog(@"signal didFailWithError %@", error);
-        return error;
-    }
     
     return nil;
 }

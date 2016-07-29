@@ -64,7 +64,7 @@
     UIButton *eventButton = (UIButton *)[cell viewWithTag:103];
     
     
-    [titleLabel setText:event.eventName];
+    [titleLabel setText:event.name];
     if([event.status isEqualToString:@"N"]){
         [statusLabel setText: [self getFormattedDate:event.startTime]];
         

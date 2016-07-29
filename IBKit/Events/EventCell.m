@@ -33,7 +33,7 @@
                      indexPath:(NSIndexPath *)indexPath {
 
     IBEvent *event = instance.events[indexPath.row];
-    [self.titleLabel setText:event.eventName];
+    [self.titleLabel setText:event.name];
     
     if ([event.descriptiveStatus isEqualToString:@"N"]) {
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];

@@ -31,7 +31,7 @@
 /**
  *  The name of the interactive broadcast event.
  */
-@property (readonly, nonatomic) NSString *eventName;
+@property (readonly, nonatomic) NSString *name;
 
 /**
  *  The ID of the interactive broadcast event.

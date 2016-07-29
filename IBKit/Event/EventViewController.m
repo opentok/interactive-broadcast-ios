@@ -247,7 +247,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)startSession{
-    _openTokManager.session = [[OTSession alloc] initWithApiKey:self.instance.apiKey
+    _openTokManager.liveSession = [[OTSession alloc] initWithApiKey:self.instance.apiKey
                                                       sessionId:self.instance.sessionIdHost
                                                        delegate:self];
     [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
@@ -265,7 +265,7 @@ typedef enum : NSUInteger {
         currentSession = _openTokManager.producerSession;
     }
     else{
-        currentSession = _openTokManager.session;
+        currentSession = _openTokManager.liveSession;
     }
     
     _textChat = [[OTKTextChatComponent alloc] init];
@@ -311,7 +311,7 @@ typedef enum : NSUInteger {
     if(self.user.role == IBUserRoleFan){
 
         if((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage){
-            [self.openTokManager sendNewUserSignalWithName:self.userName];
+            [self.openTokManager signalNewUserName:self.userName];
             [self publishTo:_openTokManager.producerSession];
             _openTokManager.publisher.publishAudio = NO;
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
@@ -320,7 +320,7 @@ typedef enum : NSUInteger {
         }
         
         if((self.eventStage & IBEventStageOnstage) == IBEventStageOnstage) {
-            [self publishTo:_openTokManager.session];
+            [self publishTo:_openTokManager.liveSession];
             [self.eventView.fanViewHolder addSubview:_openTokManager.publisher.view];
             _openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.fanViewHolder.bounds.size.width, self.eventView.fanViewHolder.bounds.size.height);
             [self.eventView fanIsOnStage];
@@ -328,13 +328,13 @@ typedef enum : NSUInteger {
     }
     else {
         if(self.user.role == IBUserRoleCelebrity && !_stopGoingLive){
-            [self publishTo:_openTokManager.session];
+            [self publishTo:_openTokManager.liveSession];
             [self.eventView.celebrityViewHolder addSubview:_openTokManager.publisher.view];
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.celebrityViewHolder.bounds.size.width, self.eventView.celebrityViewHolder.bounds.size.height);
         }
         
         if(self.user.role == IBUserRoleHost && !_stopGoingLive){
-            [self publishTo:_openTokManager.session];
+            [self publishTo:_openTokManager.liveSession];
             [self.eventView.hostViewHolder addSubview:_openTokManager.publisher.view];
             (_openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.hostViewHolder.bounds.size.width, self.eventView.hostViewHolder.bounds.size.height);
         }
@@ -350,7 +350,7 @@ typedef enum : NSUInteger {
 -(void) publishTo:(OTSession *)session {
     
     
-    NSString *session_name = _openTokManager.session.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
+    NSString *session_name = _openTokManager.liveSession.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
     NSString *logtype = [NSString stringWithFormat:@"%@Publishes%@", [[self.user userRoleName] capitalizedString], session_name];
     [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
@@ -363,7 +363,7 @@ typedef enum : NSUInteger {
     
     if (error) {
         NSLog(@"%@", error);
-        [_openTokManager sendWarningSignal];
+        [_openTokManager signalWarningUpdate];
         
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
@@ -452,7 +452,7 @@ typedef enum : NSUInteger {
         }
         
     }
-    if(stream.session.connection.connectionId == _openTokManager.session.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
+    if(stream.session.connection.connectionId == _openTokManager.liveSession.connection.connectionId && [connectingTo isEqualToString:@"producer"]){
         NSString *logtype = [NSString stringWithFormat:@"%@SubscribesProducer", [[self.user userRoleName] capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
         _openTokManager.privateProducerSubscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
@@ -472,7 +472,7 @@ typedef enum : NSUInteger {
 {
     _networkTest = [[OpenTokNetworkTest alloc] initWithFrameRateAndResolution:@"30" resolution:@"640x480"];
     
-    if(subscriber.session.connection.connectionId == _openTokManager.session.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
+    if(subscriber.session.connection.connectionId == _openTokManager.liveSession.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
         
@@ -505,7 +505,7 @@ typedef enum : NSUInteger {
     
     [self.eventView showNotification:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event" useColor:[UIColor SLRedColor]];
     [_openTokManager.errors setObject:error forKey:@"subscriberError"];
-    [_openTokManager sendWarningSignal];
+    [_openTokManager signalWarningUpdate];
 }
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
@@ -571,7 +571,7 @@ typedef enum : NSUInteger {
 - (void)checkQualityAndSendSignal
 {
     if(_openTokManager.publisher && _openTokManager.publisher.session) {
-        [_openTokManager updateQualitySignal:[_networkTest getQuality]];
+        [_openTokManager signalQualityUpdate:[_networkTest getQuality]];
         [self startNetworkTest];
     }
 }
@@ -583,13 +583,13 @@ typedef enum : NSUInteger {
                connectionId:session.connection.connectionId
                   partnerId:@([self.instance.apiKey integerValue])];
     
-    if (session == self.openTokManager.session) {
+    if (session == self.openTokManager.liveSession) {
         NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [[self.user userRoleName] capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
     }
     
     if (self.user.role == IBUserRoleFan) {
-        if(session.sessionId == _openTokManager.session.sessionId){
+        if(session.sessionId == _openTokManager.liveSession.sessionId){
             NSLog(@"sessionDidConnect to Onstage");
             (self.eventView.statusLabel).text = @"";
             self.eventView.closeEvenBtn.hidden = NO;
@@ -636,7 +636,7 @@ typedef enum : NSUInteger {
     }
     else {
         self.eventView.getInLineBtn.hidden = YES;
-        _openTokManager.session = nil;
+        _openTokManager.liveSession = nil;
     }
 }
 
@@ -700,7 +700,7 @@ typedef enum : NSUInteger {
         }
     }
     else{
-        if(session.connection.connectionId == _openTokManager.session.connection.connectionId) {
+        if(session.connection.connectionId == _openTokManager.liveSession.connection.connectionId) {
             
             if([type isEqualToString:@"host"]){
                 _openTokManager.hostStream = nil;
@@ -778,7 +778,7 @@ didFailWithError:(OTError*)error
     }
     else if([type isEqualToString:@"resendNewFanSignal"]){
         if(_shouldResendProducerSignal){
-            [self.openTokManager sendNewUserSignalWithName:self.userName];
+            [self.openTokManager signalNewUserName:self.userName];
         }
     }
     else if([type isEqualToString:@"joinProducer"]){
@@ -874,7 +874,7 @@ didFailWithError:(OTError*)error
         self.eventStage &= ~ IBEventStageOnstage;
         
         if(_openTokManager.publisher) {
-            [_openTokManager unpublishFrom:_openTokManager.session withUserRole:[self.user userRoleName]];
+            [_openTokManager unpublishFrom:_openTokManager.liveSession withUserRole:[self.user userRoleName]];
         }
         [_openTokManager disconnectBackstageSession];
         
@@ -903,7 +903,7 @@ didFailWithError:(OTError*)error
         NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
         NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
         NSString *formattedString = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
-        [self.openTokManager sendScreenShotSignalWithFormattedString:formattedString];
+        [self.openTokManager signalScreenShotWithFormattedString:formattedString];
     }
 }
 
@@ -946,7 +946,7 @@ didFailWithError:(OTError*)error
 -(void)statusChanged {
     dispatch_async(dispatch_get_main_queue(), ^(){
 
-    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.eventName, self.event.descriptiveStatus];
+    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.name, self.event.descriptiveStatus];
     
     if ([self.event.status isEqualToString:@"N"]) {
         
@@ -986,7 +986,7 @@ didFailWithError:(OTError*)error
         if (self.user.role == IBUserRoleFan &&
             (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
             (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            if(_openTokManager.session){
+            if(_openTokManager.liveSession){
                 self.eventView.getInLineBtn.hidden = NO;
             }
         }
@@ -1062,7 +1062,7 @@ didFailWithError:(OTError*)error
     OTSession *currentSession;
 
     if(self.user.role != IBUserRoleFan || (self.eventStage & IBEventStageOnstage) == IBEventStageOnstage){
-        currentSession = _openTokManager.session;
+        currentSession = _openTokManager.liveSession;
     }
     else {
         currentSession = _openTokManager.producerSession;

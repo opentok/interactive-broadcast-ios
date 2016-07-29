@@ -10,20 +10,38 @@
 #import <OpenTok/OpenTok.h>
 
 @interface OpenTokManager : NSObject
-@property (nonatomic) OTSession* session;
-@property (nonatomic) OTSession* producerSession;
+
+// it uses for liveSession and producerSession
 @property (nonatomic) OTPublisher* publisher;
+
+/**
+ *  The OpneTok session for live show
+ */
+@property (nonatomic) OTSession* liveSession;
+
+/**
+ *  The OpenTok session for connecting to producer
+ */
+@property (nonatomic) OTSession* producerSession;
+
+
 @property (nonatomic) NSMutableDictionary *subscribers;
 @property (nonatomic) OTSubscriber* producerSubscriber;
 @property (nonatomic) OTSubscriber* privateProducerSubscriber;
 @property (nonatomic) OTSubscriber* selfSubscriber;
+
+// we capture this for gaining full control of subscribing
 @property (nonatomic) OTStream* celebrityStream;
 @property (nonatomic) OTStream* hostStream;
 @property (nonatomic) OTStream* fanStream;
 @property (nonatomic) OTStream* producerStream;
 @property (nonatomic) OTStream* privateProducerStream;
+
+// we capture for sending text chat to producer
 @property (nonatomic) OTConnection* producerConnection;
 @property (nonatomic) NSMutableDictionary *errors;
+
+// HLS
 @property (readonly, nonatomic) BOOL canJoinShow;
 @property (readonly, nonatomic) BOOL waitingOnBroadcast;
 @property (readonly, nonatomic) BOOL startBroadcast;
@@ -33,8 +51,8 @@
 - (void)muteOnstageSession:(BOOL)mute;
 
 #pragma mark - OpenTok Signaling
-- (NSError *)sendWarningSignal;
-- (NSError*)updateQualitySignal:(NSString*)quality;
+- (NSError *)signalWarningUpdate;
+- (NSError*)signalQualityUpdate:(NSString*)quality;
 
 #pragma sessions
 -(NSError*)connectBackstageSessionWithToken:(NSString*)token;
@@ -61,7 +79,7 @@
                         sessionId:(NSString *)sessionId;
 - (void)closeSocket;
 
-- (NSError *)sendNewUserSignalWithName:(NSString *)username;
-- (NSError *)sendScreenShotSignalWithFormattedString:(NSString *)formattedString;
+- (NSError *)signalNewUserName:(NSString *)username;
+- (NSError *)signalScreenShotWithFormattedString:(NSString *)formattedString;
 - (void)emitJoinRoom:(NSString *)sessionId;
 @end

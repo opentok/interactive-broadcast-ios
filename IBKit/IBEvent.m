@@ -75,7 +75,7 @@
             _endImage = json[@"event_image_end"];
         }
         
-        _eventName = json[@"event_name"];
+        _name = json[@"event_name"];
         _fanURL = json[@"fan_url"];
         _hostURL = json[@"host_url"];
         _identifier = json[@"id"];

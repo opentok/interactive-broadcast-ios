@@ -120,6 +120,14 @@ typedef enum : NSUInteger {
         _internetReachability = [Reachability reachabilityForInternetConnection];
         [_internetReachability startNotifier];
         
+        //Connect the logger
+        NSString* sourceId = [NSString stringWithFormat:@"%@-%@-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],self.event.adminName,self.event.identifier];
+        [OTKLogger analyticsWithClientVersion:KLogClientVersion
+                                       source:sourceId
+                                  componentId:kLogComponentIdentifier
+                                         guid:[[NSUUID UUID] UUIDString]];
+        
+        
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 
     }
@@ -391,7 +399,7 @@ typedef enum : NSUInteger {
   streamDestroyed:(OTStream *)stream
 {
     
-    if(!_openTokManager.publisher.stream || !stream.connection) return;
+    if(!stream.connection) return;
     
     NSString *me = [self.user userRoleName];
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
@@ -400,13 +408,12 @@ typedef enum : NSUInteger {
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
         NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
-        
         NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",[me capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         [_openTokManager cleanupSubscriber:connectingTo];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
-    if(_openTokManager.selfSubscriber){
+    else if ([_openTokManager.selfSubscriber.stream.streamId isEqualToString:stream.streamId]) {
         [_openTokManager unsubscribeSelfFromProducerSession];
     }
     [_openTokManager cleanupPublisher];
@@ -464,6 +471,7 @@ typedef enum : NSUInteger {
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
     _networkTest = [[OpenTokNetworkTest alloc] initWithFrameRateAndResolution:@"30" resolution:@"640x480"];
+    
     if(subscriber.session.connection.connectionId == _openTokManager.session.connection.connectionId && subscriber.stream != _openTokManager.privateProducerStream){
         
         NSLog(@"subscriberDidConnectToStream (%@)", subscriber.stream.connection.connectionId);
@@ -576,13 +584,6 @@ typedef enum : NSUInteger {
                   partnerId:@([self.instance.apiKey integerValue])];
     
     if (session == self.openTokManager.session) {
-        
-        NSString* sourceId = [NSString stringWithFormat:@"%@-%@-%@", [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],self.event.adminName,self.event.identifier];
-        [OTKLogger analyticsWithClientVersion:KLogClientVersion
-                                       source:sourceId
-                                  componentId:kLogComponentIdentifier
-                                         guid:[[NSUUID UUID] UUIDString]];
-        
         NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [[self.user userRoleName] capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
     }

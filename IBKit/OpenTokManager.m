@@ -63,9 +63,11 @@
     [self.producerSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
-    [OTKLogger logEventAction:KLogVariationFanUnpublishesBackstage variation:KLogVariationSuccess completion:nil];
     if(error){
         [OTKLogger logEventAction:KLogVariationFanUnpublishesBackstage variation:KLogVariationFailure completion:nil];
+    }
+    else{
+        [OTKLogger logEventAction:KLogVariationFanUnpublishesBackstage variation:KLogVariationSuccess completion:nil];
     }
     return error;
 }

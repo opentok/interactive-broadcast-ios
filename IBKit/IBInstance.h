@@ -9,37 +9,37 @@
 @interface IBInstance : NSObject
 
 /**
- *  An OpenTok API key.
+ *  The OpenTok API key.
  */
 @property (readonly, nonatomic) NSString *apiKey;
 
 /**
- *  An OpenTok session identifier for host.
+ *  The OpenTok session ID for the host.
  */
 @property (readonly, nonatomic) NSString *sessionIdHost;
 
 /**
- *  An OpenTok token for host.
+ *  The OpenTok token for the host.
  */
 @property (readonly, nonatomic) NSString *tokenHost;
 
 /**
- *  An OpenTok session identifier for producer.
+ *  The OpenTok session identifier for the producer.
  */
 @property (readonly, nonatomic) NSString *sessionIdProducer;
 
 /**
- *  An OpenTok token for producer.
+ *  The OpenTok token for the producer.
  */
 @property (readonly, nonatomic) NSString *tokenProducer;
 
 /**
- *  All interactive broadcast events associated with the instance
+ *  All interactive broadcast events associated with the instance.
  */
 @property (readonly, nonatomic) NSArray<IBEvent *> * events;
 
 /**
- *  An identifier of the instance
+ *  The instance ID.
  */
 @property (readonly, nonatomic) NSString *instanceId;
 

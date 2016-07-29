@@ -10,46 +10,46 @@
 @interface IBApi : NSObject
 
 /**
- *  Configure the URL of the server that is being used by the SDK.
+ *  Configure the URL of the backend server used by the SDK.
  *
- *  @param backendURL A backend URL
+ *  @param backendURL the URL of the backend server used by the SDK.
  */
 + (void)configureBackendURL:(NSString *)backendURL;
 
 /**
- *  Fetch instance information by a given instance identifier.
+ *  Retrieve instance information for the specified instance ID.
  *
- *  @param instanceId   An instance identifier.
- *  @param completion   A completion handler to call when the fetch instance operation is complete.
+ *  @param instanceId   An instance ID.
+ *  @param completion   A completion handler to call when the operation is complete.
  */
 + (void)getInstanceWithInstanceId:(NSString *)instanceId
                        completion:(void (^)(IBInstance *, NSError *))completion;
 
 /**
- *  Fetch instance information by a given admin identifier.
+ *  Retrieve instance information for the specified adminstrator ID.
  *
- *  @param adminId    An admin identifier.
- *  @param completion A completion handler to call when the fetch instance operation is complete.
+ *  @param adminId    The adminstrator ID.
+ *  @param completion A completion handler to call when the operation is complete.
  */
 + (void)getInstanceWithAdminId:(NSString *)adminId
                     completion:(void (^)(IBInstance *, NSError *))completion;
 
 /**
- *  Create an OpenTok token for an event with a given user and an event.
+ *  Create an OpenTok token for the specified user and event.
  *
  *  @param user         An interactive broadcast user.
  *  @param event        An interactive broadcast event.
- *  @param completion   A completion handler to call when the create OpenTok token operation is complete.
+ *  @param completion   A completion handler to call when the operation is complete.
  */
 + (void)createEventTokenWithUser:(IBUser *)user
                            event:(IBEvent *)event
                       completion:(void (^)(IBInstance *, NSError *))completion;
 
 /**
- *  Create an OpenTok token for a fan event with a given event.
+ *  Create an OpenTok token for the specified fan event.
  *
- *  @param event        An interactive broadcast user as a fan.
- *  @param completion   A completion handler to call when the create OpenTok token operation is complete.
+ *  @param event        An interactive broadcast fan event.
+ *  @param completion   A completion handler to call when the operation is complete.
  */
 + (void)createFanEventTokenWithEvent:(IBEvent *)event
                           completion:(void (^)(IBInstance *, NSError *))completion;

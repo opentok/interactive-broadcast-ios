@@ -11,13 +11,13 @@
 @interface EventViewController : UIViewController
 
 /**
- *  Initialize an interactive braodcast event view controller with a given instance, an eventIndexPath and a user.
+ *  Initialize an interactive braodcast event view controller with the specified instance, event index path, and user.
  *
- *  @param instance             An instance for the view controller to connect.
- *  @param eventIndexPath       An index path that locates an evnet in the instance.
- *  @param user                 A user role for the view controller connect.
+ *  @param instance             An instance to which the view controller connects.
+ *  @param eventIndexPath       The index path locating the event within the instance event array.
+ *  @param user                 A user role for the view controller connection.
  *
- *  @return A new interactive braodcast event view controller.
+ *  @return An initialized interactive broadcast event view controller.
  */
 - (instancetype)initWithInstance:(IBInstance *)instance
                   eventIndexPath:(NSIndexPath *)eventIndexPath

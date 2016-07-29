@@ -9,37 +9,37 @@
 @interface IBEvent : NSObject
 
 /**
- *  An admin identifier.
+ *  The adminstrator ID.
  */
 @property (readonly, nonatomic) NSUInteger adminId;
 
 /**
- *  An admin name.
+ *  The adminstrator name.
  */
 @property (readonly, nonatomic) NSString *adminName;
 
 /**
- *  A starting timestamp of the event.
+ *  The starting timestamp of the event.
  */
 @property (readonly, nonatomic) NSDate *startTime;
 
 /**
- *  An end timestamp of the event.
+ *  The end timestamp of the event.
  */
 @property (readonly, nonatomic) NSDate *endTime;
 
 /**
- *  A name of the interactive broadcast event.
+ *  The name of the interactive broadcast event.
  */
 @property (readonly, nonatomic) NSString *eventName;
 
 /**
- *  An identifier of the interactive broadcast event.
+ *  The ID of the interactive broadcast event.
  */
 @property (readonly, nonatomic) NSString *identifier;
 
 /**
- *  A current descriptive event status.
+ *  The current descriptive event status.
  */
 @property (readonly, nonatomic) NSString *descriptiveStatus;
 

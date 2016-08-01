@@ -25,6 +25,8 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 @property (weak, nonatomic) IBOutlet UIButton *fanCustomEventsButton;
 @property (weak, nonatomic) IBOutlet UIButton *celebrityCustomEventsButton;
 @property (weak, nonatomic) IBOutlet UIButton *hostCustomEventsButton;
+@property (weak, nonatomic) IBOutlet UITextField *adminIdField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *enviromentPicker;
 
 
 @property (nonatomic) NSDictionary *requestData;
@@ -35,7 +37,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [IBApi configureBackendURL:backendBaseUrl];
+    [IBApi configureBackendURL:demoBackend];
     _requestData = @{
                      @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
                      @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
@@ -80,13 +82,15 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 
     if((sender != self.fanCustomEventsButton ) && (sender != self.hostCustomEventsButton) && (sender != self.celebrityCustomEventsButton)) {
         
+        NSString * selectedEnviroment = self.enviromentPicker.selectedSegmentIndex == 0 ? backendBaseUrl : demoBackend;
+        [IBApi configureBackendURL:selectedEnviroment];
         
-        [IBApi getInstanceWithAdminId:@"APO0"
+        [IBApi getInstanceWithAdminId: self.adminIdField.text
                            completion:^(IBInstance *instance, NSError *error) {
                              
                                if (!error) {
                                    NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
-                                   instance_data[@"backend_base_url"] = backendBaseUrl;
+                                   instance_data[@"backend_base_url"] = selectedEnviroment;
                                  
                                    UIViewController *viewcontroller;
                                    if(instance.events.count != 1){

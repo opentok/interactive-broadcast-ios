@@ -399,18 +399,15 @@ typedef enum : NSUInteger {
   streamDestroyed:(OTStream *)stream
 {
     
-    if(!stream.connection) return;
-    
     NSString *me = [self.user userRoleName];
-    NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
-    OTSubscriber *_subscriber = _openTokManager.subscribers[connectingTo];
+    OTSubscriber *_subscriber = _openTokManager.subscribers[me];
     
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
-        NSLog(@"stream DESTROYED ONSTAGE %@", connectingTo);
+        NSLog(@"stream DESTROYED ONSTAGE %@", me);
         NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",[me capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
-        [_openTokManager cleanupSubscriber:connectingTo];
+        [_openTokManager cleanupSubscriber:me];
         [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
     }
     else if ([_openTokManager.selfSubscriber.stream.streamId isEqualToString:stream.streamId]) {

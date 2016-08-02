@@ -941,69 +941,71 @@ didFailWithError:(OTError*)error
 }
 
 -(void)statusChanged {
-    dispatch_async(dispatch_get_main_queue(), ^(){
-
-    self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.name, self.event.descriptiveStatus];
     
-    if ([self.event.status isEqualToString:@"N"]) {
+    dispatch_async(dispatch_get_main_queue(), ^(){
         
-        if (self.user.role != IBUserRoleFan) {
-            self.eventView.eventImage.hidden = YES;
-        }
-        else {
-            self.eventView.eventImage.hidden = NO;
-            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            self.eventView.getInLineBtn.hidden = YES;
-        }
-    }
-    else if([self.event.status isEqualToString:@"P"]) {
+        self.eventView.eventName.text = [NSString stringWithFormat:@"%@ (%@)", self.event.name, self.event.descriptiveStatus];
         
-        if (self.user.role != IBUserRoleFan) {
-            self.eventView.eventImage.hidden = YES;
-            self.eventView.getInLineBtn.hidden = YES;
-        }
-        else {
-            self.eventView.eventImage.hidden = NO;
-            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-            if(_openTokManager.canJoinShow){
-                self.eventView.getInLineBtn.hidden = NO;
+        if ([self.event.status isEqualToString:@"N"]) {
+            
+            if (self.user.role != IBUserRoleFan) {
+                self.eventView.eventImage.hidden = YES;
+            }
+            else {
+                self.eventView.eventImage.hidden = NO;
+                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+                self.eventView.getInLineBtn.hidden = YES;
             }
         }
-    }
-    else if ([self.event.status isEqualToString:@"L"]) {
-        
-        if (_openTokManager.subscribers.count > 0) {
-            self.eventView.eventImage.hidden = YES;
-        }
-        else{
-            self.eventView.eventImage.hidden = NO;
-            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
-        }
-        
-        if (self.user.role == IBUserRoleFan &&
-            (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
-            (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
-            if(_openTokManager.liveSession){
-                self.eventView.getInLineBtn.hidden = NO;
+        else if([self.event.status isEqualToString:@"P"]) {
+            
+            if (self.user.role != IBUserRoleFan) {
+                self.eventView.eventImage.hidden = YES;
+                self.eventView.getInLineBtn.hidden = YES;
+            }
+            else {
+                self.eventView.eventImage.hidden = NO;
+                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+                if(_openTokManager.canJoinShow){
+                    self.eventView.getInLineBtn.hidden = NO;
+                }
             }
         }
-        self.eventStage |= IBEventStageLive;
-        [self goLive];
-    }
-    else if ([self.event.status isEqualToString:@"C"]) {
-        
-        if (self.event.endImage) {
-            [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
+        else if ([self.event.status isEqualToString:@"L"]) {
+            
+            if (_openTokManager.subscribers.count > 0) {
+                self.eventView.eventImage.hidden = YES;
+            }
+            else{
+                self.eventView.eventImage.hidden = NO;
+                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+            }
+            
+            if (self.user.role == IBUserRoleFan &&
+                (self.eventStage & IBEventStageBackstage) != IBEventStageBackstage &&
+                (self.eventStage & IBEventStageOnstage) != IBEventStageOnstage){
+                if(_openTokManager.liveSession){
+                    self.eventView.getInLineBtn.hidden = NO;
+                }
+            }
+            self.eventStage |= IBEventStageLive;
+            [self goLive];
         }
-        [self.eventView eventIsClosed];
-        
-        [_openTokManager disconnectOnstageSession];
-        
-        if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
-            [_openTokManager disconnectBackstageSession];
+        else if ([self.event.status isEqualToString:@"C"]) {
+            
+            [_openTokManager disconnectOnstageSession];
+            
+            if ((self.eventStage & IBEventStageBackstage) == IBEventStageBackstage) {
+                [_openTokManager disconnectBackstageSession];
+            }
+            [self.eventView eventIsClosed];
+            [_openTokManager cleanupPublisher];
+            [_openTokManager cleanupSubscribers];
+            
+            if (self.event.endImage) {
+                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
+            }
         }
-        [_openTokManager cleanupPublisher];
-    }
     });
 }
 

@@ -61,6 +61,7 @@
 
 #pragma subscribers
 - (void)cleanupSubscriber:(NSString*)type;
+- (void)cleanupSubscribers;
 - (NSError*)subscribeToOnstageWithType:(NSString*)type;
 - (NSError*)backstageSubscribeToProducer;
 - (NSError*)onstageSubscribeToProducer;

@@ -126,6 +126,7 @@
     }
     return error;
 }
+
 - (void)cleanupSubscriber:(NSString*)type {
     OTSubscriber *_subscriber = _subscribers[type];
     if(_subscriber){
@@ -136,6 +137,9 @@
     }
 }
 
+- (void)cleanupSubscribers {
+    [_subscribers removeAllObjects];
+}
 
 #pragma session
 
@@ -200,16 +204,8 @@
     }
 }
 
--(void)cleanupPublisher{
+-(void)cleanupPublisher {
     if(_publisher){
-        
-        if(_publisher.stream.connection.connectionId == _liveSession.connection.connectionId){
-            NSLog(@"cleanup publisher from onstage");
-        }
-        else{
-            NSLog(@"cleanup publisher from backstage");
-        }
-        
         [_publisher.view removeFromSuperview];
         _publisher = nil;
     }

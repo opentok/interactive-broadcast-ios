@@ -19,7 +19,7 @@ PODS:
   - DGActivityIndicatorView (2.0)
   - Fabric (1.6.7)
   - Kiwi (2.4.0)
-  - OpenTok (2.8.3)
+  - OpenTok (2.9.0)
   - OTKAnalytics (1.0.0)
   - Reachability (3.2)
   - SIOSocket (0.2.0)
@@ -31,7 +31,7 @@ DEPENDENCIES:
   - DGActivityIndicatorView (~> 2.0)
   - Fabric
   - Kiwi
-  - OpenTok (~> 2.8.3)
+  - OpenTok (~> 2.9.0)
   - OTKAnalytics
   - Reachability
   - SIOSocket (~> 0.2.0)
@@ -43,12 +43,12 @@ SPEC CHECKSUMS:
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  OpenTok: ad14a09847ba5d6485820f5946484b749de944d7
+  OpenTok: 0d5b1180dd7d7d971c9b9a25fd33c84f09f27e11
   OTKAnalytics: 436b07bca81843e1b0d58d76847cdbaee92b922f
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
-PODFILE CHECKSUM: c22779359b7f56a8d167c93905d7299224316b62
+PODFILE CHECKSUM: 0c660ba5ff07e85ffbd1d53d2fbaa1b76aff0e39
 
 COCOAPODS: 1.0.1

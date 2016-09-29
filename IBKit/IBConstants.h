@@ -6,7 +6,7 @@
 //  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 static NSString* const kLogComponentIdentifier = @"iBS";
-static NSString* const KLogClientVersion = @"ios-ib-v1.0.3";
+static NSString* const KLogClientVersion = @"ios-ib-v1.0.2";
 static NSString* const KLogVariationAttempt = @"Attempt";
 static NSString* const KLogVariationSuccess = @"Success";
 static NSString* const KLogVariationFailure = @"Failure";

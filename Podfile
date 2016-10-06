@@ -13,7 +13,7 @@ target 'IBKit' do
   pod 'Reachability'
   pod 'AFNetworking'
   pod 'OpenTok', '~> 2.9.0'
-  pod 'OTKAnalytics'
+  pod 'OTKAnalytics', '~> 1.0.0'
 end
 
 target 'IBKitTests' do

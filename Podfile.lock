@@ -14,10 +14,10 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Crashlytics (3.7.2):
+  - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
-  - DGActivityIndicatorView (2.0)
-  - Fabric (1.6.7)
+  - DGActivityIndicatorView (2.1)
+  - Fabric (1.6.9)
   - Kiwi (2.4.0)
   - OpenTok (2.9.0)
   - OTKAnalytics (1.0.0)
@@ -32,16 +32,16 @@ DEPENDENCIES:
   - Fabric
   - Kiwi
   - OpenTok (~> 2.9.0)
-  - OTKAnalytics
+  - OTKAnalytics (~> 1.0.0)
   - Reachability
   - SIOSocket (~> 0.2.0)
   - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
-  DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
+  DGActivityIndicatorView: 1942ae657a8d247c035f229422b2d15a8adbe5b6
+  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   OpenTok: 0d5b1180dd7d7d971c9b9a25fd33c84f09f27e11
   OTKAnalytics: 436b07bca81843e1b0d58d76847cdbaee92b922f
@@ -49,6 +49,6 @@ SPEC CHECKSUMS:
   SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
-PODFILE CHECKSUM: 0c660ba5ff07e85ffbd1d53d2fbaa1b76aff0e39
+PODFILE CHECKSUM: 0061c323d1c2a9df8a14c4be9323bc93b83a6bed
 
 COCOAPODS: 1.0.1

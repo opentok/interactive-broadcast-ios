@@ -64,17 +64,21 @@
 
 #pragma mark - loader
 - (void)showLoader {
-    self.activityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeFiveDots
+    
+    if (!self.activityIndicatorView) {
+        self.activityIndicatorView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeFiveDots
                                                                  tintColor:[UIColor SLBlueColor] size:50.0f];
-    self.activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, CGRectGetWidth([UIScreen mainScreen].bounds), 100.0f);
-    [self addSubview:self.activityIndicatorView];
-    [self bringSubviewToFront:self.activityIndicatorView];
-    [self.activityIndicatorView startAnimating];
+        self.activityIndicatorView.frame = CGRectMake(0.0f, 100.0f, CGRectGetWidth([UIScreen mainScreen].bounds), 100.0f);
+        [self addSubview:self.activityIndicatorView];
+        [self bringSubviewToFront:self.activityIndicatorView];
+        [self.activityIndicatorView startAnimating];
+    }
 }
 
 - (void)stopLoader {
     [self.activityIndicatorView stopAnimating];
     [self.activityIndicatorView removeFromSuperview];
+    self.activityIndicatorView = nil;
 }
 
 #pragma mark - video preview

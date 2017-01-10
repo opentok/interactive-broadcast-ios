@@ -48,7 +48,7 @@
         _signalingURL = json[@"signaling_url"];
         
         if (json[@"apiKey"]) {
-            _apiKey = [NSString stringWithFormat:@"%ld", [json[@"apiKey"] integerValue]];
+            _apiKey = [NSString stringWithFormat:@"%ld", (unsigned long)[json[@"apiKey"] integerValue]];
         }
         _sessionIdHost = json[@"sessionIdHost"];
         _tokenHost = json[@"tokenHost"];

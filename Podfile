@@ -1,5 +1,4 @@
-platform :ios, '8.0'
-
+platform :ios, '9.0'
 
 target 'IBDemo' do
   pod 'Fabric'
@@ -7,12 +6,12 @@ target 'IBDemo' do
 end
 
 target 'IBKit' do
-  pod 'DGActivityIndicatorView', '~> 2.0'
+  pod 'DGActivityIndicatorView'
   pod 'SVProgressHUD'
-  pod 'SIOSocket', '~> 0.2.0'
+  pod 'SIOSocket'
   pod 'Reachability'
   pod 'AFNetworking'
-  pod 'OpenTok', '~> 2.9.0'
+  pod 'OpenTok', '2.10.0'
   pod 'OTKAnalytics', '~> 1.0.0'
 end
 

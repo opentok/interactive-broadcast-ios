@@ -110,7 +110,7 @@
         return;
     }
     
-    [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+    [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", (unsigned long)event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
         if (!error) {
             NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", [user userRoleName]];
             NSString *eventURL = [event valueForKey:userTypeURL];
@@ -172,7 +172,7 @@
     if (event.adminId) {
         
         // new backend instance
-        [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+        [IBApi getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", (unsigned long)event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
             
             if (!error) {
                 [self createFanEventTokenWithAdmin:event adminId:adminIdHash completion:completion];

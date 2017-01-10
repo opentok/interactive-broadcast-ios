@@ -355,7 +355,7 @@ typedef enum : NSUInteger {
     [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
     if(!_openTokManager.publisher){
-        _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self name:self.userName];
+        _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self settings:[[OTPublisherSettings alloc] init]];
     }
     
     OTError *error = nil;

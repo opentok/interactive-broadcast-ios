@@ -168,12 +168,10 @@ typedef enum : NSUInteger {
         msg.type == OTK_SENT_MESSAGE_SHORT) {
         extras = 10.0f;
     }
-    
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14.0];
-    CGSize size = [msg.text sizeWithFont:font
-                       constrainedToSize:CGSizeMake(tableView.bounds.size.width - 48, 9999) lineBreakMode:NSLineBreakByWordWrapping];
-    
-    return size.height + extras;
+
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:14]};
+    CGRect rect = [msg.text boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 48, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+    return rect.size.height + extras;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

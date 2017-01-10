@@ -11,6 +11,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
     self.message.textContainer.lineFragmentPadding = 0;    
     self.message.textContainerInset = UIEdgeInsetsZero;
 }

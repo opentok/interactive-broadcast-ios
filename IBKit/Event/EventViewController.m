@@ -728,7 +728,10 @@ didFailWithError:(OTError*)error
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)string {
     
-    if (!type) return;
+    if ( !type && ![connection.data isEqualToString:(@"usertype=producer")] && ![connection.data isEqualToString:(@"usertype=fan")] && ![connection.data isEqualToString:(@"usertype=host")] && ![connection.data isEqualToString:(@"usertype=celebrity")]) {
+        return;
+    }
+    
     NSDictionary* messageData;
     if(string){
         messageData = [JSON parseJSON:string];

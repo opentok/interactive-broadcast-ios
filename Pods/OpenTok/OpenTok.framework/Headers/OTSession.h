@@ -30,6 +30,24 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
 };
 
 /**
+ * Defines settings to be used when initializing an OTSession object using the
+ * <[OTSession initWithApiKey:sessionId:delegate:settings:]> method.
+ */
+@interface OTSessionSettings : NSObject
+
+/**
+ * Prevent connection events (such as
+ * <[OTSessionDelegate session:connectionCreated:]>) from being dispatched.
+ * This is experimental feature that is subject to change, and it is available
+ * to partners enrolled in an upcoming beta program.
+ *
+ * The default value is NO.
+ */
+@property(nonatomic, assign) BOOL connectionEventsSuppressed;
+
+@end
+
+/**
  * The first step in using the OpenTok iOS SDK is to initialize
  * an OTSession object with your API key and a valid
  * [session ID](http://tokbox.com/opentok/tutorials/create-session)
@@ -38,7 +56,6 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * [token](http://tokbox.com/opentok/tutorials/create-token).
  */
 @interface OTSession : NSObject
-
 /** @name Getting information about the session */
 
 /**
@@ -69,12 +86,12 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * The [session ID](http://tokbox.com/opentok/tutorials/create-session)
  * of this instance. This is an immutable value.
  */
-@property(readonly) NSString* sessionId;
+@property(readonly) NSString* _Nonnull sessionId;
 
 /**
  * The streams that are a part of this session, keyed by streamId.
  */
-@property(readonly) NSDictionary* streams;
+@property(readonly) NSDictionary<NSString*, OTStream*>* _Nonnull streams;
 
 /**
  * The <OTConnection> object for this session. The connection property is only
@@ -83,14 +100,14 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * session fails to connect,
  * this property shall remain nil.
  */
-@property(readonly) OTConnection* connection;
+@property(readonly) OTConnection* _Nonnull connection;
 
 /**
  * The <OTSessionDelegate> object that serves as a delegate object for this
  * OTSession object,
  * handling messages on behalf of this session.
  */
-@property(nonatomic, assign) id<OTSessionDelegate> delegate;
+@property(nonatomic, assign) id<OTSessionDelegate> _Nullable delegate;
 
 /**
  * The delegate callback queue is application-definable. The GCD queue for
@@ -98,7 +115,7 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * XCTest (new in XCode 5) or other frameworks that need the to operate in the
  * main thread.
  */
-@property(nonatomic, assign) dispatch_queue_t apiQueue;
+@property(nonatomic, assign) dispatch_queue_t _Nonnull apiQueue;
 
 /**
  * An <OTSessionCapabilities> object, which indicates whether the client can
@@ -107,7 +124,7 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * until you have connected to a session and the
  * <[OTSessionDelegate sessionDidConnect:]> method has been called.
  */
-@property(readonly) OTSessionCapabilities* capabilities;
+@property(readonly) OTSessionCapabilities* _Nullable capabilities;
 
 /** @name Initializing and connecting to a session */
 
@@ -125,10 +142,28 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  *
  * @return The OTSession object, or nil if initialization fails.
  */
-- (id)initWithApiKey:(NSString*)apiKey
-           sessionId:(NSString*)sessionId
-            delegate:(id<OTSessionDelegate>)delegate;
+- (nonnull id)initWithApiKey:(nonnull NSString*)apiKey
+                   sessionId:(nonnull NSString*)sessionId
+                    delegate:(nullable id<OTSessionDelegate>)delegate;
 
+/**
+ * Initialize the OTSession object with settings defined by an
+ * <OTSessionSettings> object.
+ *
+ * @param apiKey Your OpenTok API key.
+ *
+ * @param sessionId The session ID of this instance.
+ *
+ * @param delegate The delegate (<OTPublisherKitDelegate>) object for the
+ * publisher.
+ *
+ * @param settings The (<OTPublisherKitSettings>) object that defines settings
+ * for the publisher.
+ */
+- (nonnull id)initWithApiKey:(nonnull NSString*)apiKey
+                   sessionId:(nonnull NSString*)sessionId
+                    delegate:(nullable id<OTSessionDelegate>)delegate
+                    settings:(nonnull OTSessionSettings *)settings;
 
 /**
  * Once your application has a valid 
@@ -163,8 +198,8 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * <[OTSessionDelegate session:didFailWithError:]> message is sent to
  * the session's delegate.
  */
-- (void)connectWithToken:(NSString*)token
-                   error:(OTError**)error;
+- (void)connectWithToken:(nonnull NSString*)token
+                   error:(OTError* _Nullable* _Nullable)error;
 
 /**
  * Disconnect from an active OpenTok session.
@@ -181,7 +216,7 @@ typedef NS_ENUM(int32_t, OTSessionConnectionStatus) {
  * defines values for the `code` property of this object. This object is NULL
  * if no error occurs.
  */
-- (void)disconnect:(OTError**)error;
+- (void)disconnect:(OTError* _Nullable* _Nullable)error;
 
 - (void)disconnect
 __attribute__((deprecated("use disconnect: instead")));
@@ -213,10 +248,10 @@ __attribute__((deprecated("use disconnect: instead")));
  * <[OTPublisherKitDelegate publisher:didFailWithError:]> message is sent to
  * the publisher's delegate.
  */
-- (void)publish:(OTPublisherKit*)publisher
-          error:(OTError**)error;
+- (void)publish:(nonnull OTPublisherKit*)publisher
+          error:(OTError* _Nullable* _Nullable)error;
 
-- (void)publish:(OTPublisherKit*)publisher
+- (void)publish:(nonnull OTPublisherKit*)publisher
 __attribute__((deprecated("use publish:error: instead")));
 
 /**
@@ -233,10 +268,10 @@ __attribute__((deprecated("use publish:error: instead")));
  * defines values for the `code` property of this object. This object is NULL
  * if no error occurs.
  */
-- (void)unpublish:(OTPublisherKit*)publisher
-            error:(OTError**)error;
+- (void)unpublish:(nonnull OTPublisherKit*)publisher
+            error:(OTError* _Nullable* _Nullable)error;
 
-- (void)unpublish:(OTPublisherKit*)publisher
+- (void)unpublish:(nonnull OTPublisherKit*)publisher
 __attribute__((deprecated("use unpublish:error: instead")));
 
 /** @name Subscribing to audio-video streams */
@@ -257,10 +292,10 @@ __attribute__((deprecated("use unpublish:error: instead")));
  * <[OTSubscriberKitDelegate subscriber:didFailWithError:]> message is sent to
  * the subscriber's delegate.
  */
-- (void)subscribe:(OTSubscriberKit*)subscriber
-            error:(OTError**)error;
+- (void)subscribe:(nonnull OTSubscriberKit*)subscriber
+            error:(OTError* _Nullable* _Nullable)error;
 
-- (void)subscribe:(OTSubscriberKit*)subscriber
+- (void)subscribe:(nonnull OTSubscriberKit*)subscriber
 __attribute__((deprecated("use subscribe:error: instead")));
 
 /**
@@ -273,10 +308,10 @@ __attribute__((deprecated("use subscribe:error: instead")));
  * defines values for the `code` property of this object. This object is NULL
  * if no error occurs.
  */
-- (void)unsubscribe:(OTSubscriberKit*)subscriber
-              error:(OTError**)error;
+- (void)unsubscribe:(nonnull OTSubscriberKit*)subscriber
+              error:(OTError* _Nullable* _Nullable)error;
 
-- (void)unsubscribe:(OTSubscriberKit*)subscriber
+- (void)unsubscribe:(nonnull OTSubscriberKit*)subscriber
 __attribute__((deprecated("use unsubscribe:error: instead")));
 
 /** @name Sending and receiving signals in a session */
@@ -305,10 +340,10 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  * are valid and the signal was sent. It does not indicate that the signal was
  * sucessfully received by any of the intended recipients.
  */
-- (void)signalWithType:(NSString*) type
-                string:(NSString*)string
-            connection:(OTConnection*)connection
-                 error:(OTError**)error;
+- (void)signalWithType:(nonnull NSString*) type
+                string:(nonnull NSString*)string
+            connection:(nonnull OTConnection*)connection
+                 error:(OTError* _Nullable* _Nullable)error;
 
 /**
 * Sends a signal to one or more clients in a session. This version of the method
@@ -345,11 +380,11 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
 * are valid and the signal was sent. It does not indicate that the signal was
 * sucessfully received by any of the intended recipients.
 */
-- (void)signalWithType:(NSString*) type
-                string:(NSString*)string
-            connection:(OTConnection*)connection
+- (void)signalWithType:(nonnull NSString*) type
+                string:(nonnull NSString*)string
+            connection:(nonnull OTConnection*)connection
    retryAfterReconnect:(BOOL)retryAfterReconnect
-                 error:(OTError**)error;
+                 error:(OTError* _Nullable* _Nullable)error;
 
 /** @name Reporting an issue */
 
@@ -362,7 +397,7 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  * for the reported issue. If the call to the method fails (for example, because
  * of no network connection), this value is set to nil.
  */
-- (void)reportIssue:(NSString**)issueId;
+- (void)reportIssue:(NSString* _Nonnull* _Nonnull)issueId;
 
 @end
 
@@ -382,30 +417,32 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  *
  * @param session The <OTSession> instance that sent this message.
  */
-- (void)sessionDidConnect:(OTSession*)session;
+- (void)sessionDidConnect:(nonnull OTSession*)session;
 
 /**
  * Sent when the client disconnects from the session.
  *
  * @param session The <OTSession> instance that sent this message.
  */
-- (void)sessionDidDisconnect:(OTSession*)session;
+- (void)sessionDidDisconnect:(nonnull OTSession*)session;
 
 /**
- * Sent if the session fails to connect, some time after your application
- * invokes [OTSession connectWithToken:error:].
+ * Sent if the attempt to connect to the session fails or if the connection
+ * to the session drops due to an error after a successful connection.
  *
- * This message is sent if the attempt to connect to the session fails.
- * It is also sent if the connection to the session drops due to an error after
- * a successful connection, and in this case the message is sent just before
- * the <[OTSessionDelegate sessionDidDisconnect:]> message is sent.
+ * This message is sent after your application calls
+ * <[OTSession connectWithToken:error:]>.
+ *
+ * If this message is sent because the connection to the session drops after
+ * a successful connection, the message is sent just before the
+ * <[OTSessionDelegate sessionDidDisconnect:]> message is sent.
  *
  * @param session The <OTSession> instance that sent this message.
  * @param error An <OTError> object describing the issue. The
  * <OTSessionErrorCode> enum defines values for the `code` property of
  * this object.
  */
-- (void)session:(OTSession*)session didFailWithError:(OTError*)error;
+- (void)session:(nonnull OTSession*)session didFailWithError:(nonnull OTError*)error;
 
 /** @name Monitoring streams in a session */
 
@@ -420,7 +457,7 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  * @param session The OTSession instance that sent this message.
  * @param stream The stream associated with this event.
  */
-- (void)session:(OTSession*)session streamCreated:(OTStream*)stream;
+- (void)session:(nonnull OTSession*)session streamCreated:(nonnull OTStream*)stream;
 
 /**
  * Sent when a stream is no longer published to the session.
@@ -428,7 +465,7 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  * @param session The <OTSession> instance that sent this message.
  * @param stream The stream associated with this event.
  */
-- (void)session:(OTSession*)session streamDestroyed:(OTStream*)stream;
+- (void)session:(nonnull OTSession*)session streamDestroyed:(nonnull OTStream*)stream;
 
 @optional
 
@@ -445,8 +482,8 @@ __attribute__((deprecated("use unsubscribe:error: instead")));
  * @param session The <OTSession> instance that sent this message.
  * @param connection The new <OTConnection> object.
  */
-- (void)  session:(OTSession*) session
-connectionCreated:(OTConnection*) connection;
+- (void)  session:(nonnull OTSession*) session
+connectionCreated:(nonnull OTConnection*) connection;
 
 /**
  * Sent when another client disconnects from the session. The `connection`
@@ -460,8 +497,8 @@ connectionCreated:(OTConnection*) connection;
  * @param connection The <OTConnection> object for the client that disconnected
  * from the session.
  */
-- (void)    session:(OTSession*) session
-connectionDestroyed:(OTConnection*) connection;
+- (void)    session:(nonnull OTSession*) session
+connectionDestroyed:(nonnull OTConnection*) connection;
 
 /**
  * Sent when a message is received in the session.
@@ -471,10 +508,10 @@ connectionDestroyed:(OTConnection*) connection;
  * message. This value can be `nil`.
  * @param string The signal data.
  */
-- (void)   session:(OTSession*)session
-receivedSignalType:(NSString*)type
-    fromConnection:(OTConnection*)connection
-        withString:(NSString*)string;
+- (void)   session:(nonnull OTSession*)session
+receivedSignalType:(nonnull NSString*)type
+    fromConnection:(nonnull OTConnection*)connection
+        withString:(nonnull NSString*)string;
 
 /** @name Monitoring archiving events */
 
@@ -495,9 +532,9 @@ receivedSignalType:(NSString*)type
  * @param name The name of the archive (if one was provided when the archive
  * was created).
  */
-- (void)     session:(OTSession*)session
-archiveStartedWithId:(NSString*)archiveId
-                name:(NSString*)name;
+- (void)     session:(nonnull OTSession*)session
+archiveStartedWithId:(nonnull NSString*)archiveId
+                name:(nonnull NSString*)name;
 
 /**
  * Sent when an archive recording of a session stops.
@@ -512,8 +549,8 @@ archiveStartedWithId:(NSString*)archiveId
  * @param session The <OTSession> instance that sent this message.
  * @param archiveId The unique ID of the archive.
  */
-- (void)     session:(OTSession*)session
-archiveStoppedWithId:(NSString*)archiveId;
+- (void)     session:(nonnull OTSession*)session
+archiveStoppedWithId:(nonnull NSString*)archiveId;
 
 /** @name Reconnecting to a session */
 
@@ -532,7 +569,7 @@ archiveStoppedWithId:(NSString*)archiveId;
  *
  * @param session The <OTSession> instance that sent this message.
  */
-- (void)sessionDidBeginReconnecting:(OTSession*)session;
+- (void)sessionDidBeginReconnecting:(nonnull OTSession*)session;
 
 /**
  * Sent when the local client has reconnected to the OpenTok session after its
@@ -558,7 +595,7 @@ archiveStoppedWithId:(NSString*)archiveId;
  *
  * @param session The <OTSession> instance that sent this message.
  */
-- (void)sessionDidReconnect:(OTSession*)session;
+- (void)sessionDidReconnect:(nonnull OTSession*)session;
 
 @end
 
@@ -588,6 +625,6 @@ archiveStoppedWithId:(NSString*)archiveId;
  */
 @property (readonly) BOOL canSubscribe;
 
-- (instancetype)initWithCanPublish:(BOOL)publish
+- (nonnull instancetype)initWithCanPublish:(BOOL)publish
                       canSubscribe:(BOOL)subscribe;
 @end

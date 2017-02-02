@@ -19,18 +19,18 @@
 /**
  * The unique connection ID for this OTConnection object.
  */
-@property(readonly) NSString* connectionId;
+@property(readonly) NSString* _Nonnull connectionId;
 
 /**
  * The time at which the Connection was created on the OpenTok server.
  */
-@property(readonly) NSDate* creationTime;
+@property(readonly) NSDate* _Nonnull creationTime;
 
 /**
  * A string containing metadata describing the connection. You can add this
  * connection data when you
  * [create a token](https://tokbox.com/developer/guides/create-token/).
  */
-@property(readonly) NSString* data;
+@property(readonly) NSString* _Nullable data;
 
 @end

@@ -20,7 +20,7 @@
  * The view containing a playback buffer for associated video data. Add this
  * view to your view heirarchy to display a video stream.
  */
-@property(readonly) UIView* view;
+@property(readonly) UIView* _Nonnull view;
 
 /**
 * The scaling of the rendered video, as defined by the
@@ -51,6 +51,6 @@
  * <[OTSubscriberKitDelegate subscriberDidConnectToStream:]> message is sent.
  * @param subscriber The subscriber that generated this event.
  */
-- (void)subscriberVideoDataReceived:(OTSubscriber*)subscriber;
+- (void)subscriberVideoDataReceived:(nonnull OTSubscriber*)subscriber;
 
 @end

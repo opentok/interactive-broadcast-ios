@@ -32,14 +32,14 @@
  * @param device The <OTAudioDevice> interface implementation. This object is
  * retained.
  */
-+ (void)setAudioDevice:(id<OTAudioDevice>)device;
++ (void)setAudioDevice:(nonnull id<OTAudioDevice>)device;
 
 /**
  * Gets the <OTAudioDevice> instance.
  *
  * @return id The <OTAudioDevice> implementation.
  */
-+ (id<OTAudioDevice>)currentAudioDevice;
++ (nonnull id<OTAudioDevice>)currentAudioDevice;
 
 @end
 
@@ -90,7 +90,7 @@
  * @param data A pointer to an audio buffer.
  * @param count The number of samples available for copying.
  */
-- (void)writeCaptureData:(void*)data numberOfSamples:(uint32_t)count;
+- (void)writeCaptureData:(nonnull void*)data numberOfSamples:(uint32_t)count;
 
 /**
  * Retrieves unrendered audio samples from the session. This is most commonly
@@ -101,7 +101,7 @@
  * @param count The number of samples requested.
  * @return uint32_t The number of samples copied out of the audio buffer.
  */
-- (uint32_t)readRenderData:(void*)data numberOfSamples:(uint32_t)count;
+- (uint32_t)readRenderData:(nonnull void*)data numberOfSamples:(uint32_t)count;
 
 @end
 
@@ -125,19 +125,19 @@
  * @param audioBus An <OTAudioBus> implementation.
  * @return BOOL YES if successful; NO otherwise.
  */
-- (BOOL)setAudioBus:(id<OTAudioBus>)audioBus;
+- (BOOL)setAudioBus:(nonnull id<OTAudioBus>)audioBus;
 
 /** @name Adjusting the audio format */
 
 /**
  * The capture format used by this device.
  */
-- (OTAudioFormat*)captureFormat;
+- (nonnull OTAudioFormat*)captureFormat;
 
 /**
  * The render format used by this device.
  */
-- (OTAudioFormat*)renderFormat;
+- (nonnull OTAudioFormat*)renderFormat;
 
 /** @name Rendering audio */
 

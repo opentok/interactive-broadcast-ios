@@ -35,10 +35,10 @@
  */
 @property (readonly) double timestamp;
 
-- (instancetype)initWithPacketsLost:(uint64_t)packetsLost
-                    packetsReceived:(uint64_t)packetsReceived
-                      bytesReceived:(uint64_t)bytesReceived
-                          timestamp:(double)timestamp;
+- (nonnull instancetype)initWithPacketsLost:(uint64_t)packetsLost
+                            packetsReceived:(uint64_t)packetsReceived
+                              bytesReceived:(uint64_t)bytesReceived
+                                  timestamp:(double)timestamp;
 
 @end
 
@@ -70,9 +70,9 @@
  */
 @property (readonly) double timestamp;
 
-- (instancetype)initWithPacketsLost:(uint64_t)packetsLost
-                    packetsReceived:(uint64_t)packetsReceived
-                      bytesReceived:(uint64_t)bytesReceived
-                          timestamp:(double)timestamp;
+- (nonnull instancetype)initWithPacketsLost:(uint64_t)packetsLost
+                            packetsReceived:(uint64_t)packetsReceived
+                              bytesReceived:(uint64_t)bytesReceived
+                                  timestamp:(double)timestamp;
 
 @end

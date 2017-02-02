@@ -41,28 +41,29 @@ typedef NS_ENUM(int32_t, OTStreamVideoType) {
  * You can compare this to to the <[OTSession connection]> property to see if the stream
  * is being published by the local device.
  */
-@property(readonly) OTConnection* connection;
+@property(readonly) OTConnection* _Nonnull connection;
 
 /**
  * The session (an <OTSession> object) the stream is bound to.
  */
-@property(readonly) OTSession* session;
+@property(readonly) OTSession* _Nonnull session;
 
 /**
  * The unique ID of the stream.
  */
-@property(readonly) NSString* streamId;
+@property(readonly) NSString* _Nonnull streamId;
 
 /**
  * The timestamp for the creation of the stream on the OpenTok media server.
  */
-@property(readonly) NSDate *creationTime;
+@property(readonly) NSDate* _Nonnull creationTime;
 
 /**
- * The name of the stream. In the OpenTok iOS SDK, you can specify a published stream's name
- * when you send the <[OTPublisherKit initWithDelegate:name:]> message.
+ * The name of the stream. In the OpenTok iOS SDK, you can specify a published
+ * stream's name when you when you sent the
+ * <[OTPublisherKit initWithDelegate:settings:]> message.
  */
-@property(readonly) NSString* name;
+@property(readonly) NSString* _Nullable name;
 
 /** @name Getting audio and video information */
 

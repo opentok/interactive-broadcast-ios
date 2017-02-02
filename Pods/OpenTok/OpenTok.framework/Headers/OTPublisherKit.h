@@ -31,6 +31,47 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
 };
 
 /**
+ * Defines settings to be used when initializing a publisher using the
+ * <[OTPublisherKit initWithDelegate:settings:]> method.
+ */
+@interface OTPublisherKitSettings : NSObject
+
+/** @name Defining publisher settings */
+
+/**
+ * The name of the publisher video. The <[OTStream name]> property
+ * for a stream published by this publisher will be set to this value
+ * (on all clients). The default value is `nil`.
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ * Whether to publish audio (YES, the default) or not (NO).
+ *
+ * If this property is set to NO, the audio subsystem will not be initialized
+ * for the publisher, and setting the <[OTPublisherKit publishAudio]> property
+ * will have no effect. If your application does not require the use of audio,
+ * it is recommended to set this Builder property rather than use the
+ * <[OTPublisherKit publishAudio]> property, which only temporarily disables
+ * the audio track.
+ */
+@property(nonatomic) BOOL audioTrack;
+
+/**
+ * Whether to publish video (YES, the default) or not (NO).
+ *
+ * If this property is set to NO, the video subsystem will not be initialized
+ * for the publisher, and setting the <[OTPublisherKit publishVideo]> property
+ * will have no effect. If your application does not require the use of video,
+ * it is recommended to set this Builder property rather than use the
+ * <[OTPublisherKit publishVideo]> property, which only temporarily disables
+ * the video track.
+ */
+@property(nonatomic) BOOL videoTrack;
+
+@end
+
+/**
  * A publisher captures an audio-video stream from the sources you specify. You
  * can then publish the audio-video stream to an OpenTok session by sending the
  * <[OTSession publish:error:]> message.
@@ -53,11 +94,27 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
  *
  * @return The pointer to the instance, or `nil` if initialization failed.
  */
-- (instancetype)initWithDelegate:(id<OTPublisherKitDelegate>)delegate;
+- (nonnull instancetype)initWithDelegate:(nullable id<OTPublisherKitDelegate>)delegate;
+
+/**
+ * Initialize the publisher with settings defined by an
+ * <OTPublisherKitSettings> object.
+ *
+ * @param delegate The delegate (<OTPublisherKitDelegate>) object for the
+ * publisher.
+ *
+ * @param settings The (<OTPublisherKitSettings>) object that defines settings
+ * for the publisher.
+ */
+-(nonnull instancetype)initWithDelegate:(nullable id<OTPublisherKitDelegate>)delegate
+                       settings:(nonnull OTPublisherKitSettings *)settings;
 
 /**
  * Initialize a publisher object, and specify the delegate object and the 
  * stream's name.
+ *
+ * This method is deprecated. Use <[OTPublisherKit initWithDelegate:settings:]>
+ * instead.
  *
  * When running in the XCode iOS Simulator, this method returns `nil`.
  *
@@ -70,13 +127,18 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
  *
  * @return The pointer to the instance, or `nil` if initialization failed.
  */
-- (instancetype)initWithDelegate:(id<OTPublisherKitDelegate>)delegate
-                            name:(NSString*)name;
+- (nonnull instancetype)initWithDelegate:(nullable id<OTPublisherKitDelegate>)delegate
+                                    name:(nullable NSString*)name __attribute((deprecated(("Use initWithDelegate: settings: instead"))));
 
 /**
  * Initialize the publisher, and specify whether audio and video will be
- * enabled for this instance. If either audioTrack or videoTrack are set to
- * NO, the respective subsystem will not be initialized, and setting the
+ * enabled for this instance.
+ *
+ * This method is deprecated. Use <[OTPublisherKit initWithDelegate:settings:]>
+ * instead.
+ *
+ * If either audioTrack or videoTrack are set to NO,
+ * the respective subsystem will not be initialized, and setting the
  * corresponding <[OTPublisherKit publishAudio]> and
  * <[OTPublisherKit publishVideo]> properties will have no effect.
  *
@@ -96,10 +158,10 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
  *
  * @param videoTrack Whether to publish video (YES) or not (NO).
  */
-- (instancetype)initWithDelegate:(id<OTPublisherKitDelegate>)delegate
-                            name:(NSString*)name
-                      audioTrack:(BOOL)audioTrack
-                      videoTrack:(BOOL)videoTrack;
+- (nonnull instancetype)initWithDelegate:(nullable id<OTPublisherKitDelegate>)delegate
+                                    name:(nullable NSString*)name
+                              audioTrack:(BOOL)audioTrack
+                              videoTrack:(BOOL)videoTrack __attribute((deprecated(("Use initWithDelegate: settings: instead"))));
 
 /** @name Getting information about the publisher */
 
@@ -107,7 +169,7 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
  * The <OTPublisherDelegate> object, which is the delegate for the OTPublisher
  * object.
  */
-@property(nonatomic, assign) id<OTPublisherKitDelegate> delegate;
+@property(nonatomic, assign) id<OTPublisherKitDelegate> _Nullable delegate;
 
 /**
  * Periodically receives reports of audio levels for this publisher.
@@ -118,29 +180,29 @@ typedef NS_ENUM(int32_t, OTPublisherKitVideoType) {
  * If you do not set this property, the audio sampling subsystem is disabled.
  */
 @property (nonatomic, assign)
-id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
+id<OTPublisherKitAudioLevelDelegate> _Nullable audioLevelDelegate;
 
 /**
  * The session that owns this publisher.
  */
-@property(readonly) OTSession* session;
+@property(readonly) OTSession* _Nullable session;
 
 /**
  * The <OTStream> object associated with the publisher.
  */
-@property(readonly) OTStream* stream;
+@property(readonly) OTStream* _Nullable stream;
 
 /**
  * A string that will be associated with this publisher's stream. This string is
  * displayed at the bottom of subscriber videos associated with the published
  * stream, if an overlay to display the name exists. 
  *
- * Name must be set at initialization, when you when you send the
- * <[OTPublisherKit initWithDelegate:name:]> message.
+ * The name must be set at initialization, when you when you send the
+ * <[OTPublisherKit initWithDelegate:settings:]> message.
  *
  * This value defaults to an empty string.
  */
-@property(readonly) NSString* name;
+@property(readonly) NSString* _Nullable name;
 
 /** @name Controlling audio and video output for a publisher */
 
@@ -164,7 +226,7 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * The <OTVideoCapture> instance used to capture video to stream to the OpenTok
  * session.
  */
-@property(nonatomic, retain) id<OTVideoCapture> videoCapture;
+@property(nonatomic, retain) id<OTVideoCapture> _Nonnull videoCapture;
 
 /**
  * Specifies the type of video for the published stream.
@@ -192,7 +254,7 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * The <OTVideoRender> instance used to render video to stream to the OpenTok
  * session.
  */
-@property(nonatomic, retain) id<OTVideoRender> videoRender;
+@property(nonatomic, retain) id<OTVideoRender> _Nonnull videoRender;
 
 /** @name Setting the audio-only fallback mode */
 
@@ -227,8 +289,8 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * Used for sending messages for an OTPublisher instance. The OTPublisher class
  * includes a `delegate` property. When you send the
  * <[OTPublisherKit initWithDelegate:]> message or the
- * <[OTPublisherKit initWithDelegate:name:]> message, you specify an 
- * OTSessionDelegate object.
+ * <[OTPublisherKit initWithDelegate:settings:]> message, you specify an
+ * OTPublisherKitDelegate object.
  */
 @protocol OTPublisherKitDelegate <NSObject>
 
@@ -241,7 +303,8 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * enum (defined in the OTError class)
  * defines values for the `code` property of this object.
  */
-- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error;
+- (void)publisher:(nonnull OTPublisherKit*)publisher
+ didFailWithError:(nonnull OTError*)error;
 
 @optional
 
@@ -251,14 +314,16 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * @param publisher The publisher of the stream.
  * @param stream The stream that was created.
  */
-- (void)publisher:(OTPublisherKit*)publisher streamCreated:(OTStream*)stream;
+- (void)publisher:(nonnull OTPublisherKit*)publisher
+    streamCreated:(nonnull OTStream*)stream;
 
 /**
  * Sent when the publisher stops streaming.
  * @param publisher The publisher that stopped sending this stream.
  * @param stream The stream that ended.
  */
-- (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream*)stream;
+- (void)publisher:(nonnull OTPublisherKit*)publisher
+  streamDestroyed:(nonnull OTStream*)stream;
 
 @end
 
@@ -275,7 +340,7 @@ id<OTPublisherKitAudioLevelDelegate> audioLevelDelegate;
  * Adjust this value logarithmically for use in a user interface
  * visualization of the volume (such as a volume meter).
  */
-- (void)publisher:(OTPublisherKit*)publisher
+- (void)publisher:(nonnull OTPublisherKit*)publisher
 audioLevelUpdated:(float)audioLevel;
 
 @end

@@ -1,6 +1,8 @@
 ![logo](tokbox-logo.png)
 
-# OpenTok Interactive Broadcast Solution for iOS<br/>Version 1.0
+[![Build Status](https://travis-ci.com/opentok/spotlight-ios.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/spotlight-ios)
+
+# OpenTok Interactive Broadcast Solution for iOS
 
 This document describes how to create a OpenTok Interactive Broadcast Solution mobile app for iOS. You will learn how to set up the API calls to use the instance ID for the backend account, set up the role and name of the mobile participant, and connect the participant with a specified event.
 

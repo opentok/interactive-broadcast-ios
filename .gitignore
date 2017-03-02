@@ -20,3 +20,5 @@ DerivedData
 *.xccheckout
 
 **/SpotlightKit.framework
+Pods/
+Podfile.lock

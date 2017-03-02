@@ -1,4 +1,4 @@
-language: objective-c 
+language: objective-c
 osx_image: xcode8
 
 before_install: 
@@ -6,7 +6,13 @@ before_install:
   - pod update 
 
 script:
-  - xcodebuild clean test -workspace "IBDemo.xcworkspace" -scheme "IBKitTests" -sdk "iphonesimulator10.0" -destination "OS=9.0,name=iPhone 6 Plus" -configuration Debug ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c && exit ${PIPESTATUS[0]}
-
+- xcodebuild clean test -workspace "IBDemo.xcworkspace" -scheme "IBKitTests" -sdk
+  "iphonesimulator10.0" -destination "OS=9.0,name=iPhone 6 Plus" -configuration Debug
+  ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  | xcpretty -c && exit ${PIPESTATUS[0]}
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -t eaccc325-4da4-4e5b-9e54-e56302f36dc1
+- bash <(curl -s https://codecov.io/bash) -t eaccc325-4da4-4e5b-9e54-e56302f36dc1
+notifications:
+  slack:
+    rooms:
+      secure: Lo+sg0am0Z0jTBpQmG5LJMiftfGnqE6uzez55XZXN6CAevJ1MWovVO6gMls7H8fIXqbYLO4p0on1aV6SJ6Syo8RRe1dTfVWFC9DyvACTRRng/ZDL8VSLKgYpc5hgrWehXPkmYaCfDMFJF/zy/X2i4opARu7hx5i3zsGvDcx1yNmeq7RDMN/PAh7EC4/fdljuo1pr40fTJB7+oExMSZFcsVaEuwR0AEAR22lh5+SHxGAE+qi4PdVVl/rQWUqkWWhnE3xq63LHfr9HeFDr2i2MlwqmRJsxMalLLWKzp3Wq4ciglzRXMLCal/mGsHQwMp24ilfAmkfO3VsAp+LMF2JcmkSnRWFAWSb84MDifUZmw8B74oUyQno2Pvrqu1vBI9Xk1eOYxMiG8s2NM5VCmfYk+Tfp80KkaPRSvvZH3KJwgYkkJlwC39SuO77yCM8RNHdCBMyd1OH6EajnBUE+9Kmt7d9lBp3FTN3Rn0gm7+BLLWp4mxeBsAa2rD+2KrkyEPrL/qkbeAq6XHne8EG2LYjRZvQK9mXniAVZoAHFiV97n8f6vHc9vUrTC+SOTCeaYtduwzxIoYVaiGm8egAPp7H3uhfqAV/+1cOnm0v9waF1iULxPparLAIu7miUOC4U/U5e7seHvO9YHNwtQV/Ph0I+aW0AXy0R0PYxO2rYltTxIW4=

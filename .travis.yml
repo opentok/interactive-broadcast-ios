@@ -1,6 +1,10 @@
 language: objective-c 
 osx_image: xcode8
 
+before_install: 
+  - gem install cocoapods --pre 
+  - pod update 
+
 script:
   - xcodebuild clean test -workspace "IBDemo.xcworkspace" -scheme "IBKitTests" -sdk "iphonesimulator10.0" -destination "OS=9.0,name=iPhone 6 Plus" -configuration Debug ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c && exit ${PIPESTATUS[0]}
 

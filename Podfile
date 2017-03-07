@@ -11,7 +11,7 @@ target 'IBKit' do
   pod 'SIOSocket'
   pod 'Reachability'
   pod 'AFNetworking'
-  pod 'OpenTok', '2.10.0'
+  pod 'OpenTok', '= 2.10.2'
   pod 'OTKAnalytics', '~> 1.0.0'
 end
 

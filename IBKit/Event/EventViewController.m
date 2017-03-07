@@ -506,30 +506,21 @@ typedef enum : NSUInteger {
 }
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
-                         reason:(OTSubscriberVideoEventReason)reason
-{
-    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
-    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
-    avatar.contentMode = UIViewContentModeScaleAspectFill;
-    
-    CGRect frame = feedView.frame;
-    avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
-    
-    [feedView addSubview:avatar];
+                         reason:(OTSubscriberVideoEventReason)reason {
+    [self addSilhouetteToSubscriber:subscriber];
 }
 
 - (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
-                        reason:(OTSubscriberVideoEventReason)reason
-{
-    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
-    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
-    for(UIView* subview in [feedView subviews]) {
-        if([subview isKindOfClass:[UIImageView class]]) {
-            [subview removeFromSuperview];
-        }
-    }
+                        reason:(OTSubscriberVideoEventReason)reason {
+    [self removeSilhouetteToSubscriber:subscriber];
+}
+
+- (void)subscriberVideoDisableWarning:(OTSubscriberKit *)subscriber {
+    [self addSilhouetteToSubscriber:subscriber];
+}
+
+- (void)subscriberVideoDisableWarningLifted:(OTSubscriberKit *)subscriber {
+    [self removeSilhouetteToSubscriber:subscriber];
 }
 
 -(void)startNetworkTest{
@@ -552,6 +543,29 @@ typedef enum : NSUInteger {
         }
         else if(_openTokManager.selfSubscriber) {
             _openTokManager.selfSubscriber.networkStatsDelegate = self;
+        }
+    }
+}
+
+- (void)addSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
+    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
+    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
+    avatar.contentMode = UIViewContentModeScaleAspectFill;
+    
+    CGRect frame = feedView.frame;
+    avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
+    
+    [feedView addSubview:avatar];
+}
+
+- (void)removeSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
+    NSString *feed = [subscriber.stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
+    UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
+    for(UIView* subview in [feedView subviews]) {
+        if([subview isKindOfClass:[UIImageView class]]) {
+            [subview removeFromSuperview];
         }
     }
 }
@@ -616,6 +630,14 @@ typedef enum : NSUInteger {
             [self.eventView stopLoader];
         });
     }
+}
+
+- (void)sessionDidBeginReconnecting:(OTSession *)session {
+    [SVProgressHUD showWithStatus:@"Reconnecting..."];
+}
+
+- (void)sessionDidReconnect:(OTSession *)session {
+    [SVProgressHUD dismiss];
 }
 
 - (void)sessionDidDisconnect:(OTSession*)session {

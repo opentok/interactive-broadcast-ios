@@ -686,7 +686,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Tokbox\";\ncompanyID=\"com.Tokbox\";\ncompanyURL=\"https://tokbox.com/\";\noutputPath=\"${PROJECT_DIR}/docs\";\n# End constants\n/usr/local/bin/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--output \"${outputPath}\" \\\n--keep-intermediate-files \\\n--exit-threshold 2 \\\n\"${PROJECT_DIR}/IBKit/IBKit.h\" \\\n\"${PROJECT_DIR}/IBKit/IBApi.h\" \\\n\"${PROJECT_DIR}/IBKit/IBInstance.h\" \\\n\"${PROJECT_DIR}/IBKit/IBEvent.h\" \\\n\"${PROJECT_DIR}/IBKit/Event/EventViewController.h\" \\\n\"${PROJECT_DIR}/IBKit/Events/EventsViewController.h\" \\";
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Tokbox\";\ncompanyID=\"com.Tokbox\";\ncompanyURL=\"https://tokbox.com/\";\noutputPath=\"${PROJECT_DIR}/docs\";\n# End constants\n/usr/local/bin/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--output \"${outputPath}\" \\\n--keep-intermediate-files \\\n--exit-threshold 2 \\\n\"${PROJECT_DIR}/IBKit/IBKit.h\" \\\n\"${PROJECT_DIR}/IBKit/IBApi.h\" \\\n\"${PROJECT_DIR}/IBKit/IBInstance.h\" \\\n\"${PROJECT_DIR}/IBKit/IBEvent.h\" \\\n\"${PROJECT_DIR}/IBKit/IBUser.h\" \\\n\"${PROJECT_DIR}/IBKit/Event/EventViewController.h\" \\\n\"${PROJECT_DIR}/IBKit/Events/EventsViewController.h\" \\";
 		};
 		A0A754D21CEB909900D6D516 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

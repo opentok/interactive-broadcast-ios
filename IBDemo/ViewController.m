@@ -51,30 +51,26 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
 
 - (IBAction)mlbEventButtonPressed:(UIButton *)sender {
     
-    // test crash report
-//    [[Crashlytics sharedInstance] crash];
-    
     [IBApi configureBackendURL:MLBBackend];
-    [IBApi getInstanceWithInstanceId:mlbpass
-                          completion:^(IBInstance *instance, NSError *error) {
-                              if (!error) {
-                                  NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
-                                  instance_data[@"backend_base_url"] = MLBBackend;
+    __weak ViewController *weakSelf = (ViewController *)self;
+    [[IBApi sharedManager] getInstanceWithInstanceId:mlbpass
+                                          completion:^(IBInstance *instance, NSError *error) {
+                                              if (!error) {
+                                                  NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
+                                                  instance_data[@"backend_base_url"] = MLBBackend;
                                   
-                                  UIViewController *viewcontroller;
-                                  if(instance.events.count != 1){
-                                      
-                                      viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:self.requestData[@(sender.hash)]];
-                                  }
-                                  else {
-                                      
-                                      viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
-                                      
-                                  }
-                                  
-                                  [self presentViewController:viewcontroller animated:YES completion:nil];
-                              }
-                          }];
+                                                  dispatch_async(dispatch_get_main_queue(), ^(){
+                                                      UIViewController *viewcontroller;
+                                                      if(instance.events.count != 1){
+                                                          viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:weakSelf.requestData[@(sender.hash)]];
+                                                      }
+                                                      else {
+                                                          viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:weakSelf.requestData[@(sender.hash)]];
+                                                      }
+                                                      [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
+                                                  });
+                                              }
+                                          }];
 
 }
 
@@ -85,27 +81,26 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
         NSString * selectedEnviroment = self.enviromentPicker.selectedSegmentIndex == 0 ? backendBaseUrl : demoBackend;
         [IBApi configureBackendURL:selectedEnviroment];
         
-        [IBApi getInstanceWithAdminId: self.adminIdField.text
-                           completion:^(IBInstance *instance, NSError *error) {
+        __weak ViewController *weakSelf = (ViewController *)self;
+        [[IBApi sharedManager] getInstanceWithAdminId: self.adminIdField.text
+                                           completion:^(IBInstance *instance, NSError *error) {
                              
-                               if (!error) {
-                                   NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
-                                   instance_data[@"backend_base_url"] = selectedEnviroment;
-                                 
-                                   UIViewController *viewcontroller;
-                                   if(instance.events.count != 1){
-                                     
-                                       viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:self.requestData[@(sender.hash)]];
-                                   }
-                                   else {
+                                               if (!error) {
+                                                   
+                                                   dispatch_async(dispatch_get_main_queue(), ^(){
                                        
-                                       viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:self.requestData[@(sender.hash)]];
-
-                                   }
-                                 
-                                   [self presentViewController:viewcontroller animated:YES completion:nil];
-                               }
-                           }];
+                                                       UIViewController *viewcontroller;
+                                                       if(instance.events.count != 1){
+                                                           viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:weakSelf.requestData[@(sender.hash)]];
+                                                       }
+                                                       else {
+                                                           viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:weakSelf.requestData[@(sender.hash)]];
+                                                       }
+                                       
+                                                       [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
+                                                   });
+                                               }
+                                           }];
     }
     else {
         

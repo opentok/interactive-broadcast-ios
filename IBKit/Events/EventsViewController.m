@@ -86,14 +86,13 @@
 - (void)connectToSignalServer {
     
     __weak EventsViewController *weakSelf = self;
-    
     [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket) {
         weakSelf.signalingSocket = socket;
     
         [weakSelf.signalingSocket on:@"changeStatus" callback: ^(SIOParameterArray *args){
                                 NSLog(@"event changed");
                                 NSMutableDictionary *eventChanged = [args firstObject];
-                                [self updateEventStatus:eventChanged];
+                                [weakSelf updateEventStatus:eventChanged];
                             }];
         
         weakSelf.signalingSocket.onDisconnect = ^() {

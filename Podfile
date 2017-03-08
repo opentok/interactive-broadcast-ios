@@ -10,7 +10,6 @@ target 'IBKit' do
   pod 'SVProgressHUD'
   pod 'SIOSocket'
   pod 'Reachability'
-  pod 'AFNetworking'
   pod 'OpenTok', '= 2.10.2'
   pod 'OTKAnalytics', '~> 1.0.0'
 end

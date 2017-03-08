@@ -17,12 +17,17 @@
 + (void)configureBackendURL:(NSString *)backendURL;
 
 /**
+ *  Contains backend URL and other essential information to obtain data
+ */
++ (instancetype)sharedManager;
+
+/**
  *  Retrieve instance information for the specified instance ID.
  *
  *  @param instanceId   An instance ID.
  *  @param completion   A completion handler to call when the operation is complete.
  */
-+ (void)getInstanceWithInstanceId:(NSString *)instanceId
+- (void)getInstanceWithInstanceId:(NSString *)instanceId
                        completion:(void (^)(IBInstance *, NSError *))completion;
 
 /**
@@ -31,7 +36,7 @@
  *  @param adminId    The adminstrator ID.
  *  @param completion A completion handler to call when the operation is complete.
  */
-+ (void)getInstanceWithAdminId:(NSString *)adminId
+- (void)getInstanceWithAdminId:(NSString *)adminId
                     completion:(void (^)(IBInstance *, NSError *))completion;
 
 /**
@@ -41,7 +46,7 @@
  *  @param event        An interactive broadcast event.
  *  @param completion   A completion handler to call when the operation is complete.
  */
-+ (void)createEventTokenWithUser:(IBUser *)user
+- (void)createEventTokenWithUser:(IBUser *)user
                            event:(IBEvent *)event
                       completion:(void (^)(IBInstance *, NSError *))completion;
 
@@ -51,7 +56,7 @@
  *  @param event        An interactive broadcast fan event.
  *  @param completion   A completion handler to call when the operation is complete.
  */
-+ (void)createFanEventTokenWithEvent:(IBEvent *)event
+- (void)createFanEventTokenWithEvent:(IBEvent *)event
                           completion:(void (^)(IBInstance *, NSError *))completion;
 
 @end

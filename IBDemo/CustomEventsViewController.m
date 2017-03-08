@@ -32,15 +32,20 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
-    [IBApi getInstanceWithInstanceId:self.instance_id
-                          completion:^(IBInstance *instance, NSError *error) {
+    
+    __weak CustomEventsViewController *weakSelf = (CustomEventsViewController *)self;
+    [[IBApi sharedManager] getInstanceWithInstanceId:self.instance_id
+                                          completion:^(IBInstance *instance, NSError *error) {
                             
-                              if (!error) {
-                                  self.instance = instance;
-                                  self.openedEvents = [self.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
-                                  [self.eventsView reloadData];
-                              }
-                          }];
+                                              if (!error) {
+                                                  weakSelf.instance = instance;
+                                                  weakSelf.openedEvents = [weakSelf.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+                                  
+                                                  dispatch_async(dispatch_get_main_queue(), ^(){
+                                                      [weakSelf.eventsView reloadData];
+                                                  });
+                                              }
+                                          }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -67,7 +72,6 @@
     [titleLabel setText:event.name];
     if([event.status isEqualToString:@"N"]){
         [statusLabel setText: [self getFormattedDate:event.startTime]];
-        
     }
     else{
         [statusLabel setText: [self getEventStatus:event.status]];
@@ -106,25 +110,21 @@
     NSString* status = @"";
     if([statusLabel isEqualToString:@"N"]){
         status = @"Not Started";
-    };
-    if([statusLabel isEqualToString:@"P"]){
+    }
+    else if([statusLabel isEqualToString:@"P"]){
         status = @"Not Started";
-    };
-    if([statusLabel isEqualToString:@"L"]){
+    }
+    else if([statusLabel isEqualToString:@"L"]){
         status = @"Live";
-    };
-    if([statusLabel isEqualToString:@"C"]){
+    }
+    else if([statusLabel isEqualToString:@"C"]){
         status = @"Closed";
-    };
+    }
     return status;
 }
 
-- (NSString*)getFormattedDate:(NSDate *)date
-{
-    if(date){
-        return [IBDateFormatter convertToAppStandardFromDate:date];
-    }
-    return @"Not Started";
+- (NSString*)getFormattedDate:(NSDate *)date {
+    return date ? [IBDateFormatter convertToAppStandardFromDate:date] : @"Not Started";
 }
 
 - (IBAction)titleButtonPressed:(id)sender {

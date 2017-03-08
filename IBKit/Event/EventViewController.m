@@ -68,6 +68,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) OpenTokNetworkTest *networkTest;
 @property (nonatomic) IBAVPlayer *ibPlayer;
 
+@property (nonatomic) IBApi *sharedManager;
+
 @end
 
 @implementation EventViewController
@@ -138,6 +140,7 @@ typedef enum : NSUInteger {
     
     [super viewDidLoad];
     self.eventView = (EventView *)self.view;
+    self.sharedManager = [IBApi sharedManager];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -167,39 +170,36 @@ typedef enum : NSUInteger {
 - (void)createEventToken {
     
     [SVProgressHUD show];
-    [IBApi createEventTokenWithUser:self.user
-                              event:self.event
-                         completion:^(IBInstance *instance, NSError *error) {
-                             [SVProgressHUD dismiss];
-                                 
-                             if (!error && instance.events.count == 1) {
-                                 self.instance = instance;
-                                 self.event = [self.instance.events lastObject];
-                                 
-                                 // new backend
-                                 // this is going to connect to the signaling server for HLS feed
-                                 if (self.event.adminName) {
-                                     [self.openTokManager connectFanToSocketWithURL:self.instance.signalingURL
-                                                                          sessionId:self.instance.sessionIdHost];
-                                     dispatch_async(dispatch_get_main_queue(), ^(){
-                                         [self statusChanged];
-                                     });
-                                 }
-                                 // old backend
-                                 else {
-                                     [self startSession];
-                                     dispatch_async(dispatch_get_main_queue(), ^(){
-                                         [self statusChanged];
-                                     });
-                                 }
-//                                 [OTTextChatView setOpenTokApiKey:self.instance.apiKey
-//                                                        sessionId:self.instance.sessionIdProducer
-//                                                            token:self.instance.tokenProducer];
-                             }
-                             else {
-                                 NSLog(@"createEventTokenError");
-                             }
-                         }];
+    
+    __weak EventViewController *weakSelf = (EventViewController *)self;
+    [self.sharedManager createEventTokenWithUser:self.user
+                                           event:self.event
+                                      completion:^(IBInstance *instance, NSError *error) {
+                                             [SVProgressHUD dismiss];
+                                                 
+                                             if (!error && instance.events.count == 1) {
+                                                 dispatch_async(dispatch_get_main_queue(), ^(){
+                                                     weakSelf.instance = instance;
+                                                     weakSelf.event = [weakSelf.instance.events lastObject];
+                                                     
+                                                     // new backend
+                                                     // this is going to connect to the signaling server for HLS feed
+                                                     if (weakSelf.event.adminName) {
+                                                         [weakSelf.openTokManager connectFanToSocketWithURL:weakSelf.instance.signalingURL
+                                                                                                  sessionId:weakSelf.instance.sessionIdHost];
+                                                         [weakSelf statusChanged];
+                                                     }
+                                                     // old backend
+                                                     else {
+                                                         [weakSelf startSession];
+                                                         [weakSelf statusChanged];
+                                                     }
+                                                 });
+                                             }
+                                             else {
+                                                 NSLog(@"createEventTokenError");
+                                             }
+                                      }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -610,7 +610,6 @@ typedef enum : NSUInteger {
             self.eventStage |= IBEventStageBackstage;
             [self.eventView fanIsInline];
             [self doPublish];
-//            [self.eventView loadTextChat];
             [self loadChat];
             [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationSuccess completion:nil];
         }
@@ -622,7 +621,6 @@ typedef enum : NSUInteger {
                 [self forceDisconnect];
             }
             else{
-//                [self.eventView loadTextChat];
                 [self loadChat];
                 self.eventStage |= IBEventStageOnstage;
                 [self doPublish];

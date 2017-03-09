@@ -158,30 +158,22 @@
 
 -(NSError*)disconnectBackstageSession{
     OTError *error = nil;
-    if(_producerSession){
-        [_producerSession disconnect:&error];
-    }
+    [_producerSession disconnect:&error];
+    _producerSession = nil;
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
-    }
-    else{
-        _producerSession = nil;
     }
     return error;
 }
 
 -(NSError*)disconnectOnstageSession{
     OTError *error = nil;
-    if(_liveSession){
-        [_liveSession disconnect:&error];
-    }
+    [_liveSession disconnect:&error];
+    _liveSession = nil;
     if(error){
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
-    }
-    else{
-        _liveSession = nil;
     }
     return error;
 }

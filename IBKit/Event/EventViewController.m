@@ -355,7 +355,8 @@ typedef enum : NSUInteger {
     [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
     if(!_openTokManager.publisher){
-        _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self settings:[[OTPublisherSettings alloc] init]];
+        OTPublisherSettings *settings = [[OTPublisherSettings alloc] init];
+        _openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self settings:settings];
     }
     
     OTError *error = nil;
@@ -1155,6 +1156,7 @@ didFailWithError:(OTError*)error
     
     [_openTokManager disconnectBackstageSession];
     [_openTokManager disconnectOnstageSession];
+    _openTokManager = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }

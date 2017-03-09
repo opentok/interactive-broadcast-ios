@@ -8,7 +8,7 @@ end
 target 'IBKit' do
   pod 'DGActivityIndicatorView'
   pod 'SVProgressHUD'
-  pod 'SIOSocket'
+  pod 'SIOSocket', :git => 'https://github.com/Lucashuang0802/SIOSocket'
   pod 'Reachability'
   pod 'OpenTok', '= 2.10.2'
   pod 'OTKAnalytics', '~> 1.0.0'

@@ -4,13 +4,12 @@
 
 # OpenTok Interactive Broadcast Solution for iOS
 
-This document describes how to create a OpenTok Interactive Broadcast Solution mobile app for iOS. You will learn how to set up the API calls to use the instance ID for the backend account, set up the role and name of the mobile participant, and connect the participant with a specified event.
+This document describes how to create an OpenTok Interactive Broadcast Solution mobile app for iOS. You will learn how to set up the API calls to use the admin ID for the backend account, set up the role and name of the mobile participant, and connect the participant with a specified event.
 
 This guide has the following sections:
 
 * [Prerequisites](#prerequisites): A checklist of everything you need to get started.
 * [Create your first Interactive Broadcast Solution application](#createfirstapp): A step by step tutorial to help you develop a basic Interactive Broadcast Solution application.
-* [Complete code example](#complete-code-example): This is the complete code example that you will develop in this tutorial. You can skip the tutorial and use this example to get started quickly with your own application development.
 
 _**NOTE:** The **Interactive Broadcast Solution** only supports landscape orientation on mobile devices._
 
@@ -18,9 +17,9 @@ _**NOTE:** The **Interactive Broadcast Solution** only supports landscape orient
 
 - Xcode version 5 or later.
 - Download the **iOS Interactive Broadcast Solution Framework** provided by TokBox.
-- You will need the **Instance ID** and **Backend Base URL** provided by TokBox.
+- You will need the **Admin ID** and **Backend Base URL** provided by TokBox.
 
-_**NOTE:** To get the **iOS Interactive Broadcast Solution Framework**, **Instance ID**, and **Backend Base URL**, contact <a mailto:"bizdev@tokbox.com">bizdev@tokbox.com</a>._
+_**NOTE:** To get the **iOS Interactive Broadcast Solution Framework**, **Admin ID**, and **Backend Base URL**, contact <a mailto:"bizdev@tokbox.com">bizdev@tokbox.com</a>._
 
 _**IMPORTANT:** In order to deploy the OpenTok Interactive Broadcast Solution, your web domain must use HTTPS._
 
@@ -53,7 +52,7 @@ In Xcode, configure a new iOS **Single View Application** project.
 
 ### Configure the Interactive Broadcast Solution controller
 
-Now you are ready to add the Interactive Broadcast Solution user detail to your app, as well as the Instance ID and Base URL you retrieved earlier (see [Prerequisites](#prerequisites)). This detail is needed to initialize the Interactive Broadcast Solution controller that connects the app with the backend server and presents the user interface populated with Interactive Broadcast Solution events.
+Now you are ready to add the Interactive Broadcast Solution user detail to your app, as well as the Admin ID and Base URL you retrieved earlier (see [Prerequisites](#prerequisites)). This detail is needed to initialize the Interactive Broadcast Solution controller that connects the app with the backend server and presents the user interface populated with Interactive Broadcast Solution events.
 
 1. From the **Project Navigator** view, edit **ViewController.m** and ensure you have the following import statements:
 
@@ -72,23 +71,23 @@ Now you are ready to add the Interactive Broadcast Solution user detail to your 
 
 ```objc
 -(void)loadIBController:{
-    NSString *instance_id = @"Your instance id";
+    NSString *admin_id = @"Your admin id";
     NSString *backend_url = @"your backend url";
     NSMutableDictionary *user = [NSMutableDictionary dictionaryWithDictionary:@{
                                     @"type":@"fan",
                                     @"name":@""
                                 }];
-    self.IBController = [[MainIBViewController alloc] initWithData:instance_id
-                                                                          backend_base_url:backend_url
+    self.IBController = [[MainIBViewController alloc] initWithData:admin_id 
+                                                                          backend_base_url:backend_url 
                                                                                       user:user];
     [self presentViewController:self.IBController animated:NO completion:nil];
 }
 ```
 
 
-4. In the method you just added, the `user` dictionary stores the User Type and Username. It is used to initialize the `IBController` object, which is also initialized with the Instance ID and Backend Base Url:
+4. In the method you just added, the `user` dictionary stores the User Type and Username. It is used to initialize the `IBController` object, which is also initialized with the Admin ID and Backend Base Url:
 
-   - The Instance ID is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Instance ID for multiple events.
+   - The Admin ID is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Admin ID for multiple events.
    - The Backend Base URL is the endpoint to the web service hosting the events, and should be provided by TokBox.
    - Specify one of the following values for the User Type: `fan`, `celebrity`, or `host`. There should only be one celebrity and host per event.
    - The Username will be displayed in chats with the producer and when Fans get in line. This field is optional.
@@ -111,7 +110,7 @@ If you would like to create your own custom event handling implementation, creat
 2. Fetch the events:
 
    ```objc
-   NSMutableDictionary *instanceData = [[IBApi sharedInstance] getEvents:instance_id
+   NSMutableDictionary *instanceData = [[IBApi sharedInstance] getEvents:admin_id
                                                                        back_url:backend_url];
    ```
 
@@ -131,8 +130,3 @@ If you would like to create your own custom event handling implementation, creat
 
 You have completed the task of setting up a fully working example that uses the OpenTok Interactive Broadcast Solution! You can add processing for events and errors, and begin using your program.
 
-
-## Additional information
-
-For information on how to set up archiving on an Interactive Broadcast (IB) instance, click <a href="./ARCHIVING.md">here</a>.
- 

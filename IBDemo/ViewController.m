@@ -10,6 +10,7 @@
 #import "CustomEventsViewController.h"
 #import <IBKit/IBKit.h>
 #import <Crashlytics/Crashlytics.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 static NSString * const instanceIdentifier = @"AAAA1";
 static NSString * const backendBaseUrl = @"https://tokbox-ib-staging-tesla.herokuapp.com";
@@ -53,13 +54,17 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
     
     [IBApi configureBackendURL:MLBBackend];
     __weak ViewController *weakSelf = (ViewController *)self;
+    [SVProgressHUD show];
     [[IBApi sharedManager] getInstanceWithInstanceId:mlbpass
                                           completion:^(IBInstance *instance, NSError *error) {
-                                              if (!error) {
-                                                  NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
-                                                  instance_data[@"backend_base_url"] = MLBBackend;
-                                  
-                                                  dispatch_async(dispatch_get_main_queue(), ^(){
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^(){
+                                                  [SVProgressHUD dismiss];
+                                                  if (!error) {
+                                                      NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
+                                                      instance_data[@"backend_base_url"] = MLBBackend;
+                                      
+                                                      
                                                       UIViewController *viewcontroller;
                                                       if(instance.events.count != 1){
                                                           viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:weakSelf.requestData[@(sender.hash)]];
@@ -68,8 +73,11 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                                           viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:weakSelf.requestData[@(sender.hash)]];
                                                       }
                                                       [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
-                                                  });
-                                              }
+                                                  }
+                                                  else {
+                                                      [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                                                  }
+                                            });
                                           }];
 
 }
@@ -80,15 +88,13 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
         
         NSString * selectedEnviroment = self.enviromentPicker.selectedSegmentIndex == 0 ? backendBaseUrl : demoBackend;
         [IBApi configureBackendURL:selectedEnviroment];
-        
+        [SVProgressHUD show];
         __weak ViewController *weakSelf = (ViewController *)self;
         [[IBApi sharedManager] getInstanceWithAdminId: self.adminIdField.text
                                            completion:^(IBInstance *instance, NSError *error) {
                              
-                                               if (!error) {
-                                                   
-                                                   dispatch_async(dispatch_get_main_queue(), ^(){
-                                       
+                                               dispatch_async(dispatch_get_main_queue(), ^(){
+                                                   if (!error) {
                                                        UIViewController *viewcontroller;
                                                        if(instance.events.count != 1){
                                                            viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:weakSelf.requestData[@(sender.hash)]];
@@ -96,14 +102,13 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                                        else {
                                                            viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:weakSelf.requestData[@(sender.hash)]];
                                                        }
-                                       
+                                                       
                                                        [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
-                                                   });
-                                               }
+                                                   }
+                                               });
                                            }];
     }
     else {
-        
         [self performSegueWithIdentifier:@"EventSegueIdentifier" sender:sender];
     }
 }

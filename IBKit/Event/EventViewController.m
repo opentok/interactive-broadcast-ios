@@ -1156,6 +1156,7 @@ didFailWithError:(OTError*)error
     
     [_openTokManager disconnectBackstageSession];
     [_openTokManager disconnectOnstageSession];
+    [_openTokManager cleanupSubscribers];
     _openTokManager = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];

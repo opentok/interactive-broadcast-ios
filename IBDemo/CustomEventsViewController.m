@@ -7,6 +7,7 @@
 
 #import "CustomEventsViewController.h"
 #import <IBKit/IBKit.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 #import "EventViewController.h"
 #import "IBInstance_Internal.h"
@@ -32,19 +33,24 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"CustomEventsCell" bundle:nil];
     [self.eventsView registerNib:cellNib forCellWithReuseIdentifier:@"CustomEventsCellIdentifier"];
-    
+    [SVProgressHUD show];
     __weak CustomEventsViewController *weakSelf = (CustomEventsViewController *)self;
     [[IBApi sharedManager] getInstanceWithInstanceId:self.instance_id
                                           completion:^(IBInstance *instance, NSError *error) {
                             
-                                              if (!error) {
-                                                  weakSelf.instance = instance;
-                                                  weakSelf.openedEvents = [weakSelf.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
-                                  
-                                                  dispatch_async(dispatch_get_main_queue(), ^(){
+                                              dispatch_async(dispatch_get_main_queue(), ^(){
+                                                  [SVProgressHUD dismiss];
+                                                  if (!error) {
+                                                      weakSelf.instance = instance;
+                                                      weakSelf.openedEvents = [weakSelf.instance.events  filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+                                                      
+                                                      
                                                       [weakSelf.eventsView reloadData];
-                                                  });
-                                              }
+                                                  }
+                                                  else {
+                                                      [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                                                  }
+                                              });
                                           }];
 }
 

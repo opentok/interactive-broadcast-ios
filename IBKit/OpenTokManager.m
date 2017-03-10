@@ -157,6 +157,15 @@
 }
 
 -(NSError*)disconnectBackstageSession{
+    
+    self.selfSubscriber.delegate = nil;
+    [self.producerSession unsubscribe:self.selfSubscriber error:nil];
+    self.selfSubscriber = nil;
+    
+    self.producerSubscriber.delegate = nil;
+    [self.producerSession unsubscribe: self.producerSubscriber error:nil];
+    self.producerSubscriber = nil;
+    
     OTError *error = nil;
     [_producerSession disconnect:&error];
     _producerSession = nil;
@@ -168,6 +177,11 @@
 }
 
 -(NSError*)disconnectOnstageSession{
+    
+    self.privateProducerSubscriber.delegate = nil;
+    [self.liveSession unsubscribe: self.privateProducerSubscriber error:nil];
+    self.privateProducerSubscriber = nil;
+    
     OTError *error = nil;
     [_liveSession disconnect:&error];
     _liveSession = nil;

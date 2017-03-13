@@ -517,10 +517,12 @@ typedef enum : NSUInteger {
 }
 
 - (void)subscriberVideoDisableWarning:(OTSubscriberKit *)subscriber {
+    subscriber.subscribeToVideo = NO;
     [self addSilhouetteToSubscriber:subscriber];
 }
 
 - (void)subscriberVideoDisableWarningLifted:(OTSubscriberKit *)subscriber {
+    subscriber.subscribeToVideo = YES;
     [self removeSilhouetteToSubscriber:subscriber];
 }
 
@@ -553,6 +555,7 @@ typedef enum : NSUInteger {
     UIView *feedView = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", feed]];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
+    avatar.backgroundColor = [UIColor lightGrayColor];
     avatar.contentMode = UIViewContentModeScaleAspectFill;
     
     CGRect frame = feedView.frame;

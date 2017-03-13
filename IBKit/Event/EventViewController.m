@@ -93,28 +93,27 @@ typedef enum : NSUInteger {
         _openTokManager = [[OpenTokManager alloc] init];
         
         // start necessary services
-        __weak EventViewController *weakSelf = self;
 
-        [self addObserver:weakSelf
+        [self addObserver:self
                forKeyPath:@"event.status"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
-        [self addObserver:weakSelf
+        [self addObserver:self
                forKeyPath:@"openTokManager.canJoinShow"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
-        [self addObserver:weakSelf
+        [self addObserver:self
                forKeyPath:@"openTokManager.waitingOnBroadcast"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
-        [self addObserver:weakSelf
+        [self addObserver:self
                forKeyPath:@"openTokManager.startBroadcast"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
         
-        [self addObserver:weakSelf
+        [self addObserver:self
                forKeyPath:@"openTokManager.broadcastEnded"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
                   context:NULL];
@@ -211,14 +210,22 @@ typedef enum : NSUInteger {
 - (void)viewWillDisappear:(BOOL)animated {
     
     [super viewWillDisappear:animated];
-    [self removeObserver:self forKeyPath:@"event.status"];
-    [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
-    [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
-    [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
-    [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    [self.openTokManager closeSocket];
+}
+
+- (void)dealloc {
+    @try {
+        [self removeObserver:self forKeyPath:@"event.status"];
+        [self removeObserver:self forKeyPath:@"openTokManager.startBroadcast"];
+        [self removeObserver:self forKeyPath:@"openTokManager.waitingOnBroadcast"];
+        [self removeObserver:self forKeyPath:@"openTokManager.broadcastEnded"];
+        [self removeObserver:self forKeyPath:@"openTokManager.canJoinShow"];
+    }
+    @catch (id exception) {
+        // do nothing
+    }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.openTokManager closeSocket];
 }
 
 - (void)startBroadcastEvent {
@@ -428,6 +435,8 @@ typedef enum : NSUInteger {
     
     NSString *connectingTo = [stream.connection.data stringByReplacingOccurrencesOfString:@"usertype=" withString:@""];
     
+    if (!connectingTo) return;
+    
     if(stream.session.connection.connectionId != _openTokManager.producerSession.connection.connectionId && ![connectingTo isEqualToString:@"producer"]){
         
         OTSubscriber *subs = [[OTSubscriber alloc] initWithStream:stream delegate:self];
@@ -556,7 +565,7 @@ typedef enum : NSUInteger {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
     avatar.backgroundColor = [UIColor lightGrayColor];
-    avatar.contentMode = UIViewContentModeScaleAspectFill;
+    avatar.contentMode = UIViewContentModeScaleAspectFit;
     
     CGRect frame = feedView.frame;
     avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);

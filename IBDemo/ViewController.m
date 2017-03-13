@@ -94,6 +94,7 @@ static NSString * const mlbpass = @"spotlight-mlb-210216";
                                            completion:^(IBInstance *instance, NSError *error) {
                              
                                                dispatch_async(dispatch_get_main_queue(), ^(){
+                                                   [SVProgressHUD dismiss];
                                                    if (!error) {
                                                        UIViewController *viewcontroller;
                                                        if(instance.events.count != 1){

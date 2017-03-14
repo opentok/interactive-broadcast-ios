@@ -158,12 +158,16 @@
 
 -(NSError*)disconnectBackstageSession{
     
-    self.selfSubscriber.delegate = nil;
-    [self.producerSession unsubscribe:self.selfSubscriber error:nil];
+    if (self.selfSubscriber) {
+        self.selfSubscriber.delegate = nil;
+        [self.producerSession unsubscribe:self.selfSubscriber error:nil];
+    }
     self.selfSubscriber = nil;
     
-    self.producerSubscriber.delegate = nil;
-    [self.producerSession unsubscribe: self.producerSubscriber error:nil];
+    if (self.producerSubscriber) {
+        self.producerSubscriber.delegate = nil;
+        [self.producerSession unsubscribe: self.producerSubscriber error:nil];
+    }
     self.producerSubscriber = nil;
     
     OTError *error = nil;
@@ -178,8 +182,10 @@
 
 -(NSError*)disconnectOnstageSession{
     
-    self.privateProducerSubscriber.delegate = nil;
-    [self.liveSession unsubscribe: self.privateProducerSubscriber error:nil];
+    if (self.privateProducerSubscriber) {
+        self.privateProducerSubscriber.delegate = nil;
+        [self.liveSession unsubscribe: self.privateProducerSubscriber error:nil];
+    }
     self.privateProducerSubscriber = nil;
     
     OTError *error = nil;
@@ -278,29 +284,35 @@
         weakSelf.socket = socket;
         
         [weakSelf.socket on:@"eventGoLive" callback:^(id data) {
-            if(self.broadcastUrl && !self.startBroadcast){
-                self.startBroadcast = YES;
+            if(weakSelf.broadcastUrl && !weakSelf.startBroadcast){
+                weakSelf.startBroadcast = YES;
             }
         }];
         
         [weakSelf.socket on:@"eventEnded" callback:^(id data) {
-            self.broadcastEnded = YES;
+            weakSelf.broadcastEnded = YES;
         }];
         
         [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
-            self.canJoinShow = [data[0][@"ableToJoin"] boolValue];
+            
+            if (!data || ![data isKindOfClass: [NSArray class]]) return;
+            NSArray *dataArray = (NSArray *)data;
+            if (dataArray.count != 1) return;
+            if (![[dataArray lastObject] isKindOfClass: [NSDictionary class]]) return;
+            
+            weakSelf.canJoinShow = [data[0][@"ableToJoin"] boolValue];
 
             if(!_canJoinShow){
                 if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
                     [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
 
                     if(data[0][@"broadcastData"][@"broadcastUrl"]){
-                        self.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
+                        weakSelf.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
                         if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
-                            self.startBroadcast = YES;
+                            weakSelf.startBroadcast = YES;
                         }
                         else{
-                            self.waitingOnBroadcast = YES;
+                            weakSelf.waitingOnBroadcast = YES;
                         }
                     }
                 }
@@ -310,12 +322,14 @@
                 
             }
         }];
+        
         weakSelf.socket.onDisconnect = ^(){
             NSLog(@"SOCKET DISCONNECTED");
-            if(self.startBroadcast){
+            if(weakSelf.startBroadcast){
               [SVProgressHUD showErrorWithStatus:@"Internet connection is down. Attempting to reconnect"];
             }
         };
+        
         weakSelf.socket.onConnect = ^(){
             [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
         };

@@ -74,27 +74,27 @@ To initialize the controller you need:
 
 ```objc
 [[IBApi sharedManager] getInstanceWithAdminId: <#admin id#>
-                                           completion:^(IBInstance *instance, NSError *error) {
-                             
-                                               dispatch_async(dispatch_get_main_queue(), ^(){
+                                   completion:^(IBInstance *instance, NSError *error) {
 
-                                                   if (!error) {
+                                       dispatch_async(dispatch_get_main_queue(), ^(){
 
-                                                       // user data could be:
-                                                       // [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"]
-                                                       // [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"]
-                                                       // [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
+                                           if (!error) {
 
-                                                       UIViewController *viewcontroller;
-                                                       if(instance.events.count != 1){
-                                                           viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:<#user data#>];
-                                                       }
-                                                       else {
-                                                           viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:<#user data#>];
-                                                       }
-                                                       
-                                                       [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
-                                                   }
-                                               });
-                                           }];
+                                               // user data could be:
+                                               // [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"]
+                                               // [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"]
+                                               // [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
+
+                                               UIViewController *viewcontroller;
+                                               if(instance.events.count != 1){
+                                                   viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:<#user data#>];
+                                               }
+                                               else {
+                                                   viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:<#user data#>];
+                                               }
+
+                                               [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
+                                           }
+                                       });
+                                   }];
 ```

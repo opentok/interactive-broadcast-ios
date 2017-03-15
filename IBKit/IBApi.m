@@ -6,242 +6,273 @@
 //  Copyright © 2015 Andrea Phillips. All rights reserved.
 //
 
-#import "IBApi.h"
-
 #import <UIKit/UIKit.h>
-#import <ifaddrs.h>
-#import <arpa/inet.h>
+
+#import "IBApi.h"
+#import "IBApi_Internal.h"
+#import "IBInstance_Internal.h"
+
+@interface IBApi()
+@property (nonatomic) NSURLSession *session;
+@end
 
 @implementation IBApi
-NSString *BACKEND_URL;
 
-+ (IBApi*)sharedInstance
-{
-    static IBApi *_sharedInstance = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        _sharedInstance = [[IBApi alloc] init];
++ (instancetype)sharedManager {
+    static IBApi *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[IBApi alloc] init];
+        sharedMyManager.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     });
-    return _sharedInstance;
+    return sharedMyManager;
 }
 
++ (NSString *)getBackendURL {
+    return [IBApi sharedManager].backendURL;
+}
 
-- (NSMutableDictionary*)getEvents:(NSString*)instance_id back_url:(NSString*)backend_base_url{
-    NSMutableDictionary *instance_data ;
-    BACKEND_URL = backend_base_url;
-    NSString *url = [NSString stringWithFormat:@"%@/get-instance-by-id",backend_base_url];
-    NSDictionary *parameters = @{
-                                 @"instance_id" : instance_id,
-                                 };
-    //Create the request
++ (void)configureBackendURL:(NSString *)backendURL {
+    [IBApi sharedManager].backendURL = backendURL;
+}
+
+- (void)getInstanceWithInstanceId:(NSString *)instandId
+                       completion:(void (^)(IBInstance *, NSError *))completion {
+    
+    NSString *url = [NSString stringWithFormat:@"%@/get-instance-by-id", [IBApi getBackendURL]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    
-    //parse parameters to json format
-    NSError * error = nil;
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
-    
-    [request setHTTPMethod:@"POST"];
+    request.HTTPMethod = @"POST";
+    request.timeoutInterval = 30.0f;
+    NSError *jsonWriteError;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:@{@"instance_id" : instandId} options:NSJSONWritingPrettyPrinted error:&jsonWriteError];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    if (jsonWriteError) {
+        completion(nil, jsonWriteError);
+        return;
+    }
     
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody: requestData];
-    
-    __block NSDictionary *json;
-    
-    NSURLResponse * response = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:request
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    if (error == nil)
-    {
-        json = [NSJSONSerialization JSONObjectWithData:data
-                                               options:0
-                                                 error:nil];
+    [[self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            completion(nil,error);
+            return;
+        }
         
-        NSError * errorDictionary = nil;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
-        instance_data = [dictionary mutableCopy];
-        instance_data[@"backend_base_url"] = backend_base_url;
-
-        return instance_data;
-    }else{
-        return instance_data;
-    }
-    
-};
-
-- (NSMutableDictionary*)creteEventToken:(NSString*)user_type
-                               back_url:(NSString*)backend_base_url
-                                   data:(NSMutableDictionary *)event_data {
-    
-    if([user_type isEqualToString:@"fan"]){
-        [self creteEventTokenFan:user_type back_url:backend_base_url data:event_data];
-    }
-    
-    NSMutableDictionary *connectionData;
-    NSString *_url = [NSString stringWithFormat:@"%@_url", user_type];
-    
-    NSString *event_url = event_data[_url];
-    
-    //user_type should be @"fan", @'celebrity' or @"host"
-    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@",backend_base_url, user_type, event_url];
-    
-    //Create the request
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    NSError * error = nil;
-
-    NSURLResponse * response = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:request
-                                          returningResponse:&response
-                                                      error:&error];
-    if (error == nil) {
+        if (!data) {
+            completion(nil, [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:-1
+                                            userInfo:@{NSLocalizedDescriptionKey:@"jsonObject is empty."}]);
+            return;
+        }
         
-        NSError * errorDictionary = nil;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
-        NSMutableDictionary *data = [dictionary mutableCopy];
-        data[@"backend_base_url"] = backend_base_url;
-        return data;
-    }
-    else{
-        return connectionData;
-    }
+        NSError *jsonReadError;
+        id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonReadError];
+        if (jsonReadError) {
+            completion(nil, jsonReadError);
+            return;
+        }
+        
+        if([responseObject[@"success"] integerValue] == 1){
+            IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+            completion(instance, nil);
+        }
+        else{
+            NSDictionary *errorDetail = @{NSLocalizedDescriptionKey: responseObject[@"error"]};
+            NSError *error = [NSError errorWithDomain:@"IBKit" code:-1 userInfo:errorDetail];
+            completion(nil,error);
+        }
+    }] resume];
 }
 
-- (void)creteEventToken:(NSString*)user_type
-               back_url:(NSString*)backend_base_url
-                   data:(NSMutableDictionary *)event_data
-             completion:(void (^)(NSMutableDictionary *))completion {
+- (void)getInstanceWithAdminId:(NSString *)adminId
+                    completion:(void (^)(IBInstance *, NSError *))completion {
     
-    if([user_type isEqualToString:@"fan"]){
-        [self creteEventTokenFan:user_type back_url:backend_base_url data:event_data];
+    NSString *url = [NSString stringWithFormat:@"%@/get-events-by-admin", [IBApi getBackendURL]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    request.HTTPMethod = @"POST";
+    request.timeoutInterval = 30.0f;
+    NSError *jsonWriteError;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:@{@"id" : adminId} options:NSJSONWritingPrettyPrinted error:&jsonWriteError];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    if (jsonWriteError) {
+        completion(nil, jsonWriteError);
+        return;
     }
     
-    NSMutableDictionary *connectionData;
-    NSString *_url = [NSString stringWithFormat:@"%@_url", user_type];
+    [[self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            completion(nil,error);
+            return;
+        }
+        
+        if (!data) {
+            completion(nil, [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:-1
+                                            userInfo:@{NSLocalizedDescriptionKey:@"jsonObject is empty."}]);
+            return;
+        }
+        
+        NSError *jsonReadError;
+        id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonReadError];
+        if (jsonReadError) {
+            completion(nil, jsonReadError);
+            return;
+        }
+        
+        if([responseObject[@"success"] integerValue] == 1){
+            IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+            completion(instance, nil);
+        }
+        else{
+            NSDictionary *errorDetail = @{NSLocalizedDescriptionKey: responseObject[@"error"]};
+            NSError *error = [NSError errorWithDomain:@"IBKit" code:-1 userInfo:errorDetail];
+            completion(nil,error);
+        }
+    }] resume];
+}
+
+- (void)getEventHashWithAdminId:(NSString *)adminId
+                     completion:(void (^)(NSString *, NSError *))completion {
     
-    NSString *event_url = event_data[_url];
-    
-    //user_type should be @"fan", @'celebrity' or @"host"
-    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@",backend_base_url, user_type, event_url];
-    
-    //Create the request
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-    
-        if (error == nil) {
-            NSError * errorDictionary = nil;
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
-            NSMutableDictionary *data = [dictionary mutableCopy];
-            data[@"backend_base_url"] = backend_base_url;
-            completion(data);
+    NSString *url = [NSString stringWithFormat:@"%@/event/get-event-hash-json/%@", [IBApi getBackendURL], adminId];
+    [[self.session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            NSError *error;
+            id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            if (error) {
+                NSLog(@"JSONObjectWithData error: %@", error);
+                completion(nil, error);
+                return;
+            }
+            completion(responseObject[@"admins_id"], nil);
         }
         else {
-            completion(connectionData);
+            completion(nil, error);
+        }
+    }] resume];
+}
+
+- (void)createEventTokenWithUser:(IBUser *)user
+                           event:(IBEvent *)event
+                      completion:(void (^)(IBInstance *, NSError *))completion {
+    
+    if (user.role == IBUserRoleFan) {
+        [self createFanEventTokenWithEvent:event completion:^(IBInstance *instance, NSError *error) {
+            completion(instance, error);
+        }];
+        return;
+    }
+    
+    [self getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", (unsigned long)event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+        if (!error) {
+            NSString *userTypeURL = [NSString stringWithFormat:@"%@URL", [user userRoleName]];
+            NSString *eventURL = [event valueForKey:userTypeURL];
+            NSString *url = [NSString stringWithFormat:@"%@/create-token-%@/%@/%@", [IBApi getBackendURL], [user userRoleName], adminIdHash,eventURL];
+            
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            [[session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if (!error) {
+                    NSError *error;
+                    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    if (error) {
+                        NSLog(@"JSONObjectWithData error: %@", error);
+                        completion(nil, error);
+                        return;
+                    }
+                    IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+                    completion(instance, nil);
+                }
+                else {
+                    completion(nil, error);
+                }
+            }] resume];
+        
+        }
+        else{
+            completion(nil, error);
         }
     }];
 }
 
-- (NSMutableDictionary*) creteEventTokenFan:(NSString*)user_type back_url:(NSString*)backend_base_url data:(NSMutableDictionary *)event_data{
+- (void)createFanEventTokenWithAdmin:(IBEvent *)event
+                            adminId:(NSString *)adminHash
+                         completion:(void (^)(IBInstance *, NSError *))completion {
     
-    NSMutableDictionary *connectionData ;
-    NSString *_url = [NSString stringWithFormat:@"%@_url", user_type];
-    
-    NSString *event_url = event_data[_url];
-    NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSLocale *currentLocale = [NSLocale currentLocale];
     NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSString *eventURL = [event valueForKey:@"fanURL"];
+    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@", [IBApi getBackendURL], @"fan"];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+
+    parameters[@"fan_url"] = eventURL;
+    parameters[@"user_id"]= [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    parameters[@"os"]= @"IOS";
+    parameters[@"is_mobile"]= @"true";
+    parameters[@"country"]= countryCode;
     
-    NSString *url = [NSString stringWithFormat:@"%@/create-token-%@",backend_base_url, user_type];
-    NSDictionary *parameters = @{@"fan_url":event_url,
-                                 @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                 @"os": @"IOS",
-                                 @"is_mobile": @"true",
-                                 @"country": countryCode,
-                                 };
-    
-    //[[NSHost currentHost] address]
-    //Create the request
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    
-    //parse parameters to json format
-    NSError * error = nil;
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody: requestData];
-    
-    __block NSDictionary *json;
-    
-    NSURLResponse * response = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:request
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    if (error == nil)
-    {
-        json = [NSJSONSerialization JSONObjectWithData:data
-                                               options:0
-                                                 error:nil];
-        
-        NSError * errorDictionary = nil;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
-        NSMutableDictionary *data = [dictionary mutableCopy];
-        data[@"backend_base_url"] = backend_base_url;
-        return data;
-    }else{
-        return connectionData;
+    if(adminHash){
+        parameters[@"admins_id"]= adminHash;
     }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    request.HTTPMethod = @"POST";
+    request.timeoutInterval = 30.0f;
+    NSError *jsonWriteError;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&jsonWriteError];
+    if (jsonWriteError) {
+        completion(nil, jsonWriteError);
+        return;
+    }
+    
+    [[self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            completion(nil,error);
+            return;
+        }
+        
+        if (!data) {
+            completion(nil, [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:-1
+                                            userInfo:@{NSLocalizedDescriptionKey:@"jsonObject is empty."}]);
+            return;
+        }
+        
+        NSError *jsonReadError;
+        id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonReadError];
+        if (jsonReadError) {
+            completion(nil, jsonReadError);
+            return;
+        }
+        
+        IBInstance *instance = [[IBInstance alloc] initWithJson:responseObject];
+        completion(instance, nil);
+        
+    }] resume];
 }
 
-- (NSMutableDictionary*)sendMetric:(NSString*)metric event_id:(NSString*)an_event_id{
-    NSMutableDictionary * _data;
-    NSString *url = [NSString stringWithFormat:@"%@/metrics/%@",BACKEND_URL,metric];
-    NSDictionary *parameters = @{
-                                 @"user_id" : [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                 @"event_id" : an_event_id
-                                 };
-    //Create the request
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+- (void)createFanEventTokenWithEvent:(IBEvent *)event
+                          completion:(void (^)(IBInstance *, NSError *))completion {
     
-    //parse parameters to json format
-    NSError * error = nil;
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody: requestData];
-    
-    __block NSDictionary *json;
-    
-    NSURLResponse * response = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:request
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    if (error == nil)
-    {
-        json = [NSJSONSerialization JSONObjectWithData:data
-                                               options:0
-                                                 error:nil];
+    if (event.adminId) {
         
-        NSError * errorDictionary = nil;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorDictionary];
-        return [dictionary mutableCopy];
-    }else{
-        return _data;
+        // new backend instance
+        [self getEventHashWithAdminId:[NSString stringWithFormat:@"%ld", (unsigned long)event.adminId] completion:^(NSString *adminIdHash, NSError *error) {
+            
+            if (!error) {
+                [self createFanEventTokenWithAdmin:event adminId:adminIdHash completion:completion];
+            }
+            else {
+                completion(nil, error);
+            }
+        }];
     }
-    
-};
+    else {
+        
+        // MLB: old backend
+        [self createFanEventTokenWithAdmin:event adminId:nil completion:completion];
+    }
+}
 
 @end

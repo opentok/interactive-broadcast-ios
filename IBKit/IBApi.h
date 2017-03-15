@@ -1,30 +1,62 @@
 //
 //  IBApi.h
-//  ;
 //
-//  Created by Andrea Phillips on 15/12/2015.
-//  Copyright © 2015 Andrea Phillips. All rights reserved.
+//  Copyright © 2016 Tokbox, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <IBKit/IBInstance.h>
+#import <IBKit/IBUser.h>
 
-@interface IBApi : NSObject;
+@interface IBApi : NSObject
 
-+ (IBApi*)sharedInstance;
+/**
+ *  Configure the URL of the backend server used by the SDK.
+ *
+ *  @param backendURL the URL of the backend server used by the SDK.
+ */
++ (void)configureBackendURL:(NSString *)backendURL;
 
-- (NSMutableDictionary*)getEvents:(NSString*)instance_id
-                         back_url:(NSString*)backend_base_url;
+/**
+ *  Contains backend URL and other essential information to obtain data
+ */
++ (instancetype)sharedManager;
 
-- (NSMutableDictionary*)creteEventToken:(NSString*)user_type
-                               back_url:(NSString*)backend_base_url
-                                   data:(NSMutableDictionary *)event_data;
+/**
+ *  Retrieve instance information for the specified instance ID.
+ *
+ *  @param instanceId   An instance ID.
+ *  @param completion   A completion handler to call when the operation is complete.
+ */
+- (void)getInstanceWithInstanceId:(NSString *)instanceId
+                       completion:(void (^)(IBInstance *, NSError *))completion;
 
-- (void)creteEventToken:(NSString*)user_type
-               back_url:(NSString*)backend_base_url
-                   data:(NSMutableDictionary *)event_data
-             completion:(void (^)(NSMutableDictionary *))completion;
+/**
+ *  Retrieve instance information for the specified adminstrator ID.
+ *
+ *  @param adminId    The adminstrator ID.
+ *  @param completion A completion handler to call when the operation is complete.
+ */
+- (void)getInstanceWithAdminId:(NSString *)adminId
+                    completion:(void (^)(IBInstance *, NSError *))completion;
 
-- (NSMutableDictionary*)sendMetric:(NSString*)metric
-                          event_id:(NSString*)an_event_id;
+/**
+ *  Create an OpenTok token for the specified user and event.
+ *
+ *  @param user         An interactive broadcast user.
+ *  @param event        An interactive broadcast event.
+ *  @param completion   A completion handler to call when the operation is complete.
+ */
+- (void)createEventTokenWithUser:(IBUser *)user
+                           event:(IBEvent *)event
+                      completion:(void (^)(IBInstance *, NSError *))completion;
+
+/**
+ *  Create an OpenTok token for the specified fan event.
+ *
+ *  @param event        An interactive broadcast fan event.
+ *  @param completion   A completion handler to call when the operation is complete.
+ */
+- (void)createFanEventTokenWithEvent:(IBEvent *)event
+                          completion:(void (^)(IBInstance *, NSError *))completion;
 
 @end

@@ -517,6 +517,8 @@ typedef enum : NSUInteger {
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
                          reason:(OTSubscriberVideoEventReason)reason {
+    
+    [self removeSilhouetteToSubscriber:subscriber];
     [self addSilhouetteToSubscriber:subscriber];
 }
 
@@ -527,6 +529,7 @@ typedef enum : NSUInteger {
 
 - (void)subscriberVideoDisableWarning:(OTSubscriberKit *)subscriber {
     subscriber.subscribeToVideo = NO;
+    [self removeSilhouetteToSubscriber:subscriber];
     [self addSilhouetteToSubscriber:subscriber];
 }
 

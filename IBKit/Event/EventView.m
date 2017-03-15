@@ -129,6 +129,18 @@
             [view setFrame:CGRectMake(0, 0, 5,new_height)];
         }
     }
+    
+    for (UIView *view in self.hostViewHolder.subviews) {
+        view.frame = self.hostViewHolder.bounds;
+    }
+    
+    for (UIView *view in self.fanViewHolder.subviews) {
+        view.frame = self.fanViewHolder.bounds;
+    }
+    
+    for (UIView *view in self.celebrityViewHolder.subviews) {
+        view.frame = self.celebrityViewHolder.bounds;
+    }
 }
 
 #pragma chat Bar

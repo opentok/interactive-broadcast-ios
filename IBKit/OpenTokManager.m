@@ -44,6 +44,7 @@
 
 - (void)closeSocket{
     [self.socket close];
+    self.socket = nil;
 }
 
 - (void)muteOnstageSession:(BOOL)mute {

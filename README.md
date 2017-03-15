@@ -27,7 +27,7 @@ _**IMPORTANT:** In order to deploy the OpenTok Interactive Broadcast Solution, y
 
 To get up and running quickly with your first app, go through the following steps in the tutorial provided below:
 
-1. [Create an Xcode project](#create-an-xcode-studio-project)
+1. [Create an Xcode project](#create-an-xcode-project)
 2. [Add the required frameworks](#add-the-required-frameworks)
 3. [Configure the Interactive Broadcast Solution controller](#configure-the-interactive-broadcast-solution-controller)
 4. [Handle events](#handle-events)
@@ -57,40 +57,73 @@ Now you are ready to add the Interactive Broadcast Solution user detail to your 
 1. From the **Project Navigator** view, edit **ViewController.m** and ensure you have the following import statements:
 
 ```objc
-#import <IBKit/MainIBViewController.h>
+#import <IBKit/IBKit.h>
 ```
 
-2. You will now be able to create a Interactive Broadcast Solution controller, which will populate the application with events available on the Interactive Broadcast Solution service. Ensure the following statement is within the **ViewController** interface declaration in **ViewController.m**:
+2. You will be able to use the API to create an Interactive Broadcasting Solution controller.
+
+To initialize the controller you need:
+
+   - **The Admin ID** is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Admin ID for multiple events.
+   - **The Backend URL** is the endpoint to the web service hosting the events, and should be provided by TokBox.
+   - **The User Type** to be used. Specify one of the following values for the User Type: `fan`, `celebrity`, or `host`. There should only be one celebrity and host per event.
+   - The Username will be displayed in chats with the producer and when Fans get in line. **This field is optional**.
+
+3. The ``user type`` can be passed depending on which button is pressed:
 
 ```objc
-@property (strong, nonatomic) MainIBViewController *IBController;
-```
+_requestData = @{
+                     @(self.celebrityButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
+                     @(self.hostButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"],
+                     @(self.fanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
+                     @(self.mlbFanButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"FanName"],
+                     @(self.fanCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleFan name:@"Fan"],
+                     @(self.celebrityCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleCelebrity name:@"Celebrity"],
+                     @(self.hostCustomEventsButton.hash): [IBUser userWithIBUserRole:IBUserRoleHost name:@"Host"]
+                    };
+```                     
 
-
-3. In **ViewController.m**, add this `loadIBController()` method, which instantiates the Interactive Broadcast Solution controller. You can call this method as needed to respond to load or button click events:
+2. Configure the backend URL using the `configureBackendURL ` method:
 
 ```objc
--(void)loadIBController:{
-    NSString *admin_id = @"Your admin id";
-    NSString *backend_url = @"your backend url";
-    NSMutableDictionary *user = [NSMutableDictionary dictionaryWithDictionary:@{
-                                    @"type":@"fan",
-                                    @"name":@""
-                                }];
-    self.IBController = [[MainIBViewController alloc] initWithData:admin_id 
-                                                                          backend_base_url:backend_url 
-                                                                                      user:user];
-    [self presentViewController:self.IBController animated:NO completion:nil];
+[IBApi configureBackendURL:<YOUR_BACKEND URL>];
+``` 
+
+1. Now you can create an Interactive Broadcast Solution controller, which will populate the application with events available on the Interactive Broadcast Solution service using the `sharedManager` method, the `admin_id` parameter and the `user type`:
+
+```objc
+- (IBAction)mlbEventButtonPressed:(UIButton *)sender {
+    
+    [IBApi configureBackendURL:<YOUR_BACKEND_URL>];
+    __weak ViewController *weakSelf = (ViewController *)self;
+    [SVProgressHUD show];
+    [[IBApi sharedManager] getInstanceWithInstanceId:mlbpass
+                                          completion:^(IBInstance *instance, NSError *error) {
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^(){
+                                                  [SVProgressHUD dismiss];
+                                                  if (!error) {
+                                                      NSMutableDictionary *instance_data = [NSMutableDictionary dictionaryWithDictionary:@{}];
+                                                      instance_data[@"backend_base_url"] = MLBBackend;
+                                      
+                                                      
+                                                      UIViewController *viewcontroller;
+                                                      if(instance.events.count != 1){
+                                                          viewcontroller = [[EventsViewController alloc] initWithInstance:instance user:weakSelf.requestData[@(sender.hash)]];
+                                                      }
+                                                      else {
+                                                          viewcontroller = [[EventViewController alloc] initWithInstance:instance eventIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] user:weakSelf.requestData[@(sender.hash)]];
+                                                      }
+                                                      [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
+                                                  }
+                                                  else {
+                                                      [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                                                  }
+                                            });
+                                          }];
+
 }
 ```
-
-
-4. In the method you just added, the `user` dictionary stores the User Type and Username. It is used to initialize the `IBController` object, which is also initialized with the Admin ID and Backend Base Url:
-
-   - The Admin ID is unique to your account. It is used to authorize your code to use the library and make requests to the backend, which is hosted at the location identified by the Backend Base URL. You can use your Admin ID for multiple events.
-   - The Backend Base URL is the endpoint to the web service hosting the events, and should be provided by TokBox.
-   - Specify one of the following values for the User Type: `fan`, `celebrity`, or `host`. There should only be one celebrity and host per event.
-   - The Username will be displayed in chats with the producer and when Fans get in line. This field is optional.
 
 
 ### Handle events
@@ -100,17 +133,16 @@ The Interactive Broadcast Solution Kit provides you with these fully functional 
 If you would like to create your own custom event handling implementation, create your event handling class and perform the following steps:
 
 
-1. Add these import statements to your event handling class:
+1. Add this import statement to your event handling class:
 
 ```objc
-#import <IBKit/EventViewController.h>
 #import <IBKit/IBApi.h>
 ```
 
 2. Fetch the events:
 
    ```objc
-   NSMutableDictionary *instanceData = [[IBApi sharedInstance] getEvents:admin_id
+   NSMutableDictionary *instanceData = [[IBApi sharedManager] getEvents:admin_id
                                                                        back_url:backend_url];
    ```
 

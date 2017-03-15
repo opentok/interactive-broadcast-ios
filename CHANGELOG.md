@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 #### [1.0.4]
 
-* [UPDATED] OpenTok SDK version to 2.10.1
+* [UPDATED] OpenTok SDK version to 2.10.2
 * [ADDED] Reconnections.
 * [ADDED] Connection quality UI.
 * [FIXED] Memory on SIOSocket.

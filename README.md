@@ -2,6 +2,9 @@
 
 # OpenTok Interactive Broadcast Solution for iOS
 
+[![Build Status](https://travis-ci.com/opentok/ibs-ios.svg?token=Bgz48rVAyAihVsymz2iz&branch=develop)](https://travis-ci.com/opentok/ibs-ios)
+[![codecov](https://codecov.io/gh/opentok/ibs-ios/branch/master/graph/badge.svg?token=lVSgFBGVpU)](https://codecov.io/gh/opentok/ibs-ios)
+
 This document describes how to create an OpenTok Interactive Broadcast Solution mobile app for iOS. You will learn how to set up the API calls to use the admin ID for the backend account, set up the role and name of the mobile participant, and connect the participant with a specified event.
 
 This guide has the following sections:
@@ -13,7 +16,7 @@ _**NOTE:** The **Interactive Broadcast Solution** only supports landscape orient
 
 ## Prerequisites
 
-- Xcode version 7 or later.
+- Xcode version 8 or later.
 - Download the **iOS Interactive Broadcast Solution Framework** provided by TokBox.
 - You will need the **Admin ID** and **Backend Base URL** provided by TokBox.
 
@@ -98,3 +101,19 @@ To initialize the controller you need:
                                        });
                                    }];
 ```
+
+## Contribute
+
+If you'd like to contribute to OpenTok IBS's development, please follow the guidelines in the [contributing files](/.github).
+
+
+## License
+
+This project is under the [Apache License 2.0](./LICENSE)
+
+
+# About OpenTok
+
+![logo](./tokbox-logo.png)
+
+The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. For more info on how OpenTok works, check out our [Core Concepts](https://tokbox.com/developer/guides/core-concepts/).

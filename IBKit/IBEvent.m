@@ -51,35 +51,39 @@
     
     if (self = [super init]) {
         
-        if (json[@"admins_id"]) {
-            _adminId = [json[@"admins_id"] integerValue];
-            _adminName = json[@"admins_name"];
-        }
-        _celebrityURL = json[@"celebrity_url"];
-        _fanURL = json[@"fan_url"];
-        _hostURL = json[@"host_url"];
-        
-        if (json[@"date_time_start"] != [NSNull null]) {
-            _startTime = [IBDateFormatter convertFromBackendDateString:json[@"date_time_start"]];
-        }
-        
-        if (json[@"date_time_end"] != [NSNull null]) {
-            _endTime = [IBDateFormatter convertFromBackendDateString:json[@"date_time_end"]];
-        }
-        
-        if (json[@"event_image"] != [NSNull null]) {
-            _image = json[@"event_image"];
-        }
-        
-        if (json[@"event_image_end"] != [NSNull null]) {
-            _endImage = json[@"event_image_end"];
-        }
-        
-        _name = json[@"event_name"];
-        _fanURL = json[@"fan_url"];
-        _hostURL = json[@"host_url"];
         _identifier = json[@"id"];
+        
+        _adminId = json[@"adminId"];
+        
+        _celebrityURL = json[@"celebrityUrl"];
+        _fanURL = json[@"fanUrl"];
+        _hostURL = json[@"hostUrl"];
+        
+        if (json[@"dateTimeStart"]) {
+            _startTime = [IBDateFormatter convertFromBackendDateString:json[@"dateTimeStart"]];
+        }
+        
+        if (json[@"dateTimeEnd"]) {
+            _endTime = [IBDateFormatter convertFromBackendDateString:json[@"dateTimeEnd"]];
+        }
+        
+        if (json[@"startImage"]) {
+            _image = json[@"startImage"][@"url"];
+        }
+        
+        if (json[@"endImage"]) {
+            _endImage = json[@"endImage"][@"url"];
+        }
+        
+        _name = json[@"name"];
+        
         _status = json[@"status"];
+        
+        _apiKey = json[@"apiKey"];
+        _onstageSession = json[@"stageSessionId"];
+        _onstageToken = json[@"stageToken"];
+        _backstageSession = json[@"sessionId"];
+        _backstageToken = json[@"backstageToken"];
     }
     return self;
 }

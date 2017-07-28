@@ -10,6 +10,18 @@
 
 @interface IBEvent ()
 
+@property (nonatomic) NSString *apiKey;
+
+@property (nonatomic) NSString *onstageSession;
+
+@property (nonatomic) NSString *onstageToken;
+
+@property (nonatomic) NSString *backstageSession;
+
+@property (nonatomic) NSString *backstageToken;
+
+@property (nonatomic) NSString *identifier;
+
 @property (nonatomic) NSString *status;
 
 @property (readonly, nonatomic) NSString *celebrityURL;

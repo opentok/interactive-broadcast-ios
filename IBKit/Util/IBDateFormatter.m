@@ -18,7 +18,8 @@
 - (NSDateFormatter *)backendDateFormatter {
     if (!_backendDateFormatter) {
         _backendDateFormatter = [[NSDateFormatter alloc] init];
-        [_backendDateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+        [_backendDateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+        [_backendDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     }
     return _backendDateFormatter;
 }
@@ -27,6 +28,7 @@
     if (!_appDateFormatter) {
         _appDateFormatter = [[NSDateFormatter alloc] init];
         [_appDateFormatter setDateFormat:@"dd MMM YYYY HH:mm:ss"];
+        [_appDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     }
     return _appDateFormatter;
 }

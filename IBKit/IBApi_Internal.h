@@ -14,4 +14,18 @@
 
 + (NSString *)getBackendURL;
 
+#pragma mark - Version 2
+// ==================================================
+// Version 2
+// ==================================================
+@property (nonatomic) NSString *adminId;
+
+@property (nonatomic) NSString *backendURL_v2;
+
+@property (nonatomic) NSString *token;
+
++ (void)getJWTTokenWithUser:(IBUser *)user
+                      event:(IBEvent *)event
+                 completion:(void (^)(NSString *, NSError *))completion;
+
 @end

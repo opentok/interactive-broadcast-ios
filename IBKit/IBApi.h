@@ -59,4 +59,28 @@
 - (void)createFanEventTokenWithEvent:(IBEvent *)event
                           completion:(void (^)(IBInstance *, NSError *))completion;
 
+#pragma mark - Version 2
+
+// ==================================================
+// Version 2
+// ==================================================
+
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ *  Configure the URL of the backend server used by the SDK for version 2.
+ *
+ *  @param backendURL the URL of the backend server used by the SDK.
+ */
++ (void)configureBackendURL_v2:(NSString *)backendURL
+                       adminId:(NSString *)adminId;
+
+- (void)getEventsWithCompletion:(nonnull void (^)(NSArray<IBEvent *> * _Nullable, NSError * _Nullable))completion;
+
+- (void)getEventTokenWithUser:(IBUser *)user
+                        event:(IBEvent *)event
+                   completion:(nonnull void (^)(IBEvent * _Nullable, NSError * _Nullable))completion;
+
+NS_ASSUME_NONNULL_END
+
 @end

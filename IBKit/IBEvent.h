@@ -11,7 +11,7 @@
 /**
  *  The adminstrator ID.
  */
-@property (readonly, nonatomic) NSUInteger adminId;
+@property (readonly, nonatomic) NSString *adminId;
 
 /**
  *  The adminstrator name.

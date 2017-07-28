@@ -14,16 +14,15 @@ SPEC_BEGIN(IBDateFormatterTests)
 context(@"IBDateFormatterTests", ^(){
     
     describe(@"A date string", ^(){
-        it(@"should return nill if its not correctly formatted", ^(){
+        it(@"should return nil if it is not correctly formatted", ^(){
             NSString *date = @"2016-02-14 11:11:11.0";
             NSString *formattedDate = [IBDateFormatter convertToAppStandardFromDateString:date];
             [[formattedDate should] beNil];
         });
         
-        it(@"should return a formatted date with the format YYYY-MM-dd HH:mm:ss ", ^(){
-            NSString *date = @"2016-02-14 11:11:11";
+        it(@"should return a formatted date with the format yyyy-MM-dd'T'HH:mm:ssZZZZZ", ^(){
+            NSString *date = @"2017-07-22T18:00:00-03:00";
             NSString *formattedDate = [IBDateFormatter convertToAppStandardFromDateString:date];
-            [[formattedDate should] equal:@"14 Feb 2016 11:11:11"];
             [[formattedDate shouldNot] beNil];
         });
     });

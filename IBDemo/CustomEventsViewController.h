@@ -12,6 +12,5 @@
 @interface CustomEventsViewController : UIViewController
 
 @property (nonatomic) IBUser *user;
-@property (nonatomic) NSString *instance_id;
 
 @end

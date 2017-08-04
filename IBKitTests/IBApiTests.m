@@ -13,7 +13,7 @@
 SPEC_BEGIN(IBApiTests)
 
 context(@"IBApiURLTest", ^(){
-    describe(@"A standalone IBInstance", ^(){
+    describe(@"configure backend URLs", ^(){
         
         [IBApi configureBackendURL:@"https://tokbox-ib-staging-tesla.herokuapp.com"];
         it(@"should return a valid URL", ^(){

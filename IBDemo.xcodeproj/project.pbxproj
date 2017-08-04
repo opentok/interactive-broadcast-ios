@@ -38,7 +38,6 @@
 		0BEFEB0F1CFF199B0034A18B /* OpenTokNetworkTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEFEB0D1CFF199B0034A18B /* OpenTokNetworkTest.h */; };
 		0BEFEB101CFF199B0034A18B /* OpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */; };
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
-		A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A61D00C0FA007905CC /* IBInstanceTests.m */; };
 		A00231A91D00C23B007905CC /* IBUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A81D00C23B007905CC /* IBUserTests.m */; };
 		A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AA1D00C42B007905CC /* IBEventTests.m */; };
 		A00231AD1D00C446007905CC /* IBApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AC1D00C446007905CC /* IBApiTests.m */; };
@@ -84,12 +83,9 @@
 		A06CE4341D4934D000E9EBEC /* IBEvent_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */; };
 		A08D96C61CF7C79200877619 /* IBEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C41CF7C79200877619 /* IBEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A08D96C71CF7C79200877619 /* IBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C51CF7C79200877619 /* IBEvent.m */; };
-		A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96C81CF7D2E800877619 /* IBInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96C91CF7D2E800877619 /* IBInstance.m */; };
 		A08D96D91CF8DCB200877619 /* IBKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C526391CEAD2E000706104 /* IBKit.framework */; };
 		A08D96E71CFE36E800877619 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96E51CFE36E800877619 /* JSON.h */; };
 		A08D96E81CFE36E800877619 /* JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96E61CFE36E800877619 /* JSON.m */; };
-		A08D96EC1CFE36F400877619 /* IBInstance_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96E91CFE36F400877619 /* IBInstance_Internal.h */; };
 		A08D96ED1CFE36F400877619 /* OpenTokManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A08D96EA1CFE36F400877619 /* OpenTokManager.h */; };
 		A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96EB1CFE36F400877619 /* OpenTokManager.m */; };
 		A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -158,7 +154,6 @@
 		0BEFEB0E1CFF199B0034A18B /* OpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokNetworkTest.m; sourceTree = "<group>"; };
 		0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBDateFormatterTests.m; sourceTree = "<group>"; };
 		A002319C1CFFF442007905CC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A00231A61D00C0FA007905CC /* IBInstanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstanceTests.m; sourceTree = "<group>"; };
 		A00231A81D00C23B007905CC /* IBUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBUserTests.m; sourceTree = "<group>"; };
 		A00231AA1D00C42B007905CC /* IBEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEventTests.m; sourceTree = "<group>"; };
 		A00231AC1D00C446007905CC /* IBApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBApiTests.m; sourceTree = "<group>"; };
@@ -206,13 +201,10 @@
 		A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBEvent_Internal.h; sourceTree = "<group>"; };
 		A08D96C41CF7C79200877619 /* IBEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBEvent.h; sourceTree = "<group>"; };
 		A08D96C51CF7C79200877619 /* IBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBEvent.m; sourceTree = "<group>"; };
-		A08D96C81CF7D2E800877619 /* IBInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance.h; sourceTree = "<group>"; };
-		A08D96C91CF7D2E800877619 /* IBInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBInstance.m; sourceTree = "<group>"; };
 		A08D96D41CF8DCB200877619 /* IBKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IBKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A08D96D81CF8DCB200877619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A08D96E51CFE36E800877619 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		A08D96E61CFE36E800877619 /* JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSON.m; sourceTree = "<group>"; };
-		A08D96E91CFE36F400877619 /* IBInstance_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBInstance_Internal.h; sourceTree = "<group>"; };
 		A08D96EA1CFE36F400877619 /* OpenTokManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTokManager.h; sourceTree = "<group>"; };
 		A08D96EB1CFE36F400877619 /* OpenTokManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenTokManager.m; sourceTree = "<group>"; };
 		A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBUser.h; sourceTree = "<group>"; };
@@ -371,7 +363,6 @@
 		A08D96D51CF8DCB200877619 /* IBKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				A00231A61D00C0FA007905CC /* IBInstanceTests.m */,
 				A00231AA1D00C42B007905CC /* IBEventTests.m */,
 				A00231A81D00C23B007905CC /* IBUserTests.m */,
 				A00231AC1D00C446007905CC /* IBApiTests.m */,
@@ -441,9 +432,6 @@
 				A06CE4311D4933B700E9EBEC /* IBApi_Internal.h */,
 				A0C526561CEAD35A00706104 /* IBApi.h */,
 				A0C526571CEAD35A00706104 /* IBApi.m */,
-				A08D96E91CFE36F400877619 /* IBInstance_Internal.h */,
-				A08D96C81CF7D2E800877619 /* IBInstance.h */,
-				A08D96C91CF7D2E800877619 /* IBInstance.m */,
 				A06CE4331D4934D000E9EBEC /* IBEvent_Internal.h */,
 				A08D96C41CF7C79200877619 /* IBEvent.h */,
 				A08D96C51CF7C79200877619 /* IBEvent.m */,
@@ -496,7 +484,6 @@
 				0B595F811D25BC06002779B7 /* IBAVPlayer.h in Headers */,
 				A0C5267D1CEAD35A00706104 /* IBApi.h in Headers */,
 				A08D96C61CF7C79200877619 /* IBEvent.h in Headers */,
-				A08D96CA1CF7D2E800877619 /* IBInstance.h in Headers */,
 				A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */,
 				A01E44171CF75C1B00D20CFA /* EventView.h in Headers */,
 				A01E44191CF75C1B00D20CFA /* EventViewController.h in Headers */,
@@ -513,7 +500,6 @@
 				A01E44591CF7602B00D20CFA /* OTKTextChatTableViewCell.h in Headers */,
 				A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */,
 				A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */,
-				A08D96EC1CFE36F400877619 /* IBInstance_Internal.h in Headers */,
 				A01E44571CF7602B00D20CFA /* OTKTextChatComponent.h in Headers */,
 				A01E44531CF7602B00D20CFA /* OTDefaultAudioDevice.h in Headers */,
 				0BBF96341D4171F7006DCDE9 /* IBConstants.h in Headers */,
@@ -721,7 +707,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A00231A71D00C0FA007905CC /* IBInstanceTests.m in Sources */,
 				A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */,
 				A00231A91D00C23B007905CC /* IBUserTests.m in Sources */,
 				0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */,
@@ -756,7 +741,6 @@
 				A08D96C71CF7C79200877619 /* IBEvent.m in Sources */,
 				A022F6091CF60D83008E8C70 /* EventsView.m in Sources */,
 				A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */,
-				A08D96CB1CF7D2E800877619 /* IBInstance.m in Sources */,
 				A022F6061CF60D83008E8C70 /* EventCell.m in Sources */,
 				A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */,
 				A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */,

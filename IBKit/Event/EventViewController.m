@@ -16,7 +16,6 @@
 #import "DotSpinnerViewController.h"
 
 #import "EventView.h"
-#import "IBInstance_Internal.h"
 #import "IBDateFormatter.h"
 #import "JSON.h"
 #import "OTDefaultAudioDevice.h"
@@ -61,7 +60,7 @@ typedef enum : NSUInteger {
 // Data
 @property (nonatomic) IBUser *user;
 @property (nonatomic) IBEvent *event;
-@property (nonatomic) IBInstance *instance;
+//@property (nonatomic) IBInstance *instance;
 
 // OpenTok
 @property (nonatomic) OpenTokManager *openTokManager;
@@ -74,26 +73,24 @@ typedef enum : NSUInteger {
 
 @implementation EventViewController
 
-- (instancetype)initWithInstance:(IBInstance *)instance
-                  eventIndexPath:(NSIndexPath *)eventIndexPath
-                            user:(IBUser *)user {
+- (instancetype)initWithEvent:(IBEvent *)event
+                         user:(IBUser *)user {
     
-    if (!instance || !eventIndexPath || !user) return nil;
+    if (!event || !user) return nil;
     
     if (self = [super initWithNibName:@"EventViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
         
         OTDefaultAudioDevice *defaultAudioDevice = [[OTDefaultAudioDevice alloc] init];
         [OTAudioDeviceManager setAudioDevice:defaultAudioDevice];
         
-        _instance = instance;
-        _event = _instance.events[eventIndexPath.row];
+        _event = event;
         _user = user;
         _userName = user.name ? user.name : [user userRoleName];
         
         _openTokManager = [[OpenTokManager alloc] init];
         
         // start necessary services
-
+        
         [self addObserver:self
                forKeyPath:@"event.status"
                   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
@@ -130,7 +127,7 @@ typedef enum : NSUInteger {
         
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-
+        
     }
     return self;
 }
@@ -158,7 +155,7 @@ typedef enum : NSUInteger {
         case ReachableViaWWAN:
         case ReachableViaWiFi:{
             
-            if (!self.instance) {
+            if (!self.event) {
                 [self createEventToken];
             }
             break;
@@ -171,34 +168,36 @@ typedef enum : NSUInteger {
     [SVProgressHUD show];
     
     __weak EventViewController *weakSelf = (EventViewController *)self;
-    [self.sharedManager createEventTokenWithUser:self.user
-                                           event:self.event
-                                      completion:^(IBInstance *instance, NSError *error) {
-                                             [SVProgressHUD dismiss];
-                                                 
-                                             if (!error && instance.events.count == 1) {
-                                                 dispatch_async(dispatch_get_main_queue(), ^(){
-                                                     weakSelf.instance = instance;
-                                                     weakSelf.event = [weakSelf.instance.events lastObject];
-                                                     
-                                                     // new backend
-                                                     // this is going to connect to the signaling server for HLS feed
-                                                     if (weakSelf.event.adminName) {
-                                                         [weakSelf.openTokManager connectFanToSocketWithURL:weakSelf.instance.signalingURL
-                                                                                                  sessionId:weakSelf.instance.sessionIdHost];
-                                                         [weakSelf statusChanged];
-                                                     }
-                                                     // old backend
-                                                     else {
-                                                         [weakSelf startSession];
-                                                         [weakSelf statusChanged];
-                                                     }
-                                                 });
-                                             }
-                                             else {
-                                                 NSLog(@"createEventTokenError");
-                                             }
-                                      }];
+    
+    
+    
+    
+    [self.sharedManager getEventTokenWithUser:self.user event:self.event completion:^(IBEvent * event, NSError * error) {
+        [SVProgressHUD dismiss];
+        
+        if (!error && event) {
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                weakSelf.event = event;
+                
+                // new backend
+                // this is going to connect to the signaling server for HLS feed
+                if (weakSelf.event.adminName) {
+#warning FIXME
+                    [weakSelf.openTokManager connectFanToSocketWithURL:@"123"
+                                                             sessionId:weakSelf.event.onstageSession];
+                    [weakSelf statusChanged];
+                }
+                // old backend
+                else {
+                    [weakSelf startSession];
+                    [weakSelf statusChanged];
+                }
+            });
+        }
+        else {
+            NSLog(@"createEventTokenError");
+        }
+    }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -254,14 +253,14 @@ typedef enum : NSUInteger {
 }
 
 - (void)startSession{
-    _openTokManager.liveSession = [[OTSession alloc] initWithApiKey:self.instance.apiKey
-                                                      sessionId:self.instance.sessionIdHost
+    _openTokManager.liveSession = [[OTSession alloc] initWithApiKey:self.event.apiKey
+                                                      sessionId:self.event.onstageSession
                                                        delegate:self];
-    [self.openTokManager connectWithTokenHost:self.instance.tokenHost];
+    [self.openTokManager connectWithTokenHost:self.event.onstageToken];
     
     if(self.user.role == IBUserRoleFan) {
         self.eventView.getInLineBtn.hidden = NO;
-        [self.openTokManager emitJoinRoom:self.instance.sessionIdHost];
+        [self.openTokManager emitJoinRoom:self.event.onstageSession];
     }
 }
 
@@ -608,7 +607,7 @@ typedef enum : NSUInteger {
     
     [OTKLogger setSessionId:session.sessionId
                connectionId:session.connection.connectionId
-                  partnerId:@([self.instance.apiKey integerValue])];
+                  partnerId:@([self.event.apiKey integerValue])];
     
     if (session == self.openTokManager.liveSession) {
         NSString *logtype = [NSString stringWithFormat:@"%@ConnectsOnstage", [[self.user userRoleName] capitalizedString]];
@@ -992,7 +991,7 @@ didFailWithError:(OTError*)error
             }
             else {
                 self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+                [self.eventView.eventImage loadImageWithUrl:self.event.image];
                 self.eventView.getInLineBtn.hidden = YES;
             }
         }
@@ -1004,7 +1003,7 @@ didFailWithError:(OTError*)error
             }
             else {
                 self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+                [self.eventView.eventImage loadImageWithUrl:self.event.image];
                 if(_openTokManager.canJoinShow){
                     self.eventView.getInLineBtn.hidden = NO;
                 }
@@ -1017,7 +1016,7 @@ didFailWithError:(OTError*)error
             }
             else{
                 self.eventView.eventImage.hidden = NO;
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.image]];
+                [self.eventView.eventImage loadImageWithUrl:self.event.image];
             }
             
             if (self.user.role == IBUserRoleFan &&
@@ -1042,7 +1041,7 @@ didFailWithError:(OTError*)error
             [_openTokManager cleanupSubscribers];
             
             if (self.event.endImage) {
-                [self.eventView.eventImage loadImageWithUrl:[NSString stringWithFormat:@"%@%@", self.instance.frontendURL, self.event.endImage]];
+                [self.eventView.eventImage loadImageWithUrl:self.event.endImage];
             }
         }
     });
@@ -1135,11 +1134,11 @@ didFailWithError:(OTError*)error
 }
 
 - (IBAction)getInLineClick:(id)sender {
-    _openTokManager.producerSession = [[OTSession alloc] initWithApiKey:_instance.apiKey
-                                                              sessionId:self.instance.sessionIdProducer
+    _openTokManager.producerSession = [[OTSession alloc] initWithApiKey:self.event.apiKey
+                                                              sessionId:self.event.backstageSession
                                                                delegate:self];
     [self.eventView showLoader];
-    [_openTokManager connectBackstageSessionWithToken:self.instance.tokenProducer];
+    [_openTokManager connectBackstageSessionWithToken:self.event.backstageToken];
 }
 
 - (IBAction)leaveLine:(id)sender {

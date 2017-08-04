@@ -12,8 +12,7 @@
 #import "EventsView.h"
 #import "EventCell.h"
 
-#import "IBInstance.h"
-#import "IBInstance_Internal.h"
+#import "IBEvent.h"
 #import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
@@ -22,7 +21,6 @@
 @interface EventsViewController ()
 
 @property (nonatomic) IBUser *user;
-@property (nonatomic) IBInstance *instance;
 @property (nonatomic) NSArray *openedEvents;
 
 @property (nonatomic) EventsView *eventsView;
@@ -33,14 +31,13 @@
 
 @implementation EventsViewController
 
-- (instancetype)initWithInstance:(IBInstance *)instance
-                            user:(IBUser *)user {
+- (instancetype)initWithEvents:(NSArray<IBEvent *> *)events
+                          user:(IBUser *)user {
     
-    if (!instance || !user) return nil;
+    if (!events || !user) return nil;
     
     if (self = [super initWithNibName:@"EventsViewController" bundle:[NSBundle bundleForClass:[self class]]]) {
-        _instance = instance;
-        _openedEvents = [_instance.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
+        _openedEvents = [events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.status != %@", @"C"]];
         _user = user;
         
         _internetReachability = [Reachability reachabilityForInternetConnection];
@@ -86,22 +83,24 @@
 - (void)connectToSignalServer {
     
     __weak EventsViewController *weakSelf = self;
-    [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket) {
-        weakSelf.signalingSocket = socket;
     
-        [weakSelf.signalingSocket on:@"changeStatus" callback: ^(SIOParameterArray *args){
-                                NSLog(@"event changed");
-                                NSMutableDictionary *eventChanged = [args firstObject];
-                                [weakSelf updateEventStatus:eventChanged];
-                            }];
-        
-        weakSelf.signalingSocket.onDisconnect = ^() {
-            NSLog(@"DISCONNECTED");
-        };
-        weakSelf.signalingSocket.onConnect = ^() {
-            NSLog(@"Connected to signaling server");
-        };
-    }];
+#warning FIXME
+//    [SIOSocket socketWithHost:self.instance.signalingURL response: ^(SIOSocket *socket) {
+//        weakSelf.signalingSocket = socket;
+//    
+//        [weakSelf.signalingSocket on:@"changeStatus" callback: ^(SIOParameterArray *args){
+//                                NSLog(@"event changed");
+//                                NSMutableDictionary *eventChanged = [args firstObject];
+//                                [weakSelf updateEventStatus:eventChanged];
+//                            }];
+//        
+//        weakSelf.signalingSocket.onDisconnect = ^() {
+//            NSLog(@"DISCONNECTED");
+//        };
+//        weakSelf.signalingSocket.onConnect = ^() {
+//            NSLog(@"Connected to signaling server");
+//        };
+//    }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -128,7 +127,7 @@
     static NSString *cellIdentifier = @"eCell";
     
     EventCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    [cell updateCellWithInstance:self.instance indexPath:indexPath];
+    [cell updateCellWithEvent:self.openedEvents[indexPath.row]];
     [cell.eventButton addTarget:self
                     action:@selector(onCellClick:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -141,7 +140,7 @@
     UICollectionViewCell *clickedCell = (UICollectionViewCell *)[[sender superview] superview];
     CGPoint buttonPosition = [clickedCell convertPoint:CGPointZero toView:_eventsView.eventsCollectionView];
     NSIndexPath *indexPath = [_eventsView.eventsCollectionView indexPathForItemAtPoint:buttonPosition];
-    EventViewController *eventView = [[EventViewController alloc] initWithInstance:self.instance eventIndexPath:indexPath user:self.user];
+    EventViewController *eventView = [[EventViewController alloc] initWithEvent:self.openedEvents[indexPath.row] user:self.user];
     [eventView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:eventView animated:YES completion:nil];
 }

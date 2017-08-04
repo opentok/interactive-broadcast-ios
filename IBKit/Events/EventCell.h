@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IBInstance.h"
+#import "IBEvent.h"
 
 @interface EventCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *eventButton;
-- (void)updateCellWithInstance:(IBInstance *)instance
-                     indexPath:(NSIndexPath *)indexPath;
-
+- (void)updateCellWithEvent:(IBEvent *)event;
 @end

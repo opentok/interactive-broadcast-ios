@@ -5,7 +5,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <IBKit/IBInstance.h>
+#import <IBKit/IBEvent.h>
 #import <IBKit/IBUser.h>
 
 @interface EventsViewController : UIViewController
@@ -19,7 +19,10 @@
  *
  *  @return An initialized interactive broadcast event view controller.
  */
-- (instancetype)initWithInstance:(IBInstance *)instance
-                            user:(IBUser *)user;
+//- (instancetype)initWithInstance:(IBInstance *)instance
+//                            user:(IBUser *)user;
+
+- (instancetype)initWithEvents:(NSArray<IBEvent *> *)events
+                          user:(IBUser *)user ;
 
 @end

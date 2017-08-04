@@ -12,8 +12,6 @@
 #import "IBDateFormatter.h"
 #import "UIImageView+Category.h"
 
-#import "IBInstance_Internal.h"
-
 @interface EventCell()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -29,10 +27,7 @@
     self.layer.cornerRadius = 3.0;
 }
 
-- (void)updateCellWithInstance:(IBInstance *)instance
-                     indexPath:(NSIndexPath *)indexPath {
-
-    IBEvent *event = instance.events[indexPath.row];
+- (void)updateCellWithEvent:(IBEvent *)event {
     [self.titleLabel setText:event.name];
     
     if ([event.descriptiveStatus isEqualToString:@"N"]) {
@@ -47,7 +42,7 @@
     }
     
     if (event.image) {
-        [self.imageView loadImageWithUrl:[NSString stringWithFormat:@"%@%@", instance.frontendURL, event.image]];
+        [self.imageView loadImageWithUrl:event.image];
     }
 }
 

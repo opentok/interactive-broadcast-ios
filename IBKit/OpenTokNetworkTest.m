@@ -66,7 +66,7 @@
     
     return self;
 }
-- (void)setStats:(OTSubscriberKitVideoNetworkStats*)stats{
+- (void)setStats:(OTSubscriberKitVideoNetworkStats *)stats {
     
     if (self.prevVideoTimestamp == 0) {
         self.prevVideoTimestamp = stats.timestamp;
@@ -91,7 +91,7 @@
     }
 }
 
-- (NSString*)getQuality{
+- (NSString *)getQuality {
    
     NSString *quality;
     NSArray *aVideoLimits = self.videoLimits[[NSString stringWithFormat:@"%@-%@", self.resolution, self.frameRate]];
@@ -99,7 +99,7 @@
         return @"";
     };
     
-    if([_resolution isEqualToString:@"1280x720"]){
+    if ([_resolution isEqualToString:@"1280x720"]){
         if (_video_bw < [aVideoLimits[0] longValue]) {
             quality = @"Poor";
         } else if (_video_bw > [aVideoLimits[0] longValue] && _video_bw <= [aVideoLimits[1] longValue] && _video_pl_ratio < 0.1 ) {

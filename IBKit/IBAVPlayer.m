@@ -44,6 +44,12 @@
     self.block(self.player.status, error);
 }
 
+- (void)stopBroadcastEvent {
+    if (self.player) {
+        [self.player pause];
+    }
+}
+
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"player.status"];
 }

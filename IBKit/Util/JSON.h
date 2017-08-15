@@ -10,7 +10,7 @@
 
 @interface JSON : NSObject
 
-+ (NSDictionary *)parseJSON:(NSString*)string;
++ (id)parseJSON:(NSString*)string;
 
 + (NSString *)stringify:(NSDictionary*)json;
 

@@ -25,21 +25,21 @@ context(@"JSONTests", ^(){
 
         it(@"should return an array with valid string", ^(){
             NSString *toParse = @"[{\"name\":\"testName\", \"id\":\"5\"}]";
-            NSArray *result = [JSON parseJSON:toParse];
+            NSArray *result = (NSArray *)[JSON parseJSON:toParse];
             [[result[0][@"name"] should] equal:@"testName"];
             
         });
         
         it(@"should return a dictionary with a valid string", ^(){
             NSString *toParse = @"{\"name\":\"testName\", \"id\":\"5\"}";
-            NSDictionary *result = [JSON parseJSON:toParse];
+            NSDictionary *result = (NSDictionary *)[JSON parseJSON:toParse];
             [[result[@"name"] should] equal:@"testName"];
             
         });
         
         it(@"should return nil with invalid string", ^(){
             NSString *toParse = @"{\"nametestName\", \"id\"\"5\"}";
-            NSDictionary *result = [JSON parseJSON:toParse];
+            NSDictionary *result = (NSDictionary *)[JSON parseJSON:toParse];
             [[result should] beNil];
             
         });

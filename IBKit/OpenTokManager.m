@@ -7,20 +7,26 @@
 //
 
 #import "OpenTokManager.h"
-#import "SIOSocket.h"
 #import "JSON.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <OTKAnalytics/OTKAnalytics.h>
 #import "IBConstants.h"
 
+#import "UIView+Category.h"
+
 @interface OpenTokManager()
-@property (nonatomic) SIOSocket *socket;
 
 @property (nonatomic) BOOL canJoinShow;
-@property (nonatomic) BOOL waitingOnBroadcast;
 @property (nonatomic) BOOL startBroadcast;
-@property (nonatomic) BOOL broadcastEnded;
+@property (nonatomic) BOOL endBroadcast;
 @property (nonatomic) NSString* broadcastUrl;
+
+@property (nonatomic) FIRDatabaseReference *ref;
+@property (nonatomic) FIRDatabaseReference *eventRef;
+@property (nonatomic) FIRDatabaseReference *eventStatusRef;
+@property (nonatomic) FIRDatabaseReference *fanRef;
+@property (nonatomic) FIRDatabaseReference *privateCallRef;
+
 @end
 
 @implementation OpenTokManager
@@ -28,40 +34,155 @@
 - (instancetype)init {
     if (self = [super init]) {
         _subscribers = [[NSMutableDictionary alloc]initWithCapacity:3];
+        _ref = [[FIRDatabase database] reference];
     }
     return self;
 }
 
-- (void)connectWithTokenHost:(NSString *)tokenHost {
-    OTError *error = nil;
-    [_liveSession connectWithToken:tokenHost error:&error];
-    
-    if (error) {
-        NSLog(@"connectWithTokenHost error: %@", error);
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+- (void)getInLine:(IBUser *)user {
+    if (self.fanRef) {
+        
+        // snapshot
+        NSString *snapshot;
+        if (self.publisher.view) {
+            UIImage *screenshot = [self.publisher.view captureViewImage];
+            NSData *imageData = UIImageJPEGRepresentation(screenshot, 0.3);
+            NSString *encodedString = [imageData base64EncodedStringWithOptions:0 ];
+            snapshot = [NSString stringWithFormat:@"data:image/png;base64,%@",encodedString];
+        }
+        
+        [self.fanRef updateChildValues:@{
+                                         @"name":user.name,
+                                         @"inPrivateCall":@(NO),
+                                         @"isBackstage":@(NO),
+                                         @"isOnStage":@(NO),
+                                         @"mobile":@(YES),
+                                         @"os": @"ios",
+                                         @"snapshot": snapshot,
+                                         @"streamId":self.publisher.stream.streamId
+                                         }];
     }
 }
 
-- (void)closeSocket{
-    [self.socket close];
-    self.socket = nil;
+- (void)getOnstage {
+    if (self.fanRef) {
+        [self.fanRef updateChildValues:@{@"streamId":self.publisher.stream.streamId}];
+    }
+}
+
+- (void)leaveLine {
+    if (self.fanRef) {
+        [self.fanRef setValue:@{@"id": [FIRAuth auth].currentUser.uid}];
+    }
+}
+
+- (void)closeEvent {
+    [self.fanRef removeValue];
+}
+
+- (void)updateNetworkQuality:(NSString*)quality {
+    if (self.fanRef && quality) {
+        [self.fanRef updateChildValues:@{@"networkQuality":quality}];
+    }
+}
+
+- (void)startEvent:(IBEvent *)event {
+    
+    __weak OpenTokManager *weakSelf = self;
+    
+    void (^joinInteractiveModeBlock)(void) = ^(){
+        
+        NSString *userId = [FIRAuth auth].currentUser.uid;
+        
+        _fanRef = [[[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"activeFans"] child:userId];
+        NSDictionary *fan = @{
+                              @"id": userId
+                              };
+        [self.fanRef setValue:fan];
+        
+        // remove a record from activeFans array is essential to keep the app run normmally
+        [self.fanRef onDisconnectRemoveValue];
+        
+        _privateCallRef = [[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"privateCall"];
+        
+        // next steps: connect opentok
+        // Previouly, we were doing ping-pong to decide whether we can set canJoinShow to YES
+        // now we have determine it from interactiveLimit and activeFans, no need to do ping-pong anymore
+        self.canJoinShow = YES;
+    };
+    
+    _eventRef = [[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL];
+    [self.eventRef observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        if (snapshot.value == [NSNull null] || snapshot.value[@"interactiveLimit"] == [NSNull null]) return;
+        
+        // if missing activeFans property, that means there is no fan now
+        // interactiveLimit should always be there
+        if ([snapshot.value[@"interactiveLimit"] isKindOfClass:[NSNumber class]]) {
+            
+            NSArray *activeFans = snapshot.value[@"activeFans"];
+            NSUInteger interactiveLimit = snapshot.value[@"interactiveLimit"] == nil ? 0 : [snapshot.value[@"interactiveLimit"] integerValue];
+            
+            if (activeFans.count < interactiveLimit) {
+                joinInteractiveModeBlock();
+            }
+            else {
+                weakSelf.broadcastUrl = snapshot.value[@"hlsUrl"];
+                if (weakSelf.broadcastUrl) {
+                    weakSelf.startBroadcast = YES;
+                }
+            }
+        }
+        
+    }];
+    
+    // when Firebase creates a "hlsUrl" ref, we need to buffer 15 seconds for HLS feed
+    [self.eventRef observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        if (![snapshot.key isEqualToString:@"hlsUrl"]) return;
+        weakSelf.broadcastUrl = snapshot.value;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            // check the interactive limit again
+            [self.eventRef observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                
+                if (snapshot.value == [NSNull null] || snapshot.value[@"interactiveLimit"] == [NSNull null]) return;
+                
+                if ([snapshot.value[@"interactiveLimit"] isKindOfClass:[NSNumber class]]) {
+                    
+                    NSArray *activeFans = snapshot.value[@"activeFans"];
+                    NSUInteger interactiveLimit = snapshot.value[@"interactiveLimit"] == nil ? 0 : [snapshot.value[@"interactiveLimit"] integerValue];
+                    
+                    if (activeFans.count >= interactiveLimit) {
+                        weakSelf.startBroadcast = YES;
+                        
+                        weakSelf.eventStatusRef = [self.eventRef child:@"status"];
+                        [weakSelf.eventStatusRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                            if (snapshot.value == [NSNull null] || [snapshot.value isEqualToString:@"closed"]) {
+                                weakSelf.endBroadcast = YES;
+                            }
+                        }];
+                    }
+                    else {
+                        // do nothing
+                    }
+                }
+                
+            }];
+        });
+    }];
 }
 
 - (void)muteOnstageSession:(BOOL)mute {
-    for(NSString *subscriber in self.subscribers){
+    for (NSString *subscriber in self.subscribers){
         OTSubscriber *sub = self.subscribers[subscriber];
         sub.subscribeToAudio = !mute;
     }
 }
 
-- (void)dealloc {
-    [self.socket close];
-}
-
 #pragma subscriber
-- (NSError*) unsubscribeSelfFromProducerSession{
+- (NSError *)unsubscribeSelfFromProducerSession{
     OTError *error = nil;
-    [self.producerSession unsubscribe:self.selfSubscriber error:&error];
+    [self.backstageSession unsubscribe:self.selfSubscriber error:&error];
     self.selfSubscriber = nil;
     
     if(error){
@@ -73,21 +194,21 @@
     return error;
 }
 
-- (NSError*) unsubscribeFromPrivateProducerCall{
+- (NSError *)unsubscribeFromPrivateProducerCall {
     OTError *error = nil;
-    [_liveSession unsubscribe: self.privateProducerSubscriber error:&error];
+    [self.onstageSession unsubscribe: self.privateProducerSubscriber error:&error];
+    self.privateProducerSubscriber = nil;
     [self muteOnstageSession:NO];
-    if(error){
+    if (error){
         [OTKLogger logEventAction:KLogVariationUnsubscribePrivateCall variation:KLogVariationFailure completion:nil];
     }
     return error;
 }
 
-- (NSError*) unsubscribeOnstageProducerCall{
+- (NSError *)unsubscribeOnstageProducerCall {
     OTError *error = nil;
-    [self.producerSession unsubscribe: self.producerSubscriber error:&error];
+    [self.backstageSession unsubscribe:self.producerSubscriber error:&error];
     self.producerSubscriber = nil;
-//    self.publisher.publishAudio = NO;
     [self muteOnstageSession:NO];
     if(error){
         [OTKLogger logEventAction:KLogVariationUnsubscribeOnstageCall variation:KLogVariationFailure completion:nil];
@@ -95,60 +216,64 @@
     return error;
 }
 
-- (NSError*) subscribeToOnstageWithType:(NSString*)type{
+- (NSError *)subscribeToOnstageWithType:(NSString*)type {
     OTError *error = nil;
-    [_liveSession subscribe: self.subscribers[type] error:&error];
-    if(error){
-        [self.errors setObject:error forKey:type];
-        [self signalWarningUpdate];
-    }
+    [self.onstageSession subscribe:self.subscribers[type] error:&error];
     return error;
 }
 
-- (NSError*) backstageSubscribeToProducer{
+- (NSError *)backstageSubscribeToProducer {
     OTError *error = nil;
-    [self.producerSession subscribe: self.producerSubscriber error:&error];
+    [self.backstageSession subscribe:self.producerSubscriber error:&error];
     [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationAttempt completion:nil];
-    if(error){
-        [self.errors setObject:error forKey:@"producer_backstage"];
+    if (error){
         [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationFailure completion:nil];
     }
     else{
         [OTKLogger logEventAction:KLogVariationFanSubscribesProducerBackstage variation:KLogVariationSuccess completion:nil];
     }
     return error;
-
 }
-- (NSError*) onstageSubscribeToProducer{
+
+- (NSError *)onstageSubscribeToProducer {
     OTError *error = nil;
-    [_liveSession subscribe: self.privateProducerSubscriber error:&error];
-    if(error){
-        [self.errors setObject:error forKey:@"producer_onstage"];
-    }
+    [self.onstageSession subscribe:self.privateProducerSubscriber error:&error];
     return error;
 }
 
 - (void)cleanupSubscriber:(NSString*)type {
-    OTSubscriber *_subscriber = _subscribers[type];
-    if(_subscriber){
-        NSLog(@"SUBSCRIBER CLEANING UP");
-        [_subscriber.view removeFromSuperview];
-        [_subscribers removeObjectForKey:type];
-        _subscriber = nil;
+    OTSubscriber *subscriber = self.subscribers[type];
+    if (subscriber){
+        [subscriber.view removeFromSuperview];
+        [self.subscribers removeObjectForKey:type];
+        subscriber = nil;
     }
 }
 
 - (void)cleanupSubscribers {
-    [_subscribers removeAllObjects];
+    for (OTSubscriber *subscriber in self.subscribers.allValues) {
+        [subscriber.view removeFromSuperview];
+    }
+    [self.subscribers removeAllObjects];
 }
 
 #pragma session
 
--(NSError*)connectBackstageSessionWithToken:(NSString*)token{
+- (NSError *)connectOnstageWithToken:(NSString *)token {
+    OTError *error = nil;
+    [self.onstageSession connectWithToken:token error:&error];
+    if (error) {
+        NSLog(@"connectWithTokenHost error: %@", error);
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+    }
+    return error;
+}
+
+- (NSError *)connectBackstageWithToken:(NSString *)token {
     OTError *error = nil;
     
     [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationAttempt completion:nil];
-    [_producerSession connectWithToken:token error:&error];
+    [self.backstageSession connectWithToken:token error:&error];
     
     if (error) {
         [OTKLogger logEventAction:KLogVariationFanConnectsBackstage variation:KLogVariationFailure completion:nil];
@@ -157,244 +282,51 @@
     return error;
 }
 
--(NSError*)disconnectBackstageSession{
+- (void)disconnectBackstageSession {
     
     if (self.selfSubscriber) {
         self.selfSubscriber.delegate = nil;
-        [self.producerSession unsubscribe:self.selfSubscriber error:nil];
+        [self.backstageSession unsubscribe:self.selfSubscriber error:nil];
+        [self cleanupSubscriber:@"fan"];
     }
     self.selfSubscriber = nil;
     
     if (self.producerSubscriber) {
         self.producerSubscriber.delegate = nil;
-        [self.producerSession unsubscribe: self.producerSubscriber error:nil];
+        [self.backstageSession unsubscribe: self.producerSubscriber error:nil];
     }
     self.producerSubscriber = nil;
-    
-    OTError *error = nil;
-    [_producerSession disconnect:&error];
-    _producerSession = nil;
-    if(error){
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
-    }
-    return error;
+
+    [self.backstageSession disconnect:nil];
+    self.backstageSession = nil;
 }
 
--(NSError*)disconnectOnstageSession{
+- (void)disconnectOnstageSession {
     
     if (self.privateProducerSubscriber) {
         self.privateProducerSubscriber.delegate = nil;
-        [self.liveSession unsubscribe: self.privateProducerSubscriber error:nil];
+        [self.onstageSession unsubscribe: self.privateProducerSubscriber error:nil];
     }
     self.privateProducerSubscriber = nil;
     
-    OTError *error = nil;
-    [_liveSession disconnect:&error];
-    _liveSession = nil;
-    if(error){
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:KLogVariationFanDisconnectsBackstage variation:KLogVariationFailure completion:nil];
-    }
-    return error;
+    [self.onstageSession disconnect:nil];
+    self.onstageSession = nil;
 }
 
 #pragma publisher
--(void)unpublishFrom:(OTSession *)session
-        withUserRole:(NSString*)userRole
-{
-    OTError *error = nil;
-    [session unpublish:self.publisher error:&error];
-    
-    NSString *session_name = _liveSession.sessionId == session.sessionId ? @"Onstage" : @"Backstage";
-    NSString *logtype = [NSString stringWithFormat:@"%@Unpublishes%@", [userRole capitalizedString], session_name];
-    
-    [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
-    
-    if (error) {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        [OTKLogger logEventAction:logtype variation:KLogVariationFailure completion:nil];
-    }
+- (void)unpublishFrom:(OTSession *)session {
+    [self.publisher.view removeFromSuperview];
+    [session unpublish:self.publisher error:nil];
+    self.publisher = nil;
 }
 
--(void)cleanupPublisher {
-    if(_publisher){
-        [_publisher.view removeFromSuperview];
-        _publisher = nil;
+- (void)cleanupPublisher {
+    if (self.publisher) {
+        [self.onstageSession unpublish:self.publisher error:nil];
+        [self.backstageSession unpublish:self.publisher error:nil];
+        [self.publisher.view removeFromSuperview];
+        self.publisher = nil;
     }
-}
-
-
-#pragma mark - OpenTok Signaling
-- (NSError *)signalWarningUpdate {
-    if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
-    }
-
-    
-    NSDictionary *data = @{
-                           @"type" : @"warning",
-                           @"data" :@{
-                                   @"connected": @(YES),
-                                   @"subscribing":@(_errors.count == 0 ? NO : YES),
-                                   @"connectionId": _publisher && _publisher.stream ? _publisher.stream.connection.connectionId : @"",
-                                   },
-                           };
-    
-    OTError* error = nil;
-    [_producerSession signalWithType:@"warning" string:[JSON stringify:data] connection:_publisher.stream.connection error:&error];
-    
-    if (error) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendWarningSignal: unable to send warning signal"}];
-    }
-    return nil;
-    
-    
-}
-
-- (NSError*)signalQualityUpdate:(NSString*)quality
-{
-    NSDictionary *data = @{
-                           @"type" : @"qualityUpdate",
-                           @"data" :@{
-                                   @"connectionId":_publisher.session.connection.connectionId,
-                                   @"quality" : quality,
-                                   },
-                           };
-    
-    OTError* error = nil;
-    NSString *parsedString = [JSON stringify:data];
-    [_producerSession signalWithType:@"qualityUpdate" string:parsedString connection:_producerSubscriber.stream.connection error:&error];
-    
-    if (error) {
-        NSLog(@"signal didFailWithError %@", error);
-        return error;
-    }
-    
-    return nil;
-}
-
-#pragma mark - SIOSocket Signaling
-- (void)connectFanToSocketWithURL:(NSString *)url
-                        sessionId:(NSString *)sessionId {
-    
-    __weak OpenTokManager *weakSelf = self;
-    
-    [SIOSocket socketWithHost:url response:^(SIOSocket *socket){
-        
-        weakSelf.socket = socket;
-        
-        [weakSelf.socket on:@"eventGoLive" callback:^(id data) {
-            if(weakSelf.broadcastUrl && !weakSelf.startBroadcast){
-                weakSelf.startBroadcast = YES;
-            }
-        }];
-        
-        [weakSelf.socket on:@"eventEnded" callback:^(id data) {
-            weakSelf.broadcastEnded = YES;
-        }];
-        
-        [weakSelf.socket on:@"ableToJoin" callback:^(id data) {
-            
-            if (!data || ![data isKindOfClass: [NSArray class]]) return;
-            NSArray *dataArray = (NSArray *)data;
-            if (dataArray.count != 1) return;
-            if (![[dataArray lastObject] isKindOfClass: [NSDictionary class]]) return;
-            
-            weakSelf.canJoinShow = [data[0][@"ableToJoin"] boolValue];
-
-            if(!_canJoinShow){
-                if(![data[0][@"broadcastData"]  isKindOfClass:[NSNull class]]){
-                    [weakSelf.socket emit:@"joinBroadcast" args:@[[NSString stringWithFormat:@"broadcast%@",data[0][@"broadcastData"][@"broadcastId"]]]];
-
-                    if(data[0][@"broadcastData"][@"broadcastUrl"]){
-                        weakSelf.broadcastUrl = data[0][@"broadcastData"][@"broadcastUrl"];
-                        if([data[0][@"broadcastData"][@"eventLive"] isEqualToString:@"true"]){
-                            weakSelf.startBroadcast = YES;
-                        }
-                        else{
-                            weakSelf.waitingOnBroadcast = YES;
-                        }
-                    }
-                }
-                else{
-                    [SVProgressHUD showErrorWithStatus:@"This show is over the maximum number of participants. Please try again in a few minutes."];
-                }
-                
-            }
-        }];
-        
-        weakSelf.socket.onDisconnect = ^(){
-            NSLog(@"SOCKET DISCONNECTED");
-            if(weakSelf.startBroadcast){
-              [SVProgressHUD showErrorWithStatus:@"Internet connection is down. Attempting to reconnect"];
-            }
-        };
-        
-        weakSelf.socket.onConnect = ^(){
-            [weakSelf.socket emit:@"joinInteractive" args:@[sessionId]];
-        };
-    }];
-}
-- (void) emitJoinRoom:(NSString *)sessionId{
-    [self.socket emit:@"joinRoom" args:@[sessionId]];
-}
-- (NSError *)signalNewUserName:(NSString *)username {
-    
-    if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
-    }
-    
-    if (!username) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: Misses username"}];
-    }
-    
-    NSLog(@"sending new user signal");
-    NSDictionary *data = @{
-                           @"type":@"newFan",
-                           @"user":
-                               @{
-                                   @"username": username,
-                                   @"quality":@"",
-                                   @"user_id": [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                                   @"mobile":@(YES),
-                                   @"os":@"iOS",
-                                   @"device":[[UIDevice currentDevice] model]
-                                },
-                           @"chat":
-                               @{
-                                   @"chatting" : @"false",
-                                   @"messages" : @"[]"
-                                }
-                           };
-    
-    OTError* error = nil;
-    [self.producerSession signalWithType:@"newFan" string:[JSON stringify:data] connection:nil error:&error];
-    if (error) {
-        NSLog(@"%@", error);
-    }
-    return error;
-}
-
-- (NSError *)signalScreenShotWithFormattedString:(NSString *)formattedString {
-    
-    if (!self.publisher.session.connection) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendScreenShotWithFormattedString: pubisher has not published"}];
-    }
-    
-    if (self.producerSession.sessionConnectionStatus != OTSessionConnectionStatusConnected) {
-        return [NSError errorWithDomain:@"OpenTokManagerDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"sendNewUserSignalWithName: producerSession has not connected"}];
-    }
-    
-    [self.socket emit:@"mySnapshot" args:@[
-                                           @{
-                                               @"connectionId": self.publisher.session.connection.connectionId,
-                                               @"sessionId" : self.producerSession.sessionId,
-                                               @"snapshot": formattedString
-                                            }
-                                        ]];
-    
-    return nil;
 }
 
 @end

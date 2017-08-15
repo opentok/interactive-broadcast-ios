@@ -14,15 +14,11 @@
  *  Initialize an interactive braodcast event view controller with the specified instance, event index path, and user.
  *
  *  @param instance             An instance to which the view controller connects.
- *  @param eventIndexPath       The index path locating the event within the instance event array.
+ *  @param eventIndexPath       An event to connect.
  *  @param user                 A user role for the view controller connection.
  *
  *  @return An initialized interactive broadcast event view controller.
  */
-//- (instancetype)initWithInstance:(IBInstance *)instance
-//                  eventIndexPath:(NSIndexPath *)eventIndexPath
-//                            user:(IBUser *)user;
-
 - (instancetype)initWithEvent:(IBEvent *)event
                          user:(IBUser *)user;
 @end

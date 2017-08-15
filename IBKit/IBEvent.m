@@ -10,6 +10,11 @@
 #import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
+NSString *const notStarted = @"notStart";
+NSString *const preshow = @"preshow";
+NSString *const live = @"live";
+NSString *const closed = @"closed";
+
 @interface IBEvent()
 @property (nonatomic) NSString *descriptiveStatus;
 @end
@@ -18,11 +23,11 @@
 
 - (NSString *)descriptiveStatus {
     if (!_status) return nil;
-    
-    if ([_status isEqualToString:@"N"]) {
-        
+
+    if ([_status isEqualToString:notStarted]) {
+
         if (!_startTime) return nil;
-        
+
         if (_startTime && ![_startTime isEqual:[NSNull null]]) {
             return [IBDateFormatter convertToAppStandardFromDate:_startTime];
         }
@@ -30,19 +35,19 @@
             return @"Not Started";
         }
     }
-    
-    if([_status isEqualToString:@"P"]){
+
+    if([_status isEqualToString:preshow]){
         return @"Not Started";
     }
-    
-    if([_status isEqualToString:@"L"]){
+
+    if([_status isEqualToString:live]){
         return @"Live";
     }
-    
-    if([_status isEqualToString:@"C"]){
+
+    if([_status isEqualToString:closed]){
         return @"Closed";
     }
-    
+
     return nil;
 }
 
@@ -68,11 +73,11 @@
         }
         
         if (json[@"startImage"]) {
-            _image = json[@"startImage"][@"url"];
+            _imageURL = json[@"startImage"][@"url"];
         }
         
         if (json[@"endImage"]) {
-            _endImage = json[@"endImage"][@"url"];
+            _endImageURL = json[@"endImage"][@"url"];
         }
         
         _name = json[@"name"];
@@ -86,12 +91,6 @@
         _backstageToken = json[@"backstageToken"];
     }
     return self;
-}
-
-- (void)updateEventWithJson:(NSDictionary *)updatedJson {
-    if (!updatedJson) return;
-    
-    _status = updatedJson[@"newStatus"];
 }
 
 @end

@@ -13,4 +13,5 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *eventButton;
 - (void)updateCellWithEvent:(IBEvent *)event;
+
 @end

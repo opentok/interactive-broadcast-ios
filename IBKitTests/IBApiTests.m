@@ -15,15 +15,10 @@ SPEC_BEGIN(IBApiTests)
 context(@"IBApiURLTest", ^(){
     describe(@"configure backend URLs", ^(){
         
-        [IBApi configureBackendURL:@"https://tokbox-ib-staging-tesla.herokuapp.com"];
+        [IBApi configureBackendURL:@"https://ibs-dev-server.herokuapp.com"
+                           adminId:@"fBLBS9NPHYUitE3KtVghn4yI9ke2"];
         it(@"should return a valid URL", ^(){
-            [[[IBApi getBackendURL] should] equal:@"https://tokbox-ib-staging-tesla.herokuapp.com"];
-        });
-        
-        [IBApi configureBackendURL_v2:@"https://ibs-dev-server.herokuapp.com"
-                              adminId:@"fBLBS9NPHYUitE3KtVghn4yI9ke2"];
-        it(@"should return a valid URL", ^(){
-            [[[IBApi sharedManager].backendURL_v2 should] equal:@"https://ibs-dev-server.herokuapp.com"];
+            [[[IBApi sharedManager].backendURL should] equal:@"https://ibs-dev-server.herokuapp.com"];
         });
     });
 });

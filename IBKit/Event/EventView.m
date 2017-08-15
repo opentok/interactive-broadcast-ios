@@ -8,8 +8,6 @@
 
 #import "EventView.h"
 #import "UIColor+AppAdditions.h"
-
-//#import <OTTextChatKit/OTTextChatKit.h>
 #import <DGActivityIndicatorView/DGActivityIndicatorView.h>
 
 @interface EventView()
@@ -17,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIView *internalHolder;
 @property (weak, nonatomic) IBOutlet UIView *notificationBar;
 @property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
-
-//@property (nonatomic) OTTextChatView *textChatView;
 @end
 
 @implementation EventView
@@ -84,8 +80,8 @@
 #pragma mark - video preview
 - (void)showVideoPreviewWithPublisher:(OTPublisher *)publisher {
     if (!publisher) return;
-    
     publisher.view.layer.cornerRadius = 0.5;
+    publisher.view.frame = self.inLineHolder.bounds;
     [self.inLineHolder addSubview:publisher.view];
     [self.inLineHolder sendSubviewToBack:publisher.view];
     self.inLineHolder.hidden = NO;
@@ -113,20 +109,20 @@
     
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
     
-    for(NSString *viewName in viewNames){
+    for (NSString *viewName in viewNames) {
         
         UIView *view = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];
         if(subscribers[viewName]){
             [view setHidden:NO];
             OTSubscriber *temp = subscribers[viewName];
             
-            [view setFrame:CGRectMake((c*new_width), 0, new_width, new_height)];
+            [view setFrame:CGRectMake((c * new_width), 0, new_width, new_height)];
             temp.view.frame = CGRectMake(0, 0, new_width,new_height);
             c++;
         }
         else{
             [view setHidden:YES];
-            [view setFrame:CGRectMake(0, 0, 5,new_height)];
+            [view setFrame:CGRectMake(0, 0, 5, new_height)];
         }
     }
     
@@ -144,23 +140,6 @@
 }
 
 #pragma chat Bar
-
-//- (void)loadTextChat {
-//    _textChatView = [OTTextChatView textChatView];
-//    [_textChatView setMaximumTextMessageLength:1050];
-//    [_textChatView setAlias:@"You"];
-//    
-//    
-//    CGFloat newY = self.statusBar.layer.frame.size.height + self.chatBar.layer.frame.size.height;
-//    
-//    CGRect r = self.bounds;
-//    r.origin.y += newY;
-//    r.size.height -= newY;
-//    _textChatView.frame = r;
-//    [self insertSubview:_textChatView belowSubview:self.chatBar];
-//    self.chatBar.hidden = YES;
-//}
-
 - (void)userIsChatting{
     self.chatBtn.hidden = YES;
     self.chatBar.hidden = NO;
@@ -170,15 +149,15 @@
     self.chatBar.hidden = YES;
 }
 
-
 #pragma fan status changes
 
-- (void) fanIsInline{
+- (void)fanIsInline {
     _closeEvenBtn.hidden = YES;
     _leaveLineBtn.hidden = NO;
     _getInLineBtn.hidden = YES;
 }
-- (void)fanIsOnStage{
+
+- (void)fanIsOnStage {
     _statusLabel.text = @"\u2022 You are live";
     _statusLabel.hidden = NO;
     _leaveLineBtn.hidden = YES;
@@ -188,7 +167,8 @@
     _closeEvenBtn.hidden = YES;
     [self hideVideoPreview];
 }
-- (void)fanLeaveLine{
+
+- (void)fanLeaveLine {
     _leaveLineBtn.hidden = YES;
     _chatBtn.hidden = YES;
     _closeEvenBtn.hidden = NO;
@@ -198,7 +178,7 @@
 }
 
 #pragma status changes
-- (void)eventIsClosed{
+- (void)eventIsClosed {
     _eventImage.hidden = NO;
     _getInLineBtn.hidden = YES;
     _leaveLineBtn.hidden = YES;

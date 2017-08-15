@@ -18,4 +18,5 @@ typedef void(^IBAVPlayerStatusBlock)(AVPlayerStatus status, NSError *error);
 
 - (instancetype)initWithURL:(NSString *)url;
 - (void)playBroadcastEvent:(IBAVPlayerStatusBlock)block;
+- (void)stopBroadcastEvent;
 @end

@@ -10,7 +10,7 @@
 
 @implementation JSON
 
-+ (NSDictionary *)parseJSON:(NSString*)string {
++ (id)parseJSON:(NSString*)string {
     NSError *error;
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
     if (error) return nil;

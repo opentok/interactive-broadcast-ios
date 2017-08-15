@@ -59,7 +59,6 @@
 - (void)fanLeaveLine;
 
 #pragma chat bar
-//- (void)loadTextChat;
 - (void)userIsChatting;
 - (void)hideChatBar;
 

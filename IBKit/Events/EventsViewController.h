@@ -10,7 +10,6 @@
 
 @interface EventsViewController : UIViewController
 
-
 /**
  *  Initialize an interactive braodcast event view controller with the specified instance and user.
  *
@@ -19,9 +18,6 @@
  *
  *  @return An initialized interactive broadcast event view controller.
  */
-//- (instancetype)initWithInstance:(IBInstance *)instance
-//                            user:(IBUser *)user;
-
 - (instancetype)initWithEvents:(NSArray<IBEvent *> *)events
                           user:(IBUser *)user ;
 

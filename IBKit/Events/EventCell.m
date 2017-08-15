@@ -30,7 +30,7 @@
 - (void)updateCellWithEvent:(IBEvent *)event {
     [self.titleLabel setText:event.name];
     
-    if ([event.descriptiveStatus isEqualToString:@"N"]) {
+    if ([event.status isEqualToString:notStarted]) {
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
         [self.eventButton setTitle:@"Not Started" forState: UIControlStateNormal];
         self.eventButton.enabled = NO;
@@ -41,8 +41,8 @@
         [self.statusLabel setText:event.descriptiveStatus];
     }
     
-    if (event.image) {
-        [self.imageView loadImageWithUrl:event.image];
+    if (event.imageURL) {
+        [self.imageView loadImageWithUrl:event.imageURL];
     }
 }
 

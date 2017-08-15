@@ -8,6 +8,11 @@
 
 #import <IBKit/IBKit.h>
 
+FOUNDATION_EXPORT NSString *const notStarted;
+FOUNDATION_EXPORT NSString *const preshow;
+FOUNDATION_EXPORT NSString *const live;
+FOUNDATION_EXPORT NSString *const closed;
+
 @interface IBEvent ()
 
 @property (nonatomic) NSString *apiKey;
@@ -30,12 +35,10 @@
 
 @property (readonly, nonatomic) NSString *hostURL;
 
-@property (readonly, nonatomic) NSString *image;
+@property (readonly, nonatomic) NSString *imageURL;
 
-@property (readonly, nonatomic) NSString *endImage;
+@property (readonly, nonatomic) NSString *endImageURL;
 
 - (instancetype)initWithJson:(NSDictionary *)json;
-
-- (void)updateEventWithJson:(NSDictionary *)updatedJson;
 
 @end

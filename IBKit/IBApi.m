@@ -12,6 +12,8 @@
 #import "IBApi_Internal.h"
 #import "IBEvent_Internal.h"
 
+#import <Firebase/Firebase.h>
+
 @interface IBApi()
 @property (nonatomic) NSURLSession *session;
 @end
@@ -22,6 +24,10 @@
     static IBApi *sharedMyManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
+        // Use Firebase library to configure APIs
+        [FIRApp configure];
+        
         sharedMyManager = [[IBApi alloc] init];
         sharedMyManager.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     });
@@ -32,22 +38,9 @@
     return [IBApi sharedManager].backendURL;
 }
 
-+ (void)configureBackendURL:(NSString *)backendURL {
++ (void)configureBackendURL:(NSString *)backendURL
+                    adminId:(NSString *)adminId {
     [IBApi sharedManager].backendURL = backendURL;
-}
-
-#pragma mark - Version 2
-// ==================================================
-// Version 2
-// ==================================================
-
-+ (NSString *)getBackendURL_v2 {
-    return [IBApi sharedManager].backendURL_v2;
-}
-
-+ (void)configureBackendURL_v2:(NSString *)backendURL
-                       adminId:(NSString *)adminId {
-    [IBApi sharedManager].backendURL_v2 = backendURL;
     [IBApi sharedManager].adminId = adminId;
 }
 
@@ -58,7 +51,7 @@
     void (^getEventsBlock)(void) = ^(){
         if (!completion) return;
         
-        NSString *url = [NSString stringWithFormat:@"%@/api/event/get-events-by-admin?adminId=%@", [IBApi getBackendURL_v2], self.adminId];
+        NSString *url = [NSString stringWithFormat:@"%@/api/event/get-events-by-admin?adminId=%@", [IBApi getBackendURL], self.adminId];
         [[self.session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (!error) {
                 NSError *error;
@@ -91,7 +84,7 @@
     
     if (!completion) return;
     
-    NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@/api/auth/token", [IBApi getBackendURL_v2]]];
+    NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@/api/auth/token", [IBApi getBackendURL]]];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[IBApi sharedManager].adminId, @"adminId", nil];
     
     if (event) {
@@ -168,7 +161,7 @@
     if (!completion) return;
     
     void(^getEventTokenBlock)(void) = ^void(){
-        NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@/api/event/create-token", [IBApi getBackendURL_v2]]];
+        NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@/api/event/create-token", [IBApi getBackendURL]]];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[IBApi sharedManager].adminId, @"adminId", nil];
         
         if (event) {
@@ -186,7 +179,7 @@
                 case IBUserRoleCelebrity:
                     [url appendString:@"-celebrity"];
                     dict[@"userType"] = @"celebrity";
-                    dict[@"celebrity"] = event.celebrityURL;
+                    dict[@"celebrityUrl"] = event.celebrityURL;
                     break;
                 default:
                     break;

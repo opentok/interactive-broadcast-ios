@@ -23,6 +23,13 @@ typedef enum : NSUInteger {
     IBUserRoleCelebrity
 } IBUserRole;
 
+typedef enum : NSUInteger {
+    IBUserStatusJoined,
+    IBUserStatusInline,
+    IBUserStatusBackstage,
+    IBUserStatusOnstage
+} IBUserStatus;
+
 @interface IBUser : NSObject
 
 /**
@@ -34,6 +41,8 @@ typedef enum : NSUInteger {
  *  The user name.
  */
 @property (readonly, nonatomic) NSString *name;
+
+@property (nonatomic) IBUserStatus status;
 
 /**
  *  Initialize an interactive broadcast user with a given role and name.

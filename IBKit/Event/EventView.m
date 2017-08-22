@@ -7,8 +7,10 @@
 //
 
 #import "EventView.h"
-#import "UIColor+AppAdditions.h"
 #import <DGActivityIndicatorView/DGActivityIndicatorView.h>
+
+#import "JSON.h"
+#import "UIColor+AppAdditions.h"
 
 @interface EventView()
 @property (nonatomic) DGActivityIndicatorView *activityIndicatorView;
@@ -114,11 +116,16 @@
         UIView *view = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];
         if(subscribers[viewName]){
             [view setHidden:NO];
-            OTSubscriber *temp = subscribers[viewName];
+            OTSubscriber *subscriber = subscribers[viewName];
             
             [view setFrame:CGRectMake((c * new_width), 0, new_width, new_height)];
-            temp.view.frame = CGRectMake(0, 0, new_width,new_height);
+            subscriber.view.frame = CGRectMake(0, 0, new_width,new_height);
             c++;
+            
+            if (!subscriber.stream.hasVideo) {
+                [self removeSilhouetteToSubscriber:subscriber];
+                [self addSilhouetteToSubscriber:subscriber];
+            }
         }
         else{
             [view setHidden:YES];
@@ -136,6 +143,35 @@
     
     for (UIView *view in self.celebrityViewHolder.subviews) {
         view.frame = self.celebrityViewHolder.bounds;
+    }
+}
+
+- (void)addSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
+    NSDictionary *connectionData = [JSON parseJSON:subscriber.stream.connection.data];
+    NSString *roleName = connectionData[@"userType"];
+    if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";
+    UIView *feedView = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", roleName]];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UIImageView* avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar" inBundle:bundle compatibleWithTraitCollection:nil]];
+    avatar.backgroundColor = [UIColor lightGrayColor];
+    avatar.contentMode = UIViewContentModeScaleAspectFit;
+    
+    CGRect frame = feedView.frame;
+    avatar.frame = CGRectMake(0, 0, frame.size.width,frame.size.height);
+    
+    [feedView addSubview:avatar];
+}
+
+- (void)removeSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
+    NSDictionary *connectionData = [JSON parseJSON:subscriber.stream.connection.data];
+    NSString *roleName = connectionData[@"userType"];
+    if ([roleName isEqualToString:@"producer"]) return;
+    if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";
+    UIView *feedView = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", roleName]];
+    for(UIView* subview in [feedView subviews]) {
+        if([subview isKindOfClass:[UIImageView class]]) {
+            [subview removeFromSuperview];
+        }
     }
 }
 

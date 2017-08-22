@@ -80,7 +80,8 @@
 - (void)unpublishFrom:(OTSession *)session;
 
 #pragma mark - Signaling
-- (void)startEvent:(IBEvent *)event;
+- (void)startEvent:(IBEvent *)event
+              user:(IBUser *)user;
 - (void)closeEvent;
 - (void)getInLine:(IBUser *)user;
 - (void)getOnstage;

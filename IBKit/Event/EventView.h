@@ -49,6 +49,8 @@
 
 #pragma mark - subscriber views
 - (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers;
+- (void)addSilhouetteToSubscriber:(OTSubscriberKit *)subscriber;
+- (void)removeSilhouetteToSubscriber:(OTSubscriberKit *)subscriber;
 
 #pragma status changes
 - (void)eventIsClosed;

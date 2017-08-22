@@ -40,7 +40,6 @@
 		0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFEB151D00F2730034A18B /* IBDateFormatterTests.m */; };
 		A00231A91D00C23B007905CC /* IBUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231A81D00C23B007905CC /* IBUserTests.m */; };
 		A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AA1D00C42B007905CC /* IBEventTests.m */; };
-		A00231AD1D00C446007905CC /* IBApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AC1D00C446007905CC /* IBApiTests.m */; };
 		A0156FD51CEE60A50009FBEF /* PerformSelectorWithDebounce.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD01CEE60A50009FBEF /* PerformSelectorWithDebounce.h */; };
 		A0156FD61CEE60A50009FBEF /* PerformSelectorWithDebounce.m in Sources */ = {isa = PBXBuildFile; fileRef = A0156FD11CEE60A50009FBEF /* PerformSelectorWithDebounce.m */; };
 		A0156FD71CEE60A50009FBEF /* UIColor+AppAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0156FD21CEE60A50009FBEF /* UIColor+AppAdditions.h */; };
@@ -89,6 +88,7 @@
 		A08D96EE1CFE36F400877619 /* OpenTokManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A08D96EB1CFE36F400877619 /* OpenTokManager.m */; };
 		A0A8A52E1CFF7F2F00A9EB4B /* IBUser.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A8A52C1CFF7F2F00A9EB4B /* IBUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0A8A52F1CFF7F2F00A9EB4B /* IBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A8A52D1CFF7F2F00A9EB4B /* IBUser.m */; };
+		A0BF048E1F42460200B49173 /* IBApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A00231AC1D00C446007905CC /* IBApiTests.m */; };
 		A0C5261F1CEAD2D400706104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5261E1CEAD2D400706104 /* main.m */; };
 		A0C526221CEAD2D400706104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C526211CEAD2D400706104 /* AppDelegate.m */; };
 		A0C5262A1CEAD2D400706104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C526291CEAD2D400706104 /* Assets.xcassets */; };
@@ -692,10 +692,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BF048E1F42460200B49173 /* IBApiTests.m in Sources */,
 				A00231AB1D00C42B007905CC /* IBEventTests.m in Sources */,
 				A00231A91D00C23B007905CC /* IBUserTests.m in Sources */,
 				0BEFEB161D00F2730034A18B /* IBDateFormatterTests.m in Sources */,
-				A00231AD1D00C446007905CC /* IBApiTests.m in Sources */,
 				A067F3651D0A904F0015CD22 /* JSONTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

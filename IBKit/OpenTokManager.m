@@ -57,7 +57,7 @@
                                          @"isBackstage":@(NO),
                                          @"isOnStage":@(NO),
                                          @"mobile":@(YES),
-                                         @"os": @"ios",
+                                         @"os": @"apple",
                                          @"snapshot": snapshot,
                                          @"streamId":self.publisher.stream.streamId
                                          }];
@@ -86,24 +86,27 @@
     }
 }
 
-- (void)startEvent:(IBEvent *)event {
+- (void)startEvent:(IBEvent *)event
+              user:(IBUser *)user {
     
     __weak OpenTokManager *weakSelf = self;
     
     void (^joinInteractiveModeBlock)(void) = ^(){
-        
-        NSString *userId = [FIRAuth auth].currentUser.uid;
-        
-        _fanRef = [[[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"activeFans"] child:userId];
-        NSDictionary *fan = @{
-                              @"id": userId
-                              };
-        [self.fanRef setValue:fan];
-        
-        // remove a record from activeFans array is essential to keep the app run normmally
-        [self.fanRef onDisconnectRemoveValue];
-        
-        _privateCallRef = [[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"privateCall"];
+      
+        if (user.role == IBUserRoleFan) {
+            NSString *userId = [FIRAuth auth].currentUser.uid;
+            
+            _fanRef = [[[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"activeFans"] child:userId];
+            NSDictionary *fan = @{
+                                  @"id": userId
+                                  };
+            [self.fanRef setValue:fan];
+            
+            // remove a record from activeFans array is essential to keep the app run normmally
+            [self.fanRef onDisconnectRemoveValue];
+            
+            _privateCallRef = [[[[self.ref child:@"activeBroadcasts"] child:event.adminId] child:event.fanURL] child:@"privateCall"];
+        }
         
         // next steps: connect opentok
         // Previouly, we were doing ping-pong to decide whether we can set canJoinShow to YES

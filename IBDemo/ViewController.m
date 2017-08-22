@@ -38,7 +38,7 @@
 - (IBAction)eventButtonPressed:(UIButton *)sender {
     
     IBUser *user;
-    NSString *userName = self.nameTextField.text ? self.nameTextField.text : @"Anonymous";
+    NSString *userName = self.nameTextField.text.length ? self.nameTextField.text : @"Anonymous";
     if (sender == self.celebrityButton) {
         user =  [IBUser userWithIBUserRole:IBUserRoleCelebrity name:userName];
     }

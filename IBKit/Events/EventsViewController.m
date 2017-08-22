@@ -114,7 +114,8 @@
     
     EventCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                 forIndexPath:indexPath];
-    [cell updateCellWithEvent:self.openedEvents[indexPath.row]];
+    [cell updateCellWithEvent:self.openedEvents[indexPath.row]
+                         user:self.user];
     [cell.eventButton addTarget:self
                          action:@selector(onCellClick:)
                forControlEvents:UIControlEventTouchUpInside];

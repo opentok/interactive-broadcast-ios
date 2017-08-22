@@ -10,7 +10,7 @@
 #import "IBEvent_Internal.h"
 #import "IBDateFormatter.h"
 
-NSString *const notStarted = @"notStart";
+NSString *const notStarted = @"notStarted";
 NSString *const preshow = @"preshow";
 NSString *const live = @"live";
 NSString *const closed = @"closed";
@@ -25,15 +25,7 @@ NSString *const closed = @"closed";
     if (!_status) return nil;
 
     if ([_status isEqualToString:notStarted]) {
-
-        if (!_startTime) return nil;
-
-        if (_startTime && ![_startTime isEqual:[NSNull null]]) {
-            return [IBDateFormatter convertToAppStandardFromDate:_startTime];
-        }
-        else{
-            return @"Not Started";
-        }
+        return @"Not Started";
     }
 
     if([_status isEqualToString:preshow]){

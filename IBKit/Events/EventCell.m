@@ -27,18 +27,23 @@
     self.layer.cornerRadius = 3.0;
 }
 
-- (void)updateCellWithEvent:(IBEvent *)event {
+- (void)updateCellWithEvent:(IBEvent *)event
+                       user:(IBUser *)user {
     [self.titleLabel setText:event.name];
     
     if ([event.status isEqualToString:notStarted]) {
         [self.statusLabel setText:[self getFormattedDate:event.startTime]];
         [self.eventButton setTitle:@"Not Started" forState: UIControlStateNormal];
-        self.eventButton.enabled = NO;
+        if (user.role == IBUserRoleFan) {
+            self.eventButton.backgroundColor = [UIColor grayColor];
+            self.eventButton.enabled = NO;
+        }
     }
     else{
-        [self.eventButton setTitle:@"Join Event" forState: UIControlStateNormal];
-        self.eventButton.enabled = YES;
         [self.statusLabel setText:event.descriptiveStatus];
+        [self.eventButton setTitle:@"Join Event" forState: UIControlStateNormal];
+        self.eventButton.backgroundColor = [UIColor colorWithRed:44 / 255.0f green:164 / 255.0f blue:1.0 alpha:1.0];
+        self.eventButton.enabled = YES;
     }
     
     if (event.imageURL) {

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IBEvent.h"
+#import "IBUser.h"
 
 @interface EventCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *eventButton;
-- (void)updateCellWithEvent:(IBEvent *)event;
+- (void)updateCellWithEvent:(IBEvent *)event
+                       user:(IBUser *)user;
 
 @end

@@ -19,7 +19,6 @@
 #import "OTDefaultAudioDevice.h"
 #import "UIColor+AppAdditions.h"
 #import "UIImageView+Category.h"
-#import "PerformSelectorWithDebounce.h"
 
 #import "OpenTokManager.h"
 #import "OpenTokNetworkTest.h"
@@ -31,9 +30,7 @@
 #import <OTKAnalytics/OTKAnalytics.h>
 #import <Reachability/Reachability.h>
 
-@interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate, OTSubscriberKitNetworkStatsDelegate> {
-    BOOL inCallWithProducer;
-}
+@interface EventViewController () <OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate, OTKTextChatDelegate, OTSubscriberKitNetworkStatsDelegate>
 @property (nonatomic) OTKTextChatComponent *textChat;
 @property (nonatomic) CGFloat chatYPosition;
 
@@ -384,12 +381,11 @@
 - (void)setupProducerPrivateCall {
 
     [self.openTokManager.privateCallRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        if ([snapshot.value isEqual:[NSNull null]] && inCallWithProducer) {
+        if ([snapshot.value isEqual:[NSNull null]]) {
             
             // end private call
             [self.openTokManager unsubscribeOnstageProducerCall];
             [self.openTokManager unsubscribeFromPrivateProducerCall];
-            inCallWithProducer = NO;
             if (self.user.status == IBUserStatusBackstage) {
                 self.eventView.getInLineBtn.hidden = NO;
                 [self.eventView showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
@@ -412,7 +408,6 @@
                 else if ([isWith isEqualToString:@"backstageFan"] || [isWith isEqualToString:@"activeFan"]) {
                     [self doSubscribe:self.openTokManager.producerStream];
                 }
-                inCallWithProducer = YES;
                 self.openTokManager.publisher.publishAudio = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
@@ -420,7 +415,10 @@
             }
             else {
                 [self.openTokManager muteOnstageSession:YES];
-                [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
+                
+                if (self.user.status == IBUserStatusOnstage || self.user.status == IBUserStatusBackstage) {
+                    [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
+                }
             }
         }
     }];
@@ -565,8 +563,6 @@
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
                          reason:(OTSubscriberVideoEventReason)reason {
-    
-    [self.eventView removeSilhouetteToSubscriber:subscriber];
     [self.eventView addSilhouetteToSubscriber:subscriber];
 }
 
@@ -577,7 +573,6 @@
 
 - (void)subscriberVideoDisableWarning:(OTSubscriberKit *)subscriber {
     subscriber.subscribeToVideo = NO;
-    [self.eventView removeSilhouetteToSubscriber:subscriber];
     [self.eventView addSilhouetteToSubscriber:subscriber];
 }
 
@@ -613,7 +608,9 @@
 - (void)subscriber:(OTSubscriberKit*)subscriber videoNetworkStatsUpdated:(OTSubscriberKitVideoNetworkStats *)stats {
     if (stats.timestamp - self.networkTest.prevVideoTimestamp >= 3000) {
         subscriber.delegate = nil;
-        [self performSelector:@selector(checkQualityAndSendSignal) withDebounceDuration:15.0];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self checkQualityAndSendSignal];
+        });
     }
     [self.networkTest setStats:stats];
 }

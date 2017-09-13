@@ -815,7 +815,11 @@
         [self.eventView hideNotification];
         [self.eventView hideVideoPreview];
     }
+    else if ([type isEqualToString:@"prepareGoLive"]) { // cel&host only
+        [DotSpinnerViewController show];
+    }
     else if([type isEqualToString:@"goLive"]){
+        [DotSpinnerViewController dismiss];
         self.event.status = live;
     }
     else if([type isEqualToString:@"joinHost"]){

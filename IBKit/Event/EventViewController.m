@@ -484,6 +484,7 @@
 
 - (void)doSubscribe:(OTStream *)stream {
     
+    if (!stream || !stream.connection) return;
     NSDictionary *connectionData = [JSON parseJSON:stream.connection.data];
     NSString *roleName = connectionData[@"userType"];
     

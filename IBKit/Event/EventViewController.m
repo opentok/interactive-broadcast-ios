@@ -412,11 +412,18 @@
                 self.openTokManager.publisher.publishAudio = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                [self.eventView showVideoPreviewWithPublisher:self.openTokManager.publisher];
+                if (self.user.status != IBUserStatusOnstage) {
+                    [self.eventView showVideoPreviewWithPublisher:self.openTokManager.publisher];
+                }
             }
             else {
-                [self.openTokManager muteOnstageSession:YES];
-                
+                // Unsubscribe audio only from the user in the private call with the producer and only if he or she is the stage fan, celebrity or host
+                if ([isWith isEqualToString:@"fan"] || [isWith isEqualToString:@"celebrity"] || [isWith isEqualToString:@"host"]) {
+                    OTSubscriber *subscriber = self.openTokManager.subscribers[isWith];
+                    if (subscriber) {
+                        subscriber.subscribeToAudio = NO;
+                    }
+                }
                 if (self.user.status == IBUserStatusOnstage) {
                     [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
                 }

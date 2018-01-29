@@ -417,14 +417,15 @@
                 }
             }
             else {
+                BOOL isOnStageUser = [isWith isEqualToString:@"fan"] || [isWith isEqualToString:@"celebrity"] || [isWith isEqualToString:@"host"];
                 // Unsubscribe audio only from the user in the private call with the producer and only if he or she is the stage fan, celebrity or host
-                if ([isWith isEqualToString:@"fan"] || [isWith isEqualToString:@"celebrity"] || [isWith isEqualToString:@"host"]) {
+                if (isOnStageUser) {
                     OTSubscriber *subscriber = self.openTokManager.subscribers[isWith];
                     if (subscriber) {
                         subscriber.subscribeToAudio = NO;
                     }
                 }
-                if (self.user.status == IBUserStatusOnstage) {
+                if (self.user.status == IBUserStatusOnstage && isOnStageUser) {
                     [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
                 }
             }

@@ -322,6 +322,7 @@
 
         if (self.user.status == IBUserStatusInline) {
             [self publishTo:self.openTokManager.backstageSession];
+            [self.eventView.fanViewHolder addSubview:self.openTokManager.publisher.view];
             self.openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self.eventView fanIsInline];
             [self.eventView stopLoader];

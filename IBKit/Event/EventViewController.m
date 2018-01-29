@@ -417,7 +417,7 @@
             else {
                 [self.openTokManager muteOnstageSession:YES];
                 
-                if (self.user.status == IBUserStatusOnstage || self.user.status == IBUserStatusBackstage) {
+                if (self.user.status == IBUserStatusOnstage) {
                     [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
                 }
             }

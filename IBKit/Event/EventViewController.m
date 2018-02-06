@@ -322,6 +322,7 @@
 
         if (self.user.status == IBUserStatusInline) {
             [self publishTo:self.openTokManager.backstageSession];
+            [self.eventView.fanViewHolder addSubview:self.openTokManager.publisher.view];
             self.openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.inLineHolder.bounds.size.width, self.eventView.inLineHolder.bounds.size.height);
             [self.eventView fanIsInline];
             [self.eventView stopLoader];
@@ -411,12 +412,20 @@
                 self.openTokManager.publisher.publishAudio = YES;
                 [self.openTokManager muteOnstageSession:YES];
                 [self.eventView showNotification:@"YOU ARE NOW IN PRIVATE CALL WITH PRODUCER" useColor:[UIColor SLBlueColor]];
-                [self.eventView showVideoPreviewWithPublisher:self.openTokManager.publisher];
+                if (self.user.status != IBUserStatusOnstage) {
+                    [self.eventView showVideoPreviewWithPublisher:self.openTokManager.publisher];
+                }
             }
             else {
-                [self.openTokManager muteOnstageSession:YES];
-                
-                if (self.user.status == IBUserStatusOnstage || self.user.status == IBUserStatusBackstage) {
+                BOOL isOnStageUser = [isWith isEqualToString:@"fan"] || [isWith isEqualToString:@"celebrity"] || [isWith isEqualToString:@"host"];
+                // Unsubscribe audio only from the user in the private call with the producer and only if he or she is the stage fan, celebrity or host
+                if (isOnStageUser) {
+                    OTSubscriber *subscriber = self.openTokManager.subscribers[isWith];
+                    if (subscriber) {
+                        subscriber.subscribeToAudio = NO;
+                    }
+                }
+                if (self.user.status == IBUserStatusOnstage && isOnStageUser) {
                     [self.eventView showNotification:@"OTHER PARTICIPANTS ARE IN A PRIVATE CALL. THEY MAY NOT BE ABLE TO HEAR YOU." useColor:[UIColor SLBlueColor]];
                 }
             }

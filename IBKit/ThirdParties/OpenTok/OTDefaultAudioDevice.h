@@ -17,8 +17,9 @@
 
 @interface OTDefaultAudioDevice : NSObject <OTAudioDevice>
 {
-    AudioStreamBasicDescription	stream_format;
+    AudioStreamBasicDescription stream_format;
 }
+
 /**
  Returns YES if a wired headset is available.
  */
@@ -28,7 +29,6 @@
  Returns YES if a bluetooth device is available.
  */
 @property (nonatomic, readonly) BOOL bluetoothDeviceAvailable;
-
 
 - (BOOL)setAudioBus:(id<OTAudioBus>)audioBus;
 
@@ -58,4 +58,5 @@
 - (BOOL)detectCurrentRoute;
 
 - (BOOL)setPlayOutRenderCallback:(AudioUnit)unit;
+
 @end

@@ -518,7 +518,6 @@
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event"
                              useColor:[UIColor SLRedColor]];
         }
-        self.openTokManager.producerSubscriber = nil;
     }
     
     if (stream.session.connection.connectionId == self.openTokManager.onstageSession.connection.connectionId && [roleName isEqualToString:@"producer"]){
@@ -529,7 +528,6 @@
             [self.eventView showError:@"You are experiencing network connectivity issues. Please try closing the application and coming back to the event"
                              useColor:[UIColor SLRedColor]];
         }
-        self.openTokManager.privateProducerSubscriber = nil;
     }
 }
 
@@ -841,6 +839,11 @@
             if (![self.event.status isEqualToString:live]) {
                 [self goLive];
             }
+
+            // If there is a private call with the subscriber, stop it
+            [self.openTokManager unsubscribeOnstageProducerCall];
+            [self.openTokManager unsubscribeFromPrivateProducerCall];
+
             [DotSpinnerViewController show];
         }
     }

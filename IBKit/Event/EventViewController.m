@@ -814,6 +814,10 @@
         self.eventView.statusLabel.text = @"BACKSTAGE";
         [self.eventView showVideoPreviewWithPublisher:self.openTokManager.publisher];
         [self.eventView showNotification:@"Going Backstage.You are sharing video." useColor:[UIColor SLBlueColor]];
+        
+        // If there is a private call with the subscriber, stop it
+        [self.openTokManager unsubscribeOnstageProducerCall];
+        [self.openTokManager unsubscribeFromPrivateProducerCall];
     }
     else if ([type isEqualToString:@"disconnectBackstage"]) {
         self.user.status = IBUserStatusInline;
@@ -822,6 +826,10 @@
         self.eventView.statusLabel.text = @"IN LINE";
         [self.eventView hideNotification];
         [self.eventView hideVideoPreview];
+        
+        // If there is a private call with the subscriber, stop it
+        [self.openTokManager unsubscribeOnstageProducerCall];
+        [self.openTokManager unsubscribeFromPrivateProducerCall];
     }
     else if ([type isEqualToString:@"prepareGoLive"]) { // cel&host only
         [DotSpinnerViewController show];

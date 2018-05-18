@@ -290,7 +290,6 @@
     if (self.selfSubscriber) {
         self.selfSubscriber.delegate = nil;
         [self.backstageSession unsubscribe:self.selfSubscriber error:nil];
-        [self cleanupSubscriber:@"fan"];
     }
     self.selfSubscriber = nil;
     

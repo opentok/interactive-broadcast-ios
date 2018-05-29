@@ -1,6 +1,5 @@
-![logo](tokbox-logo.png)
-
 # OpenTok Interactive Broadcast Solution for iOS
+![OpenTok Labs](https://d26dzxoao6i3hh.cloudfront.net/items/0U1R0a0e2g1E361H0x3c/Image%202017-11-22%20at%2012.16.38%20PM.png?v=2507a2df)
 
 [![Build Status](https://travis-ci.com/opentok/ibs-ios.svg?token=Bgz48rVAyAihVsymz2iz&branch=develop)](https://travis-ci.com/opentok/ibs-ios)
 [![codecov](https://codecov.io/gh/opentok/ibs-ios/branch/master/graph/badge.svg?token=lVSgFBGVpU)](https://codecov.io/gh/opentok/ibs-ios)

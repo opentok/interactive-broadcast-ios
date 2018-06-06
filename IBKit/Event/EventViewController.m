@@ -878,8 +878,8 @@
             [self.openTokManager unpublishFrom:self.openTokManager.onstageSession];
         }
         [self.openTokManager disconnectBackstageSession];
+        [self.openTokManager cleanupSubscriber:@"fan"];
         [self.openTokManager leaveLine];
-        
         [self.eventView showError:@"Thank you for participating, you are no longer sharing video/voice. You can continue to watch the session at your leisure." useColor:[UIColor SLBlueColor]];
     }
     else if([type isEqualToString:@"chatMessage"]){

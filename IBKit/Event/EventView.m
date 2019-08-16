@@ -118,7 +118,6 @@
     
     NSString *roleName = user.userRoleName;
     if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";
-    
     for (NSString *viewName in viewNames) {
         
         UIView *view = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", viewName]];

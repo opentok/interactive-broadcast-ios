@@ -10,7 +10,6 @@
 #import <OpenTok/OpenTok.h>
 #import "IBUser.h"
 
-
 @interface EventView : UIView
 
 @property (weak, nonatomic) IBOutlet UIView *videoHolder;
@@ -20,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIView *fanViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *celebrityViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *internalViewHolder;
-
-
 @property (weak, nonatomic) IBOutlet UIView *inLineHolder;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

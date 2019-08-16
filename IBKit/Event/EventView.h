@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <OpenTok/OpenTok.h>
+#import "IBUser.h"
+
 
 @interface EventView : UIView
 
@@ -17,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIView *hostViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *fanViewHolder;
 @property (weak, nonatomic) IBOutlet UIView *celebrityViewHolder;
+@property (weak, nonatomic) IBOutlet UIView *internalViewHolder;
+
+
 @property (weak, nonatomic) IBOutlet UIView *inLineHolder;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -48,9 +53,9 @@
 - (void)hideVideoPreview;
 
 #pragma mark - subscriber views
-- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers;
-- (void)addSilhouetteToSubscriber:(OTSubscriberKit *)subscriber;
-- (void)removeSilhouetteToSubscriber:(OTSubscriberKit *)subscriber;
+- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers user:(IBUser *)user;
+- (void)addSilhouetteToSubscriber:(NSString *)data;
+- (void)removeSilhouetteToSubscriber:(NSString *)data;
 
 #pragma status changes
 - (void)eventIsClosed;

@@ -7,6 +7,7 @@
 //
 
 #import "EventView.h"
+#import "IBUser.h"
 #import <DGActivityIndicatorView/DGActivityIndicatorView.h>
 
 #import "JSON.h"
@@ -96,20 +97,27 @@
 }
 
 #pragma mark - subscriber views
-- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers {
+- (void)adjustSubscriberViewsFrameWithSubscribers:(NSMutableDictionary *)subscribers user:(IBUser *)user  {
     CGFloat c = 0;
     CGFloat new_width = 1;
     CGFloat new_height = self.internalHolder.bounds.size.height;
+    int stageUsers = subscribers.count;
+    if (user.status == IBUserStatusOnstage) {
+        stageUsers++;
+    }
     
-    if(subscribers.count == 0){
+    if(stageUsers == 0){
         self.eventImage.hidden = NO;
     }
     else{
         self.eventImage.hidden = YES;
-        new_width = CGRectGetWidth([UIScreen mainScreen].bounds) / subscribers.count;
+        new_width = CGRectGetWidth([UIScreen mainScreen].bounds) / stageUsers;
     }
     
     NSArray *viewNames = @[@"host",@"celebrity",@"fan"];
+    
+    NSString *roleName = user.userRoleName;
+    if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";
     
     for (NSString *viewName in viewNames) {
         
@@ -123,14 +131,18 @@
             c++;
             
             if (!subscriber.stream.hasVideo) {
-                [self removeSilhouetteToSubscriber:subscriber];
-                [self addSilhouetteToSubscriber:subscriber];
+                [self removeSilhouetteToSubscriber:subscriber.stream.connection.data];
+                [self addSilhouetteToSubscriber:subscriber.stream.connection.data];
             }
-        }
-        else{
+        } else if ([viewName isEqualToString:roleName] && user.status == IBUserStatusOnstage) {
+            [view setHidden:NO];
+            [view setFrame:CGRectMake((c * new_width), 0, new_width, new_height)];
+            c++;
+        } else {
             [view setHidden:YES];
             [view setFrame:CGRectMake(0, 0, 5, new_height)];
         }
+        
     }
     
     for (UIView *view in self.hostViewHolder.subviews) {
@@ -142,12 +154,12 @@
     }
     
     for (UIView *view in self.celebrityViewHolder.subviews) {
-        view.frame = self.celebrityViewHolder.bounds;
+      view.frame = self.celebrityViewHolder.bounds;
     }
 }
 
-- (void)addSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
-    NSDictionary *connectionData = [JSON parseJSON:subscriber.stream.connection.data];
+- (void)addSilhouetteToSubscriber:(NSString *)data {
+    NSDictionary *connectionData = [JSON parseJSON:data];
     NSString *roleName = connectionData[@"userType"];
     if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";
     UIView *feedView = [self valueForKey:[NSString stringWithFormat:@"%@ViewHolder", roleName]];
@@ -162,8 +174,8 @@
     [feedView addSubview:avatar];
 }
 
-- (void)removeSilhouetteToSubscriber:(OTSubscriberKit *)subscriber {
-    NSDictionary *connectionData = [JSON parseJSON:subscriber.stream.connection.data];
+- (void)removeSilhouetteToSubscriber:(NSString *)data {
+    NSDictionary *connectionData = [JSON parseJSON:data];
     NSString *roleName = connectionData[@"userType"];
     if ([roleName isEqualToString:@"producer"]) return;
     if ([roleName isEqualToString:@"backstageFan"]) roleName = @"fan";

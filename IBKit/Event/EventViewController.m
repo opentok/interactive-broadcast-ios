@@ -195,9 +195,10 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.eventView performSelector:@selector(adjustSubscriberViewsFrameWithSubscribers:)
-                         withObject:self.openTokManager.subscribers
-                         afterDelay:1.0];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers user:self.user];
+    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -318,6 +319,10 @@
 
 #pragma mark - publishers
 - (void)doPublish {
+    int stageUsers = self.openTokManager.subscribers.count + 1;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width / stageUsers;
+    CGFloat initialX = (stageUsers-1) * width;
+    CGFloat height = self.eventView.internalViewHolder.bounds.size.height;
     if (self.user.role == IBUserRoleFan) {
 
         if (self.user.status == IBUserStatusInline) {
@@ -330,22 +335,25 @@
         
         if (self.user.status == IBUserStatusOnstage) {
             [self publishTo:self.openTokManager.onstageSession];
+            [self.eventView.fanViewHolder setFrame:CGRectMake(initialX, 0, width, height)];
             [self.eventView.fanViewHolder addSubview:self.openTokManager.publisher.view];
-            self.openTokManager.publisher.view.frame = CGRectMake(0, 0, self.eventView.fanViewHolder.bounds.size.width, self.eventView.fanViewHolder.bounds.size.height);
+            self.openTokManager.publisher.view.frame = CGRectMake(initialX, 0, width, height);
             [self.eventView fanIsOnStage];
         }
     }
     else {
         if(self.user.role == IBUserRoleCelebrity && !self.stopGoingLive){
             [self publishTo:self.openTokManager.onstageSession];
+            [self.eventView.celebrityViewHolder setFrame:CGRectMake(initialX, 0, width, height)];
             [self.eventView.celebrityViewHolder addSubview:self.openTokManager.publisher.view];
-            (self.openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.celebrityViewHolder.bounds.size.width, self.eventView.celebrityViewHolder.bounds.size.height);
+            (self.openTokManager.publisher.view).frame = CGRectMake(initialX, 0, width, height);
         }
         
         if(self.user.role == IBUserRoleHost && !self.stopGoingLive){
             [self publishTo:self.openTokManager.onstageSession];
+            [self.eventView.hostViewHolder setFrame:CGRectMake(initialX, 0, width, height)];
             [self.eventView.hostViewHolder addSubview:self.openTokManager.publisher.view];
-            (self.openTokManager.publisher.view).frame = CGRectMake(0, 0, self.eventView.hostViewHolder.bounds.size.width, self.eventView.hostViewHolder.bounds.size.height);
+            (self.openTokManager.publisher.view).frame = CGRectMake(initialX, 0, width, height);
         }
         
         if (self.stopGoingLive){
@@ -353,7 +361,7 @@
         }
     }
     
-    [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
+    [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers user:self.user];
 }
 
 - (void)publishTo:(OTSession *)session {
@@ -361,9 +369,10 @@
     NSString *logtype = [NSString stringWithFormat:@"%@Publishes%@", [[self.user userRoleName] capitalizedString], session_name];
     [OTKLogger logEventAction:logtype variation:KLogVariationAttempt completion:nil];
     
-    if(!self.openTokManager.publisher){
+    if(!self.openTokManager.publisher) {
         OTPublisherSettings *settings = [[OTPublisherSettings alloc] init];
         self.openTokManager.publisher = [[OTPublisher alloc] initWithDelegate:self settings:settings];
+        self.openTokManager.publisher.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
     }
     
     OTError *error = nil;
@@ -455,9 +464,6 @@
             NSLog(@"subscribe self error");
         }
     }
-    else{
-        [self doSubscribe:stream];
-    }
     
     // update stream id property in firebase
     [self.openTokManager getOnstage];
@@ -478,7 +484,7 @@
         NSString *logtype = [NSString stringWithFormat:@"%@UnpublishesOnstage",[me capitalizedString]];
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         [self.openTokManager cleanupSubscriber:me];
-        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
+        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers user:self.user];
     }
     else if ([self.openTokManager.selfSubscriber.stream.streamId isEqualToString:stream.streamId]) {
         [self.openTokManager unsubscribeSelfFromProducerSession];
@@ -550,13 +556,11 @@
         [OTKLogger logEventAction:logtype variation:KLogVariationSuccess completion:nil];
         
         assert(_subscriber == subscriber);
-        
         holder = [self.eventView valueForKey:[NSString stringWithFormat:@"%@ViewHolder", roleName]];
         (_subscriber.view).frame = CGRectMake(0, 0, holder.bounds.size.width,holder.bounds.size.height);
-        
         [holder addSubview:_subscriber.view];
         self.eventView.eventImage.hidden = YES;
-        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
+        [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers user:self.user];
     }
     
     if (self.openTokManager.publisher && self.openTokManager.publisher.stream.connection.connectionId == subscriber.stream.connection.connectionId){
@@ -571,22 +575,22 @@
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit*)subscriber
                          reason:(OTSubscriberVideoEventReason)reason {
-    [self.eventView addSilhouetteToSubscriber:subscriber];
+    [self.eventView addSilhouetteToSubscriber:subscriber.stream.connection.data];
 }
 
 - (void)subscriberVideoEnabled:(OTSubscriberKit*)subscriber
                         reason:(OTSubscriberVideoEventReason)reason {
-    [self.eventView removeSilhouetteToSubscriber:subscriber];
+    [self.eventView removeSilhouetteToSubscriber:subscriber.stream.connection.data];
 }
 
 - (void)subscriberVideoDisableWarning:(OTSubscriberKit *)subscriber {
     subscriber.subscribeToVideo = NO;
-    [self.eventView addSilhouetteToSubscriber:subscriber];
+    [self.eventView addSilhouetteToSubscriber:subscriber.stream.connection.data];
 }
 
 - (void)subscriberVideoDisableWarningLifted:(OTSubscriberKit *)subscriber {
     subscriber.subscribeToVideo = YES;
-    [self.eventView removeSilhouetteToSubscriber:subscriber];
+    [self.eventView removeSilhouetteToSubscriber:subscriber.stream.connection.data];
 }
 
 - (void)startNetworkTest {
@@ -766,7 +770,7 @@
                 self.openTokManager.fanStream = nil;
             }
             [self.openTokManager cleanupSubscriber:userType];
-            [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers];
+            [self.eventView adjustSubscriberViewsFrameWithSubscribers:self.openTokManager.subscribers user:self.user];
         }
     }
 }
@@ -802,7 +806,13 @@
         [messageData[@"mute"] isEqualToString:@"on"] ? [_openTokManager.publisher setPublishAudio: NO] : [self.openTokManager.publisher setPublishAudio: YES];
     }
     else if ([type isEqualToString:@"videoOnOff"]){
-        [messageData[@"video"] isEqualToString:@"on"] ? [_openTokManager.publisher setPublishVideo: YES] : [self.openTokManager.publisher setPublishVideo: NO];
+        if ([messageData[@"video"] isEqualToString:@"on"]) {
+            [_openTokManager.publisher setPublishVideo: YES];
+            [self.eventView removeSilhouetteToSubscriber:self.openTokManager.publisher.stream.connection.data];
+        } else {
+            [_openTokManager.publisher setPublishVideo: NO];
+            [self.eventView addSilhouetteToSubscriber:self.openTokManager.publisher.stream.connection.data];
+        }
     }
     else if ([type isEqualToString:@"newBackstageFan"]) { // celebrity and host
         if (self.user.role != IBUserRoleFan) {

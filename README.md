@@ -27,9 +27,14 @@ _**IMPORTANT:** In order to deploy the OpenTok Interactive Broadcast Solution, y
 
 To get up and running quickly with your first app, go through the following steps in the tutorial provided below:
 
-1. [Create an Xcode project](#create-an-xcode-project)
-2. [Add the required frameworks](#add-the-required-frameworks)
-3. [Configure the Interactive Broadcast Solution controller](#configure-the-interactive-broadcast-solution-controller)
+- [OpenTok Interactive Broadcast Solution for iOS](#opentok-interactive-broadcast-solution-for-ios)
+  - [Prerequisites](#prerequisites)
+    - [Create an Xcode project](#create-an-xcode-project)
+    - [Add the required frameworks](#add-the-required-frameworks)
+    - [Configure the Interactive Broadcast Solution controller](#configure-the-interactive-broadcast-solution-controller)
+  - [Development and Contributing](#development-and-contributing)
+  - [Getting Help](#getting-help)
+  - [Further Reading](#further-reading)
 
 ### Create an Xcode project
 
@@ -101,18 +106,20 @@ To initialize the controller you need:
                                    }];
 ```
 
-## Contribute
+## Development and Contributing
 
-If you'd like to contribute to OpenTok IBS's development, please follow the guidelines in the [contributing files](/.github).
+Interested in contributing? We :heart: pull requests! See the 
+[Contribution](CONTRIBUTING.md) guidelines.
 
+## Getting Help
 
-## License
+We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
 
-This project is under the [Apache License 2.0](./LICENSE)
+- Open an issue on this repository
+- See <https://support.tokbox.com/> for support options
+- Tweet at us! We're [@VonageDev](https://twitter.com/VonageDev) on Twitter
+- Or [join the Vonage Developer Community Slack](https://developer.nexmo.com/community/slack)
 
+## Further Reading
 
-# About OpenTok
-
-![logo](./tokbox-logo.png)
-
-The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. For more info on how OpenTok works, check out our [Core Concepts](https://tokbox.com/developer/guides/core-concepts/).
+- Check out the Developer Documentation at <https://tokbox.com/developer/>

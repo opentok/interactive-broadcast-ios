@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.com/opentok/ibs-ios.svg?token=Bgz48rVAyAihVsymz2iz&branch=develop)](https://travis-ci.com/opentok/ibs-ios)
 [![codecov](https://codecov.io/gh/opentok/ibs-ios/branch/master/graph/badge.svg?token=lVSgFBGVpU)](https://codecov.io/gh/opentok/ibs-ios)
 
+> ⚠️ This repository is deprecated and will no longer receive meaningful updates. For new projects and migrations, we recommend using the [Vonage Video iOS reference application](https://github.com/Vonage/vonage-video-ios-app).
+
 This document describes how to create an OpenTok Interactive Broadcast Solution mobile app for iOS. You will learn how to set up the API calls to use the admin ID for the backend account, set up the role and name of the mobile participant, and connect the participant with a specified event.
 
 This guide has the following sections:
